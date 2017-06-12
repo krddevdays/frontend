@@ -12,14 +12,12 @@ const Home = () => (
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     </Head>
-    <Image style={styles.logo}
-           source={{
-             uri: require('file-loader!./logo.svg'),
-             width: 200,
-             height: 217
-           }}
-           accessible
-           accessibilityLabel='Krasnodar Dev Days logo'
+    <Image
+      source={{
+        uri: require('file-loader!./text.svg'),
+        width: 300,
+        height: 133
+      }}
     />
   </View>
 )
