@@ -1,17 +1,12 @@
 import React from 'react'
-import Head from 'react-helmet'
 import { StyleSheet, Image, View } from 'react-primitives'
 import { createContainer } from '@phenomic/preset-react-app/lib/client'
 
+import Head from '../Head'
+
 const Home = () => (
   <View style={styles.page}>
-    <Head>
-      <html lang="ru" />
-      <title>Krasnodar Dev Days</title>
-      <meta charSet="utf-8" />
-      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    </Head>
+    <Head />
     <Image
       source={{
         uri: require('file-loader!./text.svg'),
