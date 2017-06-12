@@ -1,34 +1,25 @@
 import React from 'react'
-import { StyleSheet, Image, View } from 'react-primitives'
+import styled from 'styled-components'
 import { createContainer } from '@phenomic/preset-react-app/lib/client'
 
 import Head from '../Head'
+import Image from '../Image'
+
+// language=SCSS prefix=dummy{ suffix=}
+const Page = styled.div`
+  display: flex;
+  flex: 0 0 100%;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background: black url(${require('file-loader!./bg.jpg')}) no-repeat center;
+`
 
 const Home = () => (
-  <View style={styles.page}>
+  <Page>
     <Head />
-    <Image
-      source={{
-        uri: require('file-loader!./text.svg'), // eslint-disable-line import/no-webpack-loader-syntax
-        width: 300,
-        height: 133
-      }}
-    />
-  </View>
+    <Image width='300px' height='133px' src={require('file-loader!./text.svg')} />
+  </Page>
 )
-
-const styles = StyleSheet.create({
-  page: {
-    flexShrink: 0,
-    flexBasis: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    backgroundImage: `url(${require('file-loader!./bg.jpg')})`, // eslint-disable-line import/no-webpack-loader-syntax
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat'
-  }
-})
 
 export default createContainer(Home)

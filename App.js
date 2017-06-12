@@ -1,15 +1,33 @@
 import React from 'react'
 import { Router, Route, browserHistory } from 'react-router'
 import { createApp, renderApp } from '@phenomic/preset-react-app/lib/client'
+import { injectGlobal } from 'styled-components'
 
+import sheet from './ServerStyleSheet'
 import Html from './Html'
 
-import './defaults.css'
+// language=SCSS prefix=dummy{ suffix=}
+injectGlobal`
+    body {
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    #PhenomicRoot {
+      display: flex;
+      min-height: 100%;
+    }
+`
 
 const routes = () => (
-  <Router history={browserHistory}>
-    <Route path='/' component={require('./components/Home/index').default} />
-  </Router>
+  sheet.collectStyles(
+    <Router history={browserHistory}>
+      <Route path='/' component={require('./components/Home/index').default} />
+    </Router>
+  )
 )
 
 export default createApp(routes, Html)

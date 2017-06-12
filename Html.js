@@ -1,20 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'react-helmet'
-import { StyleSheet } from 'react-primitives'
+
+import sheet from './ServerStyleSheet'
 
 const Html = (props) => {
   const helmet = Head.renderStatic()
-  // https://github.com/necolas/react-native-web/issues/504
-  const styles = StyleSheet.renderToString().split('</style>')
-  const staticStyles = styles[0].replace(
-    '<style id="react-native-stylesheet-static">',
-    ''
-  )
-  const mainStyles = styles[1].replace(
-    '<style id="react-native-stylesheet">',
-    ''
-  )
+
   return (
     <html {...helmet.htmlAttributes.toComponent()}>
       <head>
@@ -22,8 +14,7 @@ const Html = (props) => {
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         <link rel='stylesheet' href='/styles.css' />
-        <style id='react-native-stylesheet-static'>{staticStyles}</style>
-        <style id='react-native-stylesheet-static'>{mainStyles}</style>
+        {sheet.getStyleElement()}
         {helmet.link.toComponent()}
         {helmet.style.toComponent()}
         {helmet.script.toComponent()}
