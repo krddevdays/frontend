@@ -14,9 +14,9 @@ const Home = () => (
     </Head>
     <Image style={styles.logo}
            source={{
-             uri: require('file-loader!./logo@2x.png'),
-             width: 189,
-             height: 205
+             uri: require('file-loader!./logo.svg'),
+             width: 200,
+             height: 217
            }}
            accessible
            accessibilityLabel='Krasnodar Dev Days logo'
