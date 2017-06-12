@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "standard",
+    "standard-jsx"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "react/sort-comp": [
+      "error",
+      {
+        "order": [
+          "static-methods",
+          "static-react",
+          "everything-else",
+          "/^on.+$/",
+          "lifecycle",
+          "rendering"
+        ],
+        "groups": {
+          "static-react": [
+            "displayName",
+            "propTypes",
+            "defaultProps",
+            "contextTypes",
+            "childContextTypes",
+            "getChildContext",
+            "state",
+            "constructor"
+          ],
+          "lifecycle": [
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount"
+          ],
+          "rendering": [
+            "/^render.+$/",
+            "render"
+          ]
+        }
+      }
+    ],
+    "react/prop-types": [
+      "error"
+    ],
+    "react/no-unused-prop-types": [
+      "error"
+    ]
+  }
+}

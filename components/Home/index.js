@@ -9,7 +9,7 @@ const Home = () => (
     <Head />
     <Image
       source={{
-        uri: require('file-loader!./text.svg'),
+        uri: require('file-loader!./text.svg'), // eslint-disable-line import/no-webpack-loader-syntax
         width: 300,
         height: 133
       }}
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-    backgroundImage: `url(${require('file-loader!./bg.jpg')})`,
+    backgroundImage: `url(${require('file-loader!./bg.jpg')})`, // eslint-disable-line import/no-webpack-loader-syntax
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat'

@@ -7,8 +7,8 @@ import Html from './Html'
 import './defaults.css'
 
 const routes = () => (
-  <Router history={ browserHistory }>
-    <Route path="/" component={ require('./components/Home/index').default } />
+  <Router history={browserHistory}>
+    <Route path='/' component={require('./components/Home/index').default} />
   </Router>
 )
 
