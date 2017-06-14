@@ -1,0 +1,8 @@
+{
+  "presets": [
+    "@phenomic/babel-preset"
+  ],
+  "plugins": [
+    "react-hot-loader/babel"
+  ]
+}

@@ -12,13 +12,13 @@ const Page = styled.div`
   justify-content: center;
   align-items: center;
   background-size: cover;
-  background: black url(${require('file-loader!./bg.jpg')}) no-repeat center;
+  background: black url(${require('./bg.jpg')}) no-repeat center;
 `
 
 const Home = () => (
   <Page>
     <Head />
-    <Image width='300px' height='133px' src={require('file-loader!./text.svg')} />
+    <Image width='300px' height='133px' src={require('./text.svg')} />
   </Page>
 )
 

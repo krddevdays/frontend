@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "@phenomic/preset-react-app": "^1.0.0-alpha.3",
-    "file-loader": "^0.11.2",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -23,6 +22,7 @@
     ]
   },
   "devDependencies": {
+    "@phenomic/babel-preset": "^1.0.0-alpha.3",
     "@phenomic/cli": "^1.0.0-alpha.3",
     "eslint": "^3.0.0",
     "eslint-config-standard": "^10.2.1",
@@ -33,6 +33,10 @@
     "eslint-plugin-react": "^7.0.1",
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.13.4",
-    "lint-staged": "^3.6.1"
+    "image-webpack-loader": "^3.3.1",
+    "lint-staged": "^3.6.1",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "webpack-blocks": "^1.0.0-beta",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }
