@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'react-helmet'
-import { YMInitializer } from 'react-yandex-metrika'
 
 import sheet from './ServerStyleSheet'
 
@@ -24,13 +23,6 @@ const Html = (props) => {
         {props.body}
         {props.state}
         {props.script}
-        <YMInitializer accounts={[44994376]} options={{
-          clickmap: true,
-          trackLinks: true,
-          accurateTrackBounce: true,
-          webvisor: true,
-          trackHash: true
-        }} />
       </body>
     </html>
   )

@@ -3,7 +3,6 @@ import { Router, Route, browserHistory } from 'react-router'
 import { createApp, renderApp } from '@phenomic/preset-react-app/lib/client'
 import { injectGlobal } from 'styled-components'
 
-import sheet from './ServerStyleSheet'
 import Html from './Html'
 
 // language=SCSS prefix=dummy{ suffix=}
@@ -23,11 +22,9 @@ injectGlobal`
 `
 
 const routes = () => (
-  sheet.collectStyles(
-    <Router history={browserHistory}>
-      <Route path='/' component={require('./components/Home/index').default} />
-    </Router>
-  )
+  <Router history={browserHistory}>
+    <Route path='/' component={require('./components/Home/index').default} />
+  </Router>
 )
 
 export default createApp(routes, Html)
