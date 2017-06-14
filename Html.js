@@ -14,7 +14,6 @@ const Html = (props) => {
         {helmet.base.toComponent()}
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
-        <link rel='stylesheet' href='/styles.css' />
         {sheet.getStyleElement()}
         {helmet.link.toComponent()}
         {helmet.style.toComponent()}
