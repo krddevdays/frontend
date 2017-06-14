@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'react-helmet'
 
-import sheet from './ServerStyleSheet'
-
 const Html = (props) => {
   const helmet = Head.renderStatic()
 
@@ -13,7 +11,6 @@ const Html = (props) => {
         {helmet.base.toComponent()}
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
-        {sheet.getStyleElement()}
         {helmet.link.toComponent()}
         {helmet.style.toComponent()}
         {helmet.script.toComponent()}
