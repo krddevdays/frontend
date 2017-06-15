@@ -2,7 +2,8 @@ language: node_js
 cache:
   yarn: true
 before_script:
-  - yarn run lint
+  - yarn run lint:js
+  - yarn run lint:css
 script:
   - yarn run build
 deploy:

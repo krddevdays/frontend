@@ -7,18 +7,19 @@ import Html from './Html'
 
 // language=SCSS prefix=dummy{ suffix=}
 injectGlobal`
-    body {
-      margin: 0;
-    }
+  body {
+    margin: 0;
+  }
 
-    html, body {
-      height: 100%;
-    }
+  html,
+  body {
+    height: 100%;
+  }
 
-    #PhenomicRoot {
-      display: flex;
-      min-height: 100%;
-    }
+  #PhenomicRoot {
+    display: flex;
+    min-height: 100%;
+  }
 `
 
 const routes = () => (

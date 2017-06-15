@@ -11,8 +11,8 @@ const Page = styled.div`
   flex: 0 0 100%;
   justify-content: center;
   align-items: center;
-  background-size: cover;
   background: black url(${require('./bg.jpg')}) no-repeat center;
+  background-size: cover;
 `
 
 const Home = () => (
