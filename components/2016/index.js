@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Head from '../Head'
 import Header from './Header'
 import Main from './Main'
+import Footer from './Footer'
 
 // language=SCSS prefix=dummy{ suffix=}
 const Page = styled.div`
@@ -39,6 +40,7 @@ export default () => {
       </Helmet>
       <Header />
       <Main />
+      <Footer />
     </Page>
   )
 }
