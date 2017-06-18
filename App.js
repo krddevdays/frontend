@@ -24,7 +24,8 @@ injectGlobal`
 
 const routes = () => (
   <Router history={browserHistory}>
-    <Route path='/' component={require('./components/Home/index').default} />
+    <Route path='/' component={require('./components/Home').default} />
+    <Route path='/2016' component={require('./components/2016').default} />
   </Router>
 )
 
