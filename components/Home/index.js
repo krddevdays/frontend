@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { createContainer } from '@phenomic/preset-react-app/lib/client'
 
 import Wrapper from '../Wrapper'
 import Image from '../Image'
@@ -23,4 +22,4 @@ const Home = () => (
   </Wrapper>
 )
 
-export default createContainer(Home)
+export default Home
