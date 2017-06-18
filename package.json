@@ -10,6 +10,7 @@
     "@phenomic/babel-preset": "^1.0.0-alpha.3",
     "@phenomic/cli": "^1.0.0-alpha.3",
     "@phenomic/preset-react-app": "^1.0.0-alpha.3",
+    "babel-eslint": "^7.2.3",
     "eslint": "^4.0.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-jsx": "^4.0.2",
