@@ -5,7 +5,7 @@ import { injectGlobal } from 'styled-components'
 
 import Html from './Html'
 
-// language=SCSS prefix=dummy{ suffix=}
+// language=SCSS
 injectGlobal`
   body {
     margin: 0;
