@@ -2,6 +2,8 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
+import Head from '../Head'
+
 // language=SCSS prefix=dummy{ suffix=}
 const Page = styled.div`
   display: flex;
@@ -206,6 +208,7 @@ const ButtonHeader = Button.extend`
 export default () => {
   return (
     <Page>
+      <Head />
       <Helmet>
         <title>Krasnodar Dev Days #1</title>
         <meta property='og:title' content='Krasnodar Dev Days #1' />
