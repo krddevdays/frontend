@@ -50,7 +50,6 @@
     ],
     "react/no-unused-prop-types": [
       "error"
-    ],
-    "import/no-webpack-loader-syntax": "off"
+    ]
   }
 }

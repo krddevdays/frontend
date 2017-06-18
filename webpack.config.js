@@ -10,6 +10,7 @@ import {
   webpack,
   file
 } from 'webpack-blocks'
+import StyleLintPlugin from 'stylelint-webpack-plugin'
 
 module.exports = (config) => createConfig([
   entryPoint({
@@ -43,9 +44,27 @@ module.exports = (config) => createConfig([
       }
     })
   ]),
+  match(['*.js'], [
+    (context, {merge}) => merge({
+      module: {
+        rules: [
+          Object.assign(
+            {
+              enforce: 'pre',
+              loader: 'eslint-loader'
+            },
+            context.match
+          )
+        ]
+      }
+    })
+  ]),
   addPlugins([
     process.env.PHENOMIC_ENV !== 'static' && new webpack.HotModuleReplacementPlugin(),
-    process.env.NODE_ENV === 'production' && new webpack.optimize.UglifyJsPlugin()
+    process.env.NODE_ENV === 'production' && new webpack.optimize.UglifyJsPlugin(),
+    new StyleLintPlugin({
+      files: ['**/*.js']
+    })
   ].filter(item => item)),
   (context, util) => util.merge({
     // eslint-disable-next-line max-len
