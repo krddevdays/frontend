@@ -70,12 +70,18 @@ injectGlobal`
   }
 `
 
-const routes = () => (
-  <Router history={browserHistory}>
-    <Route path='/' component={require('./components/2017').default} />
-    <Route path='/2016' component={require('./components/2016').default} />
-  </Router>
-)
+const routes = () => {
+  const routes = (
+    <Router history={browserHistory}>
+      <Route path='/' component={require('./components/2017').default} />
+      <Route path='/2016' component={require('./components/2016').default} />
+    </Router>
+  )
+
+  if (typeof window === 'undefined') {
+    return require('./ServerStyleSheet').default.collectStyles(routes)
+  } else return routes
+}
 
 export default createApp(routes, Html)
 

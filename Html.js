@@ -12,7 +12,7 @@ const Html = (props) => {
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.link.toComponent()}
-        {helmet.style.toComponent()}
+        {typeof window === 'undefined' && require('./ServerStyleSheet').default.getStyleElement()}
         {helmet.script.toComponent()}
         {helmet.noscript.toComponent()}
       </head>
