@@ -43,9 +43,16 @@ injectGlobal`
     font-family: "Source Sans Pro", sans-serif;
   }
 
-  pre {
+  pre,
+  code {
     font-family: monospace;
     font-size: 1em;
+  }
+
+  html.wf-active pre,
+  html.wf-active code {
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.9em;
   }
 
   body {
