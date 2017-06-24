@@ -5,11 +5,7 @@ import styled from 'styled-components'
 import Head from './Head'
 import YandexMetrika from './YandexMetrika'
 
-// language=SCSS prefix=dummy{ suffix=}
-const Container = styled.div`
-  display: flex;
-  flex: 1 0 100%;
-`
+const Container = styled.div([])
 
 const Wrapper = (props) => (
   <Container>
