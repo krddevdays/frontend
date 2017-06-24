@@ -3,8 +3,11 @@ import { Router, Route, browserHistory } from 'react-router'
 import { createApp, renderApp } from '@phenomic/preset-react-app/lib/client'
 import { injectGlobal } from 'styled-components'
 
-import './font'
 import Html from './Html'
+
+if (typeof window !== 'undefined') {
+  require('./font')
+}
 
 // language=SCSS
 injectGlobal`
