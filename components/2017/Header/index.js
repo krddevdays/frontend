@@ -75,7 +75,7 @@ const Buttons = styled.div`
 const Header = () => (
   <Container>
     <Logo>
-      <Image src={require('./text.svg')} height='100px' />
+      <Image src={require('./text.svg')} height='100px' alt='Krasnodar Dev Days' title='Krasnodar Dev Days' />
     </Logo>
     <Text>
       Конференция для разработчиков<br />
@@ -117,7 +117,7 @@ const Header = () => (
       </SyntaxHighlighter>
     </Information>
     <Buttons>
-      <Button href='https://krddevdays.timepad.ru/event/512166/'>Приобрести билет</Button>
+      <Button href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'>Приобрести билет</Button>
       <Button href='http://eepurl.com/cPFwj9' target='_blank' white>Подписаться на рассылку</Button>
     </Buttons>
   </Container>
