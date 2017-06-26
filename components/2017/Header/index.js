@@ -9,7 +9,6 @@ import Image from '../../Image'
 registerLanguage('javascript', js)
 
 const Container = styled.div`
-  height: 100%;
   background: linear-gradient(145deg, #b07ec5, #55e3ca);
   color: white;
   width: 100vw;
