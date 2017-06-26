@@ -6,6 +6,7 @@ import Header from './Header'
 
 const Container = styled.section`
   flex-grow: 1;
+  flex-shrink: 0;
   padding: 1rem 0;
   text-align: center;
   background-color: #252525;

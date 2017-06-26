@@ -9,6 +9,7 @@ import Image from '../../Image'
 registerLanguage('javascript', js)
 
 const Container = styled.main`
+  flex-shrink: 0;
   background-color: #55e3ca;
   background-image: linear-gradient(145deg, #b07ec5, #55e3ca);
   color: white;
@@ -34,7 +35,7 @@ const Information = styled.div`
 
 const Button = styled.a`
   white-space: nowrap;
-  display: inline-block;
+  display: block;
   min-height: 2.5em;
   line-height: 2.5;
   margin: 0 0.5rem;
@@ -43,6 +44,7 @@ const Button = styled.a`
   background: ${props => props.white ? 'white' : '#1d1f27'};
   border-radius: 0.25em;
   font-weight: 600;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: ${props => props.white ? '#1d1f27' : 'white'};
@@ -59,16 +61,18 @@ const Button = styled.a`
 
 const Buttons = styled.div`
   margin-top: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   > a {
-    display: block;
     margin-top: 1rem;
   }
 
   @media (min-width: 768px) {
+    flex-direction: row;
+
     > a {
-      display: inline-block;
       margin-top: 0;
     }
   }
