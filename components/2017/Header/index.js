@@ -98,7 +98,7 @@ const Header = () => (
         {
           'const name = \'Krasnodar Dev Days #2\'\n' +
           '// 17 сентября 2017 года, 10:00\n' +
-          'const date = new Date(2017, 9, 17, 10, 0, 0, 0)\n' +
+          'const date = new Date(2017, 8, 17, 10, 0, 0, 0)\n' +
           'const ticketsCount = 250\n' +
           '// г. Краснодар, ул. Гимназическая 65 (БЦ Централь)\n' +
           'const place = {lat: 45.025372, long: 38.971086}\n' +
