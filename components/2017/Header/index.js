@@ -8,8 +8,9 @@ import Image from '../../Image'
 
 registerLanguage('javascript', js)
 
-const Container = styled.div`
-  background: linear-gradient(145deg, #b07ec5, #55e3ca);
+const Container = styled.main`
+  background-color: #55e3ca;
+  background-image: linear-gradient(145deg, #b07ec5, #55e3ca);
   color: white;
   padding: 2rem 1rem;
   box-shadow: 0 0.125rem 1.25rem rgba(0, 0, 0, 0.2);
@@ -28,14 +29,13 @@ const Text = styled.h2`
 
 const Information = styled.div`
   margin: 2rem auto;
-  width: 100%;
   max-width: 600px;
 `
 
 const Button = styled.a`
   white-space: nowrap;
   display: inline-block;
-  height: 2.5em;
+  min-height: 2.5em;
   line-height: 2.5;
   margin: 0 0.5rem;
   padding: 0 0.875em;
@@ -49,6 +49,7 @@ const Button = styled.a`
   text-decoration: none;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
   will-change: transform;
+  user-select: none;
 
   &:hover {
     transform: translate3d(0, -1px, 0);
@@ -57,7 +58,7 @@ const Button = styled.a`
 `
 
 const Buttons = styled.div`
-  margin: 2rem 0 0;
+  margin-top: 2rem;
   text-align: center;
 
   > a {
@@ -76,10 +77,10 @@ const Buttons = styled.div`
 const Header = () => (
   <Container>
     <Logo>
-      <Image src={require('./text.svg')} height='100px' alt='Krasnodar Dev Days' title='Krasnodar Dev Days' />
+      <Image src={require('./text.svg')} height='100' width='226' alt='Krasnodar Dev Days' title='Krasnodar Dev Days' />
     </Logo>
     <Text>
-      Конференция для разработчиков<br />
+      Конференция для разработчиков
     </Text>
     <Information>
       <SyntaxHighlighter language='javascript' style={{

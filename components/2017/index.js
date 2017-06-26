@@ -4,12 +4,17 @@ import styled from 'styled-components'
 import Wrapper from '../Wrapper'
 import Header from './Header'
 
-const Container = styled.div`
+const Container = styled.section`
   flex-grow: 1;
   padding: 1rem 0;
   text-align: center;
-  background: #252525;
+  background-color: #252525;
   color: white;
+`
+
+const Text = styled.p`
+  margin: 0;
+  padding: 0 1rem;
 `
 
 const Link = styled.a`
@@ -25,12 +30,14 @@ const Landing2017 = (props) => (
   <Wrapper>
     <Header />
     <Container>
-      Здесь должна быть реклама, но у нас нет спонсоров,<br />
-      да и вообще мы еще не утвердили список докладов.<br />
-      Все будет, не волнуйтесь, но чуть позже.<br />
-      <br />
-      Если вы хотите выступить или стать партнером/спонсором<br />
-      пишите на <Link href='mailto:mark@krddevdays.ru'>mark@krddevdays.ru</Link>
+      <Text>
+        Здесь должна быть реклама, но&nbsp;у&nbsp;нас нет спонсоров,<br />
+        да&nbsp;и&nbsp;вообще мы&nbsp;еще нe&nbsp;утвердили список докладов.<br />
+        Все будет, не&nbsp;волнуйтесь, но&nbsp;чуть позже.<br />
+        <br />
+        Если вы&nbsp;хотите выступить или стать партнером/спонсором<br />
+        пишите на <Link href='mailto:mark@krddevdays.ru'>mark@krddevdays.ru</Link>
+      </Text>
     </Container>
   </Wrapper>
 )

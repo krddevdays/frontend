@@ -14,8 +14,8 @@ const Container = styled.div`
 const Wrapper = (props) => (
   <Container>
     <Head />
-    <YandexMetrika />
     {props.children}
+    <YandexMetrika />
   </Container>
 )
 
