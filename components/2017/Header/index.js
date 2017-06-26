@@ -47,7 +47,7 @@ const Button = styled.a`
   letter-spacing: 0.07em;
   color: ${props => props.white ? '#1d1f27' : 'white'};
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
   will-change: transform;
 
   &:hover {
