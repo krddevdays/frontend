@@ -48,9 +48,10 @@ const Button = styled.a`
   color: ${props => props.white ? '#1d1f27' : 'white'};
   text-decoration: none;
   transition: all 0.15s ease;
+  will-change: transform;
 
   &:hover {
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
   }
 `
