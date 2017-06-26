@@ -11,7 +11,6 @@ registerLanguage('javascript', js)
 const Container = styled.div`
   background: linear-gradient(145deg, #b07ec5, #55e3ca);
   color: white;
-  width: 100vw;
   padding: 2rem 1rem;
   box-shadow: 0 0.125rem 1.25rem rgba(0, 0, 0, 0.2);
 `
@@ -38,7 +37,7 @@ const Button = styled.a`
   display: inline-block;
   height: 2.5em;
   line-height: 2.5;
-  margin: 1rem 0.5rem;
+  margin: 0 0.5rem;
   padding: 0 0.875em;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   background: ${props => props.white ? 'white' : '#1d1f27'};
@@ -62,11 +61,13 @@ const Buttons = styled.div`
 
   > a {
     display: block;
+    margin-top: 1rem;
   }
 
   @media (min-width: 768px) {
     > a {
       display: inline-block;
+      margin-top: 0;
     }
   }
 `

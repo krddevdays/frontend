@@ -5,6 +5,7 @@ import Wrapper from '../Wrapper'
 import Header from './Header'
 
 const Container = styled.div`
+  flex-grow: 1;
   padding: 1rem 0;
   text-align: center;
   background: #252525;
