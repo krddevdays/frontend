@@ -6,6 +6,7 @@ import Head from './Head'
 import YandexMetrika from './YandexMetrika'
 
 const Container = styled.div`
+  min-height: 100vh;
   flex: 1 0 100%;
   display: flex;
   flex-direction: column;
@@ -14,8 +15,8 @@ const Container = styled.div`
 const Wrapper = (props) => (
   <Container>
     <Head />
-    <YandexMetrika />
     {props.children}
+    <YandexMetrika />
   </Container>
 )
 
