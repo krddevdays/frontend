@@ -16,11 +16,11 @@ const Container = styled.div`
   box-shadow: 0 0.125rem 1.25rem rgba(0, 0, 0, 0.2);
 `
 
-const Logo = styled.div`
+const Logo = styled.h1`
   text-align: center;
 `
 
-const Text = styled.p`
+const Text = styled.h2`
   margin: 2rem 0;
   font-size: 2em;
   font-weight: 600;
