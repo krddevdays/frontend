@@ -19,6 +19,7 @@ const Container = styled.main`
 
 const Logo = styled.h1`
   text-align: center;
+  margin: 1rem 0 2rem;
 `
 
 const Text = styled.h2`
@@ -90,7 +91,7 @@ const Header = () => (
       <SyntaxHighlighter language='javascript' style={{
         ...hybrid,
         hljs: {
-          background: '#1d1f27',
+          background: '#252525',
           padding: '1rem',
           margin: '0 0.5rem',
           boxShadow: '0.05rem 0.05rem 1rem rgba(0, 0, 0, 0.25)',
