@@ -1,6 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import url from 'url'
 
 import Wrapper from '../Wrapper'
 import Header from './Header'
@@ -38,7 +39,7 @@ const Landing2017 = (props) => (
       />
       <meta
         property='og:image'
-        content={require('./og.png')}
+        content={url.resolve('https://krddevdays.ru', require('./og.png'))}
       />
     </Helmet>
     <Header />
