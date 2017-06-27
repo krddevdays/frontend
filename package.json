@@ -3,8 +3,7 @@
   "scripts": {
     "start": "phenomic start",
     "build": "phenomic build",
-    "lint:js": "eslint --ext .js ./",
-    "lint:css": "stylelint './**/*.js'"
+    "lint:js": "eslint --ext .js ./"
   },
   "dependencies": {
     "@phenomic/babel-preset": "^1.0.0-alpha.3",
@@ -31,17 +30,12 @@
     "react-syntax-highlighter": "^5.6.2",
     "react-yandex-metrika": "^2.1.0",
     "styled-components": "^2.1.0",
-    "stylelint": "^7.11.1",
-    "stylelint-config-standard": "^16.0.0",
-    "stylelint-processor-styled-components": "^0.1.2",
-    "stylelint-webpack-plugin": "^0.7.0",
     "webfontloader": "^1.6.28",
     "webpack-blocks": "^1.0.0-beta"
   },
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "stylelint",
       "git add"
     ]
   }
