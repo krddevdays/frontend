@@ -1,4 +1,5 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import Wrapper from '../Wrapper'
@@ -29,6 +30,17 @@ const Link = styled.a`
 
 const Landing2017 = (props) => (
   <Wrapper>
+    <Helmet>
+      <title>Krasnodar Dev Days #2</title>
+      <meta
+        property='og:description'
+        content='Вторая full-day конференция разработчиков в Краснодаре. Front-end, Back-end, Mobile, DevOps'
+      />
+      <meta
+        property='og:image'
+        content={require('./og.png')}
+      />
+    </Helmet>
     <Header />
     <Container>
       <Text>
