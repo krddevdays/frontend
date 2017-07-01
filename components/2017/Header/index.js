@@ -5,6 +5,7 @@ import js from 'react-syntax-highlighter/dist/languages/javascript'
 import { hybrid } from 'react-syntax-highlighter/dist/styles'
 
 import Image from '../../Image'
+import Button from '../Button'
 
 registerLanguage('javascript', js)
 
@@ -17,14 +18,14 @@ const Container = styled.main`
   box-shadow: 0 0.125rem 1.25rem rgba(0, 0, 0, 0.2);
 `
 
-const Logo = styled.h1`
+const Title = styled.h1`
   text-align: center;
   margin: 1rem 0 2rem;
 `
 
-const Text = styled.h2`
+const Subtitle = styled.h2`
   margin: 2rem 0;
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 600;
   text-align: center;
 `
@@ -34,46 +35,20 @@ const Information = styled.div`
   max-width: 600px;
 `
 
-const Button = styled.a`
-  white-space: nowrap;
-  display: block;
-  min-height: 2.5em;
-  line-height: 2.5;
-  margin: 0 0.5rem;
-  padding: 0 0.875em;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  background: ${props => props.white ? 'white' : '#1d1f27'};
-  border-radius: 0.25em;
-  font-weight: 600;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: ${props => props.white ? '#1d1f27' : 'white'};
-  text-decoration: none;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-  will-change: transform;
-  user-select: none;
-
-  &:hover {
-    transform: translate3d(0, -1px, 0);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-  }
-`
-
 const Buttons = styled.div`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  > a {
+  > ${Button} {
     margin-top: 1rem;
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
 
-    > a {
+    > ${Button} {
       margin-top: 0;
     }
   }
@@ -81,12 +56,12 @@ const Buttons = styled.div`
 
 const Header = () => (
   <Container>
-    <Logo>
+    <Title>
       <Image src={require('./text.svg')} height='100' width='226' alt='Krasnodar Dev Days' title='Krasnodar Dev Days' />
-    </Logo>
-    <Text>
+    </Title>
+    <Subtitle>
       Конференция для разработчиков
-    </Text>
+    </Subtitle>
     <Information>
       <SyntaxHighlighter language='javascript' style={{
         ...hybrid,
@@ -124,8 +99,10 @@ const Header = () => (
       </SyntaxHighlighter>
     </Information>
     <Buttons>
-      <Button href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'>Приобрести билет</Button>
-      <Button href='http://eepurl.com/cPFwj9' target='_blank' white>Подписаться на рассылку</Button>
+      <Button href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b' color='light'>
+        Приобрести билет
+      </Button>
+      <Button href='http://eepurl.com/cPFwj9' target='_blank'>Подписаться на рассылку</Button>
     </Buttons>
   </Container>
 )
