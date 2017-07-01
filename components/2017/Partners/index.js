@@ -37,7 +37,7 @@ export default () => (
         />
       </Text>
       <Text align='center'>
-        <Button href='mailto:mark@krddevdays.ru?subject=Хочу стать партнером KDD2'>Стать парнером</Button>
+        <Button href='mailto:mark@krddevdays.ru?subject=Хочу стать партнером KDD2'>Стать партнером</Button>
       </Text>
     </Section>
   </ThemeProvider>
