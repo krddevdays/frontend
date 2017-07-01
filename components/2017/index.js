@@ -6,6 +6,7 @@ import Wrapper from '../Wrapper'
 import Header from './Header'
 import Speakers from './Speakers'
 import Partners from './Partners'
+import Footer from './Footer'
 
 const Landing2017 = (props) => (
   <Wrapper>
@@ -23,6 +24,7 @@ const Landing2017 = (props) => (
     <Header />
     <Speakers />
     <Partners />
+    <Footer />
   </Wrapper>
 )
 
