@@ -69,6 +69,10 @@ export default () => (
           photo={require('./Khashin.jpg')}
           fullName='Евгений Хашин'
         />
+        <Speaker
+          photo={require('./Muratov.jpg')}
+          fullName='Иван Муратов'
+        />
       </Container>
       <Text align='center'>
         <Button href='mailto:mark@krddevdays.ru?subject=Хочу выступить на KDD2'>Стать спикером</Button>
