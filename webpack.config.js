@@ -1,15 +1,17 @@
 import path from 'path'
 
+import webpack from 'webpack'
 import {
   createConfig,
   entryPoint,
   setOutput,
-  babel,
-  match,
   addPlugins,
-  webpack,
-  file
-} from 'webpack-blocks'
+  env,
+  match,
+  setDevTool
+} from '@webpack-blocks/webpack'
+import { file } from '@webpack-blocks/assets'
+import babel from '@webpack-blocks/babel6'
 
 module.exports = (config) => createConfig([
   entryPoint({
@@ -21,46 +23,34 @@ module.exports = (config) => createConfig([
       './App.js'
     ].filter(item => item)
   }),
+  setDevTool('source-map'),
   setOutput({
     publicPath: '/',
     path: path.join(process.cwd(), 'dist'),
     filename: '[name].js'
   }),
-  babel(),
+  match('*.js', {exclude: /node_modules/}, [
+    babel(),
+    (context, util) => util.addLoader({
+      ...context.match,
+      enforce: 'pre',
+      loader: 'eslint-loader'
+    })
+  ]),
   match(['*.gif', '*.jpg', '*.jpeg', '*.png', '*.svg'], [
     file(),
-    (context, {merge}) => merge({
-      module: {
-        rules: [
-          Object.assign({
-            use: [
-              {
-                loader: 'image-webpack-loader'
-              }
-            ]
-          }, context.match)
-        ]
-      }
+    (context, util) => util.addLoader({
+      ...context.match,
+      use: ['image-webpack-loader']
     })
   ]),
-  match(['*.js'], [
-    (context, {merge}) => merge({
-      module: {
-        rules: [
-          Object.assign(
-            {
-              enforce: 'pre',
-              loader: 'eslint-loader'
-            },
-            context.match
-          )
-        ]
-      }
-    })
+  env('production', [
+    addPlugins([
+      new webpack.optimize.UglifyJsPlugin()
+    ])
   ]),
   addPlugins([
-    process.env.PHENOMIC_ENV !== 'static' && new webpack.HotModuleReplacementPlugin(),
-    process.env.NODE_ENV === 'production' && new webpack.optimize.UglifyJsPlugin()
+    process.env.PHENOMIC_ENV !== 'static' && new webpack.HotModuleReplacementPlugin()
   ].filter(item => item)),
   (context, util) => util.merge({
     // eslint-disable-next-line max-len
