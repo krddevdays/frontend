@@ -6184,10 +6184,6 @@ react-syntax-highlighter@^5.6.2:
     highlight.js "~9.8.0"
     lowlight "^1.5.0"
 
-react-yandex-metrika@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-yandex-metrika/-/react-yandex-metrika-2.1.0.tgz#56a0fa343d4088e59762d9b8348ef838b76104b0"
-
 react@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"

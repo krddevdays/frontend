@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Head from './Head'
-import YandexMetrika from './YandexMetrika'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -16,7 +15,6 @@ const Wrapper = (props) => (
   <Container>
     <Head />
     {props.children}
-    <YandexMetrika />
   </Container>
 )
 
