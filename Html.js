@@ -50,7 +50,7 @@ const Html = (props) => {
         `
         }} />
         <noscript
-          dangerouslySetInnerHTML={{__html: `<img src='https://mc.yandex.ru/watch/44994376' style={{position: 'absolute', left: '-9999px'}} alt='' />`}} />
+          dangerouslySetInnerHTML={{__html: `<img src='https://mc.yandex.ru/watch/44994376' style='position: absolute; left: -9999px' alt='' />`}} />
       </body>
     </html>
   )
