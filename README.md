@@ -5,20 +5,19 @@
 ## Requirements
 
 1. [nvm](https://github.com/creationix/nvm)
-1. [yarn](https://yarnpkg.com/lang/en/)
 1. libpng (`brew install libpng`)
 
 ## Launch
 
 1. nvm use
-1. yarn
-1. yarn start
+1. npm install
+1. npm start
 
 ## Build
 
 1. nvm use
-1. yarn
-1. yarn run build
+1. npm
+1. npm run build
 
 # Thanks
 
