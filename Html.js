@@ -15,6 +15,9 @@ const Html = (props) => {
         {typeof window === 'undefined' && require('./ServerStyleSheet').default.getStyleElement()}
         {helmet.script.toComponent()}
         {helmet.noscript.toComponent()}
+        <script
+          type='text/javascript'
+          dangerouslySetInnerHTML={{__html: `(window.Image ? (new Image()) : document.createElement('img')).src = 'https://vk.com/rtrg?p=VK-RTRG-140553-fXIvj';`}} />
       </head>
       <body {...helmet.bodyAttributes.toComponent()}>
         {props.body}
@@ -36,17 +39,17 @@ const Html = (props) => {
             } catch(e) { }
           });
 
-          var n = d.getElementsByTagName("script")[0],
-          s = d.createElement("script"),
+          var n = d.getElementsByTagName('script')[0],
+          s = d.createElement('script'),
           f = function () { n.parentNode.insertBefore(s, n); };
-          s.type = "text/javascript";
+          s.type = 'text/javascript';
           s.async = true;
-          s.src = "https://mc.yandex.ru/metrika/watch.js";
+          s.src = 'https://mc.yandex.ru/metrika/watch.js';
 
-          if (w.opera == "[object Opera]") {
-          d.addEventListener("DOMContentLoaded", f, false);
+          if (w.opera == '[object Opera]') {
+          d.addEventListener('DOMContentLoaded', f, false);
         } else { f(); }
-        })(document, window, "yandex_metrika_callbacks");
+        })(document, window, 'yandex_metrika_callbacks');
         `
         }} />
         <noscript
