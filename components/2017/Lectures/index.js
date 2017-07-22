@@ -30,7 +30,7 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
   </a>
 ))`
   text-decoration: none;
-  margin: 0.5em 0;
+  margin: 0.5rem 0;
   display: block;
   background: ${props => background[props.theme.color]};
   color: ${props => color[props.theme.color]};
@@ -51,22 +51,23 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
   
   > img {
     float: left;
-    height: 5em;
-    width: 5em;
+    height: 5rem;
+    width: 5rem;
   }
   
   > span {
     display: block;
-    margin: 0 0 0 5em;
-    padding: 0.5em;
-    line-height: 2em;
+    margin: 0 0 0 5rem;
+    padding: 0.5rem;
+    line-height: 1.5rem;
     
     > span {
       display: block;
     }
     
     > span:first-child {
-      font-size: 1.5em;
+      font-size: 1.5rem;
+      line-height: 2rem;
       text-decoration: underline;
     }
   }
@@ -82,6 +83,21 @@ const Container = Text.withComponent('div').extend`
   max-width: 768px;
   width: 100%;
   margin: 0 auto;
+  padding: 0 0.5rem;
+`
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > ${Button} {
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `
 
 export default () => (
@@ -108,14 +124,14 @@ export default () => (
           href='http://mailchi.mp/6fd2d4dbdf8c/20'
         />
       </Container>
-      <Text align='center'>
+      <Buttons>
         <Button
           href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'
           color='gradient'>
           Приобрести билет
         </Button>
         <Button href='mailto:mark@krddevdays.ru?subject=Хочу выступить на KDD2'>Стать спикером</Button>
-      </Text>
+      </Buttons>
     </Section>
   </ThemeProvider>
 )
