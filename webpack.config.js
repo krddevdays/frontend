@@ -44,6 +44,9 @@ module.exports = (config) => createConfig([
       use: ['image-webpack-loader']
     })
   ]),
+  match(['*.pdf'], [
+    file()
+  ]),
   env('production', [
     addPlugins([
       new webpack.optimize.UglifyJsPlugin()
