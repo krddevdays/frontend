@@ -82,7 +82,7 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
 const Container = Text.withComponent('div').extend`
   max-width: 768px;
   width: 100%;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: 0 0.5rem;
 `
 
@@ -90,10 +90,6 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  > ${Button} {
-    margin-top: 1rem;
-  }
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -123,7 +119,16 @@ export default () => (
           title='Тест Джоэла Спольски. 20 лет спустя. Наши дни.'
           href='http://mailchi.mp/6fd2d4dbdf8c/20'
         />
+        <Lecture
+          lecturer='Александр Иванов'
+          photo={require('./Ivanov.jpg')}
+          title='get git'
+          href='#'
+        />
       </Container>
+      <Text align='center'>
+        Мы еще работаем над программой, не волнуйтесь ;-)
+      </Text>
       <Buttons>
         <Button
           href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'
