@@ -123,7 +123,7 @@ export default () => (
           lecturer='Александр Иванов'
           photo={require('./Ivanov.jpg')}
           title='get git'
-          href='#'
+          href='http://mailchi.mp/ab74ce7805e4/get-git'
         />
       </Container>
       <Text align='center'>
