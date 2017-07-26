@@ -125,6 +125,12 @@ export default () => (
           title='get git'
           href='http://mailchi.mp/ab74ce7805e4/get-git'
         />
+        <Lecture
+          lecturer='Денис Сальников'
+          photo={require('./Salnikov.jpg')}
+          title='Кросс-функциональные команды и самоорганизация в основе Agile'
+          href='#'
+        />
       </Container>
       <Text align='center'>
         Мы еще работаем над программой, не волнуйтесь ;-)
