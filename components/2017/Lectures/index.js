@@ -131,6 +131,12 @@ export default () => (
           title='Кросс-функциональные команды и самоорганизация в основе Agile'
           href='#'
         />
+        <Lecture
+          lecturer='Ник Ков'
+          photo={require('./Kov.jpg')}
+          title='Realm vs CoreData'
+          href='#'
+        />
       </Container>
       <Text align='center'>
         Мы еще работаем над программой, не волнуйтесь ;-)
