@@ -6,6 +6,7 @@ jobs:
     steps:
       - checkout
       - run: sudo npm i -g greenkeeper-lockfile@1
+      - run: sudo npm i -g npm
 
       - restore_cache:
           keys:
