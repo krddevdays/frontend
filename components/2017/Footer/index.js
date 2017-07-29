@@ -1,14 +1,14 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import Image from '../../Image'
 
-const Footer = require('../Section').default.withComponent('footer').extend`
+const Footer = styled(require('../Section').default.withComponent('footer'))`
   display: flex;
   justify-content: center;
 `
 
-const Link = require('../Link').default.extend`
+const Link = styled(require('../Link').default)`
   display: inline-block;
   margin: 0 0.5rem;
   transition: opacity 0.2s;

@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.1.4
+    steps:
+      - checkout
+      - run: sudo npm i -g greenkeeper-lockfile@1
+
+      - restore_cache:
+          keys:
+          - node-modules-{{ checksum "npm-shrinkwrap.json" }}
+          - node-modules-
+
+      - run: npm i
+
+      - save_cache:
+          key: node-modules-{{ checksum "npm-shrinkwrap.json" }}
+          paths:
+            - node_modules
+
+      - run: greenkeeper-lockfile-update
+
+      - run: npm test
+      - run: npm run build
+
+      - deploy:
+          name: Deploy to Github Pages if branch is master
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./.circleci/deploy-ghpages.sh ./dist
+            fi
+
+      - store_artifacts:
+          path: ./dist
+          destination: /
+
+      - run: ./.circleci/preview.sh
+
+      - run: greenkeeper-lockfile-upload
