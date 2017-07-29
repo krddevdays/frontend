@@ -26,5 +26,6 @@ jobs:
 
       - store_artifacts:
           path: ./dist
+          destination: /
 
       - run: greenkeeper-lockfile-upload
