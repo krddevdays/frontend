@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./artifact-variables.sh
+source ./.circleci/artifact-variables.sh
 
 PREVIEWS="$(artifactLink 'index.html' 'site')"
 
