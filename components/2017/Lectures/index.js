@@ -79,7 +79,7 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
   }
 `
 
-const Container = Text.withComponent('div').extend`
+const Container = styled(Text.withComponent('div'))`
   max-width: 768px;
   width: 100%;
   margin: 1rem auto;
