@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "npm-shrinkwrap.json" }}
+          - v1-dependencies-
+
+      - run: npm install
+      - run: npm i -g greenkeeper-lockfile@1
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "npm-shrinkwrap.json" }}
+
+      - run: greenkeeper-lockfile-update
+
+      - run: npm test
+      - run: npm run build
+
+      - store_artifacts:
+          path: /build
+          destination: build
+
+      - run: greenkeeper-lockfile-upload
