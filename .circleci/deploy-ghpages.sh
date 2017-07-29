@@ -46,7 +46,7 @@ git add -A
 git commit --allow-empty -m "Deploy to GitHub pages [ci skip]"
 # and push, but send any output to /dev/null to hide anything sensitive
 
-git push --force --quiet "$GH_AUTH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git" gh-pages > /dev/null 2>&1
+git push --force --quiet "https://$GH_AUTH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git" gh-pages > /dev/null 2>&1
 
 # go back to where we started and remove the gh-pages git repo we made and used
 # for deployment
