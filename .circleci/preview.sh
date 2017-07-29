@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source scripts/artifactVariables.sh
+source artifact-variables.sh
 
 PREVIEWS="$(artifactLink 'index.html' 'site')"
 
