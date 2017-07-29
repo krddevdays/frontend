@@ -2,7 +2,7 @@
 
 # Compute all the fancy artifact variables for preview scripts
 
-ARTIFACTS_URL="https://circleci.com/api/v1/project/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts/0/"
+ARTIFACTS_URL="https://$CIRCLE_BUILD_NUM-$REPO_ID-gh.circle-artifacts.com/$CIRCLE_NODE_INDEX/"
 UPSTREAM_USERNAME=$(echo $CI_PULL_REQUEST | awk -F/ '{print $4;}')
 UPSTREAM_REPONAME=$(echo $CI_PULL_REQUEST | awk -F/ '{print $5;}')
 PR_NUMBER=$(basename $CI_PULL_REQUEST)
