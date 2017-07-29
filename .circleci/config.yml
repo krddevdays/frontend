@@ -27,9 +27,9 @@ jobs:
       - deploy:
           name: Deploy to Github Pages if branch is master
           command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            ./.circleci/deploy-ghpages.sh ./dist
-          fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./.circleci/deploy-ghpages.sh ./dist
+            fi
 
       - store_artifacts:
           path: ./dist
