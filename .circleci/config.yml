@@ -26,7 +26,7 @@ jobs:
       - run: npm run build
 
       - store_artifacts:
-          path: /repo/build
+          path: ~/repo/build
           destination: build
 
       - run: greenkeeper-lockfile-upload
