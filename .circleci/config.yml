@@ -2,22 +2,22 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8.1.4
     steps:
       - checkout
+      - run: sudo npm i -g greenkeeper-lockfile@1
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "npm-shrinkwrap.json" }}
-          - v1-dependencies-
+          - node-modules-{{ checksum "npm-shrinkwrap.json" }}
+          - node-modules-
 
-      - run: npm install
-      - run: sudo npm i -g greenkeeper-lockfile@1
+      - run: npm i
 
       - save_cache:
+          key: node-modules-{{ checksum "npm-shrinkwrap.json" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "npm-shrinkwrap.json" }}
 
       - run: greenkeeper-lockfile-update
 
