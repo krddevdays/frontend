@@ -2,7 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/krddevdays/krddevdays.ru.svg)](https://greenkeeper.io/)
 
-[![Build Status](https://travis-ci.org/krddevdays/krddevdays.ru.svg)](https://travis-ci.org/krddevdays/krddevdays.ru)
+[![CircleCI](https://circleci.com/gh/krddevdays/krddevdays.ru.svg?style=svg)](https://circleci.com/gh/krddevdays/krddevdays.ru)
 
 ## Requirements
 
