@@ -13,14 +13,14 @@ jobs:
           - v1-dependencies-
 
       - run: npm install
-      - run: npm i -g greenkeeper-lockfile@1
+      - run: sudo npm i -g greenkeeper-lockfile@1
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "npm-shrinkwrap.json" }}
 
-      - run: greenkeeper-lockfile-update
+      - run: sudo greenkeeper-lockfile-update
 
       - run: npm test
       - run: npm run build
@@ -29,4 +29,4 @@ jobs:
           path: /build
           destination: build
 
-      - run: greenkeeper-lockfile-upload
+      - run: sudo greenkeeper-lockfile-upload
