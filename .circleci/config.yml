@@ -10,7 +10,6 @@ jobs:
       - restore_cache:
           keys:
           - node-modules-{{ checksum "npm-shrinkwrap.json" }}
-          - node-modules-
 
       - run: npm i
 
