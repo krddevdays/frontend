@@ -2,11 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8.1.4
     steps:
       - checkout
       - run: sudo npm i -g greenkeeper-lockfile@1
-      - run: sudo npm i -g npm
 
       - restore_cache:
           keys:
