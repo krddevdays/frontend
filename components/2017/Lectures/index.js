@@ -129,7 +129,7 @@ export default () => (
           lecturer='Денис Сальников'
           photo={require('./Salnikov.jpg')}
           title='Кросс-функциональные команды и самоорганизация в основе Agile'
-          href='#'
+          href='http://mailchi.mp/8a09c4670b20/agile'
         />
         <Lecture
           lecturer='Ник Ков'
