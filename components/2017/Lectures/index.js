@@ -21,13 +21,14 @@ const color = {
 const Heading = require('../Heading').default.withComponent('h3')
 
 const Lecture = styled(({className, title, lecturer, photo, href}) => (
-  <a className={className} href={href} target='_blank'>
+  <div className={className}>
     <img src={photo} alt={lecturer} title={lecturer} />
     <span>
       <span>{lecturer}</span>
       <span>{title}</span>
+      {href && <a href={href} target='_blank'>Подробнее</a>}
     </span>
-  </a>
+  </div>
 ))`
   text-decoration: none;
   margin: 0.5rem 0;
@@ -36,11 +37,7 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
   color: ${props => color[props.theme.color]};
   opacity: 1;
   transition: opacity 0.2s;
-  
-  &:hover {
-    opacity: 0.7;
-  }
-  
+ 
   &:last-child {
     margin-bottom: 0;
   }
@@ -68,7 +65,10 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
     > span:first-child {
       font-size: 1.5rem;
       line-height: 2rem;
-      text-decoration: underline;
+    }
+  
+    > a {
+      color: ${props => color[props.theme.color]};
     }
   }
   
@@ -135,7 +135,6 @@ export default () => (
           lecturer='Ник Ков'
           photo={require('./Kov.jpg')}
           title='Realm vs CoreData'
-          href='#'
         />
       </Container>
       <Text align='center'>
