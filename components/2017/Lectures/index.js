@@ -22,7 +22,7 @@ const Heading = require('../Heading').default.withComponent('h3')
 
 const Lecture = styled(({className, title, lecturer, photo, href}) => (
   <div className={className}>
-    <img src={photo} alt={lecturer} title={lecturer} />
+    {photo && <img src={photo} alt={lecturer} title={lecturer} />}
     <span>
       <span>{lecturer}</span>
       <span>{title}</span>
@@ -135,6 +135,11 @@ export default () => (
           lecturer='Ник Ков'
           photo={require('./Kov.jpg')}
           title='Realm vs CoreData'
+        />
+        <Lecture
+          lecturer='Виктор Тыщенко'
+          photo={require('./ViktorT.jpg')}
+          title='Зачем мне Python?'
         />
       </Container>
       <Text align='center'>
