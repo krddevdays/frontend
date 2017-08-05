@@ -1,17 +1,16 @@
 import React from 'react'
-import Helmet from 'react-helmet'
 import url from 'url'
 
-import Wrapper from '../Wrapper'
+import Head from '../Head'
 import Header from './Header'
 import Lectures from './Lectures'
 import Partners from './Partners'
 import Sponsors from './Sponsors'
 import Footer from './Footer'
 
-const Landing2017 = (props) => (
-  <Wrapper>
-    <Helmet>
+const Landing = props => (
+  [
+    <Head key='head'>
       <title>Krasnodar Dev Days #2</title>
       <meta
         property='og:description'
@@ -21,13 +20,13 @@ const Landing2017 = (props) => (
         property='og:image'
         content={url.resolve('https://krddevdays.ru', require('./og.png'))}
       />
-    </Helmet>
-    <Header />
-    <Lectures />
-    <Partners />
-    <Sponsors />
-    <Footer />
-  </Wrapper>
+    </Head>,
+    <Header key='header' />,
+    <Lectures key='lectures' />,
+    <Partners key='partners' />,
+    <Sponsors key='sponsors' />,
+    <Footer key='footer' />
+  ]
 )
 
-export default Landing2017
+export default Landing

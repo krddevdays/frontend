@@ -4,6 +4,7 @@ import { createApp, renderApp } from '@phenomic/preset-react-app/lib/client'
 import { injectGlobal } from 'styled-components'
 
 import Html from './Html'
+import Landing2017 from './components/2017'
 
 if (typeof window !== 'undefined') {
   require('./font')
@@ -80,7 +81,7 @@ injectGlobal`
 const routes = () => {
   const routes = (
     <Router history={browserHistory}>
-      <Route path='/' component={require('./components/2017').default} />
+      <Route path='/' component={Landing2017} />
     </Router>
   )
 
@@ -89,7 +90,7 @@ const routes = () => {
   } else return routes
 }
 
-export default createApp(routes, Html)
+module.exports = createApp(routes, Html)
 
 if (module.hot) {
   module.hot.accept(() => renderApp(routes))
