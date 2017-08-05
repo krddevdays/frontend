@@ -21,13 +21,14 @@ const color = {
 const Heading = require('../Heading').default.withComponent('h3')
 
 const Lecture = styled(({className, title, lecturer, photo, href}) => (
-  <a className={className} href={href} target='_blank'>
-    <img src={photo} alt={lecturer} title={lecturer} />
+  <div className={className}>
+    {photo && <img src={photo} alt={lecturer} title={lecturer} />}
     <span>
       <span>{lecturer}</span>
       <span>{title}</span>
+      {href && <a href={href} target='_blank'>Подробнее</a>}
     </span>
-  </a>
+  </div>
 ))`
   text-decoration: none;
   margin: 0.5rem 0;
@@ -36,11 +37,7 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
   color: ${props => color[props.theme.color]};
   opacity: 1;
   transition: opacity 0.2s;
-  
-  &:hover {
-    opacity: 0.7;
-  }
-  
+ 
   &:last-child {
     margin-bottom: 0;
   }
@@ -68,7 +65,10 @@ const Lecture = styled(({className, title, lecturer, photo, href}) => (
     > span:first-child {
       font-size: 1.5rem;
       line-height: 2rem;
-      text-decoration: underline;
+    }
+  
+    > a {
+      color: ${props => color[props.theme.color]};
     }
   }
   
@@ -84,16 +84,6 @@ const Container = styled(Text.withComponent('div'))`
   width: 100%;
   margin: 1rem auto;
   padding: 0 0.5rem;
-`
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
 `
 
 export default () => (
@@ -135,20 +125,25 @@ export default () => (
           lecturer='Ник Ков'
           photo={require('./Kov.jpg')}
           title='Realm vs CoreData'
-          href='#'
+        />
+        <Lecture
+          lecturer='Виктор Тыщенко'
+          photo={require('./ViktorT.jpg')}
+          title='Зачем мне Python?'
+        />
+        <Lecture
+          lecturer='Павел Колмаков'
+          photo={require('./PavelK.jpg')}
+          title='WinDbg & Co. : отладка .Net приложений'
         />
       </Container>
       <Text align='center'>
-        Мы еще работаем над программой, не волнуйтесь ;-)
-      </Text>
-      <Buttons>
         <Button
           href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'
           color='gradient'>
           Приобрести билет
         </Button>
-        <Button href='mailto:mark@krddevdays.ru?subject=Хочу выступить на KDD2'>Стать спикером</Button>
-      </Buttons>
+      </Text>
     </Section>
   </ThemeProvider>
 )
