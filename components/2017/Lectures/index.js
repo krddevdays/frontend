@@ -86,16 +86,6 @@ const Container = styled(Text.withComponent('div'))`
   padding: 0 0.5rem;
 `
 
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
-`
-
 export default () => (
   <ThemeProvider theme={{color: 'dark'}}>
     <Section>
@@ -141,18 +131,19 @@ export default () => (
           photo={require('./ViktorT.jpg')}
           title='Зачем мне Python?'
         />
+        <Lecture
+          lecturer='Павел Колмаков'
+          photo={require('./PavelK.jpg')}
+          title='WinDbg & Co. : отладка .Net приложений'
+        />
       </Container>
       <Text align='center'>
-        Мы еще работаем над программой, не волнуйтесь ;-)
-      </Text>
-      <Buttons>
         <Button
           href='https://krddevdays.timepad.ru/event/512166/?utm_refcode=4c6b52e5f714cf8bad3b8033eb3344a85090149b'
           color='gradient'>
           Приобрести билет
         </Button>
-        <Button href='mailto:mark@krddevdays.ru?subject=Хочу выступить на KDD2'>Стать спикером</Button>
-      </Buttons>
+      </Text>
     </Section>
   </ThemeProvider>
 )
