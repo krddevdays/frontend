@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@phenomic/babel-preset": "1.0.0-alpha.4",
-    "@phenomic/cli": "1.0.0-alpha.4",
+    "@phenomic/cli": "1.0.0-alpha.5",
     "@phenomic/preset-react-app": "1.0.0-alpha.4",
     "@webpack-blocks/assets": "1.0.0-beta",
     "@webpack-blocks/babel6": "1.0.0-beta",
