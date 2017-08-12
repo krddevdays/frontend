@@ -125,16 +125,19 @@ export default () => (
           lecturer='Ник Ков'
           photo={require('./Kov.jpg')}
           title='Realm vs CoreData'
+          href='http://mailchi.mp/c7a4aa1f0b90/realm-vs-coredata'
         />
         <Lecture
           lecturer='Виктор Тыщенко'
           photo={require('./ViktorT.jpg')}
           title='Зачем мне Python?'
+          href='http://mailchi.mp/6830eafaa86b/python'
         />
         <Lecture
           lecturer='Павел Колмаков'
           photo={require('./PavelK.jpg')}
           title='WinDbg & Co. : отладка .Net приложений'
+          href='http://mailchi.mp/0f50381f676d/windbg-co-net'
         />
       </Container>
       <Text align='center'>
