@@ -22,6 +22,7 @@ const Sponsor = styled(({className, href, image, name}) => (
   
   > img {
     vertical-align: top;
+    max-width: 100%;
   }
 `
 
