@@ -16,7 +16,7 @@ const Partner = styled(({className, href, image, name}) => (
   ${grayscale}
   
   display: inline-block;
-  margin: 1rem 0.5rem;
+  margin: 1rem;
   padding: 0;
   text-decoration: none;
   
@@ -35,6 +35,11 @@ export default () => (
           href='http://www.iidf.ru/'
           image={require('./free.png')}
           name='ФРИИ'
+        />
+        <Partner
+          href='https://vk.com/codehipsters'
+          image={require('./ch.png')}
+          name='Code Hipsters'
         />
       </Text>
       <Text align='center'>
