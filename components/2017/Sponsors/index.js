@@ -10,7 +10,7 @@ const Heading = require('../Heading').default.withComponent('h3')
 
 const Sponsor = styled(({className, href, image, name}) => (
   <a className={className} href={href} target='_blank'>
-    <img src={image} alt={name} title={name} height='40px' />
+    <img src={image} alt={name} title={name} height='60px' />
   </a>
 ))`
   ${grayscale}
@@ -35,6 +35,11 @@ export default () => (
           href='https://www.billing.ru'
           image={require('./peter-service.svg')}
           name='PETER-SERVICE'
+        />
+        <Sponsor
+          href='http://dodopizza.ru'
+          image={require('./dodo.svg')}
+          name='Додо Пицца'
         />
       </Text>
       <Text align='center'>
