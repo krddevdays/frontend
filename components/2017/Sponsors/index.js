@@ -38,7 +38,7 @@ export default () => (
         />
         <Sponsor
           href='http://dodopizza.ru'
-          image={require('./dodo.svg')}
+          image={require('./dodo.png')}
           name='Додо Пицца'
         />
       </Text>
