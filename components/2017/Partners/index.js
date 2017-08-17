@@ -10,7 +10,7 @@ const Heading = require('../Heading').default.withComponent('h3')
 
 const Partner = styled(({className, href, image, name}) => (
   <a className={className} href={href} target='_blank'>
-    <img src={image} alt={name} title={name} height='40px' />
+    <img src={image} alt={name} title={name} height='60px' />
   </a>
 ))`
   ${grayscale}
@@ -40,6 +40,11 @@ export default () => (
           href='https://vk.com/codehipsters'
           image={require('./ch.png')}
           name='Code Hipsters'
+        />
+        <Partner
+          href='https://vk.com/co_place'
+          image={require('./co-place.svg')}
+          name='Коворкинг CO-Place'
         />
       </Text>
       <Text align='center'>
