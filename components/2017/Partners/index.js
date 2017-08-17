@@ -17,7 +17,7 @@ const Partner = styled(({className, href, image, name}) => (
   
   display: inline-block;
   margin: 1rem;
-  padding: 0; 
+  padding: 0;
   text-decoration: none;
   
   > img {
@@ -49,7 +49,7 @@ export default () => (
         <Partner
           href='https://vk.com/afishakrr'
           image={require('./afisha.svg')}
-          name='Афиша #1'
+          name='Афиша №1'
         />
       </Text>
       <Text align='center'>
