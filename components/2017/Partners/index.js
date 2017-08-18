@@ -51,6 +51,11 @@ export default () => (
           image={require('./afisha.svg')}
           name='Афиша №1'
         />
+        <Partner
+          href='https://vse-kursy.com'
+          image={require('./vse-kursy.svg')}
+          name='Все Курсы'
+        />
       </Text>
       <Text align='center'>
         <Button href='mailto:mark@krddevdays.ru?subject=Хочу стать партнером KDD2'>Стать партнером</Button>
