@@ -5,6 +5,7 @@ import url from 'url'
 import Wrapper from '../Wrapper'
 import Header from './Header'
 import Lectures from './Lectures'
+import Gallery from './Gallery'
 import Partners from './Partners'
 import Sponsors from './Sponsors'
 import Footer from './Footer'
@@ -23,6 +24,7 @@ const Landing2017 = (props) => (
       />
     </Helmet>
     <Header />
+    <Gallery />
     <Lectures />
     <Partners />
     <Sponsors />
