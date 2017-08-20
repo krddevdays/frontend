@@ -27,7 +27,7 @@ const Button = styled.a`
   border-radius: 0.25em;
   font-weight: 600;
   text-align: center;
-  text-transform: uppercase;
+  text-transform: ${props => props.textTransform ? props.textTransform : 'uppercase'};
   letter-spacing: 0.07em;
   color: ${props => color[props.color || props.theme.color]};
   text-decoration: none;
