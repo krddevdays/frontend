@@ -12,9 +12,10 @@ const Container = styled(Text.withComponent('a'))`
   width: 100%;
   display: block;
   margin: 1rem auto;
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem;
   overflow-x: scroll;
   overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
   white-space: nowrap;
 `
 
