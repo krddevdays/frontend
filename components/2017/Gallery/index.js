@@ -24,6 +24,10 @@ const Photo = styled.img`
   margin-right: 1em;
   cursor: pointer;
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+
+  :last-child {
+    margin-right: 0;
+  }
 `
 
 export default () => (
