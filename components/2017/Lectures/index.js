@@ -139,6 +139,11 @@ export default () => (
           title='WinDbg & Co. : отладка .Net приложений'
           href='http://mailchi.mp/0f50381f676d/windbg-co-net'
         />
+        <Lecture
+          lecturer='Алексей Светлицкий'
+          photo={require('./AlexS.jpg')}
+          title='Безбажный код. Опыт борьбы с ошибками в большой компании.'
+        />
       </Container>
       <Text align='center'>
         <Button
