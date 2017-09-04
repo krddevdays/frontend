@@ -144,6 +144,11 @@ export default () => (
           photo={require('./AlexS.jpg')}
           title='Безбажный код. Опыт борьбы с ошибками в большой компании.'
         />
+        <Lecture
+          lecturer='Марк Ланговой'
+          photo={require('./MarkL.jpg')}
+          title='React: ecosystem & future'
+        />
       </Container>
       <Text align='center'>
         <Button
