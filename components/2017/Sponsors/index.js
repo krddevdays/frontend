@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import Section from '../Section'
 import Text from '../Text'
-import Button from '../Button'
 import grayscale from '../grayscale'
 
 const Heading = require('../Heading').default.withComponent('h3')
@@ -41,9 +40,6 @@ export default () => (
           image={require('./dodo.png')}
           name='Додо Пицца'
         />
-      </Text>
-      <Text align='center'>
-        <Button href={require('./information.pdf')}>Стать спонсором</Button>
       </Text>
     </Section>
   </ThemeProvider>
