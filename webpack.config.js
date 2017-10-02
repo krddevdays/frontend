@@ -11,7 +11,7 @@ import {
   setDevTool
 } from '@webpack-blocks/webpack'
 import { file } from '@webpack-blocks/assets'
-import babel from '@webpack-blocks/babel6'
+import babel from '@webpack-blocks/babel'
 
 module.exports = (config) => createConfig([
   entryPoint({
