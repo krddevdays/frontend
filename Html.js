@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'react-helmet'
+import { ServerStyleSheet } from 'styled-components'
 
-const Html = (props) => {
+const Html = ({ App, render }) => {
+  const sheet = new ServerStyleSheet()
+  const { Main, State, Script } = render(sheet.collectStyles(<App />))
   const helmet = Head.renderStatic()
 
   return (
@@ -12,17 +15,17 @@ const Html = (props) => {
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.link.toComponent()}
-        {typeof window === 'undefined' && require('./ServerStyleSheet').default.getStyleElement()}
+        {sheet.getStyleElement()}
         {helmet.script.toComponent()}
         {helmet.noscript.toComponent()}
         <script
           type='text/javascript'
-          dangerouslySetInnerHTML={{__html: `(window.Image ? (new Image()) : document.createElement('img')).src = 'https://vk.com/rtrg?p=VK-RTRG-140553-fXIvj';`}} />
+          dangerouslySetInnerHTML={{ __html: `(window.Image ? (new Image()) : document.createElement('img')).src = 'https://vk.com/rtrg?p=VK-RTRG-140553-fXIvj';` }} />
       </head>
       <body {...helmet.bodyAttributes.toComponent()}>
-        {props.body}
-        {props.state}
-        {props.script}
+        <Main />
+        <State />
+        <Script />
         <script type='text/javascript' dangerouslySetInnerHTML={{
           __html: `
         (function (d, w, c) {
@@ -64,20 +67,20 @@ const Html = (props) => {
         `
         }} />
         <noscript
-          dangerouslySetInnerHTML={{__html: `
+          dangerouslySetInnerHTML={{
+            __html: `
             <img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=1948331748778465&ev=PageView&noscript=1'/>
-          `}} />
+          `
+          }} />
         <noscript
-          dangerouslySetInnerHTML={{__html: `<img src='https://mc.yandex.ru/watch/44994376' style='position: absolute; left: -9999px' alt='' />`}} />
+          dangerouslySetInnerHTML={{ __html: `<img src='https://mc.yandex.ru/watch/44994376' style='position: absolute; left: -9999px' alt='' />` }} />
       </body>
     </html>
   )
 }
-
 Html.propTypes = {
-  body: PropTypes.any,
-  state: PropTypes.any,
-  script: PropTypes.any
+  App: PropTypes.any.isRequired,
+  render: PropTypes.func.isRequired
 }
 
 export default Html

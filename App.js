@@ -77,17 +77,11 @@ injectGlobal`
   }
 `
 
-const routes = () => {
-  const routes = (
-    <Router history={browserHistory}>
-      <Route path='/' component={require('./components/2017').default} />
-    </Router>
-  )
-
-  if (typeof window === 'undefined') {
-    return require('./ServerStyleSheet').default.collectStyles(routes)
-  } else return routes
-}
+const routes = () => (
+  <Router history={browserHistory}>
+    <Route path='/' component={require('./components/2017').default} />
+  </Router>
+)
 
 export default createApp(routes, Html)
 
