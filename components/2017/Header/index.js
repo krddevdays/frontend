@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light'
-import js from 'react-syntax-highlighter/dist/languages/javascript'
-import { hybrid } from 'react-syntax-highlighter/dist/styles'
+import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/light'
+import js from 'react-syntax-highlighter/languages/hljs/javascript'
+import hybrid from 'react-syntax-highlighter/styles/hljs/hybrid'
 
 import Image from '../../Image'
 import Button from '../Button'
