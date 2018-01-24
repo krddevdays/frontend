@@ -24,7 +24,7 @@
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
-    "image-webpack-loader": "^3.4.2",
+    "image-webpack-loader": "^4.0.0",
     "lint-staged": "^6.0.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
