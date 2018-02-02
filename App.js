@@ -55,10 +55,6 @@ injectGlobal`
     font-size: 0.9em;
   }
 
-  body {
-    margin: 0;
-  }
-
   html,
   body {
     height: 100%;
