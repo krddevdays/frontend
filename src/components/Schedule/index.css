@@ -1,0 +1,44 @@
+.container {
+    padding: 20px 0;
+    background: white;
+}
+
+@media (min-width: 480px) {
+    .container {
+        text-align: center;
+    }
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    margin-bottom: calc(1em + 21px);
+}
+
+.title:after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100px;
+    bottom: -20px;
+    border-bottom: black 1px solid;
+}
+
+@media (min-width: 720px) {
+    .title {
+        font-size: 42px;
+        margin-bottom: calc(1em + 22px);
+    }
+
+    .title:after {
+        border-bottom-width: 2px;
+    }
+}

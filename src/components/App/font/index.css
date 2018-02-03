@@ -1,0 +1,47 @@
+@font-face {
+	font-family: "SF UI Display";
+	src: url("./SFUIDisplay-Semibold.eot");
+	src: url("./SFUIDisplay-Semibold.eot?#iefix") format("embedded-opentype"),
+		url("./SFUIDisplay-Semibold.woff2") format("woff2"),
+		url("./SFUIDisplay-Semibold.woff") format("woff"),
+		url("./SFUIDisplay-Semibold.ttf") format("truetype"),
+		url("./SFUIDisplay-Semibold.svg#SFUIDisplay-Semibold") format("svg");
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF UI Display";
+	src: url("./SFUIDisplay-Bold.eot");
+	src: url("./SFUIDisplay-Bold.eot?#iefix") format("embedded-opentype"),
+		url("./SFUIDisplay-Bold.woff2") format("woff2"),
+		url("./SFUIDisplay-Bold.woff") format("woff"),
+		url("./SFUIDisplay-Bold.ttf") format("truetype"),
+		url("./SFUIDisplay-Bold.svg#SFUIDisplay-Bold") format("svg");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF UI Display";
+	src: url("./SFUIDisplay-Medium.eot");
+	src: url("./SFUIDisplay-Medium.eot?#iefix") format("embedded-opentype"),
+		url("./SFUIDisplay-Medium.woff2") format("woff2"),
+		url("./SFUIDisplay-Medium.woff") format("woff"),
+		url("./SFUIDisplay-Medium.ttf") format("truetype"),
+		url("./SFUIDisplay-Medium.svg#SFUIDisplay-Medium") format("svg");
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "SF UI Display";
+	src: url("./SFUIDisplay-Light.eot");
+	src: url("./SFUIDisplay-Light.eot?#iefix") format("embedded-opentype"),
+		url("./SFUIDisplay-Light.woff2") format("woff2"),
+		url("./SFUIDisplay-Light.woff") format("woff"),
+		url("./SFUIDisplay-Light.ttf") format("truetype"),
+		url("./SFUIDisplay-Light.svg#SFUIDisplay-Light") format("svg");
+	font-weight: 300;
+	font-style: normal;
+}

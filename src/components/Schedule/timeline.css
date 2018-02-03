@@ -1,0 +1,91 @@
+.timeline {
+    position: relative;
+    display: block;
+    padding: 15px 15px 15px 21px;
+    margin: 40px 0;
+}
+
+@media (min-width: 480px) {
+    .timeline {
+        display: inline-block;
+        text-align: left;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 720px) {
+    .timeline {
+        display: inline-block;
+        text-align: left;
+        max-width: 40%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .timeline {
+        display: inline-block;
+        text-align: left;
+        max-width: 30%;
+    }
+}
+
+.timeline:before {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    display: block;
+    content: "";
+    border-radius: 3px;
+    background: rgba(38, 210, 180, 0.4);
+    width: 6px;
+    height: 100%;
+}
+
+.item {
+    position: relative;
+    padding: 15px 0 15px 24px;
+    font-size: 14px;
+    line-height: 1.5em;
+    letter-spacing: 0.03em;
+}
+
+@media (min-width: 720px) {
+    .item {
+        font-size: 16px;
+    }
+}
+
+.item:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(15px + (1.5em - 24px) / 2);
+    left: calc((24px + 6px) / -2);
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    border: solid 6px white;
+    box-sizing: border-box;
+    background: #26d2b4;
+    transition: background 0.2s;
+}
+
+.item:hover:before {
+    background: #25b496;
+}
+
+.itemTime {
+    color: #d571ff;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.itemTitle {
+    color: #3e3e3e;
+}
+
+.itemSubtitle {
+    color: #b0b0b0;
+    font-style: italic;
+}

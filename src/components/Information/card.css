@@ -1,0 +1,36 @@
+.container {
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background: white;
+}
+
+@media (min-width: 720px) {
+    .container {
+        box-shadow: 0 3px 10px 0 rgba(0, 204, 168, 0.3);
+        transition: box-shadow 0.2s;
+    }
+
+    .container:hover {
+        box-shadow: 0 3px 20px 0 rgba(0, 204, 168, 0.3);
+    }
+}
+
+.title {
+    font-size: 4.2em;
+    line-height: 1.2em;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #26d2b4;
+}
+
+.subtitle {
+    font-size: 1.6em;
+    line-height: 1.2em;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #7b7b7b;
+}

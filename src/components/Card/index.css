@@ -1,0 +1,43 @@
+.container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    border: 5px solid rgba(177, 177, 177, 0.15);
+    margin: 0 auto 20px auto;
+    transition: border-color 0.2s;
+}
+
+.container:hover .photo {
+    border-color: rgba(177, 177, 177, 0.5)
+}
+
+.title {
+    font-weight: 500;
+    margin: 0;
+}
+
+.subtitle {
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.email {
+    font-weight: 300;
+}

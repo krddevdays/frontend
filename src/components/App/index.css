@@ -1,0 +1,32 @@
+html {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html.wf-sfuidisplay-n4-active {
+    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.5em;
+    letter-spacing: 0.033em;
+    font-weight: 300;
+    color: #333333;
+}
+
+@media (min-width: 720px) {
+    p {
+        font-size: 16px;
+        letter-spacing: 0.05em;
+    }
+}
+
+:global a {
+    color: #26d2b4;
+    transition: color 0.2s;
+    letter-spacing: 0.05em;
+}
+
+:global a:hover {
+    color: #27bfa0;
+}
