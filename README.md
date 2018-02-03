@@ -1,4 +1,4 @@
-# [Krasnodar Dev Days](https://new.krddevdays.ru)
+# [Krasnodar Dev Days](https://krddevdays.ru)
 
 ## Requirements
 
