@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'react-helmet'
-import { ServerStyleSheet } from 'styled-components'
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 const Html = ({ App, render }) => {
   const sheet = new ServerStyleSheet()
-  const { Main, State, Script } = render(sheet.collectStyles(<App />))
+  const { Main, State, Script } = render(sheet.collectStyles(
+    <StyleSheetManager sheet={sheet.instance}>
+      <App />
+    </StyleSheetManager>
+  ))
   const helmet = Head.renderStatic()
 
   return (
