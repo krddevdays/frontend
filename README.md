@@ -1,5 +1,8 @@
 # [Krasnodar Dev Days](https://krddevdays.ru)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/krddevdays/krddevdays.ru.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/krddevdays/krddevdays.ru.svg)](https://travis-ci.org/krddevdays/krddevdays.ru)
+
 ## Requirements
 
 1. [nvm](https://github.com/creationix/nvm)
