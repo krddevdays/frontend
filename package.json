@@ -13,7 +13,6 @@
     "@webpack-blocks/babel": "^1.0.0-rc",
     "@webpack-blocks/webpack": "^1.0.0-rc",
     "babel-eslint": "^8.2.1",
-    "babel-plugin-styled-components": "^1.5.0",
     "eslint": "^4.17.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-jsx": "^4.0.2",
