@@ -1,6 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import url from 'url'
 
 const Container = styled.main`
   display: flex;
@@ -37,7 +38,7 @@ export default () => (
       />
       <meta
         property='og:image'
-        content={require('../images/og.png')}
+        content={url.resolve(process.env.URL, require('../images/og.png'))}
       />
     </Helmet>
     <Title>
