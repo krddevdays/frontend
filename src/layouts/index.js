@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectGlobal } from 'styled-components'
+import Helmet from 'react-helmet'
 
 injectGlobal`
   html {
@@ -73,6 +74,9 @@ const Footer = require('../components/Footer')
 
 const TemplateWrapper = ({children}) => (
   <Fragment>
+    <Helmet>
+      <html lang='ru' />
+    </Helmet>
     {children()}
     <Footer />
   </Fragment>
