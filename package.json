@@ -29,7 +29,7 @@
     "lint-staged": "^6.1.0"
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "rm -rf public && gatsby build",
     "start": "gatsby develop",
     "lint:js": "eslint --ext .js --ignore-path .gitignore ./",
     "test": "echo \"Error: no test specified\" && exit 1"
