@@ -19,6 +19,7 @@ module.exports = {
         webvisor: true,
         trackHash: true
       }
-    }
+    },
+    'gatsby-plugin-netlify'
   ]
 }
