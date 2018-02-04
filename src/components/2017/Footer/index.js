@@ -21,13 +21,13 @@ const Link = styled(require('../Link'))`
 export default () => (
   <ThemeProvider theme={{color: 'dark'}}>
     <Footer>
-      <Link href='https://github.com/krddevdays/krddevdays.ru'>
+      <Link href='https://github.com/krddevdays/krddevdays.ru' target='_blank' rel='noopener'>
         <Image src={require('./github.svg')} height='24' />
       </Link>
-      <Link href='https://facebook.com/krddevdays'>
+      <Link href='https://facebook.com/krddevdays' target='_blank' rel='noopener'>
         <Image src={require('./facebook.svg')} height='24' />
       </Link>
-      <Link href='https://vk.com/krddevdays'>
+      <Link href='https://vk.com/krddevdays' target='_blank' rel='noopener'>
         <Image src={require('./vk.svg')} height='24' />
       </Link>
     </Footer>

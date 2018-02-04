@@ -28,7 +28,7 @@ export default () => (
     <Section>
       <Heading>Как это было в прошлый раз</Heading>
       <Container>
-        <Link target='_blank' href='https://vk.com/krddevdays?z=album-131416798_239706151' rel='nofollow noopener'>
+        <Link target='_blank' href='https://vk.com/krddevdays?z=album-131416798_239706151' rel='noopener'>
           {photosLinks.map((photo, index) => (
             <Photo src={require(`./photos/${index + 1}-${photo}`)} key={photo} />
           ))}
