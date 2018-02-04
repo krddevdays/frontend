@@ -23,13 +23,13 @@ const Link = styled.a`
 export default () => (
   <Container>
     <Link href='https://github.com/krddevdays/krddevdays.ru' target='_blank' rel='noopener'>
-      <img src={require('../../images/github.svg')} height='24' />
+      <img src={require('../../images/github.svg')} height='24' alt='GitHub' title='GitHub' />
     </Link>
     <Link href='https://facebook.com/krddevdays' target='_blank' rel='noopener'>
-      <img src={require('../../images/facebook.svg')} height='24' />
+      <img src={require('../../images/facebook.svg')} height='24' alt='Facebook' title='Facebook' />
     </Link>
     <Link href='https://vk.com/krddevdays' target='_blank' rel='noopener'>
-      <img src={require('../../images/vk.svg')} height='24' />
+      <img src={require('../../images/vk.svg')} height='24' alt='Вконтакте' title='Вконтакте' />
     </Link>
   </Container>
 )
