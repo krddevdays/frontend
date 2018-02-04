@@ -1,37 +1,55 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import url from 'url'
+import styled from 'styled-components'
 
-import Wrapper from '../components/Wrapper'
-import Header from '../components/2017/Header'
-import Info from '../components/2017/Info'
-import Gallery from '../components/2017/Gallery'
-import Lectures from '../components/2017/Lectures'
-import Partners from '../components/2017/Partners'
-import Sponsors from '../components/2017/Sponsors'
-import Footer from '../components/2017/Footer'
+const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #55e3ca;
+  background-image: linear-gradient(145deg, #b07ec5, #55e3ca);
+  color: white;
+  padding: 1rem;
+`
 
-const Landing2017 = (props) => (
-  <Wrapper>
+const Title = styled.h1`
+  text-align: center;
+  margin: 0.5rem 0;
+  user-select: none;
+`
+
+const Subtitle = styled.h2`
+  margin: 0.5rem 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+`
+
+export default () => (
+  <Container>
     <Helmet>
-      <title>Krasnodar Dev Days #2</title>
+      <title>Krasnodar Dev Days</title>
       <meta
         property='og:description'
-        content='Вторая full-day конференция разработчиков в Краснодаре. Front-end, Back-end, Mobile, DevOps'
+        content='Сообщество разработчиков Краснодара и края'
       />
       <meta
         property='og:image'
-        content={url.resolve('https://krddevdays.ru', require('../components/2017/og.png'))}
+        content={require('../images/og.png')}
       />
     </Helmet>
-    <Header />
-    <Info />
-    <Gallery />
-    <Lectures />
-    <Partners />
-    <Sponsors />
-    <Footer />
-  </Wrapper>
+    <Title>
+      <img
+        src={require('../images/textLogo.svg')}
+        height='100'
+        width='226'
+        alt='Krasnodar Dev Days'
+        title='Krasnodar Dev Days' />
+    </Title>
+    <Subtitle>
+      Сообщество разработчиков
+    </Subtitle>
+  </Container>
 )
-
-export default Landing2017

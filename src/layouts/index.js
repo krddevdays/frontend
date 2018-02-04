@@ -1,3 +1,4 @@
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectGlobal } from 'styled-components'
 
@@ -68,7 +69,14 @@ injectGlobal`
   }
 `
 
-const TemplateWrapper = ({children}) => children()
+const Footer = require('../components/Footer')
+
+const TemplateWrapper = ({children}) => (
+  <Fragment>
+    {children()}
+    <Footer />
+  </Fragment>
+)
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func
