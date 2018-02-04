@@ -20,6 +20,12 @@ module.exports = {
         trackHash: true
       }
     },
+    {
+      resolve: 'gatsby-plugin-sentry',
+      options: {
+        dsn: 'https://81c5d87ac8dc43d289508f0ee84c6027:b9867a8f58e34fc08001eb4f48905c7c@sentry.io/197348'
+      }
+    },
     'gatsby-plugin-offline',
     'gatsby-plugin-netlify'
   ]
