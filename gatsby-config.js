@@ -7,6 +7,12 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-next',
     {
+      resolve: 'gatsby-plugin-vk-pixel',
+      options: {
+        id: 'VK-RTRG-140553-fXIvj'
+      }
+    },
+    {
       resolve: 'gatsby-plugin-facebook-pixel',
       options: {
         pixelId: '1948331748778465'
