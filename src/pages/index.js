@@ -1,7 +1,25 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import url from 'url'
+
+const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+`
 
 const Container = styled.main`
   display: flex;
@@ -10,7 +28,9 @@ const Container = styled.main`
   justify-content: center;
   align-items: center;
   background-color: #55e3ca;
-  background-image: linear-gradient(145deg, #b07ec5, #55e3ca);
+  background-image: linear-gradient(145deg, #b07ec5, #55e3ca, #b07ec5, #55e3ca);
+  background-size: 400% 400%;
+  animation: ${gradientAnimation} 25s ease infinite;
   color: white;
   padding: 1rem;
 `
