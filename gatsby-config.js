@@ -7,6 +7,22 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-next',
     {
+      resolve: 'gatsby-plugin-typography',
+      options: {
+        pathToConfigModule: `src/utils/typography.js`
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/pages`,
+        name: 'pages'
+      }
+    },
+    {
+      resolve: 'gatsby-transformer-remark'
+    },
+    {
       resolve: 'gatsby-plugin-vk-pixel',
       options: {
         id: 'VK-RTRG-140553-fXIvj'
