@@ -1,89 +1,67 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { injectGlobal } from 'styled-components'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
-injectGlobal`
-  html {
-    font-family: sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: 100%;
-    line-height: 1.15;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-  }
+const Container = styled.div`
+  padding-top: 70px;
+`
 
-  html.wf-active {
-    font-family: "Source Sans Pro", sans-serif;
-  }
+const Logo = styled.img.attrs({
+  src: require('../images/logo.svg'),
+  alt: 'Krasnodar Dev Days',
+  title: 'Krasnodar Dev Days'
+})``
 
-  button,
-  input,
-  optgroup,
-  select,
-  textarea {
-    font-family: sans-serif;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0;
-  }
-
-  html.wf-active button,
-  html.wf-active input,
-  html.wf-active optgroup,
-  html.wf-active select,
-  html.wf-active textarea {
-    font-family: "Source Sans Pro", sans-serif;
-  }
-
-  pre,
-  code {
-    font-family: monospace;
-    font-size: 1em;
-  }
-
-  html.wf-active pre,
-  html.wf-active code {
-    font-family: "Roboto Mono", monospace;
-    font-size: 0.9em;
-  }
+const Header = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 70px;
+  width: 100%;
   
-  body {
-    margin: 0;
-  }
+  background: #252525;
+`
 
-  html,
-  body {
+const HeaderTop = styled.div`
+  box-sizing: border-box;
+  padding: 10px;
+  height: 100%;
+  
+  text-align: center;
+  
+  > ${Logo} {
     height: 100%;
-  }
-
-  #___gatsby {
-    display: flex;
-    min-height: 100%;
-    flex-direction: column;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
   }
 `
 
-const Footer = require('../components/Footer')
+const Main = styled.main`
+  margin: 1em auto;
+  padding: 0 1em;
+  max-width: 740px;
+  box-sizing: content-box;
+`
 
-const TemplateWrapper = ({children}) => (
-  <Fragment>
+const IndexLayout = ({children}) => (
+  <Container>
     <Helmet>
       <html lang='ru' />
+      <title>Krasnodar Dev Days</title>
     </Helmet>
-    {children()}
-    <Footer />
-  </Fragment>
+    <Header>
+      <HeaderTop>
+        <Logo />
+      </HeaderTop>
+    </Header>
+    <Main>
+      {children()}
+    </Main>
+  </Container>
 )
 
-TemplateWrapper.propTypes = {
+IndexLayout.propTypes = {
   children: PropTypes.func
 }
 
-export default TemplateWrapper
+export default IndexLayout

@@ -7,6 +7,48 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-next',
     {
+      resolve: 'gatsby-plugin-typography',
+      options: {
+        pathToConfigModule: 'src/utils/typography.js'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/pages`,
+        name: 'pages'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/static/media`,
+        name: 'media'
+      }
+    },
+    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          'gatsby-remark-external-links',
+          'gatsby-remark-responsive-iframe',
+          {
+            resolve: 'gatsby-remark-relative-images',
+            options: {
+              name: 'media'
+            }
+          },
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 740
+            }
+          }
+        ]
+      }
+    },
+    {
       resolve: 'gatsby-plugin-vk-pixel',
       options: {
         id: 'VK-RTRG-140553-fXIvj'
@@ -27,6 +69,7 @@ module.exports = {
       }
     },
     'gatsby-plugin-offline',
+    'gatsby-plugin-netlify-cms',
     'gatsby-plugin-netlify'
   ]
 }

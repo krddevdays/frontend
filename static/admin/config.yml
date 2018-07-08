@@ -1,0 +1,20 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+
+media_folder: "static/media"
+public_folder: "/media"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Index Page"
+        name: "index"
+        file: "src/pages/index.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
