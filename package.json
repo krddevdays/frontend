@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.5.1",
+    "clean-tag": "^1.1.0",
+    "gatsby": "2.0.0-beta.36",
+    "gatsby-image": "2.0.0-beta.6",
+    "gatsby-plugin-facebook-pixel": "^1.0.3",
+    "gatsby-plugin-netlify": "2.0.0-beta.3",
+    "gatsby-plugin-offline": "2.0.0-beta.3",
+    "gatsby-plugin-react-helmet": "3.0.0-beta.3",
+    "gatsby-plugin-sharp": "2.0.0-beta.5",
+    "gatsby-plugin-styled-components": "3.0.0-beta.2",
+    "gatsby-plugin-vk-pixel": "^1.0.2",
+    "gatsby-plugin-yandex-metrika": "^1.2.1",
+    "gatsby-source-filesystem": "2.0.1-beta.5",
+    "gatsby-transformer-sharp": "2.1.1-beta.3",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.0",
+    "normalize.css": "^8.0.0",
+    "prettier": "^1.13.7",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
+    "styled-components": "^3.3.3",
+    "styled-flex-component": "^2.2.2",
+    "styled-system": "^2.3.6"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop --host 0.0.0.0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
