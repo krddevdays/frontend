@@ -454,6 +454,46 @@ const IndexPage = ({data}) => (
                   letterSpacing='0.125em'
                   fontWeight='900'
                 >
+                  Как это было в прошлом году
+                </Heading>
+              </Shadow>
+            </Box>
+          </Flex>
+          <Flex mt='40px'
+                flexDirection='column'
+                flexWrap='wrap'
+          >
+            <Box height={0} pb='56.25%' position='relative'>
+              <iframe
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                }}
+                title='Видео Krasnodar Dev Days #2'
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/_YUUlmSZYuc?rel=0&amp;showinfo=0"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </Box>
+          </Flex>
+        </Container>
+        <Container>
+          <Flex mt={['80px']}>
+            <Box>
+              <Shadow top='-40px' left='-200px'>
+                <Heading
+                  is='h2'
+                  fontSize={['27px', '33px', '39px', '48px']}
+                  lineHeight={['40px', '48px', '57px', '70px']}
+                  letterSpacing='0.125em'
+                  fontWeight='900'
+                >
                   Остались вопросы?
                 </Heading>
               </Shadow>
