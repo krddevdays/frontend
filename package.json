@@ -2,7 +2,7 @@
   "private": true,
   "dependencies": {
     "babel-plugin-styled-components": "^1.5.1",
-    "clean-tag": "^1.1.0",
+    "clean-tag": "^2.0.0",
     "gatsby": "2.0.0-beta.36",
     "gatsby-image": "2.0.0-beta.6",
     "gatsby-plugin-facebook-pixel": "^1.0.3",
