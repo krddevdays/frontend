@@ -385,7 +385,6 @@ const IndexPage = ({data}) => (
                 {
                   title: 'Я все проспал',
                   price: '2500 ₽',
-                  description: '// 100 билетов',
                 },
               ].map(({title, price, description}, key) => (
                 <Flex key={key} width={[1, , , , , 1 / 2, 1 / 3]} maxWidth={[]}
@@ -407,18 +406,31 @@ const IndexPage = ({data}) => (
                   >
                     {title}
                   </Text>
-                  <Text
-                    mt='20px'
-                    fontSize='24px'
-                    lineHeight='30px'
-                    letterSpacing='0.125em'
-                    fontWeight='700'
-                  >
-                    {description}
-                  </Text>
+                  {
+                    description &&
+                    <Text
+                      mt='20px'
+                      fontSize='24px'
+                      lineHeight='30px'
+                      letterSpacing='0.125em'
+                      fontWeight='700'
+                    >
+                      {description}
+                    </Text>
+                  }
                 </Flex>
               ))
             }
+          </Flex>
+          <Flex flexDirection='column'>
+            <Text
+              fontSize={['24px']}
+              lineHeight={['34px']}
+              fontWeight='500'
+            >
+              Билеты ничем не отличаются, кроме цены и количества.<br />
+              Вы можете купить любой билет на ваше усмотрение.
+            </Text>
           </Flex>
           <Flex>
             <Button
