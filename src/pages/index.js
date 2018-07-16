@@ -1,5 +1,4 @@
-import React from 'react'
-import {graphql} from 'gatsby'
+import React, {Fragment} from 'react'
 import Image from 'gatsby-image'
 import {ThemeProvider} from 'styled-components'
 
@@ -44,6 +43,13 @@ Shadow.defaultProps = {
   color: '#B07EC5',
 }
 
+const List = styled(Flex)`
+  &:after {
+    content: "";
+    flex: auto;
+  }
+`
+
 const topics = [
   {
     lecturer: {
@@ -51,7 +57,8 @@ const topics = [
       company: 'N26',
       gender: 'male',
     },
-    lecture: 'Объясняем Scrum: История эволюции одной команды',
+    type: 'management',
+    title: 'Объясняем Scrum: История эволюции одной команды',
   },
   {
     lecturer: {
@@ -59,16 +66,65 @@ const topics = [
       company: 'Avito',
       gender: 'male',
     },
-    lecture: 'Dat протокол ⏤ общие понятия, инструменты, применение',
+    type: 'development',
+    title: 'Dat протокол ⏤ общие понятия, инструменты, применение',
   },
   {
     lecturer: {
       name: 'Алина Савченко',
       gender: 'female',
     },
-    lecture: 'Суровая жизнь тестировщика игр',
+    type: 'qa',
+    title: 'Суровая жизнь тестировщика игр',
+  },
+  {
+    lecturer: {
+      name: 'Станислав Ткаченко',
+      company: 'Arkadium',
+      gender: 'male',
+    },
+    type: 'development',
+    title: 'Архитектор (скрипач) не нужен',
+  },
+  {
+    lecturer: {
+      name: 'Владислав Шинкин',
+      gender: 'male',
+    },
+    type: 'design',
+    title: (
+      <Fragment>
+        Техники развития творческого мышления. Как дизайнеры придумывают вот&nbsp;это&nbsp;всё
+      </Fragment>
+    ),
   },
 ]
+
+const imageByTypeAndGender = {
+  design: {
+    male: 'designMaleImage',
+    female: 'designFemaleImage',
+  },
+  qa: {
+    male: 'QAMaleImage',
+    female: 'QAFemaleImage',
+  },
+  management: {
+    male: 'managementMaleImage',
+    female: 'managementFemaleImage',
+  },
+  development: {
+    male: 'developmentMaleImage',
+    female: 'developmentFemaleImage',
+  },
+}
+
+const titleByType = {
+  design: 'Дизайн',
+  qa: 'Тестирование',
+  management: 'Менеджмент',
+  development: 'Разработка',
+}
 
 const IndexPage = ({data}) => (
   <ThemeProvider theme={{
@@ -239,61 +295,65 @@ const IndexPage = ({data}) => (
               Подать заявку на выступление
             </Button>
           </Flex>
-          <Flex
+          <List
             justifyContent={['stretch', , , , , 'space-between']}
             flexWrap='wrap'
             mt='40px'
+            mx='-10px'
           >
-            {topics.map(({lecture, lecturer}, key) => (
-              lecture &&
-              <BorderedBox
+            {topics.map(({title, type, lecturer}, key) => (
+              <Flex
                 key={key}
-                width={['100%', , , , , '48%', '32%']}
+                width={['100%', , , , , '50%', '33.3333333333%']}
                 mb='40px'
+                px='10px'
               >
-                <Flex flexDirection='column'>
-                  <Text
-                    height={[, , , , , `${37 * 4}px`, , `${37 * 3}px`]}
-                    px='14px'
-                    mt='14px'
-                    fontSize='24px'
-                    lineHeight='37px'
-                    fontWeight='900'
-                  >
-                    {lecture}
-                  </Text>
-                  <Flex my='14px' mx='14px' alignItems='flex-start'>
-                    <Avatar
-                      fixed={data[`noAvatar${lecturer.gender.slice(0, 1).toUpperCase()}${lecturer.gender.slice(1)}`].childImageSharp.fixed}
-                      mr='20px'
-                    />
-                    <Box alignSelf='center'>
-                      <Flex flexDirection='column'>
-                        <Text
-                          fontSize='18px'
-                          lineHeight='22px'
-                          fontWeight='500'
-                        >
-                          {lecturer.name}
-                        </Text>
-                        {
-                          lecturer.company &&
+                <BorderedBox width='100%'>
+                  <Flex flexDirection='column'>
+                    <Text
+                      height={[, , , , , `${37 * 6}px`, , `${37 * 5}px`]}
+                      px='14px'
+                      mt='14px'
+                      fontSize='24px'
+                      lineHeight='37px'
+                      fontWeight='900'
+                    >
+                      {title}
+                    </Text>
+                    <Flex my='14px' mx='14px' alignItems='flex-start'>
+                      <Avatar
+                        title={titleByType[type]}
+                        fixed={data[imageByTypeAndGender[type][lecturer.gender]].childImageSharp.fixed}
+                        mr='20px'
+                      />
+                      <Box alignSelf='center'>
+                        <Flex flexDirection='column'>
                           <Text
-                            mt='5px'
-                            fontSize='16px'
-                            lineHeight='19px'
-                            fontWeight='400'
+                            fontSize='18px'
+                            lineHeight='22px'
+                            fontWeight='500'
                           >
-                            {lecturer.company}
+                            {lecturer.name}
                           </Text>
-                        }
-                      </Flex>
-                    </Box>
+                          {
+                            lecturer.company &&
+                            <Text
+                              mt='5px'
+                              fontSize='16px'
+                              lineHeight='19px'
+                              fontWeight='400'
+                            >
+                              {lecturer.company}
+                            </Text>
+                          }
+                        </Flex>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </BorderedBox>
+                </BorderedBox>
+              </Flex>
             ))}
-          </Flex>
+          </List>
         </Container>
       </Box>
       <Box position='relative' minHeight={`${data.backgroundSecond.childImageSharp.fixed.height}px`}>
@@ -562,14 +622,56 @@ export const pageQuery = graphql`
                 }
             }
         }
-        noAvatarMale: file(absolutePath: {regex: "/src\/pages\/no-avatar-male.jpg$/"}) {
+        designMaleImage: file(absolutePath: {regex: "/src\/pages\/design-male.png/"}) {
             childImageSharp {
                 fixed(width:40,height:40) {
                     ...GatsbyImageSharpFixed
                 }
             }
         }
-        noAvatarFemale: file(absolutePath: {regex: "/src\/pages\/no-avatar-female.jpg/"}) {
+        designFemaleImage: file(absolutePath: {regex: "/src\/pages\/design-female.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        QAMaleImage: file(absolutePath: {regex: "/src\/pages\/qa-male.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        QAFemaleImage: file(absolutePath: {regex: "/src\/pages\/qa-female.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        managementMaleImage: file(absolutePath: {regex: "/src\/pages\/management-male.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        managementFemaleImage: file(absolutePath: {regex: "/src\/pages\/management-female.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        developmentMaleImage: file(absolutePath: {regex: "/src\/pages\/development-male.png/"}) {
+            childImageSharp {
+                fixed(width:40,height:40) {
+                    ...GatsbyImageSharpFixed
+                }
+            }
+        }
+        developmentFemaleImage: file(absolutePath: {regex: "/src\/pages\/development-female.png/"}) {
             childImageSharp {
                 fixed(width:40,height:40) {
                     ...GatsbyImageSharpFixed
