@@ -51,7 +51,7 @@ const topics = [
       company: 'N26',
       gender: 'male',
     },
-    lecture: 'Demystifying Scrum: Story of one teams evolution',
+    lecture: 'Объясняем Scrum: История эволюции одной команды',
   },
   {
     lecturer: {
