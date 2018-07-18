@@ -86,18 +86,6 @@ const topics = [
     type: 'development',
     title: 'Архитектор (скрипач) не нужен',
   },
-  {
-    lecturer: {
-      name: 'Владислав Шинкин',
-      gender: 'male',
-    },
-    type: 'design',
-    title: (
-      <Fragment>
-        Техники развития творческого мышления. Как дизайнеры придумывают вот&nbsp;это&nbsp;всё
-      </Fragment>
-    ),
-  },
 ]
 
 const imageByTypeAndGender = {
