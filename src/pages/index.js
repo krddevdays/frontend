@@ -1,6 +1,10 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import Image from 'gatsby-image'
 import {ThemeProvider} from 'styled-components'
+import {graphql} from 'gatsby'
+import firstmkLogo from './firstmk-logo.svg'
+import avitoLogo from './avito-logo.svg'
+import waliotLogo from './waliot-logo.svg'
 
 import Layout from '../components/Layout'
 import Flex from '../components/Flex'
@@ -13,6 +17,7 @@ import styled from 'styled-components'
 import tag from 'clean-tag'
 import Button from '../components/Button'
 import Avatar from '../components/Avatar'
+import ImageLink from '../components/ImageLink'
 
 const Shadow = styled(tag)`
   position: relative;
@@ -489,6 +494,64 @@ const IndexPage = ({data}) => (
             >
               Купить билет
             </Button>
+          </Flex>
+        </Container>
+        <Container>
+          <Flex mt={['80px']}>
+            <Box>
+              <Shadow top='-40px' left='-200px' color='#55E3CA'>
+                <Heading
+                  is='h2'
+                  fontSize={['27px', '33px', '39px', '48px']}
+                  lineHeight={['40px', '48px', '57px', '70px']}
+                  letterSpacing='0.125em'
+                  fontWeight='900'
+                >
+                  Спонсоры и партнеры
+                </Heading>
+              </Shadow>
+            </Box>
+          </Flex>
+          <Flex mt='40px'
+                flexDirection='column'
+                flexWrap='wrap'
+          >
+            <Flex
+              mb='48px'
+              flexWrap={['no-wrap', 'no-wrap', 'wrap']}
+              flexDirection={['column', 'column', 'row']}
+              justifyContent='flex-start'
+              alignItems='center'
+            >
+              <ImageLink
+                width='256px'
+                mb='48px'
+                title='Первая Мониторинговая Компания'
+                href='https://firstmk.ru' src={firstmkLogo}
+              />
+            </Flex>
+            <Flex
+              flexWrap={['no-wrap', 'no-wrap', 'wrap']}
+              flexDirection={['column', 'column', 'row']}
+              justifyContent='flex-start'
+              alignItems='center'
+            >
+              <ImageLink
+                width='160px'
+                mr={['0px', '0px', '128px']}
+                mb='48px'
+                title='Avito'
+                href='https://avito.ru'
+                src={avitoLogo}
+              />
+              <ImageLink
+                width='160px'
+                mb='48px'
+                title='Waliot'
+                href='https://waliot.com'
+                src={waliotLogo}
+              />
+            </Flex>
           </Flex>
         </Container>
         <Container>
