@@ -59,6 +59,14 @@ const List = styled(Flex)`
 const topics = [
   {
     lecturer: {
+      name: 'Юлия Федоренко',
+      gender: 'female',
+    },
+    type: 'design',
+    title: 'Фронтендщики с Сатурна — дизайнеры с Плутона',
+  },
+  {
+    lecturer: {
       name: 'Денис Сальников',
       company: 'N26',
       gender: 'male',
@@ -337,7 +345,7 @@ const IndexPage = ({data}) => (
                 <BorderedBox width='100%'>
                   <Flex flexDirection='column'>
                     <Text
-                      height={[, , , , , `${37 * 6}px`, , `${37 * 5}px`]}
+                      height={[, , , , , `${37 * 4}px`]}
                       px='14px'
                       mt='14px'
                       fontSize='24px'
