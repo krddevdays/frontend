@@ -1,4 +1,5 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 import Image from 'gatsby-image'
 import {ThemeProvider} from 'styled-components'
 import {graphql} from 'gatsby'
@@ -124,6 +125,36 @@ const IndexPage = ({data}) => (
     breakpoints: ['375px', '438px', '568px', '639px', '768px', '1024px', '1170px'],
   }}>
     <Layout>
+      <Helmet>
+        <script type="text/javascript"
+                async="async"
+                defer="defer"
+                charSet="UTF-8"
+                src="https://timepad.ru/js/tpwf/loader/min/loader.js"
+                data-timepad-customized="22110"
+                data-timepad-widget-v2="event_register">
+          {
+            `(function(){
+              if(window.timepadWidget) {
+                return {}
+              }
+
+              window.timepadWidget = true;
+              return {
+                "event": {
+                  "id": "763050"
+                },
+                "hidePreloading": true,
+                "display": "popup",
+                "popup": {
+                  "autoShrink": true,
+                  "triggerSelector": ".buy-ticket"
+                }
+              }
+            })();`
+          }
+        </script>
+      </Helmet>
       <Box position='relative' minHeight={`${data.backgroundFirst.childImageSharp.fixed.height}px`}>
         <Image
           fixed={data.backgroundFirst.childImageSharp.fixed}
@@ -191,6 +222,7 @@ const IndexPage = ({data}) => (
                 href='https://krddevdays.timepad.ru/event/763050/'
                 target='_blank'
                 mt='80px'
+                className='buy-ticket'
               >
                 Купить билет
               </Button>
@@ -247,6 +279,7 @@ const IndexPage = ({data}) => (
             href='https://krddevdays.timepad.ru/event/763050/'
             target='_blank'
             mt='40px'
+            className='buy-ticket'
           >
             Купить билет
           </Button>
@@ -491,6 +524,7 @@ const IndexPage = ({data}) => (
               href='https://krddevdays.timepad.ru/event/763050/'
               target='_blank'
               mt='80px'
+              className='buy-ticket'
             >
               Купить билет
             </Button>
