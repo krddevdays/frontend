@@ -63,7 +63,7 @@ const topics = [
       gender: 'female',
     },
     type: 'design',
-    title: 'Фронтендщики с Сатурна — дизайнеры с Плутона',
+    title: 'Фронтендеры с Сатурна — дизайнеры с Плутона',
   },
   {
     lecturer: {
