@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import Image from 'gatsby-image'
 import {ThemeProvider} from 'styled-components'
@@ -217,6 +217,7 @@ const IndexPage = ({data}) => (
                 >
                   Krasnodar Dev Days #3
                 </Text>
+                <meta itemProp='description' content='Ежегодная конференция разработчиков Краснодара и края' />
                 <div itemProp='offers' itemScope itemType='http://schema.org/AggregateOffer'>
                   <meta itemProp='lowPrice' content='1500' />
                   <meta itemProp='highPrice' content='2500' />
@@ -231,11 +232,20 @@ const IndexPage = ({data}) => (
                     },
                   },
                   {
-                    content: 'ул. Трамвайная 2/6',
+                    content: (
+                      <Fragment>
+                        <meta itemProp='name' content='Бизнес-центр Меркурий' />
+                        <span itemProp='address' itemScope itemType='http://schema.org/PostalAddress'>
+                        <span itemProp='streetAddress'>ул. Трамвайная 2/6</span>
+                        <meta itemProp='addressLocality' content='Краснодар' />
+                        <meta itemProp='addressRegion' content='Краснодарский край' />
+                        </span>
+                      </Fragment>
+                    ),
                     props: {
-                      itemType: 'http://schema.org/Text',
-                      itemScope: true,
                       itemProp: 'location',
+                      itemScope: true,
+                      itemType: 'http://schema.org/Place',
                     },
                   },
                 ].map(({content, props}, key) => (
