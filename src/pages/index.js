@@ -177,7 +177,7 @@ const IndexPage = ({data}) => (
             maxHeight: `${data.backgroundFirst.childImageSharp.fixed.height}px`,
           }}
         />
-        <Container>
+        <Container is='section'>
           <Flex
             justifyContent={[, , , , , , 'space-between']}
             flexDirection={['column', , , , , , 'row']}
@@ -199,18 +199,39 @@ const IndexPage = ({data}) => (
               </Shadow>
             </Box>
             <Flex flexDirection='column' alignItems={[, , , , , , 'flex-end']}>
-              <BorderedBox flex={[, , , , , , '0 0 auto']} p='20px' boxShadow='-10px 10px 0 #B07EC5'
-                           mt={['40px', , , , , , '0px']}>
+              <BorderedBox
+                flex={[, , , , , , '0 0 auto']}
+                p='20px'
+                boxShadow='-10px 10px 0 #B07EC5'
+                mt={['40px', , , , , , '0px']}
+                itemScope
+                itemType="http://schema.org/Event"
+              >
                 <Text
                   fontSize={['28px', '34px']}
                   letterSpacing='0.125em'
                   lineHeight={['36px', '44px']}
                   fontWeight='900'
                   maxWidth={[, , , , , , '280px']}
+                  itemProp='name'
                 >
                   Krasnodar Dev Days #3
                 </Text>
-                {['15 сентября', 'ул. Трамвайная 2/6'].map((content, key) => (
+                {[
+                  {
+                    content: '15 сентября',
+                    props: {
+                      itemProp: 'startDate',
+                      content: '2018-09-15T10:00:00+03:00'
+                    },
+                  },
+                  {
+                    content: 'ул. Трамвайная 2/6',
+                    props: {
+                      itemProp: 'location'
+                    },
+                  },
+                ].map(({content, props}, key) => (
                   <Flex alignItems='center' mt='20px' key={key}>
                     <Box display={['none', , , 'block']} mr='30px' bg='#252525' height='3px' flex='0 0 60px'
                          width='60px' />
@@ -218,6 +239,7 @@ const IndexPage = ({data}) => (
                       fontSize={['24px']}
                       lineHeight={['29px']}
                       fontWeight='900'
+                      {...props}
                     >
                       {content}
                     </Text>
@@ -292,7 +314,7 @@ const IndexPage = ({data}) => (
             Купить билет
           </Button>
         </Container>
-        <Container>
+        <Container is='section'>
           <Flex
             justifyContent={['flex-start', , , , , 'space-between']}
             flexDirection={['column', , , , , 'row']}
@@ -404,7 +426,7 @@ const IndexPage = ({data}) => (
             maxHeight: `${data.backgroundSecond.childImageSharp.fixed.height}px`,
           }}
         />
-        <Container>
+        <Container is='section'>
           <Flex
             justifyContent={['flex-start', , , , , , 'space-between']}
             flexDirection={['column', , , , , , 'row']}
@@ -447,7 +469,7 @@ const IndexPage = ({data}) => (
             </Box>
           </Flex>
         </Container>
-        <Container>
+        <Container is='section'>
           <Flex mt={['80px']}>
             <Box>
               <Shadow color='#55E3CA' top='-40px' left='-200px'>
@@ -538,7 +560,7 @@ const IndexPage = ({data}) => (
             </Button>
           </Flex>
         </Container>
-        <Container>
+        <Container is='section'>
           <Flex mt={['80px']}>
             <Box>
               <Shadow top='-40px' left='-200px' color='#55E3CA'>
@@ -596,7 +618,7 @@ const IndexPage = ({data}) => (
             </Flex>
           </Flex>
         </Container>
-        <Container>
+        <Container is='section'>
           <Flex mt={['80px']}>
             <Box>
               <Shadow top='-40px' left='-200px' color='#55E3CA'>
@@ -636,7 +658,7 @@ const IndexPage = ({data}) => (
             </Box>
           </Flex>
         </Container>
-        <Container>
+        <Container is='section'>
           <Flex mt={['80px']}>
             <Box>
               <Shadow top='-40px' left='-200px'>
@@ -681,7 +703,7 @@ const IndexPage = ({data}) => (
         </Container>
       </Box>
       <Box bg='#FAFAFA' mt='40px'>
-        <Container>
+        <Container is='footer'>
           <Flex height='150px' alignItems='center'>
             <Text
               fontSize='18px'
