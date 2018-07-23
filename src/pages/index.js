@@ -134,13 +134,13 @@ const IndexPage = ({data}) => (
   }}>
     <Layout>
       <Helmet>
-        <script type="text/javascript"
-                async="async"
-                defer="defer"
-                charSet="UTF-8"
-                src="https://timepad.ru/js/tpwf/loader/min/loader.js"
-                data-timepad-customized="22110"
-                data-timepad-widget-v2="event_register">
+        <script type='text/javascript'
+                async='async'
+                defer='defer'
+                charSet='UTF-8'
+                src='https://timepad.ru/js/tpwf/loader/min/loader.js'
+                data-timepad-customized='22110'
+                data-timepad-widget-v2='event_register'>
           {
             `(function(){
               if(window.timepadWidget) {
@@ -205,7 +205,7 @@ const IndexPage = ({data}) => (
                 boxShadow='-10px 10px 0 #B07EC5'
                 mt={['40px', , , , , , '0px']}
                 itemScope
-                itemType="http://schema.org/Event"
+                itemType='http://schema.org/Event'
               >
                 <Text
                   fontSize={['28px', '34px']}
@@ -217,18 +217,25 @@ const IndexPage = ({data}) => (
                 >
                   Krasnodar Dev Days #3
                 </Text>
+                <div itemProp='offers' itemScope itemType='http://schema.org/AggregateOffer'>
+                  <meta itemProp='lowPrice' content='1500' />
+                  <meta itemProp='highPrice' content='2500' />
+                  <meta itemProp='priceCurrency' content='RUB' />
+                </div>
                 {[
                   {
                     content: '15 сентября',
                     props: {
                       itemProp: 'startDate',
-                      content: '2018-09-15T10:00:00+03:00'
+                      content: '2018-09-15T10:00:00+03:00',
                     },
                   },
                   {
                     content: 'ул. Трамвайная 2/6',
                     props: {
-                      itemProp: 'location'
+                      itemType: 'http://schema.org/Text',
+                      itemScope: true,
+                      itemProp: 'location',
                     },
                   },
                 ].map(({content, props}, key) => (
@@ -648,11 +655,11 @@ const IndexPage = ({data}) => (
                   height: '100%',
                 }}
                 title='Видео Krasnodar Dev Days #2'
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/_YUUlmSZYuc?rel=0&amp;showinfo=0"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
+                width='560'
+                height='315'
+                src='https://www.youtube.com/embed/_YUUlmSZYuc?rel=0&amp;showinfo=0'
+                frameBorder='0'
+                allow='autoplay; encrypted-media'
                 allowFullScreen
               />
             </Box>
