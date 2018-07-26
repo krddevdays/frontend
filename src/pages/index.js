@@ -20,6 +20,9 @@ import Button from '../components/Button'
 import Avatar from '../components/Avatar'
 import ImageLink from '../components/ImageLink'
 
+import {FirestoreProvider, FirestoreCollection} from 'react-firestore'
+import {firebase} from '../firebase'
+
 const Shadow = styled(tag)`
   position: relative;
   min-height: ${props => 214 + (parseInt(props.top) < 0 ? parseInt(props.top) : 0) + (!props.top && parseInt(props.bottom) < 0 ? parseInt(props.bottom) : 0)}px;
@@ -165,6 +168,18 @@ const titleByType = {
   qa: 'Тестирование',
   management: 'Менеджмент',
   development: 'Разработка',
+}
+
+function plural (number, strings) {
+  number %= 100
+
+  if (number > 10 && number < 20) {
+    return strings[2]
+  }
+
+  number %= 10
+
+  return strings[number > 1 && number < 5 ? 1 : number === 1 ? 0 : 2]
 }
 
 const IndexPage = ({data}) => (
@@ -501,15 +516,6 @@ const IndexPage = ({data}) => (
                 >
                   Круглый стол
                 </Heading>
-                <Flex>
-                  <Text
-                    fontSize={['24px', '24px', '28px']}
-                    lineHeight={['30px', '30px', '34px']}
-                    fontWeight='500'
-                  >
-                    Подача тем откроется до конца июля
-                  </Text>
-                </Flex>
               </Shadow>
             </Box>
             <Box display={['none', 'none', 'none', 'none', 'none', 'none', 'block']}>
@@ -525,6 +531,65 @@ const IndexPage = ({data}) => (
               </Text>
             </Box>
           </Flex>
+          <FirestoreProvider firebase={firebase}>
+            <Fragment>
+              <List
+                justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
+                flexWrap='wrap'
+                mt='40px'
+                mx='-10px'
+              >
+                <FirestoreCollection
+                  path='kdd3-round-table'
+                  render={({isLoading, data}) => (
+                    !isLoading &&
+                    data.map(({title, author, votes}, key) => (
+                      <Flex
+                        key={key}
+                        width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
+                        mb='40px'
+                        px='10px'
+                      >
+                        <BorderedBox width='100%'>
+                          <Flex flexDirection='column'>
+                            <Text
+                              height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
+                              px='14px'
+                              my='14px'
+                              fontSize='24px'
+                              lineHeight='37px'
+                              fontWeight='900'
+                            >
+                              {title}
+                            </Text>
+                            <Flex flexDirection={['column', 'column', 'row', 'row', 'row', 'row', 'column', 'row']}>
+                              <Flex px='14px' alignItems='center' flex='1 1 50%'>
+                                <Text
+                                  fontSize='28px'
+                                  lineHeight='42px'
+                                  fontWeight='900'
+                                >
+                                  {votes.length}
+                                </Text>
+                                <Text
+                                  fontSize='16px'
+                                  lineHeight='19px'
+                                  fontWeight='400'
+                                  ml='10px'
+                                >
+                                  {plural(votes.length, ['голос', 'голоса', 'голосов'])}
+                                </Text>
+                              </Flex>
+                            </Flex>
+                          </Flex>
+                        </BorderedBox>
+                      </Flex>
+                    ))
+                  )}
+                />
+              </List>
+            </Fragment>
+          </FirestoreProvider>
         </Container>
         <Container is='section'>
           <Flex mt={['80px']}>
