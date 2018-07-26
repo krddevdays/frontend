@@ -67,6 +67,15 @@ const topics = [
   },
   {
     lecturer: {
+      name: 'Айрат Худайгулов',
+      company: 'Arkadium',
+      gender: 'male',
+    },
+    type: 'development',
+    title: 'История функционального программирования и щепотка монад',
+  },
+  {
+    lecturer: {
       name: 'Денис Сальников',
       company: 'N26',
       gender: 'male',
