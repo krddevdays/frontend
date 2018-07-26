@@ -81,7 +81,7 @@ const topics = [
       gender: 'male',
     },
     type: 'development',
-    title: 'Dat протокол ⏤ общие понятия, инструменты, применение',
+    title: 'Dat протокол — общие понятия, инструменты, применение',
   },
   {
     lecturer: {
