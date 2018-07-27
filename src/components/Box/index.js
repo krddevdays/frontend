@@ -16,6 +16,7 @@ import {
   order,
   alignSelf,
   boxShadow,
+  opacity,
 } from 'styled-system'
 
 const Box = styled(tag)`
@@ -35,6 +36,7 @@ const Box = styled(tag)`
   ${order}
   ${alignSelf}
   ${boxShadow}
+  ${opacity}
 `
 
 export default Box

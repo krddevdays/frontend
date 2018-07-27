@@ -521,6 +521,7 @@ const IndexPage = ({data}) => (
                   title: 'Ранняя пташка',
                   price: '1500 ₽',
                   description: '// 50 билетов',
+                  soldOut: true,
                 },
                 {
                   title: 'Всё вовремя',
@@ -531,13 +532,14 @@ const IndexPage = ({data}) => (
                   title: 'Я все проспал',
                   price: '2500 ₽',
                 },
-              ].map(({title, price, description}, key) => (
+              ].map(({title, price, description, soldOut}, key) => (
                 <Flex key={key}
                       width={[1, 1, 1, 1, 1, 1 / 2, 1 / 3]}
                       maxWidth={[]}
                       flexDirection='column'
                       py='40px'
                       px='10px'
+                      opacity={soldOut ? 0.3 : 1}
                 >
                   <Text
                     fontSize='48px'
