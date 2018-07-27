@@ -183,7 +183,6 @@ const IndexPage = ({data}) => (
             height: '100%',
             zIndex: -1,
             background: 'white',
-            maxHeight: `${data.backgroundFirst.childImageSharp.fixed.height}px`,
           }}
         />
         <Container is='section'>
@@ -452,7 +451,6 @@ const IndexPage = ({data}) => (
             height: '100%',
             zIndex: -1,
             background: 'white',
-            maxHeight: `${data.backgroundSecond.childImageSharp.fixed.height}px`,
           }}
         />
         <Container is='section'>
