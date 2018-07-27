@@ -188,16 +188,16 @@ const IndexPage = ({data}) => (
         />
         <Container is='section'>
           <Flex
-            justifyContent={[, , , , , , 'space-between']}
-            flexDirection={['column', , , , , , 'row']}
-            pt={[, , , , , , '120px']}
-            alignItems={[, , , , , , 'flex-start']}
+            justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
+            flexDirection={['column', 'column', 'column', 'column', 'column', 'column', 'row']}
+            pt={['0px', '0px', '0px', '0px', '0px', '0px', '120px']}
+            alignItems={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'flex-start']}
           >
-            <Box mt={['40px', , , , , , '0px']}>
+            <Box mt={['40px', '40px', '40px', '40px', '40px', '40px', '0px']}>
               <Shadow top='-40px' left='-200px'>
                 <Heading
                   is='h1'
-                  maxWidth={[, , , , '620px']}
+                  maxWidth={['none', 'none', 'none', 'none', '620px']}
                   fontSize={['27px', '33px', '39px', '48px']}
                   lineHeight={['40px', '48px', '57px', '70px']}
                   letterSpacing='0.125em'
@@ -207,12 +207,13 @@ const IndexPage = ({data}) => (
                 </Heading>
               </Shadow>
             </Box>
-            <Flex flexDirection='column' alignItems={[, , , , , , 'flex-end']}>
+            <Flex flexDirection='column'
+                  alignItems={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'flex-end']}>
               <BorderedBox
-                flex={[, , , , , , '0 0 auto']}
+                flex={['0 1 auto', '0 1 auto', '0 1 auto', '0 1 auto', '0 1 auto', '0 1 auto', '0 0 auto']}
                 p='20px'
                 boxShadow='-10px 10px 0 #B07EC5'
-                mt={['40px', , , , , , '0px']}
+                mt={['40px', '40px', '40px', '40px', '40px', '40px', '0px']}
                 itemScope
                 itemType='http://schema.org/Event'
               >
@@ -221,7 +222,7 @@ const IndexPage = ({data}) => (
                   letterSpacing='0.125em'
                   lineHeight={['36px', '44px']}
                   fontWeight='900'
-                  maxWidth={[, , , , , , '280px']}
+                  maxWidth={['none', 'none', 'none', 'none', 'none', 'none', '280px']}
                   itemProp='name'
                 >
                   Krasnodar Dev Days #3
@@ -259,7 +260,7 @@ const IndexPage = ({data}) => (
                   },
                 ].map(({content, props}, key) => (
                   <Flex alignItems='center' mt='20px' key={key}>
-                    <Box display={['none', , , 'block']} mr='30px' bg='#252525' height='3px' flex='0 0 60px'
+                    <Box display={['none', 'none', 'none', 'block']} mr='30px' bg='#252525' height='3px' flex='0 0 60px'
                          width='60px' />
                     <Text
                       fontSize={['24px']}
@@ -273,7 +274,7 @@ const IndexPage = ({data}) => (
                 ))}
               </BorderedBox>
               <Button
-                display={['none', , , , , , 'block']}
+                display={['none', 'none', 'none', 'none', 'none', 'none', 'block']}
                 is='a'
                 href='https://krddevdays.timepad.ru/event/763050/'
                 target='_blank'
@@ -286,7 +287,7 @@ const IndexPage = ({data}) => (
           </Flex>
           <BorderedBox p='10px 20px' mt='40px'>
             <Flex
-              justifyContent={[, , , , , 'space-between']}
+              justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
               flexWrap='wrap'
             >
               {
@@ -304,9 +305,11 @@ const IndexPage = ({data}) => (
                     description: '// прекрасная возможность найти единомышленников',
                   },
                 ].map(({title, description}, key) => (
-                  <Flex flexDirection='column' width={[, , , , , '49%', '33%']} key={key} my='10px'>
+                  <Flex flexDirection='column' width={['auto', 'auto', 'auto', 'auto', 'auto', '49%', '33%']} key={key}
+                        my='10px'>
                     <Flex alignItems='center'>
-                      <Box display={['none', , , 'block']} mr='30px' bg='#252525' height='3px' flex='0 0 60px'
+                      <Box display={['none', 'none', 'none', 'block']} mr='30px' bg='#252525' height='3px'
+                           flex='0 0 60px'
                            width='60px' />
                       <Text
                         fontSize={['24px']}
@@ -330,7 +333,7 @@ const IndexPage = ({data}) => (
             </Flex>
           </BorderedBox>
           <Button
-            display={['inline-block', , , , , , 'none']}
+            display={['inline-block', 'inline-block', 'inline-block', 'inline-block', 'inline-block', 'inline-block', 'none']}
             is='a'
             href='https://krddevdays.timepad.ru/event/763050/'
             target='_blank'
@@ -342,10 +345,10 @@ const IndexPage = ({data}) => (
         </Container>
         <Container is='section'>
           <Flex
-            justifyContent={['flex-start', , , , , 'space-between']}
-            flexDirection={['column', , , , , 'row']}
+            justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
+            flexDirection={['column', 'column', 'column', 'column', 'column', 'row']}
             mt={['80px']}
-            alignItems={[, , , , , 'flex-start']}
+            alignItems={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'flex-start']}
           >
             <Box>
               <Shadow top='-40px' left='-200px'>
@@ -360,8 +363,8 @@ const IndexPage = ({data}) => (
                   Доклады
                 </Heading>
                 <Text
-                  fontSize={['24px', , '28px']}
-                  lineHeight={['30px', , '34px']}
+                  fontSize={['24px', '24px', '28px']}
+                  lineHeight={['30px', '30px', '34px']}
                   fontWeight='500'
                 >
                   Список дополняется
@@ -372,13 +375,13 @@ const IndexPage = ({data}) => (
               is='a'
               href='https://connect.yandex.ru/forms/5adc61cf6162d77e2714831c/'
               target='_blank'
-              mt={['20px', , , , , '40px']}
+              mt={['20px', '20px', '20px', '20px', '20px', '40px']}
             >
               Подать заявку на выступление
             </Button>
           </Flex>
           <List
-            justifyContent={['stretch', , , , , 'space-between']}
+            justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
             flexWrap='wrap'
             mt='40px'
             mx='-10px'
@@ -386,14 +389,14 @@ const IndexPage = ({data}) => (
             {topics.map(({title, type, lecturer}, key) => (
               <Flex
                 key={key}
-                width={['100%', , , , , '50%', '33.3333333333%']}
+                width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
                 mb='40px'
                 px='10px'
               >
                 <BorderedBox width='100%'>
                   <Flex flexDirection='column'>
                     <Text
-                      height={[, , , , , `${37 * 4}px`]}
+                      height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 4}px`]}
                       px='14px'
                       mt='14px'
                       fontSize='24px'
@@ -454,8 +457,8 @@ const IndexPage = ({data}) => (
         />
         <Container is='section'>
           <Flex
-            justifyContent={['flex-start', , , , , , 'space-between']}
-            flexDirection={['column', , , , , , 'row']}
+            justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
+            flexDirection={['column', 'column', 'column', 'column', 'column', 'column', 'row']}
             mt={['80px']}
           >
             <Box>
@@ -472,8 +475,8 @@ const IndexPage = ({data}) => (
                 </Heading>
                 <Flex>
                   <Text
-                    fontSize={['24px', , '28px']}
-                    lineHeight={['30px', , '34px']}
+                    fontSize={['24px', '24px', '28px']}
+                    lineHeight={['30px', '30px', '34px']}
                     fontWeight='500'
                   >
                     Подача тем откроется до конца июля
@@ -481,7 +484,7 @@ const IndexPage = ({data}) => (
                 </Flex>
               </Shadow>
             </Box>
-            <Box display={['none', , , , , , 'block']}>
+            <Box display={['none', 'none', 'none', 'none', 'none', 'none', 'block']}>
               <Box mr='20px' mt='20px' width='70px' bg='#252525' height='3px' style={{float: 'left'}} />
               <Text
                 fontSize={['28px']}
@@ -529,8 +532,13 @@ const IndexPage = ({data}) => (
                   price: '2500 ₽',
                 },
               ].map(({title, price, description}, key) => (
-                <Flex key={key} width={[1, , , , , 1 / 2, 1 / 3]} maxWidth={[]}
-                      flexDirection='column' py='40px' px='10px'>
+                <Flex key={key}
+                      width={[1, 1, 1, 1, 1, 1 / 2, 1 / 3]}
+                      maxWidth={[]}
+                      flexDirection='column'
+                      py='40px'
+                      px='10px'
+                >
                   <Text
                     fontSize='48px'
                     lineHeight='58px'
@@ -540,7 +548,7 @@ const IndexPage = ({data}) => (
                     {price}
                   </Text>
                   <Text
-                    mt={['10px', , , , , '40px']}
+                    mt={['10px', '10px', '10px', '10px', '10px', '40px']}
                     fontSize='32px'
                     lineHeight='39px'
                     letterSpacing='0.125em'
@@ -701,7 +709,7 @@ const IndexPage = ({data}) => (
             </Box>
           </Flex>
           <Flex mt='40px'
-                alignItems={[, , , , , 'center']}
+                alignItems={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'center']}
                 flexDirection='column'
                 flexWrap='wrap'
           >
