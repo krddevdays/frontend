@@ -615,6 +615,14 @@ const IndexPage = ({data}) => (
             >
               <ImageLink
                 width='256px'
+                mr={['0px', '0px', '128px']}
+                mb='48px'
+                title='Avito'
+                href='https://avito.ru'
+                src={avitoLogo}
+              />
+              <ImageLink
+                width='256px'
                 mb='48px'
                 title='Первая Мониторинговая Компания'
                 href='https://firstmk.ru' src={firstmkLogo}
@@ -626,14 +634,6 @@ const IndexPage = ({data}) => (
               justifyContent='flex-start'
               alignItems='center'
             >
-              <ImageLink
-                width='160px'
-                mr={['0px', '0px', '128px']}
-                mb='48px'
-                title='Avito'
-                href='https://avito.ru'
-                src={avitoLogo}
-              />
               <ImageLink
                 width='160px'
                 mb='48px'
