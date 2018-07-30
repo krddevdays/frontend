@@ -34,7 +34,7 @@ module.exports = {
         trackHash: true,
       },
     },
-    `gatsby-plugin-offline`,
     `gatsby-plugin-netlify`,
+    `gatsby-plugin-remove-serviceworker`,
   ],
 }
