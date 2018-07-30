@@ -554,7 +554,7 @@ const IndexPage = ({data}) => (
                 {
                   title: 'Всё вовремя',
                   price: '2000 ₽',
-                  description: '// 200 билетов',
+                  description: '// до 1 сентября',
                 },
                 {
                   title: 'Я все проспал',
