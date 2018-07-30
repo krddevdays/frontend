@@ -76,6 +76,36 @@ const topics = [
   },
   {
     lecturer: {
+      name: 'Никита Соболев',
+      company: 'wemake.services',
+      gender: 'male',
+    },
+    type: 'development',
+    title: 'Тестируем настоящее Vue приложение',
+  },
+  {
+    lecturer: {
+      name: 'Сэм Булатов',
+      gender: 'male',
+    },
+    type: 'development',
+    title: '7 будущих чудес CSS',
+  },
+  {
+    lecturer: {
+      name: 'Игорь Косенков',
+      company: 'Postgres Professional',
+      gender: 'male',
+    },
+    type: 'development',
+    title: (
+      <Fragment>
+        Отказоустойчивые решения&nbsp;PostgreSQL с автоматическим failover'ом
+      </Fragment>
+    ),
+  },
+  {
+    lecturer: {
       name: 'Денис Сальников',
       company: 'N26',
       gender: 'male',
