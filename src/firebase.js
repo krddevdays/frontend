@@ -1,8 +1,14 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
+if (typeof window !== 'undefined') {
+  require('firebase/auth')
+}
+
 const config = {
-  projectId: 'krddevdays'
+  projectId: 'krddevdays',
+  apiKey: 'AIzaSyCEIlVMjwxH6ubJFOTBsds-IjSnqXAuuU8',
+  authDomain: 'krddevdays.firebaseapp.com',
 }
 
 firebase.initializeApp(config)
