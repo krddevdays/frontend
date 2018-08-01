@@ -255,6 +255,7 @@ class IndexPage extends Component {
           .collection('kdd3-round-table')
           .add({
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            deletedAt: null,
             authorUid: user.uid,
             title: this.input.current.value.trim(),
           })
