@@ -185,6 +185,27 @@ function plural (number, strings) {
   return strings[number > 1 && number < 5 ? 1 : number === 1 ? 0 : 2]
 }
 
+if (typeof window !== 'undefined' && typeof window.Raven !== 'undefined') {
+  const authStateChanged = user => {
+    if (!user) {
+      window.Raven.setUserContext(null)
+      return
+    }
+
+    window.Raven.setUserContext({
+      name: user.displayName,
+      email: user.email,
+      id: user.uid,
+    })
+  }
+
+  firebase.auth().onAuthStateChanged(user => {
+    authStateChanged(user)
+  })
+
+  authStateChanged(firebase.auth().currentUser)
+}
+
 function getUser () {
   const authProvider = new firebase.auth.GithubAuthProvider()
 
@@ -193,6 +214,11 @@ function getUser () {
       if (user) {
         return user
       }
+
+      window.Raven && window.Raven.captureBreadcrumb({
+        message: `Authenticating`,
+        category: 'auth',
+      })
 
       return firebase.auth()
         .signInWithPopup(authProvider)
@@ -218,6 +244,11 @@ class IndexPage extends Component {
       return
     }
 
+    window.Raven && window.Raven.captureBreadcrumb({
+      message: `Adding round table topic "${this.input.current.value.trim()}"`,
+      category: 'action',
+    })
+
     getUser()
       .then(user => {
         return firebase.firestore()
@@ -225,7 +256,7 @@ class IndexPage extends Component {
           .add({
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             authorUid: user.uid,
-            title: this.input.current.value,
+            title: this.input.current.value.trim(),
           })
       })
       .then(() => {
@@ -247,6 +278,11 @@ class IndexPage extends Component {
       return
     }
 
+    window.Raven && window.Raven.captureBreadcrumb({
+      message: `Removing round table topic "${id}"`,
+      category: 'action',
+    })
+
     getUser()
       .then(() => {
         return firebase.firestore()
@@ -265,6 +301,11 @@ class IndexPage extends Component {
 
   handleVote (id, e) {
     e.preventDefault()
+
+    window.Raven && window.Raven.captureBreadcrumb({
+      message: `Voting for round table topic "${id}"`,
+      category: 'action',
+    })
 
     getUser()
       .then(user => firebase.firestore().collection(`kdd3-round-table/${id}/votes`).doc(user.uid))
