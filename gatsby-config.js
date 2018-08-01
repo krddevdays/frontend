@@ -32,6 +32,7 @@ module.exports = {
         trackingId: '44994376',
         webvisor: true,
         trackHash: true,
+        version: 2
       },
     },
     {
