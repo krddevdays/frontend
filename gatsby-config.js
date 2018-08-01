@@ -34,6 +34,16 @@ module.exports = {
         trackHash: true,
       },
     },
+    {
+      resolve: 'gatsby-plugin-sentry',
+      options: {
+        dsn: 'https://23dc5349ab574f7a8227da1499b1c38d@sentry.io/1253994',
+        config:  {
+          environment: process.env.CONTEXT || 'local',
+          release: process.env.COMMIT_REF,
+        },
+      },
+    },
     `gatsby-plugin-netlify`,
     `gatsby-plugin-remove-serviceworker`,
   ],
