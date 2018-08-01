@@ -291,7 +291,9 @@ class IndexPage extends Component {
         return firebase.firestore()
           .collection('kdd3-round-table')
           .doc(id)
-          .delete()
+          .update({
+            deletedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          })
       })
       .catch(error => {
         alert('Упс, ошибка... Попробуй еще раз!')
@@ -693,6 +695,13 @@ class IndexPage extends Component {
                       <FirestoreCollection
                         path='kdd3-round-table'
                         sort='createdAt'
+                        filter={[
+                          [
+                            'deletedAt',
+                            '==',
+                            null,
+                          ],
+                        ]}
                         render={({isLoading, data}) => (
                           !isLoading &&
                           data.map(({id, authorUid, title, author}, key) => (
