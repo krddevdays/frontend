@@ -316,17 +316,18 @@ class IndexPage extends Component {
 
     getUser()
       .then(user => firebase.firestore().collection(`kdd3-round-table/${id}/votes`).doc(user.uid))
-      .then(doc => {
-        return doc
-          .get()
-          .then(document => {
-            if (!document.exists) {
-              return doc.set({})
-            } else {
-              return doc.delete()
-            }
-          })
-      })
+      .then(documentRef =>
+        firebase.firestore().runTransaction(transaction => {
+          return transaction.get(documentRef)
+            .then(document => {
+              if (!document.exists) {
+                transaction.set(documentRef, {})
+              } else {
+                transaction.delete(documentRef)
+              }
+            })
+        }),
+      )
       .catch(error => {
         alert('Упс, ошибка... Попробуй еще раз!')
 
