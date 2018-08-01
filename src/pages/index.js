@@ -488,7 +488,7 @@ class IndexPage extends Component {
                 Купить билет
               </Button>
             </Container>
-            <Container is='section'>
+            <Container is='section' id='topics'>
               <Flex
                 justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
                 flexDirection={['column', 'column', 'column', 'column', 'column', 'row']}
@@ -599,7 +599,7 @@ class IndexPage extends Component {
                 background: 'white',
               }}
             />
-            <Container is='section'>
+            <Container is='section' id='round-table'>
               <Flex
                 justifyContent={['flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'flex-start', 'space-between']}
                 flexDirection={['column', 'column', 'column', 'column', 'column', 'column', 'row']}
@@ -753,7 +753,7 @@ class IndexPage extends Component {
                 </FirestoreProvider>
               </FirebaseAuthProvider>
             </Container>
-            <Container is='section'>
+            <Container is='section' id='tickets'>
               <Flex mt={['80px']}>
                 <Box>
                   <Shadow color='#55E3CA' top='-40px' left='-200px'>
