@@ -516,14 +516,6 @@ class IndexPage extends Component {
                     </Text>
                   </Shadow>
                 </Box>
-                <Button
-                  is='a'
-                  href='https://connect.yandex.ru/forms/5adc61cf6162d77e2714831c/'
-                  target='_blank'
-                  mt={['20px', '20px', '20px', '20px', '20px', '40px']}
-                >
-                  Подать заявку на выступление
-                </Button>
               </Flex>
               <List
                 justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
