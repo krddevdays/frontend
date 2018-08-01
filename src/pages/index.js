@@ -264,9 +264,11 @@ class IndexPage extends Component {
       })
       .catch(error => {
         alert('Упс, ошибка... Попробуй еще раз!')
-        console.error(error)
+
         if (typeof window.Raven !== 'undefined') {
           window.Raven.captureException(error)
+        } else {
+          console.error(error)
         }
       })
   }
@@ -292,9 +294,11 @@ class IndexPage extends Component {
       })
       .catch(error => {
         alert('Упс, ошибка... Попробуй еще раз!')
-        console.error(error)
+
         if (typeof window.Raven !== 'undefined') {
           window.Raven.captureException(error)
+        } else {
+          console.error(error)
         }
       })
   }
@@ -322,9 +326,11 @@ class IndexPage extends Component {
       })
       .catch(error => {
         alert('Упс, ошибка... Попробуй еще раз!')
-        console.error(error)
+
         if (typeof window.Raven !== 'undefined') {
           window.Raven.captureException(error)
+        } else {
+          console.error(error)
         }
       })
   }
