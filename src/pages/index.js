@@ -716,6 +716,9 @@ class IndexPage extends Component {
                                 <Flex flexDirection='column'>
                                   <Text
                                     height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
+                                    style={{
+                                      overflow: 'auto'
+                                    }}
                                     px='14px'
                                     my='14px'
                                     fontSize='24px'
