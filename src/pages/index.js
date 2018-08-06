@@ -93,6 +93,19 @@ const topics = [
   },
   {
     lecturer: {
+      name: 'Данил Герун',
+      company: 'Современные решения',
+      gender: 'male',
+    },
+    type: 'development',
+    title: (
+      <Fragment>
+        Мониторинг:<br />IT-инфраструктура на кончиках пальцев
+      </Fragment>
+    ),
+  },
+  {
+    lecturer: {
       name: 'Сэм Булатов',
       gender: 'male',
     },
