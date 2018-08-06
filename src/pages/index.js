@@ -165,6 +165,30 @@ const topics = [
     title: 'Архитектор (скрипач) не нужен',
     link: 'https://vk.com/wall-131416798_362',
   },
+  {
+    lecturer: {
+      name: 'Алексей Наумов',
+      gender: 'male',
+    },
+    type: 'management',
+    title: 'Мы рождены, чтоб сказку сделать в коде?',
+  },
+  {
+    lecturer: {
+      name: 'Евгений Воронин',
+      gender: 'male',
+    },
+    type: 'development',
+    title: 'Гибридное мобильное приложение своими руками',
+  },
+  {
+    lecturer: {
+      name: 'Андрей Холявкин',
+      gender: 'male',
+    },
+    type: 'management',
+    title: 'Эмоциональный интеллект',
+  },
 ]
 
 const imageByTypeAndGender = {
