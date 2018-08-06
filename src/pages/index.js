@@ -70,6 +70,7 @@ const topics = [
     },
     type: 'design',
     title: 'Фронтендеры с Сатурна — дизайнеры с Плутона',
+    link: 'https://vk.com/wall-131416798_358',
   },
   {
     lecturer: {
@@ -79,6 +80,7 @@ const topics = [
     },
     type: 'development',
     title: 'История функционального программирования и щепотка монад',
+    link: 'https://vk.com/wall-131416798_371',
   },
   {
     lecturer: {
@@ -118,6 +120,7 @@ const topics = [
     },
     type: 'management',
     title: 'Объясняем Scrum: История эволюции одной команды',
+    link: 'https://vk.com/wall-131416798_365',
   },
   {
     lecturer: {
@@ -127,6 +130,7 @@ const topics = [
     },
     type: 'development',
     title: 'Dat протокол — общие понятия, инструменты, применение',
+    link: 'https://vk.com/wall-131416798_357',
   },
   {
     lecturer: {
@@ -135,6 +139,7 @@ const topics = [
     },
     type: 'qa',
     title: 'Суровая жизнь тестировщика игр',
+    link: 'https://vk.com/wall-131416798_360',
   },
   {
     lecturer: {
@@ -144,6 +149,7 @@ const topics = [
     },
     type: 'development',
     title: 'Архитектор (скрипач) не нужен',
+    link: 'https://vk.com/wall-131416798_362',
   },
 ]
 
@@ -583,7 +589,7 @@ class IndexPage extends Component {
                 mt='40px'
                 mx='-10px'
               >
-                {topics.map(({title, type, lecturer}, key) => (
+                {topics.map(({title, type, lecturer, link}, key) => (
                   <Flex
                     key={key}
                     width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
@@ -602,7 +608,7 @@ class IndexPage extends Component {
                         >
                           {title}
                         </Text>
-                        <Flex my='14px' mx='14px' alignItems='flex-start'>
+                        <Flex my='14px' mx='14px' alignItems='flex-start' height='46px'>
                           <Avatar
                             title={titleByType[type]}
                             fixed={data[imageByTypeAndGender[type][lecturer.gender]].childImageSharp.fixed}
@@ -631,6 +637,19 @@ class IndexPage extends Component {
                             </Flex>
                           </Box>
                         </Flex>
+                        {
+                          link &&
+                          <Button
+                            is='a'
+                            href={link}
+                            target='_blank'
+                            ml='-6px'
+                            mr='-6px'
+                            mb='-6px'
+                          >
+                            Подробнее
+                          </Button>
+                        }
                       </Flex>
                     </BorderedBox>
                   </Flex>
@@ -717,7 +736,7 @@ class IndexPage extends Component {
                                   <Text
                                     height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
                                     style={{
-                                      overflow: 'auto'
+                                      overflow: 'auto',
                                     }}
                                     px='14px'
                                     my='14px'
