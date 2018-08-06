@@ -98,6 +98,7 @@ const topics = [
     },
     type: 'development',
     title: '7 будущих чудес CSS',
+    link: 'https://vk.com/wall-131416798_372',
   },
   {
     lecturer: {
