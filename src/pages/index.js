@@ -126,6 +126,7 @@ const topics = [
         Отказоустойчивые решения&nbsp;PostgreSQL с автоматическим failover'ом
       </Fragment>
     ),
+    link: 'https://vk.com/wall-131416798_376',
   },
   {
     lecturer: {
