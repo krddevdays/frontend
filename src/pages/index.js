@@ -885,9 +885,18 @@ class IndexPage extends Component {
                       lineHeight={['40px', '48px', '57px', '70px']}
                       letterSpacing='0.125em'
                       fontWeight='900'
+                      mb='40px'
                     >
                       Сколько стоит билет?
                     </Heading>
+                    <Text
+                      fontSize={['24px', '24px', '28px']}
+                      lineHeight={['30px', '30px', '34px']}
+                      fontWeight='500'
+                    >
+                      <b>В стоимость билета входит питание:</b><br />
+                      фрукты, печенье, напитки (чай, кофе, морсы, сладкая и простая вода), комплексный обед.
+                    </Text>
                   </Shadow>
                 </Box>
               </Flex>
