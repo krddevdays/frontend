@@ -6,6 +6,7 @@ import {graphql} from 'gatsby'
 import firstmkLogo from './firstmk-logo.svg'
 import avitoLogo from './avito-logo.svg'
 import waliotLogo from './waliot-logo.svg'
+import arkadiumLogo from './arkadium-logo.svg'
 
 import Layout from '../components/Layout'
 import Flex from '../components/Flex'
@@ -1021,10 +1022,18 @@ class IndexPage extends Component {
                 >
                   <ImageLink
                     width='160px'
+                    mr={['0px', '0px', '128px']}
                     mb='48px'
                     title='Waliot'
                     href='https://waliot.com'
                     src={waliotLogo}
+                  />
+                  <ImageLink
+                    width='160px'
+                    mb='48px'
+                    title='Arkadium'
+                    href='https://www.arkadium.com'
+                    src={arkadiumLogo}
                   />
                 </Flex>
               </Flex>
