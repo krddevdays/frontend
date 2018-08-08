@@ -176,6 +176,7 @@ const topics = [
   {
     lecturer: {
       name: 'Евгений Воронин',
+      company: 'Chava Inc.',
       gender: 'male',
     },
     type: 'development',
