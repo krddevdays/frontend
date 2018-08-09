@@ -130,6 +130,15 @@ const topics = [
   },
   {
     lecturer: {
+      name: 'Всеволод Шмыров',
+      company: 'Яндекс',
+      gender: 'male',
+    },
+    type: 'development',
+    title: 'API: хорошее, плохое, злое'
+  },
+  {
+    lecturer: {
       name: 'Денис Сальников',
       company: 'N26',
       gender: 'male',
@@ -614,13 +623,6 @@ class IndexPage extends Component {
                     >
                       Доклады
                     </Heading>
-                    <Text
-                      fontSize={['24px', '24px', '28px']}
-                      lineHeight={['30px', '30px', '34px']}
-                      fontWeight='500'
-                    >
-                      Список дополняется
-                    </Text>
                   </Shadow>
                 </Box>
               </Flex>
