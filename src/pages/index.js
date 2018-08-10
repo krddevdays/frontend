@@ -135,7 +135,7 @@ const topics = [
       gender: 'male',
     },
     type: 'development',
-    title: 'API: хорошее, плохое, злое'
+    title: 'API: Хороший, плохой, злой'
   },
   {
     lecturer: {
