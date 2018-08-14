@@ -91,6 +91,7 @@ const topics = [
     },
     type: 'development',
     title: 'Тестируем настоящее Vue приложение',
+    link: 'https://vk.com/wall-131416798_380',
   },
   {
     lecturer: {
@@ -104,6 +105,7 @@ const topics = [
         Мониторинг:<br />IT-инфраструктура на кончиках пальцев
       </Fragment>
     ),
+    link: 'https://vk.com/wall-131416798_385',
   },
   {
     lecturer: {
@@ -135,7 +137,7 @@ const topics = [
       gender: 'male',
     },
     type: 'development',
-    title: 'API: Хороший, плохой, злой'
+    title: 'API: Хороший, плохой, злой',
   },
   {
     lecturer: {
