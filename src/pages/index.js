@@ -186,6 +186,7 @@ const topics = [
     },
     type: 'management',
     title: 'Мы рождены, чтоб сказку сделать в коде?',
+    link: 'https://vk.com/wall-131416798_387'
   },
   {
     lecturer: {
