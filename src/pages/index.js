@@ -7,6 +7,7 @@ import firstmkLogo from './firstmk-logo.svg'
 import avitoLogo from './avito-logo.svg'
 import waliotLogo from './waliot-logo.svg'
 import arkadiumLogo from './arkadium-logo.svg'
+import jetbrainsLogo from './jetbrains-logo.svg'
 
 import Layout from '../components/Layout'
 import Flex from '../components/Flex'
@@ -1034,6 +1035,14 @@ class IndexPage extends Component {
                   justifyContent='flex-start'
                   alignItems='center'
                 >
+                  <ImageLink
+                    width='160px'
+                    mr={['0px', '0px', '128px']}
+                    mb='48px'
+                    title='JetBrains'
+                    href='https://jetbrains.com'
+                    src={jetbrainsLogo}
+                  />
                   <ImageLink
                     width='160px'
                     mr={['0px', '0px', '128px']}
