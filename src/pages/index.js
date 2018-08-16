@@ -186,7 +186,7 @@ const topics = [
     },
     type: 'management',
     title: 'Мы рождены, чтоб сказку сделать в коде?',
-    link: 'https://vk.com/wall-131416798_387'
+    link: 'https://vk.com/wall-131416798_387',
   },
   {
     lecturer: {
@@ -200,6 +200,7 @@ const topics = [
   {
     lecturer: {
       name: 'Андрей Холявкин',
+      company: 'Аркадия',
       gender: 'male',
     },
     type: 'management',
