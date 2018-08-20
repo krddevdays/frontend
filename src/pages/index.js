@@ -197,6 +197,7 @@ const topics = [
     },
     type: 'development',
     title: 'Гибридное мобильное приложение своими руками',
+    link: 'https://vk.com/wall-131416798_393',
   },
   {
     lecturer: {
