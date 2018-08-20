@@ -139,6 +139,7 @@ const topics = [
     },
     type: 'development',
     title: 'API: Хороший, плохой, злой',
+    link: 'https://vk.com/wall-131416798_395',
   },
   {
     lecturer: {
