@@ -64,6 +64,11 @@ const List = styled(Flex)`
   }
 `
 
+const SafeAreaBox = styled(Box)`
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+`
+
 const topics = [
   {
     lecturer: {
@@ -410,6 +415,7 @@ class IndexPage extends Component {
       }}>
         <Layout>
           <Helmet>
+            <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover' />
             <script type='text/javascript'
                     async='async'
                     defer='defer'
@@ -439,7 +445,7 @@ class IndexPage extends Component {
               }
             </script>
           </Helmet>
-          <Box position='relative' minHeight={`${data.backgroundFirst.childImageSharp.fixed.height}px`}>
+          <SafeAreaBox position='relative' minHeight={`${data.backgroundFirst.childImageSharp.fixed.height}px`}>
             <Image
               fixed={data.backgroundFirst.childImageSharp.fixed}
               style={{
@@ -706,8 +712,8 @@ class IndexPage extends Component {
                 ))}
               </List>
             </Container>
-          </Box>
-          <Box position='relative' minHeight={`${data.backgroundSecond.childImageSharp.fixed.height}px`}>
+          </SafeAreaBox>
+          <SafeAreaBox position='relative' minHeight={`${data.backgroundSecond.childImageSharp.fixed.height}px`}>
             <Image
               fixed={data.backgroundSecond.childImageSharp.fixed}
               style={{
@@ -1148,8 +1154,8 @@ class IndexPage extends Component {
                 </Text>
               </Flex>
             </Container>
-          </Box>
-          <Box bg='#FAFAFA' mt='40px'>
+          </SafeAreaBox>
+          <SafeAreaBox bg='#FAFAFA' mt='40px'>
             <Container is='footer'>
               <Flex height='150px' alignItems='center'>
                 <Text
@@ -1161,7 +1167,7 @@ class IndexPage extends Component {
                 </Text>
               </Flex>
             </Container>
-          </Box>
+          </SafeAreaBox>
         </Layout>
       </ThemeProvider>
     )
