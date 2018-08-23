@@ -212,6 +212,7 @@ const topics = [
     },
     type: 'management',
     title: 'Эмоциональный интеллект',
+    link: 'https://vk.com/wall-131416798_397',
   },
 ]
 
