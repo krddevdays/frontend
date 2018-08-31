@@ -21,12 +21,10 @@ import tag from 'clean-tag'
 import Button from '../components/Button'
 import Avatar from '../components/Avatar'
 import ImageLink from '../components/ImageLink'
-import Input from '../components/Input'
 
 import {FirestoreProvider, FirestoreCollection} from 'react-firestore'
 import {firebase} from '../firebase'
-import * as PropTypes from 'prop-types'
-import {FirebaseAuthConsumer, FirebaseAuthProvider} from '../components/FirebaseAuth'
+import PropTypes from 'prop-types'
 
 const Shadow = styled(tag)`
   position: relative;
@@ -254,159 +252,12 @@ function plural (number, strings) {
   return strings[number > 1 && number < 5 ? 1 : number === 1 ? 0 : 2]
 }
 
-if (typeof window !== 'undefined' && typeof window.Raven !== 'undefined') {
-  const authStateChanged = user => {
-    if (!user) {
-      window.Raven.setUserContext(null)
-      return
-    }
-
-    window.Raven.setUserContext({
-      name: user.displayName,
-      email: user.email,
-      id: user.uid,
-    })
-  }
-
-  firebase.auth().onAuthStateChanged(user => {
-    authStateChanged(user)
-  })
-
-  authStateChanged(firebase.auth().currentUser)
-}
-
-function getUser () {
-  const authProvider = new firebase.auth.GithubAuthProvider()
-
-  return Promise.resolve(firebase.auth().currentUser)
-    .then(user => {
-      if (user) {
-        return user
-      }
-
-      window.Raven && window.Raven.captureBreadcrumb({
-        message: `Authenticating`,
-        category: 'auth',
-      })
-
-      return firebase.auth()
-        .signInWithPopup(authProvider)
-        .then(result => result.user)
-    })
-}
-
 class IndexPage extends Component {
   static propTypes = {
     data: PropTypes.any,
   }
 
   input = React.createRef()
-
-  handleTopic = (e) => {
-    e.preventDefault()
-    if (!this.input.current) {
-      return
-    }
-
-    if (!this.input.current.value.trim()) {
-      alert('Введите название темы')
-      return
-    }
-
-    window.Raven && window.Raven.captureBreadcrumb({
-      message: `Adding round table topic "${this.input.current.value.trim()}"`,
-      category: 'action',
-    })
-
-    getUser()
-      .then(user => {
-        return firebase.firestore()
-          .collection('kdd3-round-table')
-          .add({
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            deletedAt: null,
-            authorUid: user.uid,
-            title: this.input.current.value.trim(),
-          })
-      })
-      .then(() => {
-        this.input.current.value = ''
-      })
-      .catch(error => {
-        alert('Упс, ошибка... Попробуй еще раз!')
-
-        if (typeof window.Raven !== 'undefined') {
-          window.Raven.captureException(error)
-        } else {
-          console.error(error)
-        }
-      })
-  }
-
-  handleRemoveTopic = (id, e) => {
-    e.preventDefault()
-
-    if (!window.confirm('Вы уверены?')) {
-      return
-    }
-
-    window.Raven && window.Raven.captureBreadcrumb({
-      message: `Removing round table topic "${id}"`,
-      category: 'action',
-    })
-
-    getUser()
-      .then(() => {
-        return firebase.firestore()
-          .collection('kdd3-round-table')
-          .doc(id)
-          .update({
-            deletedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-      })
-      .catch(error => {
-        alert('Упс, ошибка... Попробуй еще раз!')
-
-        if (typeof window.Raven !== 'undefined') {
-          window.Raven.captureException(error)
-        } else {
-          console.error(error)
-        }
-      })
-  }
-
-  handleVote (id, e) {
-    e.preventDefault()
-
-    window.Raven && window.Raven.captureBreadcrumb({
-      message: `Voting for round table topic "${id}"`,
-      category: 'action',
-    })
-
-    getUser()
-      .then(user => firebase.firestore().collection(`kdd3-round-table/${id}/votes`).doc(user.uid))
-      .then(documentRef =>
-        firebase.firestore().runTransaction(transaction => {
-          return transaction.get(documentRef)
-            .then(document => {
-              if (!document.exists) {
-                transaction.set(documentRef, {})
-              } else {
-                transaction.delete(documentRef)
-              }
-            })
-        }),
-      )
-      .catch(error => {
-        alert('Упс, ошибка... Попробуй еще раз!')
-
-        if (typeof window.Raven !== 'undefined') {
-          window.Raven.captureException(error)
-        } else {
-          console.error(error)
-        }
-      })
-  }
 
   render () {
     let {data} = this.props
@@ -760,136 +611,77 @@ class IndexPage extends Component {
                   </Text>
                 </Box>
               </Flex>
-              <FirebaseAuthProvider firebase={firebase}>
-                <FirestoreProvider firebase={firebase}>
-                  <Fragment>
-                    <List
-                      justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
-                      flexWrap='wrap'
-                      mt='40px'
-                      mx='-10px'
-                    >
-                      <FirestoreCollection
-                        path='kdd3-round-table'
-                        sort='createdAt'
-                        filter={[
-                          [
-                            'deletedAt',
-                            '==',
-                            null,
-                          ],
-                        ]}
-                        render={({isLoading, data}) => (
-                          !isLoading &&
-                          data.map(({id, authorUid, title, author}, key) => (
-                            <Flex
-                              key={key}
-                              width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
-                              mb='40px'
-                              px='10px'
-                            >
-                              <BorderedBox width='100%'>
-                                <Flex flexDirection='column'>
-                                  <Text
-                                    height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
-                                    style={{
-                                      overflow: 'auto',
-                                    }}
-                                    px='14px'
-                                    my='14px'
-                                    fontSize='24px'
-                                    lineHeight='37px'
-                                    fontWeight='900'
-                                  >
-                                    {title}
-                                  </Text>
-                                  <FirestoreCollection
-                                    path={`kdd3-round-table/${id}/votes`}
-                                    render={({isLoading, data: votes}) => (
-                                      !isLoading &&
-                                      <Flex
-                                        flexDirection={['column', 'column', 'row', 'row', 'row', 'row', 'column', 'row']}>
-                                        <Flex px='14px' alignItems='center' flex='1 1 50%' height='54px'>
-                                          <Text
-                                            fontSize='28px'
-                                            lineHeight='42px'
-                                            fontWeight='900'
-                                          >
-                                            {votes.length}
-                                          </Text>
-                                          <Text
-                                            fontSize='16px'
-                                            lineHeight='19px'
-                                            fontWeight='400'
-                                            ml='10px'
-                                          >
-                                            {plural(votes.length, ['голос', 'голоса', 'голосов'])}
-                                          </Text>
-                                        </Flex>
-                                        <FirebaseAuthConsumer>
-                                          {({user}) => (
-                                            <Fragment>
-                                              {
-                                                (!user || authorUid !== user.uid) &&
-                                                <Flex flex='1 1 50%'>
-                                                  <Button
-                                                    type='button'
-                                                    mr='-6px'
-                                                    mb='-6px'
-                                                    ml={['-6px', '-6px', '0px', '0px', '0px', '0px', '-6px', '0px']}
-                                                    flex='1 0 100%'
-                                                    onClick={this.handleVote.bind(this, id)}
-                                                    active={user && votes.find(vote => vote.id === user.uid)}
-                                                  >
-                                                    {!user || !votes.find(vote => vote.id === user.uid) ? 'Голосовать' : 'Передумать'}
-                                                  </Button>
-                                                </Flex>
-                                              }
-                                              {
-                                                (user && authorUid === user.uid) &&
-                                                <Flex flex='1 1 50%'>
-                                                  <Button
-                                                    type='button'
-                                                    mr='-6px'
-                                                    mb='-6px'
-                                                    ml={['-6px', '-6px', '0px', '0px', '0px', '0px', '-6px', '0px']}
-                                                    flex='1 0 100%'
-                                                    onClick={this.handleRemoveTopic.bind(this, id)}
-                                                  >
-                                                    Удалить
-                                                  </Button>
-                                                </Flex>
-                                              }
-                                            </Fragment>
-                                          )}
-                                        </FirebaseAuthConsumer>
-                                      </Flex>
-                                    )} />
-                                </Flex>
-                              </BorderedBox>
+              <FirestoreProvider firebase={firebase}>
+                <List
+                  justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
+                  flexWrap='wrap'
+                  mt='40px'
+                  mx='-10px'
+                >
+                  <FirestoreCollection
+                    path='kdd3-round-table'
+                    sort='createdAt'
+                    filter={[
+                      [
+                        'deletedAt',
+                        '==',
+                        null,
+                      ],
+                    ]}
+                    render={({isLoading, data}) => (
+                      !isLoading &&
+                      data.map(({id, authorUid, title, author}, key) => (
+                        <Flex
+                          key={key}
+                          width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
+                          mb='40px'
+                          px='10px'
+                        >
+                          <BorderedBox width='100%'>
+                            <Flex flexDirection='column'>
+                              <Text
+                                height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
+                                style={{
+                                  overflow: 'auto',
+                                }}
+                                px='14px'
+                                my='14px'
+                                fontSize='24px'
+                                lineHeight='37px'
+                                fontWeight='900'
+                              >
+                                {title}
+                              </Text>
+                              <FirestoreCollection
+                                path={`kdd3-round-table/${id}/votes`}
+                                render={({isLoading, data: votes}) => (
+                                  !isLoading &&
+                                  <Flex px='14px' alignItems='center' height='54px'>
+                                    <Text
+                                      fontSize='28px'
+                                      lineHeight='42px'
+                                      fontWeight='900'
+                                    >
+                                      {votes.length}
+                                    </Text>
+                                    <Text
+                                      fontSize='16px'
+                                      lineHeight='19px'
+                                      fontWeight='400'
+                                      ml='10px'
+                                    >
+                                      {plural(votes.length, ['голос', 'голоса', 'голосов'])}
+                                    </Text>
+                                  </Flex>
+                                )} />
                             </Flex>
-                          ))
-                        )}
-                      />
-                    </List>
-                    <Box mt='80px'>
-                      <BorderedBox mt='40px' p={['20px', '20px', '20px', '40px']}>
-                        <Flex flexDirection={['column', 'column', 'column', 'column', 'column', 'row']}>
-                          <Input placeholder='Укажите здесь тему' flex='1 1 100%' innerRef={this.input} />
-                          <Button
-                            ml={['0px', '0px', '0px', '0px', '0px', '110px']}
-                            mt={['20px', '20px', '20px', '20px', '20px', '0px']}
-                            type='button'
-                            onClick={this.handleTopic}
-                          >
-                            Предлагаю!
-                          </Button>
+                          </BorderedBox>
                         </Flex>
-                      </BorderedBox>
-                    </Box>
-                  </Fragment>
-                </FirestoreProvider>
-              </FirebaseAuthProvider>
+                      ))
+                    )}
+                  />
+                </List>
+              </FirestoreProvider>
             </Container>
             <Container is='section' id='tickets'>
               <Flex mt={['80px']}>
