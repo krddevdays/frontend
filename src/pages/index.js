@@ -9,6 +9,7 @@ import waliotLogo from './waliot-logo.svg'
 import arkadiumLogo from './arkadium-logo.svg'
 import jetbrainsLogo from './jetbrains-logo.svg'
 import GearHeartLogo from './gearheart.png'
+import TaigaSystemsLogo from './taiga-systems.svg'
 
 import Layout from '../components/Layout'
 import Flex from '../components/Flex'
@@ -843,9 +844,25 @@ class IndexPage extends Component {
                     width='160px'
                     mr={['0px', '0px', '128px']}
                     mb='48px'
-                    title='JetBrains'
-                    href='https://jetbrains.com'
-                    src={jetbrainsLogo}
+                    title='Arkadium'
+                    href='https://www.arkadium.com'
+                    src={arkadiumLogo}
+                  />
+                  <ImageLink
+                    width='160px'
+                    mr={['0px', '0px', '128px']}
+                    mb='48px'
+                    title='Taiga Systems'
+                    href='http://taiga.systems'
+                    src={TaigaSystemsLogo}
+                  />
+                  <ImageLink
+                    width='160px'
+                    mr={['0px', '0px', '128px']}
+                    mb='48px'
+                    title='GearHeart'
+                    href='https://gearheart.io'
+                    src={GearHeartLogo}
                   />
                   <ImageLink
                     width='160px'
@@ -857,18 +874,10 @@ class IndexPage extends Component {
                   />
                   <ImageLink
                     width='160px'
-                    mr={['0px', '0px', '128px']}
                     mb='48px'
-                    title='Arkadium'
-                    href='https://www.arkadium.com'
-                    src={arkadiumLogo}
-                  />
-                  <ImageLink
-                    width='160px'
-                    mb='48px'
-                    title='GearHeart'
-                    href='https://gearheart.io'
-                    src={GearHeartLogo}
+                    title='JetBrains'
+                    href='https://jetbrains.com'
+                    src={jetbrainsLogo}
                   />
                 </Flex>
               </Flex>
