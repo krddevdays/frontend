@@ -24,8 +24,6 @@ import Button from '../components/Button'
 import Avatar from '../components/Avatar'
 import ImageLink from '../components/ImageLink'
 
-import {FirestoreProvider, FirestoreCollection} from 'react-firestore'
-import {firebase} from '../firebase'
 import PropTypes from 'prop-types'
 
 const Shadow = styled(tag)`
@@ -242,17 +240,26 @@ const titleByType = {
   development: 'Разработка',
 }
 
-function plural (number, strings) {
-  number %= 100
-
-  if (number > 10 && number < 20) {
-    return strings[2]
+const roundTables = [
+  {
+    title: 'ORM для слабаков'
+  },
+  {
+    title: 'Тимлид: что должен знать/уметь? как вырасти? и надо ли?'
+  },
+  {
+    title: 'Зачем нам сообщество и что в нем стоит улучшать: разговор по душам с организаторами'
+  },
+  {
+    title: 'Базы данных внутри Docker: насколько это надежно?'
+  },
+  {
+    title: 'Монолит? SOA? Микросервисы? Serverless? Развитие инфраструктурных подходов.'
+  },
+  {
+    title: 'Как рассчитать свой почасовой рейт и особенности удаленной работы'
   }
-
-  number %= 10
-
-  return strings[number > 1 && number < 5 ? 1 : number === 1 ? 0 : 2]
-}
+]
 
 class IndexPage extends Component {
   static propTypes = {
@@ -608,90 +615,37 @@ class IndexPage extends Component {
                     </Heading>
                   </Shadow>
                 </Box>
-                <Box display={['none', 'none', 'none', 'none', 'none', 'none', 'block']}>
-                  <Box mr='20px' mt='20px' width='70px' bg='#252525' height='3px' style={{float: 'left'}} />
-                  <Text
-                    fontSize={['28px']}
-                    lineHeight={['44px']}
-                    fontWeight='500'
-                  >
-                    Подай тему,<br />
-                    найди единомышленников,<br />
-                    собери свой круглый стол.
-                  </Text>
-                </Box>
               </Flex>
-              <FirestoreProvider firebase={firebase}>
-                <List
-                  justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
-                  flexWrap='wrap'
-                  mt='40px'
-                  mx='-10px'
-                >
-                  <FirestoreCollection
-                    path='kdd3-round-table'
-                    sort='createdAt'
-                    filter={[
-                      [
-                        'deletedAt',
-                        '==',
-                        null,
-                      ],
-                    ]}
-                    render={({isLoading, data}) => (
-                      !isLoading &&
-                      data.map(({id, authorUid, title, author}, key) => (
-                        <Flex
-                          key={key}
-                          width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
-                          mb='40px'
-                          px='10px'
+              <List
+                justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
+                flexWrap='wrap'
+                mt='40px'
+                mx='-10px'
+              >
+                {roundTables.map(({title}, key) => (
+                  <Flex
+                    key={key}
+                    width={['100%', '100%', '100%', '100%', '100%', '50%', '33.3333333333%']}
+                    mb='40px'
+                    px='10px'
+                  >
+                    <BorderedBox width='100%'>
+                      <Flex flexDirection='column'>
+                        <Text
+                          height={[`auto`]}
+                          px='14px'
+                          my='14px'
+                          fontSize='24px'
+                          lineHeight='37px'
+                          fontWeight='900'
                         >
-                          <BorderedBox width='100%'>
-                            <Flex flexDirection='column'>
-                              <Text
-                                height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 6}px`]}
-                                style={{
-                                  overflow: 'auto',
-                                }}
-                                px='14px'
-                                my='14px'
-                                fontSize='24px'
-                                lineHeight='37px'
-                                fontWeight='900'
-                              >
-                                {title}
-                              </Text>
-                              <FirestoreCollection
-                                path={`kdd3-round-table/${id}/votes`}
-                                render={({isLoading, data: votes}) => (
-                                  !isLoading &&
-                                  <Flex px='14px' alignItems='center' height='54px'>
-                                    <Text
-                                      fontSize='28px'
-                                      lineHeight='42px'
-                                      fontWeight='900'
-                                    >
-                                      {votes.length}
-                                    </Text>
-                                    <Text
-                                      fontSize='16px'
-                                      lineHeight='19px'
-                                      fontWeight='400'
-                                      ml='10px'
-                                    >
-                                      {plural(votes.length, ['голос', 'голоса', 'голосов'])}
-                                    </Text>
-                                  </Flex>
-                                )} />
-                            </Flex>
-                          </BorderedBox>
-                        </Flex>
-                      ))
-                    )}
-                  />
-                </List>
-              </FirestoreProvider>
+                          {title}
+                        </Text>
+                      </Flex>
+                    </BorderedBox>
+                  </Flex>
+                ))}
+              </List>
             </Container>
             <Container is='section' id='tickets'>
               <Flex mt={['80px']}>
