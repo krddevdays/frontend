@@ -667,7 +667,7 @@ class IndexPage extends Component {
                       fontWeight='500'
                     >
                       <b>В стоимость билета входит питание:</b><br />
-                      фрукты, печенье, напитки (чай, кофе, морсы, сладкая и простая вода), комплексный обед.
+                      комплексный обед, фрукты, печенье и напитки (чай, кофе, морсы, сладкая и простая вода).
                     </Text>
                   </Shadow>
                 </Box>
@@ -685,10 +685,12 @@ class IndexPage extends Component {
                       title: 'Всё вовремя',
                       price: '2000 ₽',
                       description: '// до 1 сентября',
+                      soldOut: true,
                     },
                     {
                       title: 'Я все проспал',
                       price: '2500 ₽',
+                      description: '// до 10 сентября',
                     },
                   ].map(({title, price, description, soldOut}, key) => (
                     <Flex key={key}
@@ -739,7 +741,7 @@ class IndexPage extends Component {
                   fontWeight='500'
                 >
                   Билеты ничем не отличаются, кроме цены и количества.<br />
-                  Вы можете купить любой билет на ваше усмотрение.
+                  Вы можете купить любой билет на ваше усмотрение из доступных.
                 </Text>
               </Flex>
               <Flex>
