@@ -315,6 +315,7 @@ class IndexPage extends Component {
                 left: 0,
                 width: '100%',
                 height: '100%',
+                maxHeight: `${data.backgroundFirst.childImageSharp.fixed.height}px`,
                 zIndex: -1,
                 background: 'white',
               }}
@@ -591,6 +592,7 @@ class IndexPage extends Component {
                 left: 0,
                 width: '100%',
                 height: '100%',
+                maxHeight: `${data.backgroundSecond.childImageSharp.fixed.height}px`,
                 zIndex: -1,
                 background: 'white',
               }}
