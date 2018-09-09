@@ -492,6 +492,14 @@ class IndexPage extends Component {
                     </Heading>
                   </Shadow>
                 </Box>
+                <Button
+                  is='a'
+                  href='/schedule.pdf'
+                  target='_blank'
+                  mt={['20px', '20px', '20px', '20px', '20px', '40px']}
+                >
+                  Расписание
+                </Button>
               </Flex>
               <List
                 justifyContent={['stretch', 'stretch', 'stretch', 'stretch', 'stretch', 'space-between']}
