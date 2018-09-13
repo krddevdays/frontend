@@ -519,14 +519,15 @@ class IndexPage extends Component {
                     px='10px'
                   >
                     <BorderedBox width='100%'>
-                      <Flex flexDirection='column'>
+                      <Flex flexDirection='column' height='100%'>
                         <Text
-                          height={['auto', 'auto', 'auto', 'auto', 'auto', `${37 * 4}px`]}
+                          height='auto'
                           px='14px'
                           mt='14px'
                           fontSize='24px'
                           lineHeight='37px'
                           fontWeight='900'
+                          flex='1'
                         >
                           {title}
                         </Text>
