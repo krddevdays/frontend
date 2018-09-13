@@ -10,6 +10,14 @@ injectGlobal`
   html {
     font-family: 'Montserrat', sans-serif;
   }
+  @media screen and (max-width: 320px) {
+    html {
+      word-wrap: break-word;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      hyphens: auto;
+    }
+  }
 `
 
 const Layout = ({children}) => (
@@ -31,6 +39,7 @@ const Layout = ({children}) => (
             href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900&amp;subset=cyrillic"
             rel="stylesheet"
           />
+          <html lang="ru" />
         </Helmet>
         {children}
       </>

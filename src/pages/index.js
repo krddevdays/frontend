@@ -127,11 +127,7 @@ const topics = [
       gender: 'male',
     },
     type: 'development',
-    title: (
-      <Fragment>
-        Отказоустойчивые решения&nbsp;PostgreSQL с автоматическим failover'ом
-      </Fragment>
-    ),
+    title: 'Отказоустойчивые решения PostgreSQL с автоматическим failover\'ом',
     link: 'https://vk.com/wall-131416798_376',
   },
   {
