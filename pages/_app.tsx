@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import * as ru from 'react-intl/locale-data/ru';
 import App, { Container, NextAppContext } from 'next/app';
+import NProgress from "next-nprogress/component";
 import 'bootstrap/dist/css/bootstrap.css';
 import './_app.css';
 import NavBar from '../components/NavBar/NavBar';
@@ -32,6 +33,7 @@ class MyApp extends App<MyAppProps> {
         return (
             <IntlProvider locale='ru' initialNow={initialNow} timeZone="Europe/Moscow">
                 <Container>
+                    <NProgress />
                     <NavBar />
                     <div className="container-fluid">
                         <div className="row">
