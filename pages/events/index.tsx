@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NextFunctionComponent } from 'next';
 import EventCard, { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
+import Head from 'next/head';
 
 type EventsPageProps = {
     events: Event[];
@@ -10,6 +11,9 @@ type EventsPageProps = {
 const EventsPage: NextFunctionComponent<EventsPageProps> = props => {
     return (
         <div className="pt-3">
+            <Head>
+                <title>События</title>
+            </Head>
             <div className="pb-2 mb-3 border-bottom">
                 <h1 className="h2">События</h1>
             </div>

@@ -3,6 +3,7 @@ import { NextContext, NextFunctionComponent } from 'next';
 import FormattedDate from '../../components/FormattedDate/FormattedDate';
 import EventPrice, { TicketType } from '../../components/EventPrice/EventPrice';
 import * as api from '../../api';
+import Head from 'next/head';
 
 type Event = {
     id: number;
@@ -27,6 +28,9 @@ const EventPage: NextFunctionComponent<
 
     return (
         <div className="pt-3">
+            <Head>
+                <title>{props.name}</title>
+            </Head>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <div>
                     <h1 className="h2">{props.name}</h1>
