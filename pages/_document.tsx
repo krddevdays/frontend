@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Document, { Head, Main, NextScript, NextDocumentContext } from 'next/document';
 import * as http from 'http';
 
@@ -21,7 +22,10 @@ export default class MyDocument extends Document<MyDocumentProps> {
     render() {
         return (
             <html>
-                <Head />
+                <Head>
+                    <title>Krasnodar Dev Days</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                </Head>
                 <body>
                     <Main />
                     <script
