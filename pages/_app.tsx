@@ -1,33 +1,17 @@
 import * as React from 'react';
-import { IntlProvider, addLocaleData, LocaleData } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
+import * as ru from 'react-intl/locale-data/ru';
 import App, { Container, NextAppContext } from 'next/app';
 import 'bootstrap/dist/css/bootstrap.css';
 import './_app.css';
 import NavBar from '../components/NavBar/NavBar';
 import Sidebar from '../components/Sidebar/Sidebar';
-import * as http from 'http';
 
 type MyAppProps = {
-    locale: string;
     initialNow: number;
 };
 
-declare global {
-    interface Window {
-        ReactIntlLocaleData: {
-            [key: string]: LocaleData;
-        };
-        __NEXT_DATA__: {
-            props: MyAppProps;
-        };
-    }
-}
-
-if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
-    Object.keys(window.ReactIntlLocaleData).forEach(lang => {
-        addLocaleData(window.ReactIntlLocaleData[lang]);
-    });
-}
+addLocaleData(ru);
 
 class MyApp extends App<MyAppProps> {
     static async getInitialProps({ Component, ctx }: NextAppContext) {
@@ -37,17 +21,16 @@ class MyApp extends App<MyAppProps> {
             pageProps = await Component.getInitialProps(ctx);
         }
 
-        const { locale } = (ctx.req as http.IncomingMessage & MyAppProps) || window.__NEXT_DATA__.props;
         const initialNow = Date.now();
 
-        return { pageProps, locale, initialNow };
+        return { pageProps, initialNow };
     }
 
     render() {
-        const { Component, pageProps, initialNow, locale } = this.props;
+        const { Component, pageProps, initialNow } = this.props;
 
         return (
-            <IntlProvider locale={locale} initialNow={initialNow} timeZone="Europe/Moscow">
+            <IntlProvider locale='ru' initialNow={initialNow} timeZone="Europe/Moscow">
                 <Container>
                     <NavBar />
                     <div className="container-fluid">

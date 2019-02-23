@@ -1,27 +1,10 @@
 import * as React from 'react';
-import Document, { Head, Main, NextScript, NextDocumentContext } from 'next/document';
-import * as http from 'http';
+import Document, { Head, Main, NextScript } from 'next/document';
 
-type MyDocumentProps = {
-    locale: string;
-    localeDataScript: string;
-};
-
-export default class MyDocument extends Document<MyDocumentProps> {
-    static async getInitialProps(context: NextDocumentContext) {
-        const props = await super.getInitialProps(context);
-        const req = context.req as http.IncomingMessage & MyDocumentProps;
-
-        return {
-            ...props,
-            locale: req.locale,
-            localeDataScript: req.localeDataScript
-        };
-    }
-
+export default class MyDocument extends Document {
     render() {
         return (
-            <html lang={this.props.locale}>
+            <html lang='ru'>
                 <Head>
                     <meta charSet="utf-8" />
                     <title>Krasnodar Dev Days</title>
@@ -29,11 +12,6 @@ export default class MyDocument extends Document<MyDocumentProps> {
                 </Head>
                 <body>
                     <Main />
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: this.props.localeDataScript
-                        }}
-                    />
                     <NextScript />
                 </body>
             </html>
