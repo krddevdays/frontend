@@ -21,8 +21,9 @@ export default class MyDocument extends Document<MyDocumentProps> {
 
     render() {
         return (
-            <html>
+            <html lang={this.props.locale}>
                 <Head>
+                    <meta charSet="utf-8" />
                     <title>Krasnodar Dev Days</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 </Head>
