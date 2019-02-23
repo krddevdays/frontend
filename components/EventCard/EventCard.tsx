@@ -18,16 +18,18 @@ export default function EventCard(props: Event & { className?: string }) {
     return (
         <div className={classNames('card', props.className)}>
             <div className="card-body">
-                <div className="card-title">
-                    <h2 className="h5">{props.name}</h2>
-                </div>
-                <div>
+                <h2 className="card-title h5">
+                    {props.name}
+                </h2>
+                <p>
                     <small className="text-muted">
                         <FormattedDate value={startsAt} />
                     </small>{' '}
                     <EventPrice ticketTypes={props.ticketTypes} />
-                </div>
+                </p>
                 {props.descriptionShort && <p>{props.descriptionShort}</p>}
+            </div>
+            <div className="card-footer">
                 <Link href={`/events/event?id=${props.id}`} as={`/events/${props.id}`}>
                     <a
                         className={classNames('btn', 'btn-sm', {
