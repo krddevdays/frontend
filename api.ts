@@ -31,6 +31,10 @@ function createUrl(context: {
     return `${url}?${query}`
 }
 
+function fixDatetimeString(value: string) {
+    return value.replace(/(\d{2})(\d{2})$/, '$1:$2');
+}
+
 export const events = async (req?: http.IncomingMessage) => {
     const response = await fetch(
         createUrl({
@@ -50,13 +54,13 @@ export const events = async (req?: http.IncomingMessage) => {
         throw new Error(await response.text());
     }
 
-    const eventsResponse = await (response.json() as Promise<EventsResponse>);
+    const eventsResponse = await (response.json() as Promise<EventsResponse<'description_short' | 'ticket_types'>>);
 
     return eventsResponse.values.map(event => ({
         id: event.id,
         name: event.name,
-        startsAt: event.starts_at.replace(/(\d{2})(\d{2})$/, '$1:$2'),
-        descriptionShort: event.description_short!,
+        startsAt: fixDatetimeString(event.starts_at),
+        descriptionShort: event.description_short,
         ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
             price: ticketType.price,
             isActive: ticketType.is_active,
@@ -79,19 +83,19 @@ export const event = async (id: number, req?: http.IncomingMessage) => {
 
     const event = await (response.json() as Promise<EventResponse>);
 
-    if (event.organization!.id !== 81520) {
+    if (typeof event.organization === 'undefined' || event.organization.id !== 81520) {
         throw new Error('Event not found');
     }
 
     return {
         id: event.id,
         name: event.name,
-        startsAt: event.starts_at.replace(/(\d{2})(\d{2})$/, '$1:$2'),
-        descriptionHtml: event.description_html!,
-        ticketTypes: event.ticket_types!.map(ticketType => ({
+        startsAt: fixDatetimeString(event.starts_at),
+        descriptionHtml: event.description_html,
+        ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
             price: ticketType.price,
             isActive: ticketType.is_active,
             requirePromocode: ticketType.is_promocode_locked
-        }))
+        })) : []
     };
 };

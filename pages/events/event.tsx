@@ -8,7 +8,7 @@ type Event = {
     id: number;
     name: string;
     startsAt: string;
-    descriptionHtml: string;
+    descriptionHtml?: string;
     ticketTypes: TicketType[];
 };
 
@@ -36,7 +36,7 @@ const EventPage: NextFunctionComponent<
                     <EventPrice ticketTypes={props.ticketTypes} />
                 </div>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: props.descriptionHtml }} />
+            {props.descriptionHtml && <div dangerouslySetInnerHTML={{ __html: props.descriptionHtml }} />}
         </div>
     );
 };

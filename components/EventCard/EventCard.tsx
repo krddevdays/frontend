@@ -8,7 +8,7 @@ export type Event = {
     id: number;
     name: string;
     startsAt: string;
-    descriptionShort: string;
+    descriptionShort?: string;
     ticketTypes: TicketType[];
 };
 
@@ -27,7 +27,7 @@ export default function EventCard(props: Event & { className?: string }) {
                     </small>{' '}
                     <EventPrice ticketTypes={props.ticketTypes} />
                 </div>
-                <p>{props.descriptionShort}</p>
+                {props.descriptionShort && <p>{props.descriptionShort}</p>}
                 <Link href={`/events/event?id=${props.id}`} as={`/events/${props.id}`}>
                     <a
                         className={classNames('btn', 'btn-sm', {
