@@ -92,6 +92,8 @@ export const event = async (id: number, req?: http.IncomingMessage) => {
         name: event.name,
         startsAt: fixDatetimeString(event.starts_at),
         descriptionHtml: event.description_html,
+        url: event.url,
+        isRegistrationOpened: event.registration_data ? event.registration_data.is_registration_open : false,
         ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
             price: ticketType.price,
             isActive: ticketType.is_active,
