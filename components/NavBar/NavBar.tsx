@@ -3,11 +3,10 @@ import './NavBar.css';
 import NavLink from '../NavLink/NavLink';
 import { Calendar } from 'react-feather';
 import classNames from 'classnames';
-import { useState } from 'react';
 
 export default function NavBar() {
 
-    const [menuState, changeMenuState] = useState(false);
+    const [menuState, changeMenuState] = React.useState(false);
 
     function handleClickMenu(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
@@ -15,8 +14,8 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="navbar  navbar-dark fixed-top bg-dark flex-md-nowrap p-md-0 shadow">
-            <NavLink href="/" className="navbar-brand col col-auto col-md-3 col-xl-2 mr-0" activeClassName="active">
+        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-md-0 shadow">
+            <NavLink href="/" className="navbar-brand col-auto col-md-3 col-xl-2 mr-0" activeClassName="active">
                 Krasnodar Dev Days
             </NavLink>
             <div className="col-auto">
