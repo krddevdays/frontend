@@ -4,17 +4,9 @@
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "target": "esnext",
         "module": "commonjs",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2017",
-            "dom"
-        ]
+        "lib": [ "es2017" ]
     },
     "include": [
         "server.ts"
