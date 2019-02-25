@@ -5,7 +5,6 @@ import { Calendar } from 'react-feather';
 import classNames from 'classnames';
 
 export default function NavBar() {
-
     const [menuState, changeMenuState] = React.useState(false);
 
     function handleClickMenu(event: React.MouseEvent<HTMLButtonElement>) {
@@ -19,12 +18,12 @@ export default function NavBar() {
                 Krasnodar Dev Days
             </NavLink>
             <div className="col-auto">
-                <button className="navbar-toggler d-block d-md-none" type="button" onClick={handleClickMenu}>
+                <button className="navbar-toggler d-md-none" type="button" onClick={handleClickMenu}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
             </div>
             <div
-                className={classNames('collapse', 'navbar-collapse', 'col-xl-12', {
+                className={classNames('collapse', 'navbar-collapse', 'd-md-none', {
                     'show': menuState,
                 })}
             >
