@@ -3,7 +3,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "ts-node -P tsconfig.server.json server.ts",
-        "build": "tsc -P tsconfig.server.json server.ts && next build",
+        "prebuild": "tsc -P tsconfig.server.json",
+        "build": "next build",
         "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu server.js"
     },
     "dependencies": {
