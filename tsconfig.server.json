@@ -1,18 +1,20 @@
 {
     "compilerOptions": {
-        "allowJs": true,
-        "jsx": "preserve",
-        "lib": ["dom", "es2017"],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noEmit": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "preserveConstEnums": true,
-        "removeComments": false,
+        "outDir": "./dist",
         "sourceMap": true,
-        "strict": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "target": "esnext",
+        "module": "commonjs",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2017",
+            "dom"
+        ]
     },
     "include": [
         "server.ts"

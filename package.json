@@ -5,7 +5,7 @@
         "dev": "ts-node -P tsconfig.server.json server.ts",
         "prebuild": "tsc -P tsconfig.server.json",
         "build": "next build",
-        "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu server.js"
+        "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server.js"
     },
     "dependencies": {
         "@types/classnames": "^2.2.7",
