@@ -1,9 +1,8 @@
-const express = require('express');
-const next = require('next');
-const proxy = require('http-proxy-middleware');
-const fs = require('fs');
+import * as express from "express";
+import * as next from "next";
+import * as proxy from "http-proxy-middleware";
 
-const port = parseInt(process.env.PORT, 10) || 3000;
+const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 
@@ -30,7 +29,7 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    server.listen(port, err => {
+    server.listen(port, (err: Error) => {
         if (err) throw err;
         console.log(`> Ready on http://localhost:${port}`);
     });
