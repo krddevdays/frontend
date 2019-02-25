@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "target": "esnext",
+        "module": "commonjs",
+        "lib": [ "es2017" ]
+    },
+    "include": [
+        "server.ts"
+    ]
+}
