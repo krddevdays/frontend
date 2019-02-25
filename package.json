@@ -2,13 +2,15 @@
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "node server.js",
+        "dev": "ts-node -P tsconfig.server.json server.ts",
+        "prebuild": "tsc -P tsconfig.server.json",
         "build": "next build",
-        "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu server.js"
+        "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server.js"
     },
     "dependencies": {
         "@types/classnames": "^2.2.7",
         "@types/express": "^4.16.1",
+        "@types/http-proxy-middleware": "^0.19.2",
         "@types/next": "^8.0.1",
         "@types/nprogress": "0.0.29",
         "@types/query-string": "^6.2.0",
@@ -39,6 +41,7 @@
         "typescript": "^3.3.3333"
     },
     "devDependencies": {
-        "babel-plugin-import": "^1.11.0"
+        "babel-plugin-import": "^1.11.0",
+        "ts-node": "^8.0.2"
     }
 }
