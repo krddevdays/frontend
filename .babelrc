@@ -1,15 +1,12 @@
 {
-  "presets": [
-    "next/babel",
-    "@zeit/next-typescript/babel"
-  ],
-  "plugins": [
-    [
-      "import",
-      {
-        "libraryName": "react-feather",
-        "libraryDirectory": "dist/icons"
-      }
+    "presets": ["next/babel", "@zeit/next-typescript/babel"],
+    "plugins": [
+        [
+            "import",
+            {
+                "libraryName": "react-feather",
+                "libraryDirectory": "dist/icons"
+            }
+        ]
     ]
-  ]
 }

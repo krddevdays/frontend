@@ -1,8 +1,8 @@
-import * as express from "express";
-import * as next from "next";
-import * as proxy from "http-proxy-middleware";
+import * as express from 'express';
+import * as next from 'next';
+import * as proxy from 'http-proxy-middleware';
 
-const port = parseInt(process.env.PORT || "3000", 10);
+const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 

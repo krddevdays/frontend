@@ -3,24 +3,24 @@ import { format as urlFormat } from 'url';
 import { EventResponse, EventsRequest, EventsResponse } from './typings/timepad';
 import * as express from 'express';
 import * as http from 'http';
-import * as queryString from 'query-string'
+import * as queryString from 'query-string';
 
 function createUrl(context: {
     pathname: string;
     query?: {
-        [key: string]: any
-    },
-    req?: http.IncomingMessage
+        [key: string]: any;
+    };
+    req?: http.IncomingMessage;
 }) {
     const protocol = context.req ? (context.req as express.Request).protocol : window.location.protocol;
     const host = context.req ? context.req.headers.host : window.location.host;
     const url = urlFormat({
         protocol,
         host,
-        pathname: context.pathname,
+        pathname: context.pathname
     });
 
-    if(typeof context.query === 'undefined') {
+    if (typeof context.query === 'undefined') {
         return url;
     }
 
@@ -28,7 +28,7 @@ function createUrl(context: {
         arrayFormat: 'bracket'
     });
 
-    return `${url}?${query}`
+    return `${url}?${query}`;
 }
 
 function fixDatetimeString(value: string) {
@@ -61,11 +61,13 @@ export const events = async (req?: http.IncomingMessage) => {
         name: event.name,
         startsAt: fixDatetimeString(event.starts_at),
         descriptionShort: event.description_short,
-        ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
-            price: ticketType.price,
-            isActive: ticketType.is_active,
-            requirePromocode: ticketType.is_promocode_locked
-        })) : []
+        ticketTypes: event.ticket_types
+            ? event.ticket_types.map(ticketType => ({
+                  price: ticketType.price,
+                  isActive: ticketType.is_active,
+                  requirePromocode: ticketType.is_promocode_locked
+              }))
+            : []
     }));
 };
 
@@ -94,10 +96,12 @@ export const event = async (id: number, req?: http.IncomingMessage) => {
         descriptionHtml: event.description_html,
         url: event.url,
         isRegistrationOpened: event.registration_data ? event.registration_data.is_registration_open : false,
-        ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
-            price: ticketType.price,
-            isActive: ticketType.is_active,
-            requirePromocode: ticketType.is_promocode_locked
-        })) : []
+        ticketTypes: event.ticket_types
+            ? event.ticket_types.map(ticketType => ({
+                  price: ticketType.price,
+                  isActive: ticketType.is_active,
+                  requirePromocode: ticketType.is_promocode_locked
+              }))
+            : []
     };
 };
