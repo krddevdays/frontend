@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import FormattedDate from '../../components/FormattedDate/FormattedDate';
 import EventPrice, { TicketType } from '../../components/EventPrice/EventPrice';
-import EventLocationWidget, { EventLocation } from '../../components/EventLocation/EventLocation';
+import EventLocation, { EventLocationProps } from '../../components/EventLocation/EventLocation';
 import * as api from '../../api';
 import Head from 'next/head';
 import TimepadWidget from '../../components/TimepadWidget';
@@ -13,7 +13,7 @@ type Event = {
     startsAt: string;
     descriptionHtml?: string;
     url: string;
-    location: EventLocation | undefined;
+    location: EventLocationProps | undefined;
     isRegistrationOpened: boolean;
     ticketTypes: TicketType[];
 };
@@ -60,7 +60,7 @@ const EventPage: NextFunctionComponent<EventPageProps,
                 {' '}
                 <EventPrice ticketTypes={props.ticketTypes} />
             </div>
-            <EventLocationWidget location={props.location} />
+            {props.location !== undefined && <EventLocation location={props.location} />}
             {props.descriptionHtml && <div dangerouslySetInnerHTML={{ __html: props.descriptionHtml }} />}
         </div>
     );
