@@ -30,7 +30,7 @@ function createUrl(context: {
     return `${url}?${query}`;
 }
 
-type EventsResponse = {
+export type EventsResponse = {
     id: number;
     name: string;
     startsAt: string;
@@ -57,7 +57,7 @@ export const events = async (req?: http.IncomingMessage): Promise<EventsResponse
     return response.json();
 };
 
-type EventResponse = {
+export type EventResponse = {
     id: number;
     name: string;
     startsAt: string;

@@ -1,5 +1,10 @@
 import fetch from 'cross-fetch';
-import { EventResponse, EventsRequest, EventsResponse } from '../typings/timepad';
+import {
+    EventResponse as TPEventResponse,
+    EventsRequest,
+    EventsResponse as TPEventsResponse
+} from '../typings/timepad';
+import { EventsResponse, EventResponse } from '../api';
 import * as express from 'express';
 import * as queryString from 'query-string';
 
@@ -24,7 +29,7 @@ function fixDatetimeString(value: string) {
     return value.replace(/(\d{2})(\d{2})$/, '$1:$2');
 }
 
-const events = async () => {
+const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
             url: 'https://api.timepad.ru/v1/events',
@@ -42,7 +47,7 @@ const events = async () => {
         throw new Error(await response.text());
     }
 
-    const eventsResponse = await (response.json() as Promise<EventsResponse<'description_short' | 'ticket_types'>>);
+    const eventsResponse = await (response.json() as Promise<TPEventsResponse<'description_short' | 'ticket_types'>>);
 
     return eventsResponse.values.map(event => ({
         id: event.id,
@@ -59,7 +64,7 @@ const events = async () => {
     }));
 };
 
-const event = async (id: number) => {
+const event = async (id: number): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
             url: `https://api.timepad.ru/v1/events/${id}`
@@ -70,7 +75,7 @@ const event = async (id: number) => {
         throw new Error(await response.text());
     }
 
-    const event = await (response.json() as Promise<EventResponse>);
+    const event = await (response.json() as Promise<TPEventResponse>);
 
     if (typeof event.organization === 'undefined' || event.organization.id !== 81520) {
         throw new Error('Event not found');
