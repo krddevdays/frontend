@@ -3,5 +3,11 @@ body {
 }
 
 [role='main'] {
-    padding-top: 48px;
+    padding-top: 64px;
+}
+
+@media (min-width: 768px) {
+    [role='main'] {
+        padding-top: 48px;
+    }
 }
