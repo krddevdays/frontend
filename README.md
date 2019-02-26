@@ -1,4 +1,4 @@
-# Сайт сообщсетва «Krasnodar Dev Days»
+# Сайт сообщества «Krasnodar Dev Days»
 
 ## Помощь с разработкой
 
