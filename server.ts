@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as next from 'next';
-import * as proxy from 'http-proxy-middleware';
+import events from './api/events';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -11,15 +11,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
     const server = express();
 
-    server.use(
-        proxy('/api/timepad/', {
-            changeOrigin: true,
-            target: 'https://api.timepad.ru/',
-            pathRewrite: {
-                '^/api/timepad/': '/'
-            }
-        })
-    );
+    server.use('/api/events', events);
 
     server.get('/events/:id', (req, res) => {
         return app.render(req, res, '/events/event', { id: req.params.id });
