@@ -30,7 +30,19 @@ function createUrl(context: {
     return `${url}?${query}`;
 }
 
-export const events = async (req?: http.IncomingMessage) => {
+type EventsResponse = {
+    id: number;
+    name: string;
+    startsAt: string;
+    descriptionShort: string | undefined;
+    ticketTypes: {
+        price: number;
+        isActive: boolean;
+        requirePromocode: boolean;
+    }[];
+}[];
+
+export const events = async (req?: http.IncomingMessage): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
             req,
@@ -45,7 +57,21 @@ export const events = async (req?: http.IncomingMessage) => {
     return response.json();
 };
 
-export const event = async (id: number, req?: http.IncomingMessage) => {
+type EventResponse = {
+    id: number;
+    name: string;
+    startsAt: string;
+    descriptionHtml: string | undefined;
+    url: string;
+    isRegistrationOpened: boolean;
+    ticketTypes: {
+        price: number;
+        isActive: boolean;
+        requirePromocode: boolean;
+    }[];
+};
+
+export const event = async (id: number, req?: http.IncomingMessage): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
             req,
