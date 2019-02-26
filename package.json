@@ -2,10 +2,10 @@
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "NODE_ICU_DATA=node_modules/full-icu ts-node -P tsconfig.server.json server.ts",
+        "dev": "cross-env NODE_ICU_DATA=node_modules/full-icu ts-node -P tsconfig.server.json server.ts",
         "prebuild": "tsc -P tsconfig.server.json",
         "build": "next build",
-        "start": "NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server.js"
+        "start": "cross-env NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server.js"
     },
     "dependencies": {
         "@types/classnames": "^2.2.7",
@@ -37,9 +37,10 @@
         "babel-plugin-import": "^1.11.0"
     },
     "devDependencies": {
-        "ts-node": "^8.0.2",
-        "prettier": "^1.16.4",
+        "cross-env": "^5.2.0",
         "husky": "^1.3.1",
-        "lint-staged": "^8.1.4"
+        "lint-staged": "^8.1.4",
+        "prettier": "^1.16.4",
+        "ts-node": "^8.0.2"
     }
 }
