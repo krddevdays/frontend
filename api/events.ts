@@ -96,17 +96,11 @@ const event = async (id: number) => {
 export default express
     .Router()
     .get('/', (_, res) => {
-        // cache for one day
-        res.set('Cache-Control', 'max-age=86400');
-
         events().then(events => {
             res.json(events);
         });
     })
     .get('event/:id', (req, res) => {
-        // cache for one day
-        res.set('Cache-Control', 'max-age=86400');
-
         event(req.params.id).then(event => {
             res.json(event);
         });
