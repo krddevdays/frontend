@@ -100,7 +100,7 @@ export default express
             res.json(events);
         });
     })
-    .get('event/:id', (req, res) => {
+    .get('/:id', (req, res) => {
         event(req.params.id).then(event => {
             res.json(event);
         });
