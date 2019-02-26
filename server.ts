@@ -8,7 +8,7 @@ const app = next({ dev });
 
 const handle = app.getRequestHandler();
 
-function errorHandler(error: Error, req: express.Request, res: express.Response, next: express.NextFunction) {
+function errorHandler(error: Error, _: express.Request, res: express.Response, __: express.NextFunction) {
     res.status(500).send(error.message);
 }
 
