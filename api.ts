@@ -91,6 +91,7 @@ export const event = async (id: number, req?: http.IncomingMessage) => {
         id: event.id,
         name: event.name,
         startsAt: fixDatetimeString(event.starts_at),
+        location: event.location,
         descriptionHtml: event.description_html,
         url: event.url,
         isRegistrationOpened: event.registration_data ? event.registration_data.is_registration_open : false,
