@@ -95,13 +95,17 @@ const event = async (id: number) => {
 
 export default express
     .Router()
-    .get('/', (_, res) => {
-        events().then(events => {
-            res.json(events);
-        });
-    })
-    .get('/:id', (req, res) => {
-        event(req.params.id).then(event => {
-            res.json(event);
-        });
-    });
+    .get('/', (_, res, next) =>
+        events()
+            .then(events => {
+                res.json(events);
+            })
+            .catch(error => next(error))
+    )
+    .get('/:id', (req, res, next) =>
+        event(req.params.id)
+            .then(event => {
+                res.json(event);
+            })
+            .catch(error => next(error))
+    );
