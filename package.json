@@ -25,7 +25,6 @@
         "cross-fetch": "^3.0.1",
         "express": "^4.16.4",
         "full-icu": "^1.2.1",
-        "http-proxy-middleware": "^0.19.1",
         "next": "^8.0.3",
         "next-nprogress": "^1.4.0",
         "query-string": "^6.2.0",
