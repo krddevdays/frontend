@@ -28,6 +28,11 @@ const types = [
 
 type EventType = typeof types extends Array<{ id: infer U }> ? U : never;
 
+type TypeObj = {
+    id: 'conf' | 'frontend' | 'backend' | 'python';
+    title: string;
+};
+
 type EventsPageProps = {
     events: Event[];
     types?: EventType[];
@@ -42,6 +47,41 @@ const EventsPage: NextFunctionComponent<
         };
     }
 > = props => {
+    const [selectedTypes, setSelectedTypes] = React.useState(props.types ? props.types : []);
+
+    function handleClick(type: TypeObj) {
+        if (selectedTypes.find(el => el.toLowerCase() === type.id.toLowerCase())) {
+            const newTypeSelect = selectedTypes.slice();
+            const indexDelType = newTypeSelect.findIndex(item => item === type.id);
+            newTypeSelect.splice(indexDelType, 1);
+            setSelectedTypes(newTypeSelect);
+        } else {
+            const newTypeSelect = selectedTypes.slice();
+            newTypeSelect.push(type.id);
+            setSelectedTypes(newTypeSelect);
+        }
+    }
+
+    const filtredArray = props.events.filter(event =>
+        selectedTypes.some(type => {
+            switch (type) {
+                case 'frontend':
+                    return event.name.startsWith('Krasnodar Frontend');
+                case 'backend':
+                    return event.name.startsWith('Krasnodar Backend');
+                case 'python':
+                    return event.name.startsWith('Krasnodar Python');
+                case 'conf':
+                    return event.name.startsWith('Krasnodar Dev Days');
+                default:
+                    ((value: never) => value)(name);
+                    return false;
+            }
+        })
+    );
+
+    const filtredEvents = selectedTypes.length > 0 ? filtredArray : props.events;
+
     return (
         <div className="pt-3">
             <Head>
@@ -53,18 +93,20 @@ const EventsPage: NextFunctionComponent<
             <div className="row my-3">
                 <div className="col col-12">
                     <div className="btn-group" role="group">
-                        {typeof props.types === 'undefined' ? (
+                        {selectedTypes.length === 0 ? (
                             <span className="btn btn-outline-secondary active">Все</span>
                         ) : (
-                            <Link replace={true} href="/events">
-                                <a className="btn btn-outline-secondary">Все</a>
+                            <Link replace={true} href="/events" shallow>
+                                <a className="btn btn-outline-secondary" onClick={() => setSelectedTypes([])}>
+                                    Все
+                                </a>
                             </Link>
                         )}
                         {types.map((type, i) => {
                             const nextTypes = new Set<EventType>();
 
-                            if (typeof props.types !== 'undefined') {
-                                props.types.forEach(type => nextTypes.add(type));
+                            if (selectedTypes.length != 0) {
+                                selectedTypes.forEach(type => nextTypes.add(type));
                             }
 
                             const isActive = nextTypes.has(type.id);
@@ -84,11 +126,13 @@ const EventsPage: NextFunctionComponent<
                                                   }
                                     })}
                                     key={i}
+                                    shallow
                                 >
                                     <a
                                         className={classNames('btn', 'btn-outline-secondary', {
                                             active: isActive
                                         })}
+                                        onClick={() => handleClick(type)}
                                     >
                                         {type.title}
                                     </a>
@@ -99,7 +143,7 @@ const EventsPage: NextFunctionComponent<
                 </div>
             </div>
             <div className="row my-3">
-                {props.events.map(event => {
+                {filtredEvents.map(event => {
                     return (
                         <div className="col col-12 col-lg-4 my-2" key={event.id}>
                             <EventCard {...event} className="h-100" />
@@ -117,26 +161,7 @@ EventsPage.getInitialProps = async ctx => {
 
     return {
         types,
-        events:
-            typeof types === 'undefined'
-                ? events
-                : events.filter(event =>
-                      types.some(type => {
-                          switch (type) {
-                              case 'frontend':
-                                  return event.name.startsWith('Krasnodar Frontend');
-                              case 'backend':
-                                  return event.name.startsWith('Krasnodar Backend');
-                              case 'python':
-                                  return event.name.startsWith('Krasnodar Python');
-                              case 'conf':
-                                  return event.name.startsWith('Krasnodar Dev Days');
-                              default:
-                                  ((value: never) => value)(type);
-                                  return false;
-                          }
-                      })
-                  )
+        events: events
     };
 };
 
