@@ -28,11 +28,6 @@ const types = [
 
 type EventType = typeof types extends Array<{ id: infer U }> ? U : never;
 
-type TypeObj = {
-    id: 'conf' | 'frontend' | 'backend' | 'python';
-    title: string;
-};
-
 type EventsPageProps = {
     events: Event[];
     types?: EventType[];
@@ -49,38 +44,36 @@ const EventsPage: NextFunctionComponent<
 > = props => {
     const [selectedTypes, setSelectedTypes] = React.useState(props.types ? props.types : []);
 
-    function handleClick(type: TypeObj) {
-        if (selectedTypes.find(el => el.toLowerCase() === type.id.toLowerCase())) {
-            const newTypeSelect = selectedTypes.slice();
-            const indexDelType = newTypeSelect.findIndex(item => item === type.id);
-            newTypeSelect.splice(indexDelType, 1);
-            setSelectedTypes(newTypeSelect);
+    function handleTypeClick(typeid: EventType) {
+        if (selectedTypes.find(el => el === typeid)) {
+            setSelectedTypes(selectedTypes.filter(type => type != typeid));
         } else {
             const newTypeSelect = selectedTypes.slice();
-            newTypeSelect.push(type.id);
+            newTypeSelect.push(typeid);
             setSelectedTypes(newTypeSelect);
         }
     }
 
-    const filtredArray = props.events.filter(event =>
-        selectedTypes.some(type => {
-            switch (type) {
-                case 'frontend':
-                    return event.name.startsWith('Krasnodar Frontend');
-                case 'backend':
-                    return event.name.startsWith('Krasnodar Backend');
-                case 'python':
-                    return event.name.startsWith('Krasnodar Python');
-                case 'conf':
-                    return event.name.startsWith('Krasnodar Dev Days');
-                default:
-                    ((value: never) => value)(name);
-                    return false;
-            }
-        })
-    );
-
-    const filtredEvents = selectedTypes.length > 0 ? filtredArray : props.events;
+    const filtredEvents =
+        selectedTypes.length > 0
+            ? props.events.filter(event =>
+                  selectedTypes.some(type => {
+                      switch (type) {
+                          case 'frontend':
+                              return event.name.startsWith('Krasnodar Frontend');
+                          case 'backend':
+                              return event.name.startsWith('Krasnodar Backend');
+                          case 'python':
+                              return event.name.startsWith('Krasnodar Python');
+                          case 'conf':
+                              return event.name.startsWith('Krasnodar Dev Days');
+                          default:
+                              ((value: never) => value)(name);
+                              return false;
+                      }
+                  })
+              )
+            : props.events;
 
     return (
         <div className="pt-3">
@@ -132,7 +125,7 @@ const EventsPage: NextFunctionComponent<
                                         className={classNames('btn', 'btn-outline-secondary', {
                                             active: isActive
                                         })}
-                                        onClick={() => handleClick(type)}
+                                        onClick={() => handleTypeClick(type.id)}
                                     >
                                         {type.title}
                                     </a>
