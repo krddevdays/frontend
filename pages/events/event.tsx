@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import FormattedDate from '../../components/FormattedDate/FormattedDate';
 import EventPrice, { TicketType } from '../../components/EventPrice/EventPrice';
-import EventLocation, { EventLocationProps } from '../../components/EventLocation/EventLocation';
+import EventLocation, { EventLocationType } from '../../components/EventLocation/EventLocation';
 import * as api from '../../api';
 import Head from 'next/head';
 import TimepadWidget from '../../components/TimepadWidget';
@@ -13,7 +13,7 @@ type Event = {
     startsAt: string;
     descriptionHtml?: string;
     url: string;
-    location: EventLocationProps | undefined;
+    location: EventLocationType | undefined;
     isRegistrationOpened: boolean;
     ticketTypes: TicketType[];
 };

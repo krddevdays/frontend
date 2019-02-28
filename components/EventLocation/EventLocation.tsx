@@ -13,17 +13,21 @@ const MAP_ZOOM = 15;
 const getMapSrc = (lat: number, lng: number) =>
     `https://static-maps.yandex.ru/1.x/?ll=${lat},${lng}&size=300,250&z=${MAP_ZOOM}&l=map&pt=${lat},${lng},org`;
 
-export type EventLocationProps = {
+export type EventLocationType = {
     country: string;
     city: string;
     address: string;
     coordinates: {
-      lat: number,
-      lng: number,
+        lat: number,
+        lng: number,
     };
 };
 
-export default function EventLocation(props: { location: EventLocationProps; }) {
+export type EventLocationProps = {
+    location: EventLocationType;
+};
+
+export default function EventLocation(props: EventLocationProps) {
     const { address, coordinates: { lat, lng } } = props.location;
 
     const [ loaded ] = useScript(`https://api-maps.yandex.ru/2.1/?apikey=${API_KEY}&lang=ru_RU`);
