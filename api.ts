@@ -64,6 +64,15 @@ export type EventResponse = {
     descriptionHtml: string | undefined;
     url: string;
     isRegistrationOpened: boolean;
+    location?: {
+        country: string;
+        city: string;
+        address: string;
+        coordinates: {
+            lat: number;
+            lng: number;
+        };
+    };
     ticketTypes: {
         price: number;
         isActive: boolean;

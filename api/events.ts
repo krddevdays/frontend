@@ -88,6 +88,15 @@ const event = async (id: number): Promise<EventResponse> => {
         descriptionHtml: event.description_html,
         url: event.url,
         isRegistrationOpened: event.registration_data ? event.registration_data.is_registration_open : false,
+        location: event.location && {
+            country: event.location.country,
+            city: event.location.city,
+            address: event.location.address,
+            coordinates: {
+                lng: event.location.coordinates[0],
+                lat: event.location.coordinates[1]
+            }
+        },
         ticketTypes: event.ticket_types
             ? event.ticket_types.map(ticketType => ({
                   price: ticketType.price,
