@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 
 // Hook
 let cachedScripts: string[] = [];
-function useScript(src: string) {
+export default function useScript(src: string) {
+    // Won't load script if it runs not in browser
+    if (!process.browser) {
+        return [false];
+    }
     // Keeping track of script loaded and error state
     const [state, setState] = useState({
         loaded: false,
@@ -64,7 +68,3 @@ function useScript(src: string) {
 
     return [state.loaded, state.error];
 }
-
-export default function (src: string) {
-    return process.browser ? useScript(src) : [ false ];
-};

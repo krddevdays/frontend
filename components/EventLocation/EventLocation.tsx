@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './EventLocation.css';
 import useScript from '../../lib/custom-hooks/useScript';
-
-declare global {
-    interface Window { ymaps: any; }
-}
 
 const API_KEY = '2978e679-01ad-4adc-ad93-65add91ddf25';
 const MAP_ZOOM = 15;
@@ -13,7 +9,7 @@ const MAP_ZOOM = 15;
 const getMapSrc = (lat: number, lng: number) =>
     `https://static-maps.yandex.ru/1.x/?ll=${lat},${lng}&size=300,250&z=${MAP_ZOOM}&l=map&pt=${lat},${lng},org`;
 
-export type EventLocationType = {
+export type EventLocationProps = {
     country: string;
     city: string;
     address: string;
@@ -23,25 +19,24 @@ export type EventLocationType = {
     };
 };
 
-export type EventLocationProps = {
-    location: EventLocationType;
-};
-
 export default function EventLocation(props: EventLocationProps) {
-    const { address, coordinates: { lat, lng } } = props.location;
+    const { address, coordinates: { lat, lng } } = props;
 
     const [ loaded ] = useScript(`https://api-maps.yandex.ru/2.1/?apikey=${API_KEY}&lang=ru_RU`);
-    const [ mapHandle, setMapHandle ] = useState(null);
+    const [ mapInstance, setMapInstance ] = useState<ymaps.Map | undefined>();
+    const mapEl = useRef<HTMLDivElement>(null);
 
-    if (loaded && !mapHandle) {
-        window.ymaps.ready(() => {
-            const map = new window.ymaps.Map('event-location-map', {
-                center: [ lng, lat ],
-                zoom: MAP_ZOOM
-            });
-            const myPlacemark = new window.ymaps.Placemark([ lng, lat ]);
-            map.geoObjects.add(myPlacemark);
-            setMapHandle(map);
+    if (loaded && !mapInstance) {
+        ymaps.ready(() => {
+            if (mapEl.current) {
+                const map = new ymaps.Map(mapEl.current, {
+                    center: [ lng, lat ],
+                    zoom: MAP_ZOOM
+                });
+                const myPlacemark = new ymaps.Placemark([ lng, lat ], {});
+                map.geoObjects.add(myPlacemark);
+                setMapInstance(map);
+            }
         });
     }
 
@@ -54,7 +49,7 @@ export default function EventLocation(props: EventLocationProps) {
                 alt={address}
                 src={getMapSrc(lat, lng)}
             />}
-            {loaded && <div id="event-location-map" className="event-location-map" />}
+            {loaded && <div id="event-location-map" ref={mapEl} className="event-location-map" />}
         </div>
     );
 }
