@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 
 // Hook
 let cachedScripts: string[] = [];
-export default function useScript(src: string) {
+export default function useScript(src: string): [boolean, boolean] {
     // Won't load script if it runs not in browser
     if (!process.browser) {
-        return [false];
+        return [false, false];
     }
     // Keeping track of script loaded and error state
     const [state, setState] = useState({
@@ -13,58 +13,55 @@ export default function useScript(src: string) {
         error: false
     });
 
-    useEffect(
-        () => {
-            // If cachedScripts array already includes src that means another instance ...
-            // ... of this hook already loaded this script, so no need to load again.
-            if (cachedScripts.includes(src)) {
+    useEffect(() => {
+        // If cachedScripts array already includes src that means another instance ...
+        // ... of this hook already loaded this script, so no need to load again.
+        if (cachedScripts.includes(src)) {
+            setState({
+                loaded: true,
+                error: false
+            });
+        } else {
+            cachedScripts.push(src);
+
+            // Create script
+            let script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+
+            // Script event listener callbacks for load and error
+            const onScriptLoad = () => {
                 setState({
                     loaded: true,
                     error: false
                 });
-            } else {
-                cachedScripts.push(src);
+            };
 
-                // Create script
-                let script = document.createElement('script');
-                script.src = src;
-                script.async = true;
+            const onScriptError = () => {
+                // Remove from cachedScripts we can try loading again
+                const index = cachedScripts.indexOf(src);
+                if (index >= 0) cachedScripts.splice(index, 1);
+                script.remove();
 
-                // Script event listener callbacks for load and error
-                const onScriptLoad = () => {
-                    setState({
-                        loaded: true,
-                        error: false
-                    });
-                };
+                setState({
+                    loaded: true,
+                    error: true
+                });
+            };
 
-                const onScriptError = () => {
-                    // Remove from cachedScripts we can try loading again
-                    const index = cachedScripts.indexOf(src);
-                    if (index >= 0) cachedScripts.splice(index, 1);
-                    script.remove();
+            script.addEventListener('load', onScriptLoad);
+            script.addEventListener('error', onScriptError);
 
-                    setState({
-                        loaded: true,
-                        error: true
-                    });
-                };
+            // Add script to document body
+            document.body.appendChild(script);
 
-                script.addEventListener('load', onScriptLoad);
-                script.addEventListener('error', onScriptError);
-
-                // Add script to document body
-                document.body.appendChild(script);
-
-                // Remove event listeners on cleanup
-                return () => {
-                    script.removeEventListener('load', onScriptLoad);
-                    script.removeEventListener('error', onScriptError);
-                };
-            }
-        },
-        [src] // Only re-run effect if script src changes
-    );
+            // Remove event listeners on cleanup
+            return () => {
+                script.removeEventListener('load', onScriptLoad);
+                script.removeEventListener('error', onScriptError);
+            };
+        }
+    }, [src]); // Only re-run effect if script src changes
 
     return [state.loaded, state.error];
 }

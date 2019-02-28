@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './EventLocation.css';
 import useScript from '../../lib/custom-hooks/useScript';
 
@@ -14,42 +14,42 @@ export type EventLocationProps = {
     city: string;
     address: string;
     coordinates: {
-        lat: number,
-        lng: number,
+        lat: number;
+        lng: number;
     };
 };
 
 export default function EventLocation(props: EventLocationProps) {
-    const { address, coordinates: { lat, lng } } = props;
+    const {
+        address,
+        coordinates: { lat, lng }
+    } = props;
 
-    const [ loaded ] = useScript(`https://api-maps.yandex.ru/2.1/?apikey=${API_KEY}&lang=ru_RU`);
-    const [ mapInstance, setMapInstance ] = useState<ymaps.Map | undefined>();
-    const mapEl = useRef<HTMLDivElement>(null);
+    const [loaded] = useScript(`https://api-maps.yandex.ru/2.1/?apikey=${API_KEY}&lang=ru_RU`);
+    const [mapInstance, setMapInstance] = useState<ymaps.Map | undefined>();
+    const mapRef = useRef<HTMLDivElement>(null);
 
-    if (loaded && !mapInstance) {
-        ymaps.ready(() => {
-            if (mapEl.current) {
-                const map = new ymaps.Map(mapEl.current, {
-                    center: [ lng, lat ],
-                    zoom: MAP_ZOOM
-                });
-                const myPlacemark = new ymaps.Placemark([ lng, lat ], {});
-                map.geoObjects.add(myPlacemark);
-                setMapInstance(map);
-            }
-        });
-    }
+    useEffect(() => {
+        if (loaded && !mapInstance) {
+            ymaps.ready(() => {
+                if (mapRef.current) {
+                    const map = new ymaps.Map(mapRef.current, {
+                        center: [lng, lat],
+                        zoom: MAP_ZOOM
+                    });
+                    const myPlacemark = new ymaps.Placemark([lng, lat], {});
+                    map.geoObjects.add(myPlacemark);
+                    setMapInstance(map);
+                }
+            });
+        }
+    }, [loaded, mapInstance]);
 
     return (
         <div className="event-location">
             <small className="address-label text-muted font-italic d-block">{address}</small>
-            {!loaded &&
-            <img
-                className="event-location-map map-image"
-                alt={address}
-                src={getMapSrc(lat, lng)}
-            />}
-            {loaded && <div id="event-location-map" ref={mapEl} className="event-location-map" />}
+            {!loaded && <img className="event-location-map map-image" alt={address} src={getMapSrc(lat, lng)} />}
+            {loaded && <div id="event-location-map" ref={mapRef} className="event-location-map" />}
         </div>
     );
 }
