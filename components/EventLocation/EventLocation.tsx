@@ -7,7 +7,7 @@ declare global {
     interface Window { ymaps: any; }
 }
 
-const API_KEY = '9e9809a5-fd4f-4f84-af9e-c17b2229db12';
+const API_KEY = '2978e679-01ad-4adc-ad93-65add91ddf25';
 const MAP_ZOOM = 15;
 
 const getMapSrc = (lat: number, lng: number) =>

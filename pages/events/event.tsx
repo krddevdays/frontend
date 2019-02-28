@@ -60,7 +60,7 @@ const EventPage: NextFunctionComponent<EventPageProps,
                 {' '}
                 <EventPrice ticketTypes={props.ticketTypes} />
             </div>
-            {props.location !== undefined && <EventLocation location={props.location} />}
+            {props.location && <EventLocation location={props.location} />}
             {props.descriptionHtml && <div dangerouslySetInnerHTML={{ __html: props.descriptionHtml }} />}
         </div>
     );
