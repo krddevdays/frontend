@@ -1,26 +1,25 @@
 import fetch from 'cross-fetch';
 import { format as urlFormat } from 'url';
-import { EventResponse, EventsRequest, EventsResponse } from './typings/timepad';
 import * as express from 'express';
 import * as http from 'http';
-import * as queryString from 'query-string'
+import * as queryString from 'query-string';
 
 function createUrl(context: {
     pathname: string;
     query?: {
-        [key: string]: any
-    },
-    req?: http.IncomingMessage
+        [key: string]: any;
+    };
+    req?: http.IncomingMessage;
 }) {
     const protocol = context.req ? (context.req as express.Request).protocol : window.location.protocol;
     const host = context.req ? context.req.headers.host : window.location.host;
     const url = urlFormat({
         protocol,
         host,
-        pathname: context.pathname,
+        pathname: context.pathname
     });
 
-    if(typeof context.query === 'undefined') {
+    if (typeof context.query === 'undefined') {
         return url;
     }
 
@@ -28,25 +27,26 @@ function createUrl(context: {
         arrayFormat: 'bracket'
     });
 
-    return `${url}?${query}`
+    return `${url}?${query}`;
 }
 
-function fixDatetimeString(value: string) {
-    return value.replace(/(\d{2})(\d{2})$/, '$1:$2');
-}
+export type EventsResponse = {
+    id: number;
+    name: string;
+    startsAt: string;
+    descriptionShort: string | undefined;
+    ticketTypes: {
+        price: number;
+        isActive: boolean;
+        requirePromocode: boolean;
+    }[];
+}[];
 
-export const events = async (req?: http.IncomingMessage) => {
+export const events = async (req?: http.IncomingMessage): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
             req,
-            pathname: '/api/timepad/v1/events',
-            query: {
-                organization_ids: [81520],
-                starts_at_min: new Date(0).toISOString(),
-                fields: ['description_short', 'ticket_types'],
-                limit: 100,
-                sort: ['-starts_at']
-            } as EventsRequest
+            pathname: '/api/events'
         })
     );
 
@@ -54,26 +54,28 @@ export const events = async (req?: http.IncomingMessage) => {
         throw new Error(await response.text());
     }
 
-    const eventsResponse = await (response.json() as Promise<EventsResponse<'description_short' | 'ticket_types'>>);
-
-    return eventsResponse.values.map(event => ({
-        id: event.id,
-        name: event.name,
-        startsAt: fixDatetimeString(event.starts_at),
-        descriptionShort: event.description_short,
-        ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
-            price: ticketType.price,
-            isActive: ticketType.is_active,
-            requirePromocode: ticketType.is_promocode_locked
-        })) : []
-    }));
+    return response.json();
 };
 
-export const event = async (id: number, req?: http.IncomingMessage) => {
+export type EventResponse = {
+    id: number;
+    name: string;
+    startsAt: string;
+    descriptionHtml: string | undefined;
+    url: string;
+    isRegistrationOpened: boolean;
+    ticketTypes: {
+        price: number;
+        isActive: boolean;
+        requirePromocode: boolean;
+    }[];
+};
+
+export const event = async (id: number, req?: http.IncomingMessage): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
             req,
-            pathname: `/api/timepad/v1/events/${id}`
+            pathname: `/api/events/${id}`
         })
     );
 
@@ -81,30 +83,5 @@ export const event = async (id: number, req?: http.IncomingMessage) => {
         throw new Error(await response.text());
     }
 
-    const event = await (response.json() as Promise<EventResponse>);
-
-    if (typeof event.organization === 'undefined' || event.organization.id !== 81520) {
-        throw new Error('Event not found');
-    }
-
-    return {
-        id: event.id,
-        name: event.name,
-        startsAt: fixDatetimeString(event.starts_at),
-        location: event.location && {
-            ...event.location,
-            coordinates: {
-                lng: event.location.coordinates[0],
-                lat: event.location.coordinates[1],
-            },
-        },
-        descriptionHtml: event.description_html,
-        url: event.url,
-        isRegistrationOpened: event.registration_data ? event.registration_data.is_registration_open : false,
-        ticketTypes: event.ticket_types ? event.ticket_types.map(ticketType => ({
-            price: ticketType.price,
-            isActive: ticketType.is_active,
-            requirePromocode: ticketType.is_promocode_locked
-        })) : []
-    };
+    return response.json();
 };

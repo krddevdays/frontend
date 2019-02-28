@@ -7,7 +7,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import * as url from 'url';
 
-const types = [
+const typesConfig = [
     {
         id: 'conf' as 'conf',
         title: 'Conf'
@@ -26,11 +26,11 @@ const types = [
     }
 ];
 
-type EventType = typeof types extends Array<{ id: infer U }> ? U : never;
+type EventType = typeof typesConfig extends Array<{ id: infer U }> ? U : never;
 
 type EventsPageProps = {
     events: Event[];
-    types?: EventType[];
+    types: EventType[];
 };
 
 const EventsPage: NextFunctionComponent<
@@ -42,6 +42,29 @@ const EventsPage: NextFunctionComponent<
         };
     }
 > = props => {
+    const [types, setTypes] = React.useState(props.types ? props.types : []);
+
+    const events =
+        types.length > 0
+            ? props.events.filter(event =>
+                  types.some(type => {
+                      switch (type) {
+                          case 'frontend':
+                              return event.name.startsWith('Krasnodar Frontend');
+                          case 'backend':
+                              return event.name.startsWith('Krasnodar Backend');
+                          case 'python':
+                              return event.name.startsWith('Krasnodar Python');
+                          case 'conf':
+                              return event.name.startsWith('Krasnodar Dev Days');
+                          default:
+                              ((value: never) => value)(name);
+                              return false;
+                      }
+                  })
+              )
+            : props.events;
+
     return (
         <div className="pt-3">
             <Head>
@@ -53,23 +76,25 @@ const EventsPage: NextFunctionComponent<
             <div className="row my-3">
                 <div className="col col-12">
                     <div className="btn-group" role="group">
-                        {typeof props.types === 'undefined' ? (
+                        {types.length === 0 ? (
                             <span className="btn btn-outline-secondary active">Все</span>
                         ) : (
-                            <Link replace={true} href="/events">
-                                <a className="btn btn-outline-secondary">Все</a>
+                            <Link replace={true} href="/events" shallow>
+                                <a className="btn btn-outline-secondary" onClick={() => setTypes([])}>
+                                    Все
+                                </a>
                             </Link>
                         )}
-                        {types.map((type, i) => {
+                        {typesConfig.map((item, i) => {
                             const nextTypes = new Set<EventType>();
 
-                            if (typeof props.types !== 'undefined') {
-                                props.types.forEach(type => nextTypes.add(type));
+                            if (types.length != 0) {
+                                types.forEach(type => nextTypes.add(type));
                             }
 
-                            const isActive = nextTypes.has(type.id);
+                            const isActive = nextTypes.has(item.id);
 
-                            nextTypes[isActive ? 'delete' : 'add'](type.id);
+                            nextTypes[isActive ? 'delete' : 'add'](item.id);
 
                             return (
                                 <Link
@@ -77,20 +102,30 @@ const EventsPage: NextFunctionComponent<
                                     href={url.format({
                                         pathname: '/events',
                                         query:
-                                            nextTypes.size === types.length
+                                            nextTypes.size === typesConfig.length
                                                 ? undefined
                                                 : {
                                                       types: Array.from(nextTypes)
                                                   }
                                     })}
                                     key={i}
+                                    shallow
                                 >
                                     <a
                                         className={classNames('btn', 'btn-outline-secondary', {
                                             active: isActive
                                         })}
+                                        onClick={() => {
+                                            if (types.find(el => el === item.id)) {
+                                                setTypes(types.filter(type => type != item.id));
+                                            } else {
+                                                const newTypeSelect = types.slice();
+                                                newTypeSelect.push(item.id);
+                                                setTypes(newTypeSelect);
+                                            }
+                                        }}
                                     >
-                                        {type.title}
+                                        {item.title}
                                     </a>
                                 </Link>
                             );
@@ -99,7 +134,7 @@ const EventsPage: NextFunctionComponent<
                 </div>
             </div>
             <div className="row my-3">
-                {props.events.map(event => {
+                {events.map(event => {
                     return (
                         <div className="col col-12 col-lg-4 my-2" key={event.id}>
                             <EventCard {...event} className="h-100" />
@@ -112,31 +147,12 @@ const EventsPage: NextFunctionComponent<
 };
 
 EventsPage.getInitialProps = async ctx => {
-    const types = typeof ctx.query.types === 'string' ? [ctx.query.types] : ctx.query.types;
+    const types = typeof ctx.query.types === 'string' ? [ctx.query.types] : ctx.query.types || [];
     const events = await api.events(ctx.req);
 
     return {
-        types,
-        events:
-            typeof types === 'undefined'
-                ? events
-                : events.filter(event =>
-                      types.some(type => {
-                          switch (type) {
-                              case 'frontend':
-                                  return event.name.startsWith('Krasnodar Frontend');
-                              case 'backend':
-                                  return event.name.startsWith('Krasnodar Backend');
-                              case 'python':
-                                  return event.name.startsWith('Krasnodar Python');
-                              case 'conf':
-                                  return event.name.startsWith('Krasnodar Dev Days');
-                              default:
-                                  ((value: never) => value)(type);
-                                  return false;
-                          }
-                      })
-                  )
+        types: types.filter(type => typesConfig.filter(item => item.id === type)),
+        events
     };
 };
 
