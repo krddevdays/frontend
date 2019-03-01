@@ -59,7 +59,7 @@ const IndexPage: NextFunctionComponent = () => {
             <div className="container mb-3">
                 <h2 className="h3 border-bottom pb-3 mb-4">Кто организаторы?</h2>
                 <div className="row">
-                    <figure className="figure col-6 col-md-4 col-lg-2 col-xl-2">
+                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
                         <img
                             src="https://via.placeholder.com/180x230"
                             className="figure-img img-fluid rounded"
@@ -77,7 +77,7 @@ const IndexPage: NextFunctionComponent = () => {
                             главный помощник по всему
                         </figcaption>
                     </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-2 col-xl-2">
+                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
                         <img
                             src="https://via.placeholder.com/180x230"
                             className="figure-img img-fluid rounded"
@@ -94,7 +94,7 @@ const IndexPage: NextFunctionComponent = () => {
                             организатор митапов «Krasnodar Frontend»
                         </figcaption>
                     </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-2 col-xl-2">
+                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
                         <img
                             src="https://via.placeholder.com/180x230"
                             className="figure-img img-fluid rounded"
@@ -111,7 +111,7 @@ const IndexPage: NextFunctionComponent = () => {
                             организатор митапов «Krasnodar Backend»
                         </figcaption>
                     </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-2 col-xl-2">
+                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
                         <img
                             src="https://via.placeholder.com/180x230"
                             className="figure-img img-fluid rounded"
@@ -128,7 +128,7 @@ const IndexPage: NextFunctionComponent = () => {
                             организатор митапов «Krasnodar Python»
                         </figcaption>
                     </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-2 col-xl-2">
+                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
                         <img
                             src="https://via.placeholder.com/180x230"
                             className="figure-img img-fluid rounded"
@@ -158,26 +158,27 @@ const IndexPage: NextFunctionComponent = () => {
                         </p>
                         <p>
                             Если ты хотите задать вопрос организаторам, пообщаться с коллегами или поделиться опытом, у
-                            нас есть общий чат [@krddevdays_chat](t.me/krddevdays_chat) и следующие чаты по интересам:
+                            нас есть общий чат <a href="http://t.me/krddevdays_chat">@krddevdays_chat</a> и следующие
+                            чаты по интересам:
                         </p>
                         <ul>
                             <li>
                                 <a href="http://t.me/krdfrontend">@krdfrontend</a> для frontend-разработчиков;
                             </li>
                             <li>
-                                <a href="http://t.me/krdbackend">@krdbackend</a> для backend-разработчиков
+                                <a href="http://t.me/krdbackend">@krdbackend</a> для backend-разработчиков;
                             </li>
                             <li>
-                                <a href="http://t.me/pythonkrd">@pythonkrd</a> для python-разработчиков
+                                <a href="http://t.me/pythonkrd">@pythonkrd</a> для python-разработчиков;
                             </li>
                             <li>
-                                <a href="http://t.me/krdQA">@krdQA</a> для QA-инженеров
+                                <a href="http://t.me/krdQA">@krdQA</a> для QA-инженеров;
                             </li>
                             <li>
-                                <a href="http://t.me/golangkrasnodar">@golangkrasnodar</a> для Go-разработчиков
+                                <a href="http://t.me/golangkrasnodar">@golangkrasnodar</a> для Go-разработчиков;
                             </li>
                             <li>
-                                <a href="http://t.me/rubykrd">@rubykrd</a> для Ruby-разработчиков
+                                <a href="http://t.me/rubykrd">@rubykrd</a> для Ruby-разработчиков;
                             </li>
                         </ul>
                         <p>
@@ -198,7 +199,7 @@ const IndexPage: NextFunctionComponent = () => {
                         </p>
                     </div>
 
-                    <div>
+                    <div className="col">
                         <p>
                             Подключайтесь, общайтесь, приходите на наши мероприятия, участвуйте в жизни сообщества,{' '}
                             <a href="https://connect.yandex.ru/forms/5adc61cf6162d77e2714831c/">становитесь спикером</a>{' '}
