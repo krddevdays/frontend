@@ -1,6 +1,56 @@
 import * as React from 'react';
 import { NextFunctionComponent } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
+
+const organizators = [
+    {
+        name: 'Михаил Скворцов',
+        role: 'Сооснователь сообщества, главный помощник по всему.',
+        link: 'https://vk.com/mmskvortsov',
+        img: 'https://via.placeholder.com/180x230'
+    },
+    {
+        name: 'Николай Марченко',
+        role: 'Организатор митапов «Krasnodar Frontend».',
+        link: 'https://vk.com/n30n1ck',
+        img: 'https://via.placeholder.com/180x230'
+    },
+    {
+        name: 'Иван Муратов',
+        role: 'Организатор митапов «Krasnodar Backend».',
+        link: 'https://vk.com/binakot',
+        img: 'https://via.placeholder.com/180x230'
+    },
+    {
+        name: 'Виктор Тыщенко',
+        role: 'Организатор митапов «Krasnodar Python.',
+        link: 'https://vk.com/tyvik',
+        img: 'https://via.placeholder.com/180x230'
+    },
+    {
+        name: 'Марк Ланговой',
+        role: 'Основатель сообщества, организатор конференций «Krasnodar Dev Days»',
+        link: 'https://vk.com/marklangovoi',
+        img: 'https://via.placeholder.com/180x230'
+    }
+];
+
+const getOrgsData = organizators.map(org => {
+    return (
+        <div className="card mb-3">
+            <img src={org.img} alt={org.name} />
+            <div className="card-body">
+                <h4 className="card-title">
+                    <a href={org.link} target="_blank" rel="noopeneer">
+                        {org.name}
+                    </a>
+                </h4>
+                <p className="card-text">{org.role}</p>
+            </div>
+        </div>
+    );
+});
 
 const IndexPage: NextFunctionComponent = () => {
     return (
@@ -36,19 +86,32 @@ const IndexPage: NextFunctionComponent = () => {
                         <p>Проводим конференции и митапы:</p>
                         <ul>
                             <li>
-                                Конференции «<a href="/events?types=conf">Krasnodar Dev Days</a>» с докладами о разных
-                                сторонах разработки;
+                                Конференции «
+                                <Link href={`/events?types=conf`}>
+                                    <a>Krasnodar Dev Days</a>
+                                </Link>
+                                » с докладами о разных сторонах разработки;
                             </li>
                             <li>
-                                Митапы «<a href="/events?types=frontend">Krasnodar Frontend</a>» для front-end
-                                разработчиков;
+                                Митапы «
+                                <Link href={`/events?types=frontend`}>
+                                    <a>Krasnodar Frontend</a>
+                                </Link>
+                                » для front-end разработчиков;
                             </li>
                             <li>
-                                Митапы «<a href="/events?types=backend">Krasnodar Backend</a>» для back-end
-                                разработчиков;
+                                Митапы «
+                                <Link href={`/events?types=backend`}>
+                                    <a>Krasnodar Backend</a>
+                                </Link>
+                                » для back-end разработчиков;
                             </li>
                             <li>
-                                Митапы «<a href="/events?types=backend">Krasnodar Python</a>» для python разработчиков.
+                                Митапы «
+                                <Link href={`/events?types=python`}>
+                                    <a>Krasnodar Python</a>
+                                </Link>
+                                » для python разработчиков.
                             </li>
                         </ul>
                     </div>
@@ -57,94 +120,8 @@ const IndexPage: NextFunctionComponent = () => {
 
             <div className="container mb-3">
                 <h2 className="h3 border-bottom pb-3 mb-4">Кто организаторы?</h2>
-                <div className="row">
-                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
-                        <img
-                            src="https://via.placeholder.com/180x230"
-                            className="figure-img img-fluid rounded"
-                            alt="..."
-                        />
-                        <figcaption className="figure-caption">
-                            <h4>
-                                <a href="https://vk.com/mmskvortsov" target="_blank" rel="noopeneer">
-                                    Михаил
-                                    <br />
-                                    Скворцов
-                                </a>
-                            </h4>
-                            сооснователь сообщества, <br />
-                            главный помощник по всему
-                        </figcaption>
-                    </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
-                        <img
-                            src="https://via.placeholder.com/180x230"
-                            className="figure-img img-fluid rounded"
-                            alt="..."
-                        />
-                        <figcaption className="figure-caption">
-                            <h4>
-                                <a href="https://vk.com/n30n1ck" target="_blank" rel="noopeneer">
-                                    Николай
-                                    <br />
-                                    Марченко
-                                </a>
-                            </h4>
-                            организатор митапов «Krasnodar Frontend»
-                        </figcaption>
-                    </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
-                        <img
-                            src="https://via.placeholder.com/180x230"
-                            className="figure-img img-fluid rounded"
-                            alt="..."
-                        />
-                        <figcaption className="figure-caption">
-                            <h4>
-                                <a href="https://vk.com/binakot" target="_blank" rel="noopeneer">
-                                    Иван
-                                    <br />
-                                    Муратов
-                                </a>
-                            </h4>
-                            организатор митапов «Krasnodar Backend»
-                        </figcaption>
-                    </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
-                        <img
-                            src="https://via.placeholder.com/180x230"
-                            className="figure-img img-fluid rounded"
-                            alt="..."
-                        />
-                        <figcaption className="figure-caption">
-                            <h4>
-                                <a href="https://vk.com/tyvik" target="_blank" rel="noopeneer">
-                                    Виктор
-                                    <br />
-                                    Тыщенко
-                                </a>
-                            </h4>
-                            организатор митапов «Krasnodar Python»
-                        </figcaption>
-                    </figure>
-                    <figure className="figure col-6 col-md-4 col-lg-4 col-xl">
-                        <img
-                            src="https://via.placeholder.com/180x230"
-                            className="figure-img img-fluid rounded"
-                            alt="..."
-                        />
-                        <figcaption className="figure-caption">
-                            <h4>
-                                <a href="https://vk.com/marklangovoi" target="_blank" rel="noopeneer">
-                                    Марк
-                                    <br />
-                                    Ланговой
-                                </a>
-                            </h4>
-                            основатель сообщества, организатор конференций «Krasnodar Dev Days»
-                        </figcaption>
-                    </figure>
-                </div>
+
+                <div className="card-deck">{getOrgsData}</div>
             </div>
 
             <div className="container">
