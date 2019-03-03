@@ -6,33 +6,33 @@ import Link from 'next/link';
 const orgs = [
     {
         name: 'Михаил Скворцов',
-        description: 'Сооснователь сообщества, главный помощник по всему.',
+        description: 'Сооснователь сообщества, главный помощник по всему',
         link: 'https://vk.com/mmskvortsov',
-        img: 'https://via.placeholder.com/220x230'
+        img: 'https://via.placeholder.com/230x230'
     },
     {
         name: 'Николай Марченко',
-        description: 'Организатор митапов «Krasnodar Frontend».',
+        description: 'Организатор митапов «Krasnodar Frontend»',
         link: 'https://vk.com/n30n1ck',
-        img: 'https://via.placeholder.com/220x230'
+        img: 'https://via.placeholder.com/230x230'
     },
     {
         name: 'Иван Муратов',
-        description: 'Организатор митапов «Krasnodar Backend».',
+        description: 'Организатор митапов «Krasnodar Backend»',
         link: 'https://vk.com/binakot',
-        img: 'https://via.placeholder.com/220x230'
+        img: 'https://via.placeholder.com/230x230'
     },
     {
         name: 'Виктор Тыщенко',
-        description: 'Организатор митапов «Krasnodar Python.',
+        description: 'Организатор митапов «Krasnodar Python»',
         link: 'https://vk.com/tyvik',
-        img: 'https://via.placeholder.com/220x230'
+        img: 'https://via.placeholder.com/230x230'
     },
     {
         name: 'Марк Ланговой',
         description: 'Основатель сообщества, организатор конференций «Krasnodar Dev Days»',
         link: 'https://vk.com/marklangovoi',
-        img: 'https://via.placeholder.com/220x230'
+        img: 'https://via.placeholder.com/230x230'
     }
 ];
 
@@ -97,14 +97,25 @@ const IndexPage: NextFunctionComponent = () => {
                 </div>
             </div>
 
-            <div className="mb-3">
+            <div className="container">
                 <h2 className="h3 border-bottom pb-3 mb-4">Кто организаторы?</h2>
-
-                <div className="d-flex flex-row flex-nowrap overflow-auto">
-                    {orgs.map((org, index) => {
-                        return (
-                            <div className="card mb-3 mr-3" key={index} style={{ minWidth: 200, maxWidth: 200 }}>
-                                <img src={org.img} alt={org.name} />
+            </div>
+            <div
+                className="mx-n4 overflow-auto"
+                style={{
+                    WebkitOverflowScrolling: 'touch'
+                }}
+            >
+                <div className="container">
+                    <div className="d-flex flex-row flex-nowrap" style={{ overflow: 'visible' }}>
+                        <div className="pr-4" />
+                        {orgs.map((org, index) => (
+                            <div
+                                className="card mb-3 mr-3 flex-grow-0 flex-shrink-0 flex"
+                                key={index}
+                                style={{ width: 230 }}
+                            >
+                                <img src={org.img} alt={org.name} className="card-img-top" />
                                 <div className="card-body">
                                     <h4 className="h5 card-title">
                                         <a href={org.link} target="_blank" rel="noopeneer">
@@ -114,8 +125,9 @@ const IndexPage: NextFunctionComponent = () => {
                                     <p className="card-text">{org.description}</p>
                                 </div>
                             </div>
-                        );
-                    })}
+                        ))}
+                        <div className="pr-4" />
+                    </div>
                 </div>
             </div>
 
