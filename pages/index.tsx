@@ -4,40 +4,27 @@ import Head from 'next/head';
 import Link from 'next/link';
 import classNames from 'classnames';
 
-const orgs = [
-    {
-        name: 'Михаил Скворцов',
-        description: 'Сооснователь сообщества, главный помощник по всему',
-        link: 'https://vk.com/mmskvortsov',
-        img: '/misha.jpg'
-    },
-    {
-        name: 'Николай Марченко',
-        description: 'Организатор митапов «Krasnodar Frontend»',
-        link: 'https://vk.com/n30n1ck',
-        img: '/nick.jpg'
-    },
-    {
-        name: 'Иван Муратов',
-        description: 'Организатор митапов «Krasnodar Backend»',
-        link: 'https://vk.com/binakot',
-        img: '/ivan.jpg'
-    },
-    {
-        name: 'Виктор Тыщенко',
-        description: 'Организатор митапов «Krasnodar Python»',
-        link: 'https://vk.com/tyvik',
-        img: '/viktor.jpg'
-    },
-    {
-        name: 'Марк Ланговой',
-        description: 'Основатель сообщества, организатор конференций «Krasnodar Dev Days»',
-        link: 'https://vk.com/marklangovoi',
-        img: '/mark.jpg'
+function shuffle<T>(array: T[]): T[] {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-];
 
-const IndexPage: NextFunctionComponent = () => {
+    return array;
+}
+
+type Org = {
+    name: string;
+    description: string;
+    link: string;
+    img: string;
+};
+
+type IndexPageProps = {
+    orgs: Org[];
+};
+
+const IndexPage: NextFunctionComponent<IndexPageProps> = ({ orgs }) => {
     return (
         <div className="pt-3">
             <Head>
@@ -271,5 +258,40 @@ const IndexPage: NextFunctionComponent = () => {
         </div>
     );
 };
+
+IndexPage.getInitialProps = () => ({
+    orgs: shuffle([
+        {
+            name: 'Михаил Скворцов',
+            description: 'Сооснователь сообщества, главный помощник по всему',
+            link: 'https://vk.com/mmskvortsov',
+            img: '/misha.jpg'
+        },
+        {
+            name: 'Николай Марченко',
+            description: 'Организатор митапов «Krasnodar Frontend»',
+            link: 'https://vk.com/n30n1ck',
+            img: '/nick.jpg'
+        },
+        {
+            name: 'Иван Муратов',
+            description: 'Организатор митапов «Krasnodar Backend»',
+            link: 'https://vk.com/binakot',
+            img: '/ivan.jpg'
+        },
+        {
+            name: 'Виктор Тыщенко',
+            description: 'Организатор митапов «Krasnodar Python»',
+            link: 'https://vk.com/tyvik',
+            img: '/viktor.jpg'
+        },
+        {
+            name: 'Марк Ланговой',
+            description: 'Основатель сообщества, организатор конференций «Krasnodar Dev Days»',
+            link: 'https://vk.com/marklangovoi',
+            img: '/mark.jpg'
+        }
+    ])
+});
 
 export default IndexPage;
