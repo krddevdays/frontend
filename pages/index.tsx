@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NextFunctionComponent } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import classNames from 'classnames';
 
 const orgs = [
     {
@@ -107,15 +108,22 @@ const IndexPage: NextFunctionComponent = () => {
                 }}
             >
                 <div className="container">
-                    <div className="d-flex flex-row flex-nowrap" style={{ overflow: 'visible' }}>
-                        <div className="pr-4" />
+                    <div className="d-flex flex-row flex-nowrap">
                         {orgs.map((org, index) => (
                             <div
-                                className="card mb-3 mr-3 flex-grow-0 flex-shrink-0 flex"
+                                className={classNames('card mb-3 flex-grow-0 flex-shrink-0 flex', {
+                                    'mr-3': index + 1 !== orgs.length
+                                })}
                                 key={index}
-                                style={{ width: 230 }}
+                                style={{ width: 240 }}
                             >
-                                <img src={org.img} alt={org.name} className="card-img-top" />
+                                <img
+                                    src={org.img}
+                                    alt={org.name}
+                                    className="card-img-top"
+                                    width="240px"
+                                    height="240px"
+                                />
                                 <div className="card-body">
                                     <h4 className="h5 card-title">
                                         <a href={org.link} target="_blank" rel="noopeneer">
@@ -126,7 +134,7 @@ const IndexPage: NextFunctionComponent = () => {
                                 </div>
                             </div>
                         ))}
-                        <div className="pr-4" />
+                        <div style={{ paddingRight: 15 }} />
                     </div>
                 </div>
             </div>
