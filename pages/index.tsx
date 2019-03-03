@@ -179,7 +179,7 @@ const IndexPage: NextFunctionComponent = () => {
                                 <a href="http://t.me/rubykrd" target="_blank" rel="noopeneer">
                                     @rubykrd
                                 </a>{' '}
-                                для Ruby-разработчиков;
+                                для Ruby-разработчиков.
                             </li>
                         </ul>
                         <p>
@@ -240,14 +240,14 @@ const IndexPage: NextFunctionComponent = () => {
 
                     <div className="col">
                         <p>
-                            Подключайтесь, общайтесь, приходите на наши мероприятия, участвуйте в жизни сообщества,
+                            Подключайтесь, общайтесь, приходите на наши мероприятия, участвуйте в жизни сообщества,{' '}
                             <a
                                 href="https://connect.yandex.ru/forms/5adc61cf6162d77e2714831c/"
                                 target="_blank"
                                 rel="noopeneer"
                             >
                                 становитесь спикером
-                            </a>
+                            </a>{' '}
                             и развивайтесь!
                         </p>
                     </div>
