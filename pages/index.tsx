@@ -97,13 +97,13 @@ const IndexPage: NextFunctionComponent = () => {
                 </div>
             </div>
 
-            <div className="container mb-3">
+            <div className="mb-3">
                 <h2 className="h3 border-bottom pb-3 mb-4">Кто организаторы?</h2>
 
                 <div className="d-flex flex-row flex-nowrap overflow-auto">
                     {orgs.map((org, index) => {
                         return (
-                            <div className="card mb-3 mr-3" key={index} style={{ minWidth: 210, maxWidth: 210 }}>
+                            <div className="card mb-3 mr-3" key={index} style={{ minWidth: 200, maxWidth: 200 }}>
                                 <img src={org.img} alt={org.name} />
                                 <div className="card-body">
                                     <h4 className="h5 card-title">
