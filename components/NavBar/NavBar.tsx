@@ -1,14 +1,15 @@
 import * as React from 'react';
-import './NavBar.css';
 import NavLink from '../NavLink/NavLink';
-import { Calendar } from 'react-feather';
+import MenuProvider from '../Menu';
 import classNames from 'classnames';
+
+import './NavBar.css';
 
 export default function NavBar() {
     const [isMenuOpen, changeMenuOpen] = React.useState(false);
+    const { menu } = React.useContext(MenuProvider);
 
-    function handleClickMenu(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
+    function handleClickMenu() {
         changeMenuOpen(!isMenuOpen);
     }
 
@@ -35,14 +36,21 @@ export default function NavBar() {
                 })}
                 id="mobileMenu"
             >
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <NavLink href="/events" className="nav-link" activeClassName="active">
-                            <Calendar className="feather" />
-                            События
-                        </NavLink>
-                    </li>
-                </ul>
+                {menu.map(item => (
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <NavLink
+                                href={item.href}
+                                onClick={handleClickMenu}
+                                className="nav-link"
+                                activeClassName="active"
+                            >
+                                {item.icon}
+                                {item.title}
+                            </NavLink>
+                        </li>
+                    </ul>
+                ))}
             </div>
         </nav>
     );
