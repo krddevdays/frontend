@@ -9,31 +9,31 @@ const orgs = [
         name: 'Михаил Скворцов',
         description: 'Сооснователь сообщества, главный помощник по всему',
         link: 'https://vk.com/mmskvortsov',
-        img: 'https://via.placeholder.com/230x230'
+        img: '/misha.jpg'
     },
     {
         name: 'Николай Марченко',
         description: 'Организатор митапов «Krasnodar Frontend»',
         link: 'https://vk.com/n30n1ck',
-        img: 'https://via.placeholder.com/230x230'
+        img: '/nick.jpg'
     },
     {
         name: 'Иван Муратов',
         description: 'Организатор митапов «Krasnodar Backend»',
         link: 'https://vk.com/binakot',
-        img: 'https://via.placeholder.com/230x230'
+        img: '/ivan.jpg'
     },
     {
         name: 'Виктор Тыщенко',
         description: 'Организатор митапов «Krasnodar Python»',
         link: 'https://vk.com/tyvik',
-        img: 'https://via.placeholder.com/230x230'
+        img: '/viktor.jpg'
     },
     {
         name: 'Марк Ланговой',
         description: 'Основатель сообщества, организатор конференций «Krasnodar Dev Days»',
         link: 'https://vk.com/marklangovoi',
-        img: 'https://via.placeholder.com/230x230'
+        img: '/mark.jpg'
     }
 ];
 
