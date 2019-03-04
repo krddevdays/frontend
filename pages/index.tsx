@@ -270,13 +270,13 @@ IndexPage.getInitialProps = () => ({
         {
             name: 'Николай Марченко',
             description: 'Организатор митапов «Krasnodar Frontend»',
-            link: 'https://vk.com/n30n1ck',
+            link: 'https://twitter.com/neonick',
             img: '/nick.jpg'
         },
         {
             name: 'Иван Муратов',
             description: 'Организатор митапов «Krasnodar Backend»',
-            link: 'https://vk.com/binakot',
+            link: 'https://twitter.com/binakot',
             img: '/ivan.jpg'
         },
         {
