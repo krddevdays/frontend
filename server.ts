@@ -15,6 +15,8 @@ function errorHandler(error: Error, _: express.Request, res: express.Response, _
 app.prepare().then(() => {
     const server = express();
 
+    server.use(express.static('static'));
+
     server.use('/api/events', events).use(errorHandler);
 
     server.get('/events/:id', (req, res) => {
