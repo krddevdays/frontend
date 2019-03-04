@@ -20,44 +20,47 @@ type Event = {
 
 type EventPageProps = Event;
 
-const EventPage: NextFunctionComponent<EventPageProps,
+const EventPage: NextFunctionComponent<
+    EventPageProps,
     EventPageProps,
     NextContext & {
-    query: {
-        id: number;
-    };
-}> = props => {
+        query: {
+            id: number;
+        };
+    }
+> = props => {
     const startsAt = new Date(props.startsAt);
 
     return (
-        <div className="pt-3">
+        <div className="container pt-3">
             <Head>
                 <title>{props.name}</title>
             </Head>
-            <div
-                className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <h1 className="h2">{props.name}</h1>
                 <div className="btn-toolbar mb-2 mb-md-0 ml-2">
-                    {props.isRegistrationOpened ?
+                    {props.isRegistrationOpened ? (
                         <React.Fragment>
                             <TimepadWidget id={props.id} />
-                            <a target="_blank" href={props.url}
-                               className="btn btn-sm btn-outline-secondary timepad-widget-button">
+                            <a
+                                target="_blank"
+                                href={props.url}
+                                className="btn btn-sm btn-outline-secondary timepad-widget-button"
+                            >
                                 Зарегистрироваться
                             </a>
                         </React.Fragment>
-                        :
+                    ) : (
                         <button disabled className="btn btn-sm btn-outline-secondary">
                             Зарегистрироваться
                         </button>
-                    }
+                    )}
                 </div>
             </div>
             <div>
                 <small className="text-muted">
                     <FormattedDate value={startsAt} />
-                </small>
-                {' '}
+                </small>{' '}
                 <EventPrice ticketTypes={props.ticketTypes} />
             </div>
             {props.location && <EventLocation {...props.location} />}

@@ -66,7 +66,7 @@ const EventsPage: NextFunctionComponent<
             : props.events;
 
     return (
-        <div className="pt-3">
+        <div className="container pt-3">
             <Head>
                 <title>События</title>
             </Head>
@@ -136,7 +136,7 @@ const EventsPage: NextFunctionComponent<
             <div className="row my-3">
                 {events.map(event => {
                     return (
-                        <div className="col col-12 col-lg-4 my-2" key={event.id}>
+                        <div className="col col-12 col-lg-6 col-xl-4 my-2" key={event.id}>
                             <EventCard {...event} className="h-100" />
                         </div>
                     );
