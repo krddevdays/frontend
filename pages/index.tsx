@@ -44,7 +44,12 @@ const IndexPage: NextFunctionComponent<IndexPageProps> = ({ orgs }) => {
                             разработке.
                         </p>
                         <div className="embed-responsive embed-responsive-16by9 mb-3">
-                            <iframe src="https://www.youtube.com/embed/IKiPtJEBWXE" frameBorder="0" allowFullScreen />
+                            <iframe
+                                className="embed-responsive-item"
+                                src="https://www.youtube.com/embed/IKiPtJEBWXE"
+                                frameBorder="0"
+                                allowFullScreen
+                            />
                         </div>
                     </div>
 
