@@ -1,0 +1,38 @@
+version: 2.1
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7.14
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and push docker image
+          command: |
+            CONTAINER_NAME_LATEST=$DOCKER_IMAGE_NAME:latest
+            echo $CONTAINER_NAME_LATEST
+            if [ ! -z $CIRCLE_TAG ]; then CONTAINER_NAME_TAG=$DOCKER_IMAGE_NAME:$CIRCLE_TAG; fi
+            echo $CONTAINER_NAME_TAG
+            if [ ! -z $CIRCLE_BRANCH ]; then CONTAINER_NAME_BRANCH=$DOCKER_IMAGE_NAME:$CIRCLE_BRANCH; fi
+            echo $CONTAINER_NAME_BRANCH
+            if [ ! -z $CIRCLE_SHA1 ]; then CONTAINER_NAME_SHA=$DOCKER_IMAGE_NAME:$(echo $CIRCLE_SHA1  | awk '{ string=substr($0, 0, 7); print string; }'); fi
+            echo $CONTAINER_NAME_SHA
+            echo "Building images"
+            docker build    $([ "${BRANCH_NAME}" = "master" ] && echo "-t $CONTAINER_NAME_LATEST") \
+                            $([ ! -z $CONTAINER_NAME_TAG ] && echo "-t $CONTAINER_NAME_TAG") \
+                            $([ ! -z $CONTAINER_NAME_BRANCH ] && echo "-t $CONTAINER_NAME_BRANCH") \
+                            $([ ! -z $CONTAINER_NAME_SHA ] && echo "-t $CONTAINER_NAME_SHA") \
+                            . || exit 1
+            echo "Logging in"
+            echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin || exit 1
+            echo "Pushing images"
+            if [ "${BRANCH_NAME}" = "master" ]; then docker push $CONTAINER_NAME_LATEST || exit 1 ; fi
+            if [ ! -z $CONTAINER_NAME_TAG ]; then docker push $CONTAINER_NAME_TAG || exit 1 ; fi
+            if [ ! -z $CONTAINER_NAME_BRANCH ]; then docker push $CONTAINER_NAME_BRANCH || exit 1 ; fi
+            if [ ! -z $CONTAINER_NAME_SHA ]; then docker push $CONTAINER_NAME_SHA || exit 1 ; fi
