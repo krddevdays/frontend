@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - 8.15.0
+
+env:
+  global:
+    - secure: bCnOHHtrtao6+27AoKi+sg4PQriwot8hCXCqg3DQtWB90D+0wqCFPa780qLPi747n/bwKg+SQlSH6/xu89pEVYz6Ii95uR4zRcxCqH9HaxVikSPvoLf113R5q5EkGVq3V+ww/i9sG/WGQujhX61g6EIaOoSQr83DFsf5lFR22tAzm77ORftdX+UVsPtg38afQeMugzrU7+ZoK/T3DNyEq9ADRbS6/SPTTWqGXVfG69lSLFwA9QZc306VCjApEfnd6UsGh4nfeJAXmAS7yUYODFvHjn+8sGYutPdzl/R7eHoRSKV0xUMEU3iRHHEsq7z51kts8/Sbx/bNGxuam+Ktng==
+    - PT_UPLOAD: true
+
+build:
+  cache: true
+  cache_dir_list:
+    - $SHIPPABLE_BUILD_DIR/node_modules
+  ci:
+    - NODE_ENV=production npm ci
+    - npm run build

@@ -8,6 +8,7 @@
         "start": "cross-env NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server.js"
     },
     "dependencies": {
+        "@packtracker/webpack-plugin": "^2.0.0",
         "@types/classnames": "^2.2.7",
         "@types/express": "^4.16.1",
         "@types/http-proxy-middleware": "^0.19.2",
