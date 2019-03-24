@@ -1,4 +1,4 @@
-FROM node:carbon-alpine
+FROM node:carbon-slim
 
 EXPOSE 3000
 WORKDIR /usr/src/krddevdays
