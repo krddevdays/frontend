@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import './EventLocation.css';
-import useScript from '../../lib/custom-hooks/useScript';
+import useScript from '../../hooks/useScript';
 
 const API_KEY = '2978e679-01ad-4adc-ad93-65add91ddf25';
 const MAP_ZOOM = 15;

@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
-        "outDir": "./dist",
+        "outDir": "../dist",
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
         "target": "esnext",
         "module": "commonjs",
-        "lib": ["dom", "es2017"]
+        "lib": ["dom", "es2017", "es2018"],
+        "typeRoots": ["../typings", "../node_modules/@types"]
     },
-    "include": ["server.ts"]
+    "include": ["index.ts", "../typings"]
 }

@@ -36,8 +36,8 @@ export default function NavBar() {
                 })}
                 id="mobileMenu"
             >
-                {menu.map(item => (
-                    <ul className="navbar-nav">
+                {menu.map((item, index) => (
+                    <ul className="navbar-nav" key={index}>
                         <li className="nav-item">
                             <NavLink
                                 href={item.href}

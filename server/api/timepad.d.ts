@@ -109,11 +109,11 @@ type EventResponseOptional = {
     registration_data: RegistrationDataResponse;
     is_sending_free_tickets: boolean;
     widgets: {
-        button: WidgetResponse,
-        custom: WidgetResponse
+        button: WidgetResponse;
+        custom: WidgetResponse;
     };
     personal_link_title: boolean; // requires view_private_events
-}
+};
 
 type EventResponseOptionalFields = keyof EventResponseOptional;
 
@@ -129,7 +129,7 @@ type EventsEventResponse<T extends keyof EventResponseOptional> = {
 
 export type EventsResponse<T extends keyof EventResponseOptional = never> = {
     total: number;
-    values: EventsEventResponse<T>[]
+    values: EventsEventResponse<T>[];
 };
 
 export type EventResponse = {

@@ -70,7 +70,7 @@ const EventPage: NextFunctionComponent<
 };
 
 EventPage.getInitialProps = async ctx => {
-    return await api.event(ctx.query.id, ctx.req);
+    return await api.event(ctx.query.id);
 };
 
 export default EventPage;

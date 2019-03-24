@@ -1,7 +1,5 @@
 import fetch from 'cross-fetch';
 import { format as urlFormat } from 'url';
-import * as express from 'express';
-import * as http from 'http';
 import * as queryString from 'query-string';
 
 function createUrl(context: {
@@ -9,13 +7,10 @@ function createUrl(context: {
     query?: {
         [key: string]: any;
     };
-    req?: http.IncomingMessage;
 }) {
-    const protocol = context.req ? (context.req as express.Request).protocol : window.location.protocol;
-    const host = context.req ? context.req.headers.host : window.location.host;
     const url = urlFormat({
-        protocol,
-        host,
+        protocol: !process.browser ? 'http:' : undefined,
+        host: !process.browser ? `localhost:${parseInt(process.env.PORT || '3000', 10)}` : undefined,
         pathname: context.pathname
     });
 
@@ -42,10 +37,9 @@ export type EventsResponse = {
     }[];
 }[];
 
-export const events = async (req?: http.IncomingMessage): Promise<EventsResponse> => {
+export const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
-            req,
             pathname: '/api/events'
         })
     );
@@ -80,10 +74,9 @@ export type EventResponse = {
     }[];
 };
 
-export const event = async (id: number, req?: http.IncomingMessage): Promise<EventResponse> => {
+export const event = async (id: number): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
-            req,
             pathname: `/api/events/${id}`
         })
     );

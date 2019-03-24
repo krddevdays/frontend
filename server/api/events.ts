@@ -1,10 +1,6 @@
 import fetch from 'cross-fetch';
-import {
-    EventResponse as TPEventResponse,
-    EventsRequest,
-    EventsResponse as TPEventsResponse
-} from '../typings/timepad';
-import { EventsResponse, EventResponse } from '../api';
+import { EventResponse as TPEventResponse, EventsRequest, EventsResponse as TPEventsResponse } from './timepad';
+import { EventsResponse, EventResponse } from '../../api';
 import * as express from 'express';
 import * as queryString from 'query-string';
 

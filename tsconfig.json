@@ -12,6 +12,7 @@
         "removeComments": false,
         "sourceMap": true,
         "strict": true,
-        "target": "esnext"
+        "target": "esnext",
+        "typeRoots": ["typings", "./node_modules/@types"]
     }
 }

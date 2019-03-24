@@ -148,7 +148,7 @@ const EventsPage: NextFunctionComponent<
 
 EventsPage.getInitialProps = async ctx => {
     const types = typeof ctx.query.types === 'string' ? [ctx.query.types] : ctx.query.types || [];
-    const events = await api.events(ctx.req);
+    const events = await api.events();
 
     return {
         types: types.filter(type => typesConfig.filter(item => item.id === type)),
