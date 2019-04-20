@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import FormattedDate from '../../components/FormattedDate/FormattedDate';
-import EventPrice, { TicketType } from '../../components/EventPrice/EventPrice';
 import EventLocation, { EventLocationProps } from '../../components/EventLocation/EventLocation';
 import * as api from '../../api';
 import Head from 'next/head';
@@ -15,7 +14,6 @@ type Event = {
     url: string;
     location?: EventLocationProps;
     isRegistrationOpened: boolean;
-    ticketTypes: TicketType[];
 };
 
 type EventPageProps = Event;
@@ -60,8 +58,7 @@ const EventPage: NextFunctionComponent<
             <div>
                 <small className="text-muted">
                     <FormattedDate value={startsAt} />
-                </small>{' '}
-                <EventPrice ticketTypes={props.ticketTypes} />
+                </small>
             </div>
             {props.location && <EventLocation {...props.location} />}
             {props.descriptionHtml && <div dangerouslySetInnerHTML={{ __html: props.descriptionHtml }} />}
