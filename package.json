@@ -5,7 +5,7 @@
         "dev": "cross-env NODE_ICU_DATA=node_modules/full-icu nodemon",
         "prebuild": "tsc -P server/tsconfig.json",
         "build": "next build",
-        "start": "cross-env NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/server/index"
+        "start": "cross-env NODE_ENV=production node --icu-data-dir=node_modules/full-icu dist/index.js"
     },
     "dependencies": {
         "@types/classnames": "^2.2.7",
