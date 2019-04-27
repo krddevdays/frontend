@@ -10,7 +10,7 @@ function createUrl(context: {
 }) {
     const url = urlFormat({
         protocol: !process.browser ? 'http:' : undefined,
-        host: !process.browser ? `localhost:${parseInt(process.env.PORT || '3000', 10)}` : undefined,
+        host: process.env.BACKEND_DOMAIN || 'localhost:8000',
         pathname: context.pathname
     });
 
@@ -25,22 +25,12 @@ function createUrl(context: {
     return `${url}?${query}`;
 }
 
-export type EventsResponse = {
-    id: number;
-    name: string;
-    startsAt: string;
-    descriptionShort: string | undefined;
-    ticketTypes: {
-        price: number;
-        isActive: boolean;
-        requirePromocode: boolean;
-    }[];
-}[];
+export type EventsResponse = Array<EventResponse>;
 
 export const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: '/api/events'
+            pathname: '/events'
         })
     );
 
@@ -54,30 +44,20 @@ export const events = async (): Promise<EventsResponse> => {
 export type EventResponse = {
     id: number;
     name: string;
-    startsAt: string;
-    descriptionHtml: string | undefined;
-    url: string;
-    isRegistrationOpened: boolean;
-    location?: {
-        country: string;
-        city: string;
+    start_date: string;
+    finish_date: string;
+    venue: {
+        name: string;
         address: string;
-        coordinates: {
-            lat: number;
-            lng: number;
-        };
+        latitude: number;
+        longitude: number;
     };
-    ticketTypes: {
-        price: number;
-        isActive: boolean;
-        requirePromocode: boolean;
-    }[];
 };
 
 export const event = async (id: number): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: `/api/events/${id}`
+            pathname: `/events/${id}`
         })
     );
 
