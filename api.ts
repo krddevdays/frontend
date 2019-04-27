@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch';
 import { format as urlFormat } from 'url';
 import * as queryString from 'query-string';
+import getConfig from 'next/config';
 
 function createUrl(context: {
     pathname: string;
@@ -9,8 +10,8 @@ function createUrl(context: {
     };
 }) {
     const url = urlFormat({
-        protocol: !process.browser ? 'http:' : undefined,
-        host: process.env.BACKEND_DOMAIN || 'localhost:8000',
+        protocol: 'https:',
+        host: getConfig().publicRuntimeConfig.backendDomain,
         pathname: context.pathname
     });
 
@@ -30,7 +31,7 @@ export type EventsResponse = Array<EventResponse>;
 export const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: '/events'
+            pathname: '/events/'
         })
     );
 
@@ -57,7 +58,7 @@ export type EventResponse = {
 export const event = async (id: number): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: `/events/${id}`
+            pathname: `/events/${id}/`
         })
     );
 
