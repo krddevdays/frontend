@@ -5,3 +5,15 @@ body {
     font-size: 14px;
     line-height: 20px;
 }
+
+html,
+body {
+    height: 100%;
+}
+
+#__next {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100%;
+}

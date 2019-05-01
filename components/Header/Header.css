@@ -1,6 +1,9 @@
+.header-background {
+    margin: 40px 0;
+}
+
 .header {
     display: grid;
-    margin: 40px 16px;
     grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
     align-items: center;
@@ -107,12 +110,5 @@
 
     .header-menu__item:last-child {
         margin-right: 0;
-    }
-}
-
-@media (min-width: 1232px) {
-    .header {
-        max-width: 1200px;
-        margin: 40px auto;
     }
 }

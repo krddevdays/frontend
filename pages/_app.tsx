@@ -5,6 +5,7 @@ import App, { Container, NextAppContext } from 'next/app';
 import NProgress from 'next-nprogress/component';
 import './_app.css';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 
 type MyAppProps = {
     initialNow: number;
@@ -36,6 +37,7 @@ class MyApp extends App<MyAppProps> {
                     <main role="main">
                         <Component {...pageProps} />
                     </main>
+                    <Footer />
                 </Container>
             </IntlProvider>
         );
