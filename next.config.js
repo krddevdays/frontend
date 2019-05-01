@@ -22,6 +22,7 @@ module.exports = {
         )
     ),
     publicRuntimeConfig: {
-        backendDomain: process.env.BACKEND_DOMAIN || 'localhost:8000'
+        backendDomain: process.env.BACKEND_DOMAIN || 'localhost:8000',
+        backendProtocol: process.env.BACKEND_PROTOCOL || 'http:'
     }
 };
