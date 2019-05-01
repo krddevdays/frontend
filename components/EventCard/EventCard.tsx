@@ -1,9 +1,30 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { FormattedDate } from 'react-intl';
 
-import FormattedDate from '../FormattedDate/FormattedDate';
 import './EventCard.css';
+
+function EventDate(props: { startAt: Date; finishAt: Date }) {
+    const currentDate = new Date();
+    const needYear = currentDate.getFullYear() !== props.startAt.getFullYear();
+
+    const needDate = props.startAt.getDate() !== props.finishAt.getDate();
+
+    if (!needDate) {
+        return (
+            <FormattedDate value={props.startAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
+        );
+    }
+
+    return (
+        <React.Fragment>
+            <FormattedDate value={props.startAt} day="numeric" />
+            -
+            <FormattedDate value={props.finishAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
+        </React.Fragment>
+    );
+}
 
 export type Event = {
     id: number;
@@ -34,7 +55,7 @@ export default function EventCard(props: Event) {
             <div className="event-card__date">
                 <meta itemProp="startDate" content={startAt.toISOString()} />
                 <meta itemProp="endDate" content={finishAt.toISOString()} />
-                <FormattedDate value={startAt} />
+                <EventDate startAt={startAt} finishAt={finishAt} />
             </div>
             <div itemProp="location" itemScope itemType="http://schema.org/Place">
                 <meta itemProp="name" content={props.venue.name} />
