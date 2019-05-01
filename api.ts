@@ -61,10 +61,69 @@ export type EventResponse = {
     image_facebook?: string;
 };
 
+export type EventActivitiesResponse = Array<
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: { title: string };
+          type: 'WELCOME';
+          zone: string;
+      }
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: {
+              description: string;
+              presentation_offline: string | null;
+              speaker: {
+                  first_name: string;
+                  last_name: string;
+                  avatar: string | null;
+                  work: string | null;
+                  position: string | null;
+              };
+              title: string;
+              video: string | null;
+          };
+          type: 'TALK';
+          zone: string;
+      }
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: {
+              title: string;
+          };
+          type: 'COFFEE';
+          zone: string;
+      }
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: { title: string };
+          type: 'LUNCH';
+          zone: string;
+      }
+>;
+
 export const event = async (id: number): Promise<EventResponse> => {
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/`
+        })
+    );
+
+    if (response.status !== 200) {
+        throw new Error(await response.text());
+    }
+
+    return response.json();
+};
+
+export const eventActivities = async (id: number): Promise<EventActivitiesResponse> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/events/${id}/activities/`
         })
     );
 

@@ -1,3 +1,7 @@
+.event-block {
+    margin: 64px 0;
+}
+
 .event-title {
     font-weight: bold;
     font-size: 24px;

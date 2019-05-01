@@ -6,24 +6,28 @@ import { FormattedDate } from 'react-intl';
 
 import Container from '../../components/Container/Container';
 import './event.css';
+import Schedule, { ActivityProps } from '../../components/Schedule/Schedule';
 
 type Event = {
-    id: number;
-    name: string;
-    start_date: string;
-    finish_date: string;
-    short_description: string;
-    image: string;
-    full_description?: string;
-    ticket_description?: string;
-    image_vk?: string;
-    image_facebook?: string;
-    venue: {
+    event: {
+        id: number;
         name: string;
-        address: string;
-        latitude: number;
-        longitude: number;
+        start_date: string;
+        finish_date: string;
+        short_description: string;
+        image: string;
+        full_description?: string;
+        ticket_description?: string;
+        image_vk?: string;
+        image_facebook?: string;
+        venue: {
+            name: string;
+            address: string;
+            latitude: number;
+            longitude: number;
+        };
     };
+    activities: ActivityProps[];
 };
 
 type EventPageProps = Event;
@@ -52,7 +56,8 @@ function EventDate(props: { startAt: Date; finishAt: Date }) {
 
     return (
         <React.Fragment>
-            <FormattedDate value={props.startAt} day="numeric" />-
+            <FormattedDate value={props.startAt} day="numeric" />
+            -
             <FormattedDate value={props.finishAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
             <br />
             с <FormattedDate value={props.startAt} hour="numeric" minute="numeric" /> до{' '}
@@ -70,22 +75,23 @@ const EventPage: NextFunctionComponent<
         };
     }
 > = props => {
-    const startAt = new Date(props.start_date);
-    const finishAt = new Date(props.finish_date);
+    const { event, activities } = props;
+    const startAt = new Date(event.start_date);
+    const finishAt = new Date(event.finish_date);
 
     return (
         <Container>
             <Head>
-                <title>{props.name}</title>
+                <title>{event.name}</title>
                 <body itemScope itemType="http://schema.org/Event" />
             </Head>
-            <div className="event-image" style={{ backgroundImage: `url(${props.image})` }} />
+            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
             <h1 className="event-title" itemProp="name">
-                {props.name}
+                {event.name}
             </h1>
-            <meta itemProp="image" content={props.image} />
+            <meta itemProp="image" content={event.image} />
             <p className="event-description" itemProp="description">
-                {props.full_description || props.short_description}
+                {event.full_description || event.short_description}
             </p>
             <ul className="event-information">
                 <li className="event-information__item event-information-item">
@@ -96,17 +102,17 @@ const EventPage: NextFunctionComponent<
                         itemScope
                         itemType="http://schema.org/Place"
                     >
-                        <span itemProp="name">{props.venue.name}</span>
+                        <span itemProp="name">{event.venue.name}</span>
                         <br />
-                        <span itemProp="address">{props.venue.address}</span>
+                        <span itemProp="address">{event.venue.address}</span>
                         <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-                            <meta itemProp="latitude" content={props.venue.latitude.toString()} />
-                            <meta itemProp="longitude" content={props.venue.longitude.toString()} />
+                            <meta itemProp="latitude" content={event.venue.latitude.toString()} />
+                            <meta itemProp="longitude" content={event.venue.longitude.toString()} />
                         </div>
                     </div>
                     <a
                         className="event-information-item__action"
-                        href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
+                        href={`https://yandex.ru/maps/?pt=${event.venue.longitude},${event.venue.latitude}&z=15&l=map`}
                         target="_blank"
                         rel="nofollow noopener"
                     >
@@ -122,12 +128,21 @@ const EventPage: NextFunctionComponent<
                     </div>
                 </li>
             </ul>
+            {activities.length > 0 && (
+                <section className="event-block">
+                    <h2 className="event-title">Расписание</h2>
+                    <Schedule activities={activities} />
+                </section>
+            )}
         </Container>
     );
 };
 
 EventPage.getInitialProps = async ctx => {
-    return await api.event(ctx.query.id);
+    return {
+        event: await api.event(ctx.query.id),
+        activities: await api.eventActivities(ctx.query.id)
+    };
 };
 
 export default EventPage;

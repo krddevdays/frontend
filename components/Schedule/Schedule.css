@@ -1,0 +1,48 @@
+.schedule {
+    border-collapse: collapse;
+}
+
+.schedule__zone {
+    font-weight: normal;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+
+    padding-left: 8px;
+    padding-bottom: 12px;
+}
+
+.schedule__time {
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 20px;
+
+    padding: 28px 16px 28px 12px;
+
+    color: #262626;
+}
+
+.schedule__row:hover {
+    background: linear-gradient(93.71deg, rgba(176, 126, 197, 0.1) 0%, rgba(87, 227, 201, 0.1) 100%);
+}
+
+.schedule__activity-cell {
+    padding: 12px 12px 12px 0;
+    vertical-align: top;
+}
+
+.schedule__activity {
+    display: inline-block;
+    background: #ffffff;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    padding: 16px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+}
