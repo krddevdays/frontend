@@ -44,7 +44,7 @@ const EventPage: NextFunctionComponent<
         <Container>
             <Head>
                 <title>{props.name}</title>
-                <html itemScope itemType="http://schema.org/Event" />
+                <body itemScope itemType="http://schema.org/Event" />
             </Head>
             <div className="event__image" style={{ backgroundImage: `url(${props.image})` }} />
             <h1 className="event__title" itemProp="name">
