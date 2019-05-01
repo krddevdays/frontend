@@ -83,7 +83,10 @@ const EventPage: NextFunctionComponent<
             <h1 className="event-title" itemProp="name">
                 {props.name}
             </h1>
-            <p className="event-description">{props.full_description || props.short_description}</p>
+            <meta itemProp="image" content={props.image} />
+            <p className="event-description" itemProp="description">
+                {props.full_description || props.short_description}
+            </p>
             <ul className="event-information">
                 <li className="event-information__item event-information-item">
                     <div className="event-information-item__name">Место проведения</div>
