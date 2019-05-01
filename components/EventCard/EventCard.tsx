@@ -9,28 +9,46 @@ export type Event = {
     id: number;
     name: string;
     start_date: string;
+    finish_date: string;
+    short_description: string;
+    venue: {
+        name: string;
+        address: string;
+        latitude: number;
+        longitude: number;
+    };
 };
 
 export default function EventCard(props: Event) {
-    const startsAt = new Date(props.start_date);
+    const startAt = new Date(props.start_date);
+    const finishAt = new Date(props.finish_date);
 
     return (
         <article
             className={classNames('event-card', {
-                'event-card_disabled': startsAt.getTime() < Date.now()
+                'event-card_disabled': startAt.getTime() < Date.now()
             })}
             itemScope
             itemType="http://schema.org/Event"
         >
             <div className="event-card__date">
-                <meta itemProp="startDate" content={startsAt.toISOString()} />
-                <FormattedDate value={startsAt} />
+                <meta itemProp="startDate" content={startAt.toISOString()} />
+                <meta itemProp="endDate" content={finishAt.toISOString()} />
+                <FormattedDate value={startAt} />
+            </div>
+            <div itemProp="location" itemScope itemType="http://schema.org/Place">
+                <meta itemProp="name" content={props.venue.name} />
+                <meta itemProp="address" content={props.venue.address} />
+                <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
+                    <meta itemProp="latitude" content={props.venue.latitude.toString()} />
+                    <meta itemProp="longitude" content={props.venue.longitude.toString()} />
+                </div>
             </div>
             <h1 className="event-card__title" itemProp="name">
                 {props.name}
             </h1>
             <p className="event-card__description" itemProp="description">
-                Ежегодная конференция разработчиков Краснодара и края
+                {props.short_description}
             </p>
             <div className="event-card__footer">
                 <Link href={`/events/event?id=${props.id}`} as={`/events/${props.id}`}>

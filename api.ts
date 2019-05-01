@@ -47,12 +47,18 @@ export type EventResponse = {
     name: string;
     start_date: string;
     finish_date: string;
+    short_description: string;
+    image: string;
     venue: {
         name: string;
         address: string;
         latitude: number;
         longitude: number;
     };
+    full_description?: string;
+    ticket_description?: string;
+    image_vk?: string;
+    image_facebook?: string;
 };
 
 export const event = async (id: number): Promise<EventResponse> => {
