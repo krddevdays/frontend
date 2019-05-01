@@ -9,9 +9,6 @@
     line-height: 20px;
 
     color: #262626;
-
-    padding-left: 8px;
-    padding-bottom: 12px;
 }
 
 .schedule__time {
@@ -19,18 +16,20 @@
     font-size: 14px;
     line-height: 20px;
 
-    padding: 28px 16px 28px 12px;
-
     color: #262626;
-}
 
-.schedule__row:hover {
-    background: linear-gradient(93.71deg, rgba(176, 126, 197, 0.1) 0%, rgba(87, 227, 201, 0.1) 100%);
+    padding-top: 40px;
+    padding-right: 16px;
 }
 
 .schedule__activity-cell {
-    padding: 12px 12px 12px 0;
     vertical-align: top;
+    padding-top: 24px;
+    padding-right: 24px;
+}
+
+.schedule__activity-cell:last-child {
+    padding-right: 0;
 }
 
 .schedule__activity {
