@@ -1,0 +1,44 @@
+.index-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 24px;
+    margin: 40px 0;
+    box-sizing: border-box;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/static/index-header@2x.jpg);
+    background-size: auto, cover;
+    background-position: left top, center center;
+
+    border-radius: 4px;
+}
+
+.index-header__title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+
+    color: white;
+}
+
+.index-header__description {
+    margin: 16px 0 0 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: white;
+}
+
+@media (min-width: 644px) {
+    .index-header {
+        height: 300px;
+    }
+
+    .index-header__title,
+    .index-header__description {
+        max-width: 564px;
+    }
+}

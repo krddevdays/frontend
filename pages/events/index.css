@@ -1,0 +1,24 @@
+.events__title {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.events__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+    grid-gap: 16px;
+
+    list-style: none;
+
+    margin: 24px 0;
+    padding: 0;
+}
+
+@media (min-width: 1232px) {
+    .events__list {
+        grid-gap: 24px;
+    }
+}

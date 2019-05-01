@@ -10,7 +10,7 @@ function createUrl(context: {
     };
 }) {
     const url = urlFormat({
-        protocol: 'https:',
+        protocol: 'http:',
         host: getConfig().publicRuntimeConfig.backendDomain,
         pathname: context.pathname
     });

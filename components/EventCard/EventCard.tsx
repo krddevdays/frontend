@@ -1,7 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
+
 import FormattedDate from '../FormattedDate/FormattedDate';
+import './EventCard.css';
 
 export type Event = {
     id: number;
@@ -9,31 +11,45 @@ export type Event = {
     start_date: string;
 };
 
-export default function EventCard(props: Event & { className?: string }) {
+export default function EventCard(props: Event) {
     const startsAt = new Date(props.start_date);
 
     return (
-        <div className={classNames('card', props.className)}>
-            <div className="card-body">
-                <h2 className="card-title h5">{props.name}</h2>
-                <p>
-                    <small className="text-muted">
-                        <FormattedDate value={startsAt} />
-                    </small>
-                </p>
+        <article
+            className={classNames('event-card', {
+                'event-card_disabled': startsAt.getTime() < Date.now()
+            })}
+            itemScope
+            itemType="http://schema.org/Event"
+        >
+            <div className="event-card__date">
+                <meta itemProp="startDate" content={startsAt.toISOString()} />
+                <FormattedDate value={startsAt} />
             </div>
-            <div className="card-footer">
+            <h1 className="event-card__title" itemProp="name">
+                {props.name}
+            </h1>
+            <p className="event-card__description" itemProp="description">
+                Ежегодная конференция разработчиков Краснодара и края
+            </p>
+            <div className="event-card__footer">
                 <Link href={`/events/event?id=${props.id}`} as={`/events/${props.id}`}>
-                    <a
-                        className={classNames('btn', 'btn-sm', {
-                            'btn-secondary': startsAt.getTime() <= Date.now(),
-                            'btn-primary': startsAt.getTime() > Date.now()
-                        })}
-                    >
+                    <a className="event-card__link" itemProp="url">
                         Подробнее
+                        <span className="event-card__link-icon">
+                            <svg
+                                width="5"
+                                height="10"
+                                viewBox="0 0 5 10"
+                                fill="#0000CC"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path d="M0 10L5 5L0 0V10Z" />
+                            </svg>
+                        </span>
                     </a>
                 </Link>
             </div>
-        </div>
+        </article>
     );
 }

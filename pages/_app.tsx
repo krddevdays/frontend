@@ -2,11 +2,9 @@ import * as React from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import * as ru from 'react-intl/locale-data/ru';
 import App, { Container, NextAppContext } from 'next/app';
-import NProgress from "next-nprogress/component";
-import 'bootstrap/dist/css/bootstrap.css';
+import NProgress from 'next-nprogress/component';
 import './_app.css';
-import NavBar from '../components/NavBar/NavBar';
-import Sidebar from '../components/Sidebar/Sidebar';
+import Header from '../components/Header/Header';
 
 type MyAppProps = {
     initialNow: number;
@@ -31,18 +29,13 @@ class MyApp extends App<MyAppProps> {
         const { Component, pageProps, initialNow } = this.props;
 
         return (
-            <IntlProvider locale='ru' initialNow={initialNow} timeZone="Europe/Moscow">
+            <IntlProvider locale="ru" initialNow={initialNow} timeZone="Europe/Moscow">
                 <Container>
                     <NProgress />
-                    <NavBar />
-                    <div className="container-fluid">
-                        <div className="row">
-                            <Sidebar />
-                            <main role="main" className="col-md-9 ml-sm-auto col-xl-10 px-4">
-                                <Component {...pageProps} />
-                            </main>
-                        </div>
-                    </div>
+                    <Header />
+                    <main role="main">
+                        <Component {...pageProps} />
+                    </main>
                 </Container>
             </IntlProvider>
         );

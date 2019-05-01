@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import FormattedDate from '../../components/FormattedDate/FormattedDate';
-import EventLocation, { EventLocationProps } from '../../components/EventLocation/EventLocation';
 import * as api from '../../api';
 import Head from 'next/head';
+
+import Container from '../../components/Container/Container';
+import './event.css';
 
 type Event = {
     id: number;
     name: string;
     start_date: string;
-    venue: EventLocationProps;
+    venue: {
+        name: string;
+        address: string;
+        latitude: number;
+        longitude: number;
+    };
 };
 
 type EventPageProps = Event;
@@ -26,20 +33,19 @@ const EventPage: NextFunctionComponent<
     const startsAt = new Date(props.start_date);
 
     return (
-        <div className="container pt-3">
+        <Container>
             <Head>
                 <title>{props.name}</title>
+                <html itemScope itemType="http://schema.org/Event" />
             </Head>
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 className="h2">{props.name}</h1>
+            <h1 className="event__title" itemProp="name">
+                {props.name}
+            </h1>
+            <div className="event__date">
+                <meta itemProp="startDate" content={startsAt.toISOString()} />
+                <FormattedDate value={startsAt} />
             </div>
-            <div>
-                <small className="text-muted">
-                    <FormattedDate value={startsAt} />
-                </small>
-            </div>
-            <EventLocation {...props.venue} />
-        </div>
+        </Container>
     );
 };
 
