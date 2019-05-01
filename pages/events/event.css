@@ -30,12 +30,17 @@
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     grid-gap: 24px;
     padding: 24px;
     margin: 40px 0;
 
     list-style: none;
+}
+
+@media (min-width: 768px) {
+    .event-information {
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
 }
 
 .event-information__item {
