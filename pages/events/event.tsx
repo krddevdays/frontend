@@ -100,10 +100,12 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
                         </button>
                     ))}
             </div>
-            <ScheduleTable
-                className=" event-schedule__table"
-                activitiesByZoneAndTime={activityByDateTimeAndZone[currentDate]}
-            />
+            <div className="event-schedule__table-wrapper">
+                <ScheduleTable
+                    className="event-schedule__table"
+                    activitiesByZoneAndTime={activityByDateTimeAndZone[currentDate]}
+                />
+            </div>
         </section>
     );
 });

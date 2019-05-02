@@ -57,10 +57,27 @@
     color: #0000cc;
 }
 
-.event-schedule__table {
+.event-schedule__table-wrapper {
     margin-top: 24px;
     grid-area: table;
     justify-self: start;
+
+    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 8px 0 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.event-schedule__table-wrapper:after {
+    display: inline-block;
+    content: '';
+    width: 8px;
+}
+
+.event-schedule__table {
+    display: inline-table;
 }
 
 .event-title {
