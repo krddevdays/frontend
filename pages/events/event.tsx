@@ -4,6 +4,7 @@ import * as api from '../../api';
 import Head from 'next/head';
 import { FormattedDate, InjectedIntlProps, injectIntl } from 'react-intl';
 import classNames from 'classnames';
+import Markdown from 'markdown-to-jsx';
 
 import Container from '../../components/Container/Container';
 import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/ScheduleTable';
@@ -167,9 +168,13 @@ const EventPage: NextFunctionComponent<
                 {event.name}
             </h1>
             <meta itemProp="image" content={event.image} />
-            <p className="event-description" itemProp="description">
-                {event.full_description || event.short_description}
-            </p>
+            <div className="event-description" itemProp="description">
+                {event.full_description ? (
+                    <Markdown>{event.full_description}</Markdown>
+                ) : (
+                    <p>{event.short_description}</p>
+                )}
+            </div>
             <ul className="event-information">
                 <li className="event-information__item event-information-item">
                     <div className="event-information-item__name">Место проведения</div>
