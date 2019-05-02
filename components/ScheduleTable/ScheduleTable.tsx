@@ -60,32 +60,68 @@ function ScheduleTable(props: ScheduleTableProps) {
                 </thead>
             )}
             <tbody>
-                {times.map((time, timeIndex) => (
-                    <tr key={timeIndex} className="schedule-table__row">
-                        <td className="schedule-table__time">{time}</td>
-                        {zones.map((zone, index) => (
-                            <td className="schedule-table__activity-cell" key={index}>
-                                {props.activitiesByZoneAndTime[zone][time] &&
-                                    props.activitiesByZoneAndTime[zone][time].map((activity, index) => (
-                                        <div className="schedule-table__activity" key={index}>
-                                            <div className="schedule-table__activity-title">
-                                                {activity.thing
-                                                    ? activity.thing.title
-                                                    : activity.type === 'TALK' && 'Доклад'}
-                                            </div>
-                                            {activity.type === 'TALK' && activity.thing && (
-                                                <div className="schedule-table__activity-author">
-                                                    <Author {...activity.thing.speaker} small />
-                                                </div>
-                                            )}
-                                        </div>
+                {times.map((time, timeIndex) => {
+                    let activitiesRows = zones.reduce(
+                        (activites, zone, zoneIndex) => {
+                            if (!props.activitiesByZoneAndTime[zone][time]) {
+                                return activites;
+                            }
+
+                            props.activitiesByZoneAndTime[zone][time].forEach((activity, index) => {
+                                if (!activites[index]) {
+                                    activites[index] = new Array(zones.length).fill(undefined);
+                                }
+
+                                activites[index][zoneIndex] = activity;
+                            });
+
+                            return activites;
+                        },
+                        [] as Array<ActivityProps[]>
+                    );
+
+                    return (
+                        <React.Fragment key={timeIndex}>
+                            <tr className="schedule-table__row">
+                                <td className="schedule-table__time" rowSpan={activitiesRows.length}>
+                                    {time}
+                                </td>
+                                {activitiesRows[0] &&
+                                    activitiesRows[0].map((activity, index) => (
+                                        <td className="schedule-table__activity-cell">
+                                            {activity && <Activity key={index} {...activity} />}
+                                        </td>
                                     ))}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
+                            </tr>
+                            {activitiesRows.slice(1).map((activityRow, index) => (
+                                <tr key={index} className="schedule-table__row">
+                                    {activityRow.map((activity, index) => (
+                                        <td className="schedule-table__activity-cell">
+                                            {activity && <Activity key={index} {...activity} />}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </React.Fragment>
+                    );
+                })}
             </tbody>
         </table>
+    );
+}
+
+function Activity(props: ActivityProps) {
+    return (
+        <div className="schedule-activity">
+            <div className="schedule-activity__title">
+                {props.thing ? props.thing.title : props.type === 'TALK' && 'Доклад'}
+            </div>
+            {props.type === 'TALK' && props.thing && (
+                <div className="schedule-activity__author">
+                    <Author {...props.thing.speaker} small />
+                </div>
+            )}
+        </div>
     );
 }
 
