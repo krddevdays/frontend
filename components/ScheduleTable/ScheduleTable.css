@@ -1,8 +1,8 @@
-.schedule {
+.schedule-table {
     border-collapse: collapse;
 }
 
-.schedule__zone {
+.schedule-table__zone {
     font-weight: normal;
     text-align: left;
     font-size: 14px;
@@ -11,7 +11,7 @@
     color: #262626;
 }
 
-.schedule__time {
+.schedule-table__time {
     vertical-align: top;
     font-size: 14px;
     line-height: 20px;
@@ -22,17 +22,17 @@
     padding-right: 16px;
 }
 
-.schedule__activity-cell {
+.schedule-table__activity-cell {
     vertical-align: top;
     padding-top: 24px;
     padding-right: 24px;
 }
 
-.schedule__activity-cell:last-child {
+.schedule-table__activity-cell:last-child {
     padding-right: 0;
 }
 
-.schedule__activity {
+.schedule-table__activity {
     display: inline-block;
     background: #ffffff;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
@@ -42,7 +42,7 @@
     margin-right: 8px;
 }
 
-.schedule__activity-title {
+.schedule-table__activity-title {
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
@@ -50,7 +50,7 @@
     color: #262626;
 }
 
-.schedule__activity-author {
+.schedule-table__activity-author {
     margin-top: 8px;
 
     font-size: 12px;

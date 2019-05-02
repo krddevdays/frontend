@@ -2,10 +2,52 @@
     margin: 64px 0;
 }
 
+.event-schedule {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template:
+        'title dates'
+        'table table';
+}
+
+.event-schedule__title {
+    grid-area: title;
+}
+
+.event-schedule__dates {
+    grid-area: dates;
+    align-self: center;
+    justify-self: end;
+}
+
+.event-schedule__date {
+    display: inline-block;
+    background: none;
+    border: none;
+    margin: 0 0 0 16px;
+    padding: 0;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #a0a0a0;
+}
+
+.event-schedule__date_active {
+    color: #0000cc;
+}
+
+.event-schedule__table {
+    margin-top: 24px;
+    grid-area: table;
+    justify-self: start;
+}
+
 .event-title {
     font-weight: bold;
     font-size: 24px;
     line-height: 32px;
+    margin: 0;
 
     color: #262626;
 }

@@ -2,11 +2,88 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import * as api from '../../api';
 import Head from 'next/head';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, InjectedIntlProps, injectIntl } from 'react-intl';
+import classNames from 'classnames';
 
 import Container from '../../components/Container/Container';
+import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/ScheduleTable';
 import './event.css';
-import Schedule, { ActivityProps } from '../../components/Schedule/Schedule';
+
+type ScheduleProps = {
+    activities: ActivityProps[];
+} & InjectedIntlProps;
+
+const Schedule = injectIntl(function(props: ScheduleProps) {
+    const activityByDateTimeAndZone = React.useMemo(
+        () =>
+            props.activities.reduce(
+                (result, activity) => {
+                    const date = props.intl.formatDate(activity.start_date, {
+                        day: '2-digit',
+                        month: '2-digit'
+                    });
+
+                    if (!result[date]) {
+                        result[date] = {};
+                    }
+
+                    const time = props.intl.formatDate(activity.start_date, {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    if (!result[date][activity.zone]) {
+                        result[date][activity.zone] = {};
+                    }
+
+                    if (!result[date][activity.zone][time]) {
+                        result[date][activity.zone][time] = [];
+                    }
+
+                    result[date][activity.zone][time].push(activity);
+
+                    return result;
+                },
+                {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
+            ),
+        [props.activities, props.intl]
+    );
+
+    const dates = React.useMemo(() => Object.keys(activityByDateTimeAndZone), [activityByDateTimeAndZone]).sort();
+    const [currentDate, setCurrentDate] = React.useState(dates[0]);
+
+    if (props.activities.length === 0) {
+        return null;
+    }
+
+    return (
+        <section className="event-block event-schedule">
+            <h2 className="event-title event-schedule__title">Расписание</h2>
+            <div className="event-schedule__dates">
+                {dates.length > 1 &&
+                    dates.map((date, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            className={classNames('event-schedule__date', {
+                                'event-schedule__date_active': currentDate === date
+                            })}
+                            onClick={event => {
+                                event.preventDefault();
+                                setCurrentDate(date);
+                            }}
+                        >
+                            {date}
+                        </button>
+                    ))}
+            </div>
+            <ScheduleTable
+                className=" event-schedule__table"
+                activitiesByZoneAndTime={activityByDateTimeAndZone[currentDate]}
+            />
+        </section>
+    );
+});
 
 type Event = {
     event: {
@@ -128,12 +205,7 @@ const EventPage: NextFunctionComponent<
                     </div>
                 </li>
             </ul>
-            {activities.length > 0 && (
-                <section className="event-block">
-                    <h2 className="event-title">Расписание</h2>
-                    <Schedule activities={activities} />
-                </section>
-            )}
+            <Schedule activities={activities} />
         </Container>
     );
 };
