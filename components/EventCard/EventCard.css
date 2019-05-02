@@ -23,7 +23,7 @@
 
     color: #262626;
 
-    margin: 24px 0 16px;
+    margin: 24px 0 0;
 }
 
 .event-card__title {
@@ -31,25 +31,25 @@
     font-size: 16px;
     line-height: 24px;
     padding: 0 24px;
+    margin: 16px 0 0 0;
     white-space: nowrap;
 
     color: #262626;
-
-    margin-bottom: 8px;
 }
 
 .event-card__description {
     font-size: 14px;
     line-height: 20px;
     padding: 0 24px;
-    margin: 0;
+    margin: 8px 0 0 0;
 
     color: #262626;
     flex: 100% 1 1;
 }
 
 .event-card__footer {
-    margin: 48px 24px 24px;
+    margin: 48px 0 24px 0;
+    padding: 0 24px;
 }
 
 .event-card__link {
