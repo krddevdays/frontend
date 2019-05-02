@@ -55,11 +55,17 @@ function Schedule(props: ScheduleProps) {
                         result[date][activity.zone] = {};
                     }
 
-                    result[date][activity.zone][time] = activity;
+                    if (!result[date][activity.zone][time]) {
+                        result[date][activity.zone][time] = [];
+                    }
+
+                    result[date][activity.zone][time].push(activity);
+
+                    result[date][activity.zone][time].sort((a, b) => a.thing.title.length - b.thing.title.length);
 
                     return result;
                 },
-                {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps } } }
+                {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
             ),
         [props.activities, props.intl]
     );
@@ -96,15 +102,20 @@ function Schedule(props: ScheduleProps) {
                         <td className="schedule__time">{time}</td>
                         {zones.map((zone, index) => (
                             <td className="schedule__activity-cell" key={index}>
-                                {activityByDateTimeAndZone[date][zone][time] && (
-                                    <div
-                                        className={`schedule__activity schedule__activity_type_${activityByDateTimeAndZone[
-                                            date
-                                        ][zone][time].type.toLowerCase()}`}
-                                    >
-                                        {activityByDateTimeAndZone[date][zone][time].thing.title}
-                                    </div>
-                                )}
+                                {activityByDateTimeAndZone[date][zone][time] &&
+                                    activityByDateTimeAndZone[date][zone][time].map((activity, index) => (
+                                        <div className="schedule__activity" key={index}>
+                                            <div className="schedule__activity-title">{activity.thing.title}</div>
+                                            {activity.type === 'TALK' && (
+                                                <div className="schedule__activity-author">
+                                                    {[
+                                                        activity.thing.speaker.first_name,
+                                                        activity.thing.speaker.last_name
+                                                    ].join(' ')}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
                             </td>
                         ))}
                     </tr>

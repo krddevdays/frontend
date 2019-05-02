@@ -39,9 +39,22 @@
     border-radius: 2px;
     padding: 16px;
 
+    margin-right: 8px;
+}
+
+.schedule__activity-title {
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
+
+    color: #262626;
+}
+
+.schedule__activity-author {
+    margin-top: 8px;
+
+    font-size: 12px;
+    line-height: 16px;
 
     color: #262626;
 }
