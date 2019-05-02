@@ -88,16 +88,16 @@ function ScheduleTable(props: ScheduleTableProps) {
                                 </td>
                                 {activitiesRows[0] &&
                                     activitiesRows[0].map((activity, index) => (
-                                        <td className="schedule-table__activity-cell">
-                                            {activity && <Activity key={index} {...activity} />}
+                                        <td className="schedule-table__activity-cell" key={index}>
+                                            {activity && <Activity {...activity} />}
                                         </td>
                                     ))}
                             </tr>
                             {activitiesRows.slice(1).map((activityRow, index) => (
                                 <tr key={index} className="schedule-table__row">
                                     {activityRow.map((activity, index) => (
-                                        <td className="schedule-table__activity-cell">
-                                            {activity && <Activity key={index} {...activity} />}
+                                        <td className="schedule-table__activity-cell" key={index}>
+                                            {activity && <Activity {...activity} />}
                                         </td>
                                     ))}
                                 </tr>
