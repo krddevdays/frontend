@@ -16,11 +16,29 @@
 .event-talks__list {
     grid-area: list;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
-    grid-gap: 16px;
+    grid-template-columns: 1fr;
+    grid-gap: 24px;
 
     margin: 24px 0 0;
     padding: 0;
+}
+
+@media (min-width: 620px) {
+    .event-talks__list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 926px) {
+    .event-talks__list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1232px) {
+    .event-talks__list {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .event-schedule {
