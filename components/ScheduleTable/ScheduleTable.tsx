@@ -1,7 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
+import { TalkCardProps } from '../TalkCard/TalkCard';
 import './ScheduleTable.css';
+import Author from '../Author/Author';
 
 type BaseActivityProps = {
     zone: string;
@@ -9,19 +11,9 @@ type BaseActivityProps = {
     start_date: string;
 };
 
-type TalkActivityProps = BaseActivityProps & {
+export type TalkActivityProps = BaseActivityProps & {
     type: 'TALK';
-    thing?: {
-        description: string;
-        speaker: {
-            first_name: string;
-            last_name: string;
-            avatar: string | null;
-            work: string | null;
-            position: string | null;
-        };
-        title: string;
-    };
+    thing?: TalkCardProps;
 };
 
 export type ActivityProps =
@@ -83,10 +75,7 @@ function ScheduleTable(props: ScheduleTableProps) {
                                             </div>
                                             {activity.type === 'TALK' && activity.thing && (
                                                 <div className="schedule-table__activity-author">
-                                                    {[
-                                                        activity.thing.speaker.first_name,
-                                                        activity.thing.speaker.last_name
-                                                    ].join(' ')}
+                                                    <Author {...activity.thing.speaker} small />
                                                 </div>
                                             )}
                                         </div>

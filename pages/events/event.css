@@ -2,9 +2,29 @@
     margin: 64px 0;
 }
 
+.event-talks {
+    display: grid;
+    grid-template:
+        'title cfp'
+        'list list';
+}
+
+.event-talks__title {
+    grid-area: title;
+}
+
+.event-talks__list {
+    grid-area: list;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+    grid-gap: 16px;
+
+    margin: 24px 0 0;
+    padding: 0;
+}
+
 .event-schedule {
     display: grid;
-    grid-template-columns: 1fr auto;
     grid-template:
         'title dates'
         'table table';

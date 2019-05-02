@@ -7,8 +7,30 @@ import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 
 import Container from '../../components/Container/Container';
-import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/ScheduleTable';
+import ScheduleTable, { ActivityProps, TalkActivityProps } from '../../components/ScheduleTable/ScheduleTable';
+import TalkCard, { TalkCardProps } from '../../components/TalkCard/TalkCard';
 import './event.css';
+
+type TalksProps = {
+    talks: TalkCardProps[];
+};
+
+function Talks(props: TalksProps) {
+    if (props.talks.length === 0) {
+        return null;
+    }
+
+    return (
+        <section className="event-block event-talks">
+            <h2 className="event-title event-talks__title">Доклады</h2>
+            <div className="event-talks__list">
+                {props.talks.map((talk, index) => (
+                    <TalkCard key={index} {...talk} />
+                ))}
+            </div>
+        </section>
+    );
+}
 
 type ScheduleProps = {
     activities: ActivityProps[];
@@ -157,6 +179,10 @@ const EventPage: NextFunctionComponent<
     const startAt = new Date(event.start_date);
     const finishAt = new Date(event.finish_date);
 
+    const talks = (activities.filter(
+        activity => activity.type === 'TALK' && activity.thing
+    ) as TalkActivityProps[]).map(activity => activity.thing) as TalkCardProps[];
+
     return (
         <Container>
             <Head>
@@ -210,6 +236,7 @@ const EventPage: NextFunctionComponent<
                     </div>
                 </li>
             </ul>
+            <Talks talks={talks} />
             <Schedule activities={activities} />
         </Container>
     );
