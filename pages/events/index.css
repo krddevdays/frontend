@@ -11,8 +11,6 @@
     grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
     grid-gap: 16px;
 
-    list-style: none;
-
     margin: 24px 0;
     padding: 0;
 }
