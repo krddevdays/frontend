@@ -11,7 +11,7 @@ type BaseActivityProps = {
 
 type TalkActivityProps = BaseActivityProps & {
     type: 'TALK';
-    thing: {
+    thing?: {
         description: string;
         speaker: {
             first_name: string;
@@ -61,8 +61,6 @@ function Schedule(props: ScheduleProps) {
 
                     result[date][activity.zone][time].push(activity);
 
-                    result[date][activity.zone][time].sort((a, b) => a.thing.title.length - b.thing.title.length);
-
                     return result;
                 },
                 {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
@@ -105,8 +103,12 @@ function Schedule(props: ScheduleProps) {
                                 {activityByDateTimeAndZone[date][zone][time] &&
                                     activityByDateTimeAndZone[date][zone][time].map((activity, index) => (
                                         <div className="schedule__activity" key={index}>
-                                            <div className="schedule__activity-title">{activity.thing.title}</div>
-                                            {activity.type === 'TALK' && (
+                                            <div className="schedule__activity-title">
+                                                {activity.thing
+                                                    ? activity.thing.title
+                                                    : activity.type === 'TALK' && 'Доклад'}
+                                            </div>
+                                            {activity.type === 'TALK' && activity.thing && (
                                                 <div className="schedule__activity-author">
                                                     {[
                                                         activity.thing.speaker.first_name,
