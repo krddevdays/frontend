@@ -26,7 +26,7 @@ function createUrl(context: {
     return `${url}?${query}`;
 }
 
-export type EventsResponse = Array<EventResponse>;
+type EventsResponse = Array<EventResponse>;
 
 export const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
@@ -42,7 +42,7 @@ export const events = async (): Promise<EventsResponse> => {
     return response.json();
 };
 
-export type EventResponse = {
+type EventResponse = {
     id: number;
     name: string;
     start_date: string;
@@ -61,7 +61,7 @@ export type EventResponse = {
     image_facebook?: string;
 };
 
-export type EventActivitiesResponse = Array<
+type EventActivitiesResponse = Array<
     | {
           finish_date: string;
           start_date: string;
@@ -126,6 +126,56 @@ export const eventActivities = async (id: number): Promise<EventActivitiesRespon
             pathname: `/events/${id}/activities/`
         })
     );
+
+    if (response.status !== 200) {
+        throw new Error(await response.text());
+    }
+
+    return response.json();
+};
+
+type EventTicketsResponse = {
+    is_active: boolean;
+    sale_finish_date: string;
+    sale_start_date: string | null;
+    payments: Array<{
+        id: number;
+        type: 'card' | 'invoice';
+    }>;
+    types: Array<{
+        id: number;
+        disabled: boolean;
+        name: string;
+        price: {
+            current_value: string;
+            default_value: string;
+            modifiers: Array<
+                | {
+                      value: string;
+                      type: 'sales_count';
+                      sales_count: number;
+                  }
+                | {
+                      value: string;
+                      type: 'date';
+                      active_from: string;
+                      active_to: string;
+                  }
+            >;
+        };
+    }>;
+};
+
+export const eventTickets = async (id: number): Promise<EventTicketsResponse | null> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/events/${id}/tickets/`
+        })
+    );
+
+    if (response.status === 404) {
+        return null;
+    }
 
     if (response.status !== 200) {
         throw new Error(await response.text());

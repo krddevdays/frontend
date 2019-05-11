@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import * as api from '../../api';
 import Head from 'next/head';
-import { FormattedDate, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedDate, InjectedIntlProps, injectIntl, FormattedNumber } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 
@@ -110,29 +110,58 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
     );
 });
 
-type Event = {
-    event: {
-        id: number;
-        name: string;
-        start_date: string;
-        finish_date: string;
-        short_description: string;
-        image: string;
-        full_description?: string;
-        ticket_description?: string;
-        image_vk?: string;
-        image_facebook?: string;
-        venue: {
-            name: string;
-            address: string;
-            latitude: number;
-            longitude: number;
-        };
-    };
-    activities: ActivityProps[];
+type EventVenue = {
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
 };
 
-type EventPageProps = Event;
+type EventTickets = {
+    is_active: boolean;
+    types: Array<{
+        id: number;
+        disabled: boolean;
+        name: string;
+        price: {
+            current_value: string;
+            default_value: string;
+            modifiers: Array<
+                | {
+                      value: string;
+                      type: 'sales_count';
+                      sales_count: number;
+                  }
+                | {
+                      value: string;
+                      type: 'date';
+                      active_from: string;
+                      active_to: string;
+                  }
+            >;
+        };
+    }>;
+};
+
+type Event = {
+    id: number;
+    name: string;
+    start_date: string;
+    finish_date: string;
+    short_description: string;
+    image: string;
+    full_description?: string;
+    ticket_description?: string;
+    image_vk?: string;
+    image_facebook?: string;
+    venue: EventVenue;
+};
+
+type EventPageProps = {
+    event: Event;
+    activities: ActivityProps[];
+    tickets: EventTickets | null;
+};
 
 function EventDate(props: { startAt: Date; finishAt: Date }) {
     const currentDate = new Date();
@@ -168,6 +197,109 @@ function EventDate(props: { startAt: Date; finishAt: Date }) {
     );
 }
 
+type EventInformationProps = { tickets: EventTickets | null; startDate: string; finishDate: string; venue: EventVenue };
+
+function EventInformation(props: EventInformationProps) {
+    const startAt = new Date(props.startDate);
+    const finishAt = new Date(props.finishDate);
+
+    const price = (props.tickets && props.tickets.is_active ? props.tickets.types : []).reduce<null | {
+        min: string;
+        max: string;
+    }>((price, type) => {
+        if (type.disabled) return price;
+
+        if (price === null) {
+            return {
+                min: type.price.current_value,
+                max: type.price.current_value
+            };
+        }
+
+        const newPrice = { ...price };
+
+        if (parseFloat(price.min) > parseFloat(type.price.current_value)) {
+            newPrice.min = type.price.current_value;
+        }
+
+        if (parseFloat(price.max) < parseFloat(type.price.current_value)) {
+            newPrice.max = type.price.current_value;
+        }
+
+        return newPrice;
+    }, null);
+
+    return (
+        <ul className="event-information">
+            {price !== null && (
+                <li className="event-information__item event-information-item">
+                    <div className="event-information-item__name">Текущая цена</div>
+                    <div className="event-information-item__content">
+                        {price.min !== price.max ? (
+                            <React.Fragment>
+                                от{' '}
+                                <FormattedNumber
+                                    style="currency"
+                                    value={parseFloat(price.min)}
+                                    currency="RUB"
+                                    minimumFractionDigits={0}
+                                />{' '}
+                                до{' '}
+                                <FormattedNumber
+                                    style="currency"
+                                    value={parseFloat(price.max)}
+                                    currency="RUB"
+                                    minimumFractionDigits={0}
+                                />
+                            </React.Fragment>
+                        ) : (
+                            <FormattedNumber
+                                style="currency"
+                                value={parseFloat(price.min)}
+                                currency="RUB"
+                                minimumFractionDigits={0}
+                            />
+                        )}
+                    </div>
+                </li>
+            )}
+            <li className="event-information__item event-information-item">
+                <div className="event-information-item__name">Место проведения</div>
+                <div
+                    className="event-information-item__content"
+                    itemProp="location"
+                    itemScope
+                    itemType="http://schema.org/Place"
+                >
+                    <span itemProp="name">{props.venue.name}</span>
+                    <br />
+                    <span itemProp="address">{props.venue.address}</span>
+                    <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
+                        <meta itemProp="latitude" content={props.venue.latitude.toString()} />
+                        <meta itemProp="longitude" content={props.venue.longitude.toString()} />
+                    </div>
+                </div>
+                <a
+                    className="event-information-item__action"
+                    href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
+                    target="_blank"
+                    rel="nofollow noopener"
+                >
+                    Смотреть на карте
+                </a>
+            </li>
+            <li className="event-information__item event-information-item">
+                <div className="event-information-item__name">Дата и время</div>
+                <div className="event-information-item__content">
+                    <meta itemProp="startDate" content={startAt.toISOString()} />
+                    <meta itemProp="endDate" content={finishAt.toISOString()} />
+                    <EventDate startAt={startAt} finishAt={finishAt} />
+                </div>
+            </li>
+        </ul>
+    );
+}
+
 const EventPage: NextFunctionComponent<
     EventPageProps,
     EventPageProps,
@@ -177,10 +309,7 @@ const EventPage: NextFunctionComponent<
         };
     }
 > = props => {
-    const { event, activities } = props;
-    const startAt = new Date(event.start_date);
-    const finishAt = new Date(event.finish_date);
-
+    const { event, tickets, activities } = props;
     const talks = (activities.filter(
         activity => activity.type === 'TALK' && activity.thing
     ) as TalkActivityProps[]).map(activity => activity.thing) as TalkCardProps[];
@@ -203,41 +332,12 @@ const EventPage: NextFunctionComponent<
                     <p>{event.short_description}</p>
                 )}
             </div>
-            <ul className="event-information">
-                <li className="event-information__item event-information-item">
-                    <div className="event-information-item__name">Место проведения</div>
-                    <div
-                        className="event-information-item__content"
-                        itemProp="location"
-                        itemScope
-                        itemType="http://schema.org/Place"
-                    >
-                        <span itemProp="name">{event.venue.name}</span>
-                        <br />
-                        <span itemProp="address">{event.venue.address}</span>
-                        <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-                            <meta itemProp="latitude" content={event.venue.latitude.toString()} />
-                            <meta itemProp="longitude" content={event.venue.longitude.toString()} />
-                        </div>
-                    </div>
-                    <a
-                        className="event-information-item__action"
-                        href={`https://yandex.ru/maps/?pt=${event.venue.longitude},${event.venue.latitude}&z=15&l=map`}
-                        target="_blank"
-                        rel="nofollow noopener"
-                    >
-                        Смотреть на карте
-                    </a>
-                </li>
-                <li className="event-information__item event-information-item">
-                    <div className="event-information-item__name">Дата и время</div>
-                    <div className="event-information-item__content">
-                        <meta itemProp="startDate" content={startAt.toISOString()} />
-                        <meta itemProp="endDate" content={finishAt.toISOString()} />
-                        <EventDate startAt={startAt} finishAt={finishAt} />
-                    </div>
-                </li>
-            </ul>
+            <EventInformation
+                tickets={tickets}
+                startDate={event.start_date}
+                finishDate={event.finish_date}
+                venue={event.venue}
+            />
             <Talks talks={talks} />
             <Schedule activities={activities} />
         </Container>
@@ -247,7 +347,8 @@ const EventPage: NextFunctionComponent<
 EventPage.getInitialProps = async ctx => {
     return {
         event: await api.event(ctx.query.id),
-        activities: await api.eventActivities(ctx.query.id)
+        activities: await api.eventActivities(ctx.query.id),
+        tickets: await api.eventTickets(ctx.query.id)
     };
 };
 
