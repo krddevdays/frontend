@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import * as api from '../../api';
 import Head from 'next/head';
-import { FormattedDate, InjectedIntlProps, injectIntl, FormattedNumber } from 'react-intl';
+import { FormattedDate, InjectedIntlProps, injectIntl, FormattedNumber, FormattedPlural } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 
@@ -233,7 +233,7 @@ function EventInformation(props: EventInformationProps) {
         <ul className="event-information">
             {price !== null && (
                 <li className="event-information__item event-information-item">
-                    <div className="event-information-item__name">Текущая цена</div>
+                    <div className="event-information-item__name">Стоимость участия</div>
                     <div className="event-information-item__content">
                         {price.min !== price.max ? (
                             <React.Fragment>
@@ -261,6 +261,9 @@ function EventInformation(props: EventInformationProps) {
                             />
                         )}
                     </div>
+                    <a className="event-information-item__action" href="#event_price">
+                        Подробнее
+                    </a>
                 </li>
             )}
             <li className="event-information__item event-information-item">
@@ -297,6 +300,214 @@ function EventInformation(props: EventInformationProps) {
                 </div>
             </li>
         </ul>
+    );
+}
+
+type EventPriceProps = {
+    tickets: EventTickets | null;
+    description?: string;
+};
+
+type ConditionDate = { type: 'date'; active_from: Date; active_to: Date };
+type ConditionSalesCount = { type: 'sales_count'; sales_count: number };
+
+type Condition = ConditionDate | ConditionSalesCount;
+
+function getMinConditionActiveFrom(conditions: Condition[]) {
+    return conditions.reduce<null | Date>((minDate, condition) => {
+        if (condition.type !== 'date') return minDate;
+
+        if (minDate === null || condition.active_from.getTime() < minDate.getTime()) return condition.active_from;
+
+        return minDate;
+    }, null);
+}
+
+function EventPrice(props: EventPriceProps) {
+    if (props.tickets === null || props.tickets.types.length === 0) return null;
+
+    const types = props.tickets.types
+        .filter(type => !type.disabled)
+        .map(type => ({
+            name: type.name,
+            price: {
+                value: type.price.default_value,
+                steps: type.price.modifiers.reduce(
+                    (steps, modifier) => {
+                        let step = steps.find(step => step.value === modifier.value);
+
+                        if (!step) {
+                            step = {
+                                value: modifier.value,
+                                conditions: []
+                            };
+
+                            steps.push(step);
+                        }
+
+                        switch (modifier.type) {
+                            case 'sales_count':
+                                step.conditions.push({
+                                    type: 'sales_count',
+                                    sales_count: modifier.sales_count
+                                });
+                                break;
+                            case 'date':
+                                step.conditions.push({
+                                    type: 'date',
+                                    active_from: new Date(modifier.active_from),
+                                    active_to: new Date(modifier.active_to)
+                                });
+                                break;
+                            default:
+                                ((_: never) => null)(modifier);
+                        }
+
+                        return steps;
+                    },
+                    [] as Array<{ value: string; conditions: Condition[] }>
+                )
+            }
+        }));
+
+    const steps: Array<{ conditions: Condition[]; types: Array<string | null> }> = [];
+
+    types.forEach((type, typeIndex) => {
+        type.price.steps.forEach(typeStep => {
+            let step = steps.find(step =>
+                step.conditions.some(
+                    stepCondition =>
+                        typeStep.conditions.find(typeStepCondition => {
+                            if (typeStepCondition.type !== stepCondition.type) {
+                                return false;
+                            }
+
+                            switch (stepCondition.type) {
+                                case 'date':
+                                    return (
+                                        stepCondition.active_from.getTime() ===
+                                        (typeStepCondition as ConditionDate).active_from.getTime()
+                                    );
+                                case 'sales_count':
+                                    return (
+                                        stepCondition.sales_count ===
+                                        (typeStepCondition as ConditionSalesCount).sales_count
+                                    );
+                                default:
+                                    return ((_: never) => false)(stepCondition);
+                            }
+                        }) !== undefined
+                )
+            );
+
+            if (!step) {
+                step = {
+                    conditions: typeStep.conditions.slice(0),
+                    types: new Array(types.length).fill(null)
+                };
+                steps.push(step);
+            }
+
+            step.types[typeIndex] = typeStep.value;
+        });
+    });
+
+    steps.sort((a, b) => {
+        const minActiveFromA = getMinConditionActiveFrom(a.conditions);
+        if (minActiveFromA === null) return 1;
+
+        const minActiveFromB = getMinConditionActiveFrom(b.conditions);
+        if (minActiveFromB === null) return -1;
+
+        return minActiveFromA.getTime() - minActiveFromB.getTime();
+    });
+
+    return (
+        <section className="event-block event-price" id="event_price">
+            <h2 className="event-title event-price__title">Стоимость участия</h2>
+            <div className="event-price__table-wrapper">
+                <table className="event-price__table">
+                    <thead>
+                        <tr>
+                            <td />
+                            {types.map((type, index) => (
+                                <th key={index}>{type.name}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td />
+                            {types.map((type, index) => (
+                                <td key={index}>
+                                    <FormattedNumber
+                                        style="currency"
+                                        value={parseFloat(type.price.value)}
+                                        currency="RUB"
+                                        minimumFractionDigits={0}
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                        {steps.map((step, index) => (
+                            <tr key={index}>
+                                <td className="event-price__table-row-title">
+                                    {step.conditions.map((condition, index) => {
+                                        const lastItem = step.conditions.length === index + 1;
+                                        const br = !lastItem && step.conditions.length > 1 && <br />;
+                                        const or = lastItem && step.conditions.length > 1 && 'или';
+                                        switch (condition.type) {
+                                            case 'date':
+                                                return (
+                                                    <React.Fragment key={index}>
+                                                        {or} с{' '}
+                                                        <FormattedDate
+                                                            value={condition.active_from}
+                                                            month="long"
+                                                            day="numeric"
+                                                        />
+                                                        {br}
+                                                    </React.Fragment>
+                                                );
+                                            case 'sales_count':
+                                                return (
+                                                    <React.Fragment key={index}>
+                                                        {or} от {condition.sales_count}{' '}
+                                                        <FormattedPlural
+                                                            value={condition.sales_count}
+                                                            one="проданного билет"
+                                                            many="проданных билетов"
+                                                            other="проданного билета"
+                                                        />
+                                                        {br}
+                                                    </React.Fragment>
+                                                );
+                                        }
+                                    })}
+                                </td>
+                                {step.types.map((type, index) => (
+                                    <td key={index}>
+                                        {type && (
+                                            <FormattedNumber
+                                                style="currency"
+                                                value={parseFloat(type)}
+                                                currency="RUB"
+                                                minimumFractionDigits={0}
+                                            />
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            {props.description && (
+                <div className="event-price__description">
+                    <Markdown>{props.description}</Markdown>
+                </div>
+            )}
+        </section>
     );
 }
 
@@ -340,6 +551,7 @@ const EventPage: NextFunctionComponent<
             />
             <Talks talks={talks} />
             <Schedule activities={activities} />
+            <EventPrice tickets={tickets} description={event.ticket_description} />
         </Container>
     );
 };
