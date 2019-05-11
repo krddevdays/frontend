@@ -117,7 +117,7 @@ type EventVenue = {
     longitude: number;
 };
 
-type EventTickets = {
+export type EventTickets = {
     is_active: boolean;
     types: Array<{
         id: number;
@@ -143,7 +143,7 @@ type EventTickets = {
     }>;
 };
 
-type Event = {
+export type Event = {
     id: number;
     name: string;
     start_date: string;
@@ -529,6 +529,10 @@ const EventPage: NextFunctionComponent<
         <Container>
             <Head>
                 <title>{event.name}</title>
+                <meta property="og:title" content={event.name} />
+                <meta property="og:description" content={event.short_description} />
+                {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
+                {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
                 <body itemScope itemType="http://schema.org/Event" />
             </Head>
             <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
@@ -557,10 +561,27 @@ const EventPage: NextFunctionComponent<
 };
 
 EventPage.getInitialProps = async ctx => {
+    const event = await api.event(ctx.query.id);
+
+    if (event === null) {
+        const err = new Error();
+        // @ts-ignore
+        err.code = 'ENOENT';
+        throw err;
+    }
+
+    let tickets;
+
+    try {
+        tickets = await api.eventTickets(ctx.query.id);
+    } catch (e) {
+        tickets = null;
+    }
+
     return {
-        event: await api.event(ctx.query.id),
+        event,
         activities: await api.eventActivities(ctx.query.id),
-        tickets: await api.eventTickets(ctx.query.id)
+        tickets
     };
 };
 

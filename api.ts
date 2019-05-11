@@ -106,12 +106,16 @@ type EventActivitiesResponse = Array<
       }
 >;
 
-export const event = async (id: number): Promise<EventResponse> => {
+export const event = async (id: number): Promise<EventResponse | null> => {
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/`
         })
     );
+
+    if (response.status === 404) {
+        return null;
+    }
 
     if (response.status !== 200) {
         throw new Error(await response.text());
