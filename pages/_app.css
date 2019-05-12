@@ -18,6 +18,7 @@ textarea {
 }
 
 .button {
+    background: none;
     border: 1px solid #0000cc;
     padding: 8px 24px;
     margin: 0;
