@@ -17,6 +17,24 @@ textarea {
     margin: 0;
 }
 
+.button {
+    border: 1px solid #0000cc;
+    padding: 8px 24px;
+    margin: 0;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+
+    color: #0000cc;
+    text-decoration: none;
+}
+
+.button_small {
+    padding: 4px 8px;
+    line-height: 12px;
+}
+
 html,
 body {
     height: 100%;

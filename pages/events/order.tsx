@@ -162,7 +162,11 @@ const OrderPage: NextFunctionComponent<
                                             Данные участника
                                             {index > 0 && ' '}
                                             {index > 0 && (
-                                                <button type="button" onClick={() => arrayHelpers.remove(index)}>
+                                                <button
+                                                    type="button"
+                                                    className="button button_small"
+                                                    onClick={() => arrayHelpers.remove(index)}
+                                                >
                                                     -
                                                 </button>
                                             )}
@@ -225,6 +229,7 @@ const OrderPage: NextFunctionComponent<
                                         />
                                         <button
                                             type="button"
+                                            className="button button_small"
                                             onClick={() =>
                                                 arrayHelpers.insert(index + 1, {
                                                     type_id: '',
@@ -270,7 +275,7 @@ const OrderPage: NextFunctionComponent<
                                     </React.Fragment>
                                 )}
                         </fieldset>
-                        <button type="submit" disabled={isSubmitting}>
+                        <button type="submit" className="button" disabled={isSubmitting}>
                             Купить
                         </button>
                     </Form>

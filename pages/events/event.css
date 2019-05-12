@@ -2,6 +2,10 @@
     margin: 64px 0;
 }
 
+.event-block:last-child {
+    margin-bottom: 0;
+}
+
 .event-talks {
     display: grid;
     grid-template:
@@ -46,7 +50,8 @@
     grid-template:
         'title'
         'table'
-        'description';
+        'description'
+        'button';
 }
 
 .event-price__title {
@@ -114,6 +119,11 @@
 .event-price__description ol,
 .event-price__description ul {
     margin: 16px 0;
+}
+
+.event-price__button {
+    grid-area: button;
+    justify-self: center;
 }
 
 .event-schedule {

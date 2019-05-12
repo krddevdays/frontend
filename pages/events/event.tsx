@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { FormattedDate, FormattedNumber, FormattedPlural, InjectedIntlProps, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
+import Link from 'next/link';
 
 import Container from '../../components/Container/Container';
 import ScheduleTable, { ActivityProps, TalkActivityProps } from '../../components/ScheduleTable/ScheduleTable';
@@ -120,6 +121,8 @@ type EventVenue = {
 
 export type EventTickets = {
     is_active: boolean;
+    sale_start_date: string | null;
+    sale_finish_date: string;
     types: Array<{
         id: number;
         disabled: boolean;
@@ -275,6 +278,7 @@ function EventInformation(props: EventInformationProps) {
 }
 
 type EventPriceProps = {
+    eventId: number;
     tickets: EventTickets | null;
     description?: string;
 };
@@ -296,6 +300,16 @@ function getMinConditionActiveFrom(conditions: Condition[]) {
 
 function EventPrice(props: EventPriceProps) {
     if (props.tickets === null || props.tickets.types.length === 0) return null;
+
+    let ticketsAvailable = props.tickets.is_active;
+
+    if (ticketsAvailable && props.tickets.sale_start_date !== null) {
+        ticketsAvailable = new Date(props.tickets.sale_start_date).getTime() <= new Date().getTime();
+    }
+
+    if (ticketsAvailable) {
+        ticketsAvailable = new Date(props.tickets.sale_finish_date).getTime() > new Date().getTime();
+    }
 
     const types = props.tickets.types
         .filter(type => !type.disabled)
@@ -478,6 +492,11 @@ function EventPrice(props: EventPriceProps) {
                     <Markdown>{props.description}</Markdown>
                 </div>
             )}
+            {ticketsAvailable && (
+                <Link href={`/events/order?id=${props.eventId}`} as={`/events/${props.eventId}/order`}>
+                    <a className="button event-price__button">Купить билет</a>
+                </Link>
+            )}
         </section>
     );
 }
@@ -526,7 +545,7 @@ const EventPage: NextFunctionComponent<
             />
             <Talks talks={talks} />
             <Schedule activities={activities} />
-            <EventPrice tickets={tickets} description={event.ticket_description} />
+            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
         </Container>
     );
 };

@@ -140,8 +140,8 @@ export const eventActivities = async (id: number): Promise<EventActivitiesRespon
 
 type EventTicketsResponse = {
     is_active: boolean;
-    sale_finish_date: string;
     sale_start_date: string | null;
+    sale_finish_date: string;
     payments: Array<{
         id: number;
         type: 'card' | 'invoice';
