@@ -2,13 +2,14 @@ import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
 import * as api from '../../api';
 import Head from 'next/head';
-import { FormattedDate, InjectedIntlProps, injectIntl, FormattedNumber, FormattedPlural } from 'react-intl';
+import { FormattedDate, FormattedNumber, FormattedPlural, InjectedIntlProps, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 
 import Container from '../../components/Container/Container';
 import ScheduleTable, { ActivityProps, TalkActivityProps } from '../../components/ScheduleTable/ScheduleTable';
 import TalkCard, { TalkCardProps } from '../../components/TalkCard/TalkCard';
+import { EventDate } from '../../components/EventDate/EventDate';
 import './event.css';
 
 type TalksProps = {
@@ -141,6 +142,10 @@ export type EventTickets = {
             >;
         };
     }>;
+    payments: Array<{
+        id: number;
+        type: 'card' | 'invoice';
+    }>;
 };
 
 export type Event = {
@@ -162,40 +167,6 @@ type EventPageProps = {
     activities: ActivityProps[];
     tickets: EventTickets | null;
 };
-
-function EventDate(props: { startAt: Date; finishAt: Date }) {
-    const currentDate = new Date();
-    const needYear = currentDate.getFullYear() !== props.startAt.getFullYear();
-
-    const needDate = props.startAt.getDate() !== props.finishAt.getDate();
-
-    if (!needDate) {
-        return (
-            <React.Fragment>
-                <FormattedDate
-                    value={props.startAt}
-                    month="long"
-                    day="numeric"
-                    year={needYear ? 'numeric' : undefined}
-                />
-                <br />
-                с <FormattedDate value={props.startAt} hour="numeric" minute="numeric" /> до{' '}
-                <FormattedDate value={props.finishAt} hour="numeric" minute="numeric" />
-            </React.Fragment>
-        );
-    }
-
-    return (
-        <React.Fragment>
-            <FormattedDate value={props.startAt} day="numeric" />
-            -
-            <FormattedDate value={props.finishAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
-            <br />
-            с <FormattedDate value={props.startAt} hour="numeric" minute="numeric" /> до{' '}
-            <FormattedDate value={props.finishAt} hour="numeric" minute="numeric" />
-        </React.Fragment>
-    );
-}
 
 type EventInformationProps = { tickets: EventTickets | null; startDate: string; finishDate: string; venue: EventVenue };
 

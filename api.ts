@@ -187,3 +187,43 @@ export const eventTickets = async (id: number): Promise<EventTicketsResponse | n
 
     return response.json();
 };
+
+type Order = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone?: string;
+    tickets: Array<{
+        type_id: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+    }>;
+    payment_id: string;
+};
+
+export const eventOrder = async (id: number, order: Order): Promise<{ url: 'string' }> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/events/${id}/order/`
+        }),
+        {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        }
+    );
+
+    if (response.status === 400) {
+        throw response;
+    }
+
+    if (response.status !== 200) {
+        throw new Error(await response.text());
+    }
+
+    return response.json();
+};

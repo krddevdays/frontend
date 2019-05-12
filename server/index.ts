@@ -16,6 +16,10 @@ app.prepare().then(() => {
         return app.render(req, res, '/events/event', { id: req.params.id });
     });
 
+    server.get('/events/:id/order', (req, res) => {
+        return app.render(req, res, '/events/order', { id: req.params.id });
+    });
+
     server.get('*', (req, res) => {
         return handle(req, res);
     });
