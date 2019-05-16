@@ -32,7 +32,12 @@ export const events = async (): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
             pathname: '/events/'
-        })
+        }),
+        {
+            headers: {
+                Accept: 'application/json'
+            }
+        }
     );
 
     if (response.status !== 200) {
@@ -110,7 +115,12 @@ export const event = async (id: number): Promise<EventResponse | null> => {
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/`
-        })
+        }),
+        {
+            headers: {
+                Accept: 'application/json'
+            }
+        }
     );
 
     if (response.status === 404) {
@@ -128,7 +138,12 @@ export const eventActivities = async (id: number): Promise<EventActivitiesRespon
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/activities/`
-        })
+        }),
+        {
+            headers: {
+                Accept: 'application/json'
+            }
+        }
     );
 
     if (response.status !== 200) {
@@ -174,7 +189,12 @@ export const eventTickets = async (id: number): Promise<EventTicketsResponse | n
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/tickets/`
-        })
+        }),
+        {
+            headers: {
+                Accept: 'application/json'
+            }
+        }
     );
 
     if (response.status === 404) {
