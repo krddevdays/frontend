@@ -8,6 +8,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import sentry from '../server/sentry';
 import { BrowserClient } from '@sentry/browser';
+import { YMInitializer } from 'react-yandex-metrika';
 
 const { Sentry, captureException } = sentry();
 
@@ -79,6 +80,27 @@ class MyApp extends App<MyAppProps, MyAppState> {
         return (
             <IntlProvider locale="ru" initialNow={initialNow} timeZone="Europe/Moscow">
                 <Container>
+                    <YMInitializer
+                        accounts={[53951545]}
+                        options={{
+                            clickmap: true,
+                            trackLinks: true,
+                            accurateTrackBounce: true,
+                            webvisor: true
+                        }}
+                        version="2"
+                    >
+                        <noscript>
+                            <img
+                                src="https://mc.yandex.ru/watch/53951545"
+                                style={{
+                                    position: 'absolute',
+                                    left: '-9999px'
+                                }}
+                                alt=""
+                            />
+                        </noscript>
+                    </YMInitializer>
                     <NProgress />
                     <Header />
                     <main role="main">
