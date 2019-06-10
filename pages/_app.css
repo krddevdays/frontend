@@ -44,6 +44,6 @@ body {
 #__next {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 0 auto 1fr auto;
     min-height: 100%;
 }
