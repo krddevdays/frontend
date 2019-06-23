@@ -47,3 +47,54 @@ body {
     grid-template-rows: 0 auto 1fr auto;
     min-height: 100%;
 }
+
+/* Section */
+.section {
+    padding: 40px 0;
+
+    display: grid;
+    grid-template:
+        'title title'
+        'content content'
+        'action action';
+    grid-row-gap: 24px;
+}
+
+.section__title {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0;
+    padding: 0;
+    color: #262626;
+
+    grid-area: title;
+}
+
+.section__action {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0000cc;
+    justify-self: center;
+    text-decoration: none;
+
+    grid-area: action;
+}
+
+.section__content {
+    grid-area: content;
+}
+
+@media (min-width: 480px) {
+    .section {
+        grid-template:
+            'title action'
+            'content content';
+    }
+
+    .section__action {
+        justify-self: flex-end;
+        align-self: center;
+    }
+}

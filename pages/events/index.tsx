@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { NextContext, NextFunctionComponent } from 'next';
-import EventCard, { Event } from '../../components/EventCard/EventCard';
+import { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
 import Head from 'next/head';
 
 import Container from '../../components/Container/Container';
-import './index.css';
+import EventsList from '../../components/EventsList';
 
 type EventsPageProps = {
     events: Event[];
@@ -13,15 +13,13 @@ type EventsPageProps = {
 
 const EventsPage: NextFunctionComponent<EventsPageProps, EventsPageProps, NextContext> = props => {
     return (
-        <Container>
+        <Container className="section">
             <Head>
                 <title>Мероприятия</title>
             </Head>
-            <h1 className="events__title">Мероприятия</h1>
-            <div className="events__list">
-                {props.events.map((event, index) => (
-                    <EventCard {...event} key={index} />
-                ))}
+            <h1 className="section__title">Мероприятия</h1>
+            <div className="section__content">
+                <EventsList events={props.events} />
             </div>
         </Container>
     );

@@ -196,7 +196,7 @@
     display: block;
     border-radius: 4px;
     height: 144px;
-    margin: 0 0 40px;
+    margin: 40px 0;
     background-color: rgba(0, 0, 0, 0.5);
     background-size: cover;
     background-position: center center;

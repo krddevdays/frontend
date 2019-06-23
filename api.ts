@@ -28,10 +28,13 @@ function createUrl(context: {
 
 type EventsResponse = Array<EventResponse>;
 
-export const events = async (): Promise<EventsResponse> => {
+export const events = async (filter?: { date_from?: Date }): Promise<EventsResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: '/events/'
+            pathname: '/events/',
+            query: {
+                date_from: filter && filter.date_from ? filter.date_from.toISOString().slice(0, 10) : undefined
+            }
         }),
         {
             headers: {

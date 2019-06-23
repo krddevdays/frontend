@@ -1,34 +1,23 @@
-.events__title {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 32px;
-    margin: 0;
-    padding: 0;
-}
-
-.events__list {
+.events-list {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 24px;
-
-    margin: 24px 0;
-    padding: 0;
 }
 
 @media (min-width: 620px) {
-    .events__list {
+    .events-list {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 926px) {
-    .events__list {
+    .events-list {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1232px) {
-    .events__list {
+    .events-list {
         grid-template-columns: repeat(4, 1fr);
     }
 }
