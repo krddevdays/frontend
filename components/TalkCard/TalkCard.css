@@ -4,6 +4,7 @@
     background: #ffffff;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
+    position: relative;
 }
 
 .talk-card__body {
@@ -27,4 +28,33 @@
     color: #262626;
 
     margin: 0;
+}
+
+.talk-card__description {
+    display: none;
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+
+    background: white;
+    color: #262626;
+    margin: 0;
+    padding: 8px 24px;
+}
+
+.talk-card__description p {
+    margin: 16px 0;
+}
+
+.talk-card:hover .talk-card__description {
+    display: block;
 }
