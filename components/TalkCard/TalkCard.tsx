@@ -4,7 +4,7 @@ import './TalkCard.css';
 import Author, { AuthorProps } from '../Author/Author';
 
 export type TalkCardProps = {
-    description: string;
+    description: string | null;
     speaker: AuthorProps;
     title: string;
 };

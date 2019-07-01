@@ -8,7 +8,7 @@ import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
 
 import Container from '../../components/Container/Container';
-import ScheduleTable, { ActivityProps, TalkActivityProps } from '../../components/ScheduleTable/ScheduleTable';
+import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/ScheduleTable';
 import TalkCard, { TalkCardProps } from '../../components/TalkCard/TalkCard';
 import { EventDate } from '../../components/EventDate/EventDate';
 import './event.css';
@@ -168,6 +168,7 @@ export type Event = {
 type EventPageProps = {
     event: Event;
     activities: ActivityProps[];
+    talks: TalkCardProps[];
     tickets: EventTickets | null;
 };
 
@@ -510,10 +511,7 @@ const EventPage: NextFunctionComponent<
         };
     }
 > = props => {
-    const { event, tickets, activities } = props;
-    const talks = (activities.filter(
-        activity => activity.type === 'TALK' && activity.thing
-    ) as TalkActivityProps[]).map(activity => activity.thing) as TalkCardProps[];
+    const { event, tickets, activities, talks } = props;
 
     return (
         <Container>
@@ -571,6 +569,7 @@ EventPage.getInitialProps = async ctx => {
     return {
         event,
         activities: await api.eventActivities(ctx.query.id),
+        talks: await api.talks({ event_id: ctx.query.id }),
         tickets
     };
 };

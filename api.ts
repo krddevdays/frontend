@@ -50,6 +50,44 @@ export const events = async (filter?: { date_from?: Date }): Promise<EventsRespo
     return response.json();
 };
 
+type TalkResponse = {
+    description: string | null;
+    presentation_offline: string | null;
+    speaker: {
+        first_name: string;
+        last_name: string;
+        avatar: string | null;
+        work: string | null;
+        position: string | null;
+    };
+    title: string;
+    video: string | null;
+};
+
+type TalksResponse = Array<TalkResponse>;
+
+export const talks = async (filter?: { event_id?: number }): Promise<TalksResponse> => {
+    const response = await fetch(
+        createUrl({
+            pathname: '/talks/',
+            query: {
+                event_id: filter && filter.event_id ? filter.event_id : undefined
+            }
+        }),
+        {
+            headers: {
+                Accept: 'application/json'
+            }
+        }
+    );
+
+    if (response.status !== 200) {
+        throw new Error(await response.text());
+    }
+
+    return response.json();
+};
+
 type EventResponse = {
     id: number;
     name: string;
@@ -80,19 +118,7 @@ type EventActivitiesResponse = Array<
     | {
           finish_date: string;
           start_date: string;
-          thing: {
-              description: string;
-              presentation_offline: string | null;
-              speaker: {
-                  first_name: string;
-                  last_name: string;
-                  avatar: string | null;
-                  work: string | null;
-                  position: string | null;
-              };
-              title: string;
-              video: string | null;
-          };
+          thing: TalkResponse;
           type: 'TALK';
           zone: string;
       }
