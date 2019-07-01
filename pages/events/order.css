@@ -2,27 +2,143 @@
     font-weight: bold;
     font-size: 24px;
     line-height: 32px;
-    margin: 40px 0 0;
+    margin: 40px 0;
 
     color: #262626;
 }
 
-fieldset {
-    display: block;
-    margin: 16px 0;
-    padding: 16px;
-    border: 1px solid #e0e0e0;
+.order-container {
+    text-align: center;
 }
 
-fieldset > legend {
+.order-steps {
+    display: inline-flex;
+}
+
+.order-step {
+    position: relative;
+    text-align: center;
+    padding: 0 12px;
+    width: 100%;
+    flex: 100% 1 1;
+    box-sizing: content-box;
+}
+
+.order-step:first-child {
+    padding-left: 0;
+}
+
+.order-step:last-child {
+    padding-right: 0;
+}
+
+.order-step:before,
+.order-step:after {
+    position: absolute;
+    content: '';
+    display: block;
+    height: 1px;
+    width: 50%;
+    top: 24px;
+    background: #e0e0e0;
+}
+
+.order-step:before {
+    left: 0;
+}
+
+.order-step:after {
+    left: 50%;
+}
+
+.order-step:first-child:before {
+    display: none;
+}
+
+.order-step:last-child:after {
+    display: none;
+}
+
+.order-step__number {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+
+    background: #e0e0e0;
+    color: #a0a0a0;
+
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin: 0 0 8px;
+}
+
+.order-step__name {
     font-weight: normal;
     font-size: 12px;
     line-height: 16px;
-    color: #767676;
-    padding: 0 8px;
+    color: #a0a0a0;
 }
 
-label {
+.order-step_status_active .order-step__number {
+    color: white;
+    background: #0000cc;
+}
+
+.order-step_status_active .order-step__name {
+    color: #0000cc;
+}
+
+.order-step_status_finished .order-step__number {
+    color: white;
+    background: #7cb342;
+}
+
+.order-step_status_finished .order-step__name {
+    color: #7cb342;
+}
+
+.order-step_status_finished + .order-step:before {
+    background: #7cb342;
+}
+
+.order-step_status_finished.order-step:after {
+    background: #7cb342;
+}
+
+.order-step-form {
+    width: 100%;
+    text-align: left;
+    margin: 40px auto 0;
+}
+
+@media (min-width: 384px) {
+    .order-step-form {
+        width: 384px;
+    }
+}
+
+.order-step-form p {
+    display: block;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+
+    margin-bottom: 24px;
+}
+
+.order-step-form label {
     display: block;
 
     font-weight: normal;
@@ -33,9 +149,12 @@ label {
     padding: 0;
 }
 
-input[type='text'],
-input[type='email'],
-input[type='tel'] {
+.order-step-form input {
+    width: 100%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+
     display: block;
     background: #ffffff;
     border: 1px solid #e0e0e0;
@@ -47,20 +166,38 @@ input[type='tel'] {
     color: #a0a0a0;
 }
 
-select {
+.order-step-form select {
+    width: 100%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+
     margin: 0 0 16px;
+    padding: 8px 16px;
+
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    height: 32px;
+    color: #a0a0a0;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
-.error {
+.order-step-form select:focus,
+.order-step-form input:focus {
+    border: 1px solid #0000cc;
+    outline: none;
+}
+
+.order-step-form .error {
     font-size: 12px;
     line-height: 16px;
     color: #f44336;
     margin: -8px 0 16px;
 }
 
-input[type='text']:focus,
-input[type='email']:focus,
-input[type='tel']:focus {
-    border: 1px solid #0000cc;
-    outline: none;
+.order-step-form__buttons {
+    margin-top: 32px;
+    text-align: center;
 }

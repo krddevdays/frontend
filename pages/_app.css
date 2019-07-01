@@ -6,15 +6,16 @@ body {
     line-height: 20px;
 }
 
-button,
-input,
-optgroup,
-select,
-textarea {
-    font-family: inherit;
-    font-size: 12px;
-    line-height: 16px;
-    margin: 0;
+html,
+body {
+    height: 100%;
+}
+
+#__next {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100%;
 }
 
 .button {
@@ -23,6 +24,7 @@ textarea {
     padding: 8px 24px;
     margin: 0;
 
+    font-family: inherit;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
@@ -34,6 +36,10 @@ textarea {
 .button_small {
     padding: 4px 8px;
     line-height: 12px;
+}
+
+.button_theme_link {
+    border: none;
 }
 
 html,
