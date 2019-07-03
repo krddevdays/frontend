@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import classNames from 'classnames';
+import ym from 'react-yandex-metrika';
 
 yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
     return this.test('unique', message, function(value) {
@@ -104,7 +105,12 @@ const OrderPage: NextFunctionComponent<
 
                     try {
                         const order = await api.eventOrder(props.event.id, values);
-                        window.location.href = order.url;
+
+                        ym('reachGoal', 'event_order_success', {
+                            event_id: props.event.id
+                        });
+
+                        window.location.href = order.payment_url || order.url;
                     } catch (e) {
                         if (e instanceof Response) {
                             const response = e;

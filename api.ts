@@ -251,7 +251,7 @@ type Order = {
     payment_id: string;
 };
 
-export const eventOrder = async (id: number, order: Order): Promise<{ url: 'string' }> => {
+export const eventOrder = async (id: number, order: Order): Promise<{ url: 'string'; payment_url?: string }> => {
     const response = await fetch(
         createUrl({
             pathname: `/events/${id}/order/`

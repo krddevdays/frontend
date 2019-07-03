@@ -12,6 +12,7 @@ import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/Sch
 import TalkCard, { TalkCardProps } from '../../components/TalkCard/TalkCard';
 import { EventDate } from '../../components/EventDate/EventDate';
 import './event.css';
+import ym from 'react-yandex-metrika';
 
 type TalksProps = {
     talks: TalkCardProps[];
@@ -495,7 +496,16 @@ function EventPrice(props: EventPriceProps) {
             )}
             {ticketsAvailable && (
                 <Link href={`/events/order?id=${props.eventId}`} as={`/events/${props.eventId}/order`}>
-                    <a className="button event-price__button">Купить билет</a>
+                    <a
+                        className="button event-price__button"
+                        onClick={() => {
+                            ym('reachGoal', 'click_event_buy_button', {
+                                event_id: props.eventId
+                            });
+                        }}
+                    >
+                        Купить билет
+                    </a>
                 </Link>
             )}
         </section>
