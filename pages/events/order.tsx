@@ -107,10 +107,13 @@ const OrderPage: NextFunctionComponent<
                         const order = await api.eventOrder(props.event.id, values);
 
                         ym('reachGoal', 'event_order_success', {
-                            event_id: props.event.id
+                            event_id: props.event.id,
+                            order_id: order.id,
+                            currency: order.currency_id,
+                            order_price: parseFloat(order.price)
                         });
 
-                        window.location.href = order.payment_url || order.url;
+                        window.location.href = order.payment_url;
                     } catch (e) {
                         if (e instanceof Response) {
                             const response = e;
