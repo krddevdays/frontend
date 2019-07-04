@@ -8,7 +8,12 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import sentry from '../server/sentry';
 import { BrowserClient } from '@sentry/browser';
-import { YMInitializer } from 'react-yandex-metrika';
+import ym, { YMInitializer } from 'react-yandex-metrika';
+import Router from 'next/router';
+
+Router.events.on('routeChangeComplete', (url: string) => {
+    ym('hit', url);
+});
 
 const { Sentry, captureException } = sentry();
 
