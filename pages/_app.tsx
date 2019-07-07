@@ -10,9 +10,26 @@ import sentry from '../server/sentry';
 import { BrowserClient } from '@sentry/browser';
 import ym, { YMInitializer } from 'react-yandex-metrika';
 import Router from 'next/router';
+import Head from 'next/head';
+import { stripIndent } from 'common-tags';
+
+declare global {
+    interface Window {
+        VK: any;
+    }
+}
 
 Router.events.on('routeChangeComplete', (url: string) => {
     ym('hit', url);
+
+    if (
+        window &&
+        typeof window.VK !== 'undefined' &&
+        typeof window.VK.Retargeting !== 'undefined' &&
+        typeof window.VK.Retargeting.Hit === 'function'
+    ) {
+        window.VK.Retargeting.Hit();
+    }
 });
 
 const { Sentry, captureException } = sentry();
@@ -85,6 +102,18 @@ class MyApp extends App<MyAppProps, MyAppState> {
         return (
             <IntlProvider locale="ru" initialNow={initialNow} timeZone="Europe/Moscow">
                 <Container>
+                    <Head>
+                        <script
+                            key="plugin-vk-pixel"
+                            dangerouslySetInnerHTML={{
+                                __html: stripIndent`
+                                !function(){var t=document.createElement("script");t.type="text/javascript",
+                                t.async=!0,t.src="https://vk.com/js/api/openapi.js?154",t.onload=function()
+                                {VK.Retargeting.Init("VK-RTRG-383749-dV7bo"),VK.Retargeting.Hit()},
+                                document.head.appendChild(t)}();`
+                            }}
+                        />
+                    </Head>
                     <YMInitializer
                         accounts={[53951545]}
                         options={{
@@ -95,6 +124,13 @@ class MyApp extends App<MyAppProps, MyAppState> {
                         }}
                         version="2"
                     >
+                        <noscript
+                            key="plugin-vk-pixel"
+                            dangerouslySetInnerHTML={{
+                                __html: stripIndent`
+                                <img src="https://vk.com/rtrg?p=VK-RTRG-383749-dV7bo" style="position:fixed; left:-999px;" alt=""/>`
+                            }}
+                        />
                         <noscript>
                             <img
                                 src="https://mc.yandex.ru/watch/53951545"
