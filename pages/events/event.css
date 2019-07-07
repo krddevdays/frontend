@@ -50,8 +50,8 @@
     grid-template:
         'title'
         'table'
-        'description'
-        'button';
+        'button'
+        'description';
 }
 
 .event-price__title {
