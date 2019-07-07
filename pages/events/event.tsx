@@ -489,11 +489,6 @@ function EventPrice(props: EventPriceProps) {
                     </tbody>
                 </table>
             </div>
-            {props.description && (
-                <div className="event-price__description">
-                    <Markdown>{props.description}</Markdown>
-                </div>
-            )}
             {ticketsAvailable && (
                 <Link href={`/events/order?id=${props.eventId}`} as={`/events/${props.eventId}/order`}>
                     <a
@@ -507,6 +502,11 @@ function EventPrice(props: EventPriceProps) {
                         Купить билет
                     </a>
                 </Link>
+            )}
+            {props.description && (
+                <div className="event-price__description">
+                    <Markdown>{props.description}</Markdown>
+                </div>
             )}
         </section>
     );
