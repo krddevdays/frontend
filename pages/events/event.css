@@ -111,7 +111,7 @@
     font-size: 14px;
     line-height: 20px;
     color: #262626;
-    margin: 8px 0 16px;
+    margin: 8px 0 0;
     padding: 0;
 }
 
@@ -122,6 +122,7 @@
 }
 
 .event-price__button {
+    margin-top: 16px;
     grid-area: button;
     justify-self: center;
 }
