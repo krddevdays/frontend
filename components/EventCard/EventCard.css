@@ -51,9 +51,11 @@
 }
 
 .event-card__link {
+    display: inline-flex;
+    align-items: center;
+
     font-size: 12px;
     line-height: 16px;
-    padding: 4px 0;
 
     color: #0000cc;
     text-decoration: none;
