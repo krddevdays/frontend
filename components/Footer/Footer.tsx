@@ -65,6 +65,16 @@ export default function Footer() {
                             telegram
                         </a>
                     </li>
+                    <li className="footer-menu__item">
+                        <a
+                            href="https://www.youtube.com/c/krddevdays"
+                            target="_blank"
+                            rel="noopener nofollow"
+                            className="footer-menu__link"
+                        >
+                            youtube
+                        </a>
+                    </li>
                 </ul>
             </Container>
         </footer>
