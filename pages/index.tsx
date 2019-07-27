@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextContext, NextFunctionComponent } from 'next';
+import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ type IndexPageProps = {
     events: Event[];
 };
 
-const IndexPage: NextFunctionComponent<IndexPageProps, IndexPageProps, NextContext> = props => {
+const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPageProps> = props => {
     return (
         <React.Fragment>
             <Head>

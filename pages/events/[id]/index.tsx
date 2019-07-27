@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { NextContext, NextFunctionComponent } from 'next';
-import * as api from '../../api';
+import { NextPageContext, NextComponentType } from 'next';
+import * as api from '../../../api';
 import Head from 'next/head';
 import { FormattedDate, FormattedNumber, FormattedPlural, InjectedIntlProps, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
 
-import Container from '../../components/Container/Container';
-import ScheduleTable, { ActivityProps } from '../../components/ScheduleTable/ScheduleTable';
-import TalkCard, { TalkCardProps } from '../../components/TalkCard/TalkCard';
-import { EventDate } from '../../components/EventDate/EventDate';
-import './event.css';
+import Container from '../../../components/Container/Container';
+import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
+import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
+import { EventDate } from '../../../components/EventDate/EventDate';
+import './index.css';
 import ym from 'react-yandex-metrika';
 
 type TalksProps = {
@@ -87,21 +87,21 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
             <h2 className="event-title event-schedule__title">Расписание</h2>
             <div className="event-schedule__dates">
                 {dates.length > 1 &&
-                    dates.map((date, index) => (
-                        <button
-                            key={index}
-                            type="button"
-                            className={classNames('event-schedule__date', {
-                                'event-schedule__date_active': currentDate === date
-                            })}
-                            onClick={event => {
-                                event.preventDefault();
-                                setCurrentDate(date);
-                            }}
-                        >
-                            {date}
-                        </button>
-                    ))}
+                dates.map((date, index) => (
+                    <button
+                        key={index}
+                        type="button"
+                        className={classNames('event-schedule__date', {
+                            'event-schedule__date_active': currentDate === date
+                        })}
+                        onClick={event => {
+                            event.preventDefault();
+                            setCurrentDate(date);
+                        }}
+                    >
+                        {date}
+                    </button>
+                ))}
             </div>
             <div className="event-schedule__table-wrapper">
                 <ScheduleTable
@@ -131,19 +131,17 @@ export type EventTickets = {
         price: {
             current_value: string;
             default_value: string;
-            modifiers: Array<
+            modifiers: Array<| {
+                value: string;
+                type: 'sales_count';
+                sales_count: number;
+            }
                 | {
-                      value: string;
-                      type: 'sales_count';
-                      sales_count: number;
-                  }
-                | {
-                      value: string;
-                      type: 'date';
-                      active_from: string;
-                      active_to: string;
-                  }
-            >;
+                value: string;
+                type: 'date';
+                active_from: string;
+                active_to: string;
+            }>;
         };
     }>;
     payments: Array<{
@@ -251,11 +249,11 @@ function EventInformation(props: EventInformationProps) {
                     itemType="http://schema.org/Place"
                 >
                     <span itemProp="name">{props.venue.name}</span>
-                    <br />
+                    <br/>
                     <span itemProp="address">{props.venue.address}</span>
                     <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-                        <meta itemProp="latitude" content={props.venue.latitude.toString()} />
-                        <meta itemProp="longitude" content={props.venue.longitude.toString()} />
+                        <meta itemProp="latitude" content={props.venue.latitude.toString()}/>
+                        <meta itemProp="longitude" content={props.venue.longitude.toString()}/>
                     </div>
                 </div>
                 <a
@@ -270,9 +268,9 @@ function EventInformation(props: EventInformationProps) {
             <li className="event-information__item event-information-item">
                 <div className="event-information-item__name">Дата и время</div>
                 <div className="event-information-item__content">
-                    <meta itemProp="startDate" content={startAt.toISOString()} />
-                    <meta itemProp="endDate" content={finishAt.toISOString()} />
-                    <EventDate startAt={startAt} finishAt={finishAt} />
+                    <meta itemProp="startDate" content={startAt.toISOString()}/>
+                    <meta itemProp="endDate" content={finishAt.toISOString()}/>
+                    <EventDate startAt={startAt} finishAt={finishAt}/>
                 </div>
             </li>
         </ul>
@@ -415,82 +413,82 @@ function EventPrice(props: EventPriceProps) {
             <div className="event-price__table-wrapper">
                 <table className="event-price__table">
                     <thead>
-                        <tr>
-                            <td />
-                            {types.map((type, index) => (
-                                <th key={index}>{type.name}</th>
-                            ))}
-                        </tr>
+                    <tr>
+                        <td/>
+                        {types.map((type, index) => (
+                            <th key={index}>{type.name}</th>
+                        ))}
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td />
-                            {types.map((type, index) => (
+                    <tr>
+                        <td/>
+                        {types.map((type, index) => (
+                            <td key={index}>
+                                <FormattedNumber
+                                    style="currency"
+                                    value={parseFloat(type.price.value)}
+                                    currency="RUB"
+                                    minimumFractionDigits={0}
+                                />
+                            </td>
+                        ))}
+                    </tr>
+                    {steps.map((step, index) => (
+                        <tr key={index}>
+                            <td className="event-price__table-row-title">
+                                {step.conditions.map((condition, index) => {
+                                    const lastItem = step.conditions.length === index + 1;
+                                    const br = !lastItem && step.conditions.length > 1 && <br/>;
+                                    const or = lastItem && step.conditions.length > 1 && 'или';
+                                    switch (condition.type) {
+                                        case 'date':
+                                            return (
+                                                <React.Fragment key={index}>
+                                                    {or} с{' '}
+                                                    <FormattedDate
+                                                        value={condition.active_from}
+                                                        month="long"
+                                                        day="numeric"
+                                                    />
+                                                    {br}
+                                                </React.Fragment>
+                                            );
+                                        case 'sales_count':
+                                            return (
+                                                <React.Fragment key={index}>
+                                                    {or} от {condition.sales_count}{' '}
+                                                    <FormattedPlural
+                                                        value={condition.sales_count}
+                                                        one="проданного билет"
+                                                        many="проданных билетов"
+                                                        other="проданного билета"
+                                                    />
+                                                    {br}
+                                                </React.Fragment>
+                                            );
+                                    }
+                                })}
+                            </td>
+                            {step.types.map((type, index) => (
                                 <td key={index}>
-                                    <FormattedNumber
-                                        style="currency"
-                                        value={parseFloat(type.price.value)}
-                                        currency="RUB"
-                                        minimumFractionDigits={0}
-                                    />
+                                    {type && (
+                                        <FormattedNumber
+                                            style="currency"
+                                            value={parseFloat(type)}
+                                            currency="RUB"
+                                            minimumFractionDigits={0}
+                                        />
+                                    )}
                                 </td>
                             ))}
                         </tr>
-                        {steps.map((step, index) => (
-                            <tr key={index}>
-                                <td className="event-price__table-row-title">
-                                    {step.conditions.map((condition, index) => {
-                                        const lastItem = step.conditions.length === index + 1;
-                                        const br = !lastItem && step.conditions.length > 1 && <br />;
-                                        const or = lastItem && step.conditions.length > 1 && 'или';
-                                        switch (condition.type) {
-                                            case 'date':
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        {or} с{' '}
-                                                        <FormattedDate
-                                                            value={condition.active_from}
-                                                            month="long"
-                                                            day="numeric"
-                                                        />
-                                                        {br}
-                                                    </React.Fragment>
-                                                );
-                                            case 'sales_count':
-                                                return (
-                                                    <React.Fragment key={index}>
-                                                        {or} от {condition.sales_count}{' '}
-                                                        <FormattedPlural
-                                                            value={condition.sales_count}
-                                                            one="проданного билет"
-                                                            many="проданных билетов"
-                                                            other="проданного билета"
-                                                        />
-                                                        {br}
-                                                    </React.Fragment>
-                                                );
-                                        }
-                                    })}
-                                </td>
-                                {step.types.map((type, index) => (
-                                    <td key={index}>
-                                        {type && (
-                                            <FormattedNumber
-                                                style="currency"
-                                                value={parseFloat(type)}
-                                                currency="RUB"
-                                                minimumFractionDigits={0}
-                                            />
-                                        )}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
+                    ))}
                     </tbody>
                 </table>
             </div>
             {ticketsAvailable && (
-                <Link href={`/events/order?id=${props.eventId}`} as={`/events/${props.eventId}/order`}>
+                <Link href='/events/[id]/order' as={`/events/${props.eventId}/order`}>
                     <a
                         className="button event-price__button"
                         onClick={() => {
@@ -512,32 +510,30 @@ function EventPrice(props: EventPriceProps) {
     );
 }
 
-const EventPage: NextFunctionComponent<
+const EventPage: NextComponentType<NextPageContext & {
+    query: {
+        id: number;
+    };
+},
     EventPageProps,
-    EventPageProps,
-    NextContext & {
-        query: {
-            id: number;
-        };
-    }
-> = props => {
+    EventPageProps> = props => {
     const { event, tickets, activities, talks } = props;
 
     return (
         <Container>
             <Head>
                 <title>{event.name}</title>
-                <meta property="og:title" content={event.name} />
-                <meta property="og:description" content={event.short_description} />
-                {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
-                {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
-                <body itemScope itemType="http://schema.org/Event" />
+                <meta property="og:title" content={event.name}/>
+                <meta property="og:description" content={event.short_description}/>
+                {event.image_vk && <meta property="vk:image" content={event.image_vk}/>}
+                {event.image_facebook && <meta property="og:image" content={event.image_facebook}/>}
+                <body itemScope itemType="http://schema.org/Event"/>
             </Head>
-            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
+            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }}/>
             <h1 className="event-title" itemProp="name">
                 {event.name}
             </h1>
-            <meta itemProp="image" content={event.image} />
+            <meta itemProp="image" content={event.image}/>
             <div className="event-description" itemProp="description">
                 {event.full_description ? (
                     <Markdown>{event.full_description}</Markdown>
@@ -551,9 +547,9 @@ const EventPage: NextFunctionComponent<
                 finishDate={event.finish_date}
                 venue={event.venue}
             />
-            <Talks talks={talks} />
-            <Schedule activities={activities} />
-            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
+            <Talks talks={talks}/>
+            <Schedule activities={activities}/>
+            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id}/>
         </Container>
     );
 };

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import Link from 'next/link';
-import Router, { withRouter, WithRouterProps } from 'next/router';
+import Router, { withRouter } from 'next/router';
 import classNames from 'classnames';
 
 import Logo from '../Logo/Logo';
 import Container from '../Container/Container';
 import './Header.css';
 
-type HeaderProps = WithRouterProps;
+type HeaderProps = {
+    router: typeof Router;
+};
 
 function Header(props: HeaderProps) {
     const [menuOpened, setMenuOpened] = React.useState(false);

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as api from '../../api';
+import * as api from '../../../api';
 import Head from 'next-server/head';
-import { NextContext, NextFunctionComponent } from 'next';
+import { NextPageContext, NextComponentType } from 'next';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
@@ -25,9 +25,9 @@ yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
     });
 });
 
-import { Event, EventTickets } from './event';
+import { Event, EventTickets } from './index';
 
-import Container from '../../components/Container/Container';
+import Container from '../../../components/Container/Container';
 import './order.css';
 
 const schema = yup.object().shape({
@@ -64,15 +64,13 @@ type EventPageProps = {
     tickets: EventTickets;
 };
 
-const OrderPage: NextFunctionComponent<
+const OrderPage: NextComponentType<NextPageContext & {
+    query: {
+        id: number;
+    };
+},
     EventPageProps,
-    EventPageProps,
-    NextContext & {
-        query: {
-            id: number;
-        };
-    }
-> = props => {
+    EventPageProps> = props => {
     const [step, setStep] = React.useState(0);
 
     return (
@@ -179,20 +177,20 @@ const OrderPage: NextFunctionComponent<
                         {step === 0 && (
                             <div className="order-step-form">
                                 <label htmlFor="first_name">Имя</label>
-                                <Field type="text" name="first_name" id="first_name" />
-                                <ErrorMessage name="first_name" component="div" className="error" />
+                                <Field type="text" name="first_name" id="first_name"/>
+                                <ErrorMessage name="first_name" component="div" className="error"/>
 
                                 <label htmlFor="last_name">Фамилия</label>
-                                <Field type="text" name="last_name" id="last_name" />
-                                <ErrorMessage name="last_name" component="div" className="error" />
+                                <Field type="text" name="last_name" id="last_name"/>
+                                <ErrorMessage name="last_name" component="div" className="error"/>
 
                                 <label htmlFor="email">E-mail</label>
-                                <Field type="email" name="email" id="email" />
-                                <ErrorMessage name="email" component="div" className="error" />
+                                <Field type="email" name="email" id="email"/>
+                                <ErrorMessage name="email" component="div" className="error"/>
 
                                 <label htmlFor="phone">Телефон</label>
-                                <Field type="tel" name="phone" id="phone" />
-                                <ErrorMessage name="phone" component="div" className="error" />
+                                <Field type="tel" name="phone" id="phone"/>
+                                <ErrorMessage name="phone" component="div" className="error"/>
 
                                 <div className="order-step-form__buttons">
                                     <button type="button" className="button" onClick={() => setStep(step + 1)}>
@@ -297,7 +295,8 @@ const OrderPage: NextFunctionComponent<
                                         <div className="order-step-form__buttons">
                                             <button type="button" className="button" onClick={() => setStep(step - 1)}>
                                                 Назад
-                                            </button>{' '}
+                                            </button>
+                                            {' '}
                                             <button type="button" className="button" onClick={() => setStep(step + 1)}>
                                                 Продолжить
                                             </button>
@@ -319,25 +318,26 @@ const OrderPage: NextFunctionComponent<
                                             </option>
                                         ))}
                                 </Field>
-                                <ErrorMessage name="payment_id" component="div" className="error" />
+                                <ErrorMessage name="payment_id" component="div" className="error"/>
                                 {values.payment_id &&
-                                    (props.tickets.payments.find(
-                                        payment => payment.id.toString() === values.payment_id
-                                    ) as typeof props.tickets.payments[0]).type === 'invoice' && (
-                                        <React.Fragment>
-                                            <label htmlFor="legal_name">Название компании</label>
-                                            <Field type="text" name="legal_name" id="legal_name" />
-                                            <ErrorMessage name="legal_name" component="div" className="error" />
+                                (props.tickets.payments.find(
+                                    payment => payment.id.toString() === values.payment_id
+                                ) as typeof props.tickets.payments[0]).type === 'invoice' && (
+                                    <React.Fragment>
+                                        <label htmlFor="legal_name">Название компании</label>
+                                        <Field type="text" name="legal_name" id="legal_name"/>
+                                        <ErrorMessage name="legal_name" component="div" className="error"/>
 
-                                            <label htmlFor="inn">ИНН</label>
-                                            <Field type="text" name="inn" id="inn" />
-                                            <ErrorMessage name="inn" component="div" className="error" />
-                                        </React.Fragment>
-                                    )}
+                                        <label htmlFor="inn">ИНН</label>
+                                        <Field type="text" name="inn" id="inn"/>
+                                        <ErrorMessage name="inn" component="div" className="error"/>
+                                    </React.Fragment>
+                                )}
                                 <div className="order-step-form__buttons">
                                     <button type="button" className="button" onClick={() => setStep(step - 1)}>
                                         Назад
-                                    </button>{' '}
+                                    </button>
+                                    {' '}
                                     <button type="submit" className="button" disabled={isSubmitting}>
                                         Купить
                                     </button>

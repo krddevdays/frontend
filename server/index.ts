@@ -1,14 +1,13 @@
-import * as express from 'express';
-import * as next from 'next';
+import express from 'express';
+import next from 'next';
 import sentry from './sentry';
-import * as cookieParser from 'cookie-parser';
-import * as uuidv4 from 'uuid/v4';
+import cookieParser from 'cookie-parser';
+import uuidv4 from 'uuid/v4';
 
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-
-const handle = app.getRequestHandler();
+const handler = app.getRequestHandler();
 
 const sessionCookie: express.RequestHandler = function(req, res, next) {
     const htmlPage =
@@ -40,32 +39,20 @@ const sourcemapsForSentryOnly: (token: string | undefined) => express.RequestHan
 app.prepare().then(() => {
     const { Sentry } = sentry(app.buildId);
 
-    const server = express();
-
-    server.use(Sentry.Handlers.requestHandler());
-
-    server.use(cookieParser()).use(sessionCookie);
-
-    server.get(/\.map$/, sourcemapsForSentryOnly(process.env.SENTRY_TOKEN));
-
-    server.use(express.static('static'));
-
-    server.get('/events/:id', (req, res) => {
-        return app.render(req, res, '/events/event', { id: req.params.id });
-    });
-
-    server.get('/events/:id/order', (req, res) => {
-        return app.render(req, res, '/events/order', { id: req.params.id });
-    });
-
-    server.get('*', (req, res) => {
-        return handle(req, res);
-    });
-
-    server.use(Sentry.Handlers.errorHandler());
-
-    server.listen(port, (err: Error) => {
-        if (err) throw err;
-        console.log(`> Ready on http://localhost:${port}`);
-    });
+    express()
+        .use(Sentry.Handlers.requestHandler())
+        .use(cookieParser())
+        .use(sessionCookie)
+        .use(express.static('static'))
+        .get(/\.map$/, sourcemapsForSentryOnly(process.env.SENTRY_TOKEN))
+        // @ts-ignore
+        .use(handler)
+        .use(Sentry.Handlers.errorHandler())
+        // @ts-ignore
+        .listen(port, err => {
+            if (err) {
+                throw err;
+            }
+            console.log(`> Ready on http://localhost:${port}`);
+        });
 });

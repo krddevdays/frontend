@@ -72,7 +72,7 @@ export default function EventCard(props: Event) {
                 {props.short_description}
             </p>
             <div className="event-card__footer">
-                <Link href={`/events/event?id=${props.id}`} as={`/events/${props.id}`}>
+                <Link href="/events/[id]" as={`/events/${props.id}`}>
                     <a className="event-card__link" itemProp="url">
                         Подробнее
                         <span className="event-card__link-icon">
