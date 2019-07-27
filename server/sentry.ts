@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import * as SentryIntegrations from '@sentry/integrations';
-import * as sentryTestkit from 'sentry-testkit';
+import sentryTestkit from 'sentry-testkit';
 import * as Cookie from 'js-cookie';
 import getConfig from 'next/config';
 
@@ -46,8 +46,7 @@ export default (release: string | undefined = process.env.SENTRY_RELEASE) => {
                         scope.setExtra('statusCode', res.statusCode);
                     }
 
-                    // @ts-ignore
-                    if (process.browser) {
+                    if (typeof window !== 'undefined') {
                         // @ts-ignore
                         scope.setTag('ssr', false);
                         scope.setExtra('query', query);

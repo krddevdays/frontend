@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import * as ru from 'react-intl/locale-data/ru';
-import App, { AppProps, Container, DefaultAppIProps, NextAppContext } from 'next/app';
+import App, { AppContext, Container } from 'next/app';
 import NProgress from 'next-nprogress/component';
 import './_app.css';
 import Header from '../components/Header/Header';
@@ -52,8 +52,8 @@ type MyAppState = ErrorState;
 
 addLocaleData(ru);
 
-class MyApp extends App<MyAppProps, MyAppState> {
-    static async getInitialProps({ Component, ctx }: NextAppContext) {
+class MyApp extends App<MyAppProps, MyAppProps> {
+    static async getInitialProps({ Component, ctx }: AppContext) {
         let pageProps = {};
         let hasError = false;
         let errorEventId;
@@ -72,7 +72,7 @@ class MyApp extends App<MyAppProps, MyAppState> {
         return { pageProps, initialNow, hasError, errorEventId };
     }
 
-    static getDerivedStateFromProps(props: MyAppProps & DefaultAppIProps & AppProps, state: MyAppState) {
+    static getDerivedStateFromProps(props: MyAppProps, state: MyAppState) {
         // If there was an error generated within getInitialProps, and we haven't
         // yet seen an error, we add it to this.state here
         return {

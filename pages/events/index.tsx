@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextContext, NextFunctionComponent } from 'next';
+import { NextPageContext, NextComponentType } from 'next';
 import { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
 import Head from 'next/head';
@@ -11,7 +11,7 @@ type EventsPageProps = {
     events: Event[];
 };
 
-const EventsPage: NextFunctionComponent<EventsPageProps, EventsPageProps, NextContext> = props => {
+const EventsPage: NextComponentType<NextPageContext, EventsPageProps, EventsPageProps> = props => {
     return (
         <Container className="section">
             <Head>
