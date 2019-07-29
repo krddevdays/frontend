@@ -20,6 +20,40 @@
     text-align: right;
 }
 
+.header__profile {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.header-profile {
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    color: #262626;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.header-profile:hover {
+    text-decoration: underline;
+    color: #0000cc;
+}
+
+.header-profile__icon {
+    display: inline-block;
+    background: url('/static/profile.svg');
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+.header-profile__text {
+    margin-left: 8px;
+    display: none;
+}
+
 .header-toggler {
     display: inline-flex;
     padding: 0;
@@ -93,6 +127,15 @@
         grid-column: 1;
         grid-row: 1;
         text-align: left;
+    }
+
+    .header__profile {
+        grid-column: 3;
+        text-align: right;
+    }
+
+    .header-profile__text {
+        display: inline;
     }
 
     .header-menu {
