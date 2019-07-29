@@ -35,6 +35,20 @@ function Header(props: HeaderProps) {
     return (
         <header className="header-background">
             <Container className="header">
+                <nav
+                    role="navigation"
+                    className={classNames('header__nav', {
+                        header__nav_opened: menuOpened
+                    })}
+                >
+                    <ul className="header-menu">
+                        <li className="header-menu__item">
+                            <Link href="/events">
+                                <a className="header-menu__link">Мероприятия</a>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
                 <Link href="/">
                     <a className="header__logo" aria-label="Главная">
                         <Logo />
@@ -58,15 +72,6 @@ function Header(props: HeaderProps) {
                         </svg>
                     </button>
                 </div>
-                <nav role="navigation" className="header__nav">
-                    <ul className="header-menu">
-                        <li className="header-menu__item">
-                            <Link href="/events">
-                                <a className="header-menu__link">Мероприятия</a>
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
             </Container>
         </header>
     );

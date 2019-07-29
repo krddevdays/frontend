@@ -44,9 +44,10 @@
 .header__nav {
     display: none;
     grid-column: 1 / span 3;
+    grid-row: 2;
 }
 
-.header__nav-toggler_opened + .header__nav {
+.header__nav.header__nav_opened {
     display: block;
 }
 
@@ -89,8 +90,9 @@
 
     .header__nav {
         display: block;
-        grid-column: 3;
-        text-align: right;
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
     }
 
     .header-menu {
