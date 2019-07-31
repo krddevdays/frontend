@@ -147,6 +147,7 @@ export type EventTickets = {
     payments: Array<{
         id: number;
         type: 'card' | 'invoice';
+        agree_url: string;
     }>;
 };
 

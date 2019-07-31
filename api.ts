@@ -189,6 +189,7 @@ type EventTicketsResponse = {
     payments: Array<{
         id: number;
         type: 'card' | 'invoice';
+        agree_url: string;
     }>;
     types: Array<{
         id: number;

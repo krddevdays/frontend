@@ -125,7 +125,7 @@
     }
 }
 
-.order-step-form p {
+.order-step-form .order-step-form__title {
     display: block;
 
     font-style: normal;
@@ -200,4 +200,11 @@
 .order-step-form__buttons {
     margin-top: 32px;
     text-align: center;
+}
+
+.order-step-form .order-step-form__information {
+    font-size: 12px;
+    line-height: 16px;
+
+    color: #262626;
 }
