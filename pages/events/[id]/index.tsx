@@ -11,6 +11,7 @@ import Container from '../../../components/Container/Container';
 import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
 import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
 import DiscussionCard, { DiscussionCardProps } from '../../../components/DiscussionCard/DiscussionCard';
+import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
 import './index.css';
 import ym from 'react-yandex-metrika';
@@ -52,6 +53,7 @@ function Discussions(props: DiscussionsProps) {
                 {props.discussions.map((discussion, index) => (
                     <DiscussionCard key={index} {...discussion} />
                 ))}
+                <DiscussionForm/>
             </div>
         </section>
     );
@@ -601,7 +603,7 @@ EventPage.getInitialProps = async ctx => {
         event,
         activities: await api.eventActivities(ctx.query.id),
         talks: await api.talks({ event_id: ctx.query.id }),
-        discussions: [/*{
+        discussions: [{
             description: "что в нем стоит улучшать? разговор по душам с организаторами",
             title: "Зачем нам сообщество",
             votes: 42,
@@ -612,7 +614,7 @@ EventPage.getInitialProps = async ctx => {
                 work: "Tvoya mamka",
                 position: "Tzar' nahooi"
             }
-        }*/],
+        }],
         tickets
     };
 };

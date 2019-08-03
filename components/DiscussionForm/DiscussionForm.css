@@ -1,0 +1,66 @@
+.discussion-form {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    position: relative;
+}
+
+.discussion-form__body {
+    margin: 24px 0;
+    padding: 0 24px;
+    flex: 100% 1 1;
+}
+
+.discussion-form__footer {
+    margin: 16px 0;
+    padding: 0 24px;
+}
+
+.discussion-form__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+
+    color: #262626;
+
+    margin: 0;
+}
+
+.discussion-form label {
+    display: block;
+
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #767676;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+.discussion-form input {
+    width: 100%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+
+    display: block;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    margin: 0 0 16px;
+
+    color: #a0a0a0;
+}
+
+.discussion-form__error {
+    font-size: 12px;
+    line-height: 16px;
+    color: #f44336;
+    margin: -8px 0 16px;
+}
