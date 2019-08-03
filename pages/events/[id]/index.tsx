@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Container from '../../../components/Container/Container';
 import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
 import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
+import DiscussionCard, { DiscussionCardProps } from '../../../components/DiscussionCard/DiscussionCard';
 import { EventDate } from '../../../components/EventDate/EventDate';
 import './index.css';
 import ym from 'react-yandex-metrika';
@@ -29,6 +30,27 @@ function Talks(props: TalksProps) {
             <div className="event-talks__list">
                 {props.talks.map((talk, index) => (
                     <TalkCard key={index} {...talk} />
+                ))}
+            </div>
+        </section>
+    );
+}
+
+type DiscussionsProps = {
+    discussions: DiscussionCardProps[];
+}
+
+function Discussions(props: DiscussionsProps) {
+    if (props.discussions.length === 0) {
+        return null;
+    }
+
+    return (
+        <section className="event-block event-talks">
+            <h2 className="event-title event-talks__title">Круглые столы</h2>
+            <div className="event-talks__list">
+                {props.discussions.map((discussion, index) => (
+                    <DiscussionCard key={index} {...discussion} />
                 ))}
             </div>
         </section>
@@ -169,6 +191,7 @@ type EventPageProps = {
     event: Event;
     activities: ActivityProps[];
     talks: TalkCardProps[];
+    discussions: DiscussionCardProps[];
     tickets: EventTickets | null;
 };
 
@@ -518,7 +541,7 @@ const EventPage: NextComponentType<NextPageContext & {
 },
     EventPageProps,
     EventPageProps> = props => {
-    const { event, tickets, activities, talks } = props;
+    const { event, tickets, activities, talks, discussions } = props;
 
     return (
         <Container>
@@ -549,6 +572,7 @@ const EventPage: NextComponentType<NextPageContext & {
                 venue={event.venue}
             />
             <Talks talks={talks}/>
+            <Discussions discussions={discussions}/>
             <Schedule activities={activities}/>
             <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id}/>
         </Container>
@@ -577,6 +601,18 @@ EventPage.getInitialProps = async ctx => {
         event,
         activities: await api.eventActivities(ctx.query.id),
         talks: await api.talks({ event_id: ctx.query.id }),
+        discussions: [/*{
+            description: "что в нем стоит улучшать? разговор по душам с организаторами",
+            title: "Зачем нам сообщество",
+            votes: 42,
+            speaker: {
+                first_name: "Лёха",
+                last_name: "Ебать",
+                avatar: null,
+                work: "Tvoya mamka",
+                position: "Tzar' nahooi"
+            }
+        }*/],
         tickets
     };
 };

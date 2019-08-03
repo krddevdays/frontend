@@ -155,10 +155,15 @@
     line-height: 20px;
 
     color: #a0a0a0;
+    cursor: pointer;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    padding: 6px 12px;
 }
 
 .event-schedule__date_active {
     color: #0000cc;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.06), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
 .event-schedule__table-wrapper {
