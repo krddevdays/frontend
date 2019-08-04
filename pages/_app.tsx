@@ -30,6 +30,14 @@ Router.events.on('routeChangeComplete', (url: string) => {
     ) {
         window.VK.Retargeting.Hit();
     }
+
+    if (process.env.NODE_ENV !== 'production') {
+        const els = document.querySelectorAll<HTMLLinkElement>('link[href*="/_next/static/css/styles.chunk.css"]');
+        const timestamp = new Date().valueOf();
+        if (els.length) {
+            els[0].href = '/_next/static/css/styles.chunk.css?v=' + timestamp;
+        }
+    }
 });
 
 const { Sentry, captureException } = sentry();
