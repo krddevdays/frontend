@@ -64,3 +64,8 @@
     color: #f44336;
     margin: -8px 0 16px;
 }
+
+.discussion-form__submit {
+    font-weight: 400;
+    font-size: 16px;
+}

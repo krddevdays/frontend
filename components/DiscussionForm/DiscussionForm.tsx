@@ -35,7 +35,7 @@ export default function DiscussionForm() {
                         return (
                             <Form>
                                 <section>
-                                    <label htmlFor="title">Тема</label>
+                                    <label htmlFor="title">Название</label>
                                     <Field type="text" name="title" id="title" />
                                     <ErrorMessage name="title" component="div" className="discussion-form__error" />
 
@@ -47,7 +47,11 @@ export default function DiscussionForm() {
                                         className="discussion-form__error"
                                     />
 
-                                    <button type="submit" className="button" disabled={isSubmitting}>
+                                    <button
+                                        type="submit"
+                                        className="button discussion-form__submit"
+                                        disabled={isSubmitting}
+                                    >
                                         Добавить
                                     </button>
                                 </section>
