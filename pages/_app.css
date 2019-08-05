@@ -61,8 +61,8 @@ body {
     display: grid;
     grid-template:
         'title title'
-        'content content'
-        'action action';
+        'action action'
+        'content content';
     grid-row-gap: 24px;
 }
 
