@@ -58,3 +58,39 @@
 .talk-card:hover .talk-card__description {
     display: block;
 }
+
+.talk-card__image {
+    display: none;
+    width: 100%;
+}
+
+.talk-card__modern .talk-card__image {
+    display: block;
+}
+
+.talk-card__modern .talk-card__body {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    margin: 0;
+    background: #fff;
+    padding: 15px 20px;
+    overflow: scroll;
+}
+
+.talk-card__modern .talk-card__footer {
+    display: none;
+}
+
+.talk-card__modern .talk-card__description {
+    position: relative;
+    padding: 0;
+}
+
+.talk-card__modern:hover .talk-card__body {
+    display: block;
+}

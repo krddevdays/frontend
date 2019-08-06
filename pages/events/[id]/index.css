@@ -27,21 +27,15 @@
     padding: 0;
 }
 
-@media (min-width: 620px) {
+@media (min-width: 926px) {
     .event-talks__list {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 926px) {
-    .event-talks__list {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
 @media (min-width: 1232px) {
     .event-talks__list {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -90,7 +84,7 @@
 
 .event-price__table tbody td {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 24px;
     line-height: 20px;
     color: #a0a0a0;
     text-align: left;
@@ -122,9 +116,14 @@
 }
 
 .event-price__button {
-    margin-top: 16px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    padding: 16px 28px;
+    font-size: 18px;
+    line-height: 18px;
     grid-area: button;
     justify-self: center;
+
 }
 
 .event-schedule {
