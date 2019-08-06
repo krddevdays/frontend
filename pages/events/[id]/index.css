@@ -37,6 +37,7 @@
 
 @media (min-width: 968px) {
     .event-talks__list {
+        justify-content: initial;
         grid-template-columns: repeat(3, 1fr);
     }
 }
