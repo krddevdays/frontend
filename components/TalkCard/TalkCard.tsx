@@ -13,13 +13,14 @@ export type TalkCardProps = {
 };
 
 export default function TalkCard(props: TalkCardProps) {
+    const hasPoster = typeof props.poster_image === 'string';
     return (
         <article
             className={classNames('talk-card', {
-                'talk-card__modern': props.poster_image !== null
+                'talk-card_modern': hasPoster
             })}
         >
-            <img className="talk-card__image" src={props.poster_image} alt="" />
+            {hasPoster && <img className="talk-card__image" src={props.poster_image} alt="" />}
             <div className="talk-card__body">
                 <h1 className="talk-card__title">{props.title}</h1>
                 <div className="talk-card__description">

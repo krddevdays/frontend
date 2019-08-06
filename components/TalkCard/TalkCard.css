@@ -65,11 +65,11 @@
     border-radius: 4px;
 }
 
-.talk-card__modern .talk-card__image {
+.talk-card_modern .talk-card__image {
     display: block;
 }
 
-.talk-card__modern .talk-card__body {
+.talk-card_modern .talk-card__body {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -83,15 +83,15 @@
     overflow: scroll;
 }
 
-.talk-card__modern .talk-card__footer {
+.talk-card_modern .talk-card__footer {
     display: none;
 }
 
-.talk-card__modern .talk-card__description {
+.talk-card_modern .talk-card__description {
     position: relative;
     padding: 0;
 }
 
-.talk-card__modern:hover .talk-card__body {
+.talk-card_modern:hover .talk-card__body {
     display: block;
 }
