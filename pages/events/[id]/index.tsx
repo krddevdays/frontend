@@ -13,7 +13,6 @@ import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
 import { EventDate } from '../../../components/EventDate/EventDate';
 import './index.css';
 import ym from 'react-yandex-metrika';
-import List from '../../../components/List';
 
 type TalksProps = {
     talks: TalkCardProps[];
@@ -28,11 +27,11 @@ function Talks(props: TalksProps) {
         <section className="section">
             <h2 className="section__title">Доклады</h2>
             <div className="section__content">
-                <List>
+                <div className="event-talks__list">
                     {props.talks.map((talk, index) => (
                         <TalkCard key={index} {...talk} />
                     ))}
-                </List>
+                </div>
             </div>
         </section>
     );

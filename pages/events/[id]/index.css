@@ -1,3 +1,28 @@
+.event-talks__list {
+    grid-area: list;
+    display: grid;
+    grid-template-columns: minmax(min-content, 384px);
+    justify-content: center;
+
+    grid-gap: 24px;
+
+    margin: 24px 0 0;
+    padding: 0;
+}
+
+@media (min-width: 640px) {
+    .event-talks__list {
+        grid-template-columns: repeat(2, minmax(min-content, 384px));
+    }
+}
+
+@media (min-width: 968px) {
+    .event-talks__list {
+        justify-content: initial;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 .event-price-button {
     text-align: center;
     margin: 48px;
