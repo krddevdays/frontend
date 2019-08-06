@@ -84,7 +84,7 @@
 
 .event-price__table tbody td {
     font-weight: 500;
-    font-size: 24px;
+    font-size: 14px;
     line-height: 20px;
     color: #a0a0a0;
     text-align: left;
@@ -116,14 +116,9 @@
 }
 
 .event-price__button {
-    margin-top: 36px;
-    margin-bottom: 16px;
-    padding: 16px 28px;
-    font-size: 18px;
-    line-height: 18px;
+    margin-top: 16px;
     grid-area: button;
     justify-self: center;
-
 }
 
 .event-schedule {
@@ -231,9 +226,6 @@
 
 .event-information__item {
     display: block;
-}
-
-.event-information-item {
 }
 
 .event-information-item__name {
