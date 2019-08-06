@@ -28,7 +28,7 @@ function Talks(props: TalksProps) {
             <h2 className="event-title event-talks__title">Доклады</h2>
             <div className="event-talks__list">
                 {props.talks.map((talk, index) => (
-                    <TalkCard key={index} {...talk} poster_image />
+                    <TalkCard key={index} {...talk} />
                 ))}
             </div>
         </section>

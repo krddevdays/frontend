@@ -62,6 +62,7 @@ type TalkResponse = {
     };
     title: string;
     video: string | null;
+    poster_image?: string;
 };
 
 type TalksResponse = Array<TalkResponse>;

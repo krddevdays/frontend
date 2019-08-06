@@ -53,7 +53,7 @@
     },
     "devDependencies": {
         "husky": "^2.7.0",
-        "lint-staged": "^9.0.0",
+        "lint-staged": "^9.2.1",
         "nodemon": "^1.19.1",
         "prettier": "^1.18.2",
         "ts-node": "^8.3.0"
