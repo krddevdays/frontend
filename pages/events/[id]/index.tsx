@@ -369,14 +369,13 @@ const EventPage: NextComponentType<
     const { event, tickets, activities, talks } = props;
 
     return (
-        <Container>
+        <Container itemScope itemType="http://schema.org/Event">
             <Head>
                 <title>{event.name}</title>
                 <meta property="og:title" content={event.name} />
                 <meta property="og:description" content={event.short_description} />
                 {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
                 {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
-                <body itemScope itemType="http://schema.org/Event" />
             </Head>
             <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
             <h1 className="event-title" itemProp="name">
