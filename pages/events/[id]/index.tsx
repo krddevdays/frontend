@@ -313,8 +313,8 @@ function EventPrice(props: EventPriceProps) {
             <h2 className="section__title">Стоимость участия</h2>
             <div className="section__content">
                 <div className="event-price-items">
-                    {types.map(type => (
-                        <div className="event-price-item">
+                    {types.map((type, index) => (
+                        <div className="event-price-item" key={index}>
                             <div className="event-price-item__title">{type.name}</div>
                             <div className="event-price-item__value">
                                 <FormattedNumber
