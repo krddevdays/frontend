@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
-import { FormattedDate, FormattedNumber, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
@@ -39,14 +39,16 @@ function Talks(props: TalksProps) {
 
 type ScheduleProps = {
     activities: ActivityProps[];
-} & InjectedIntlProps;
+};
 
-const Schedule = injectIntl(function(props: ScheduleProps) {
+function Schedule(props: ScheduleProps) {
+    const intl = useIntl();
+
     const activityByDateTimeAndZone = React.useMemo(
         () =>
             props.activities.reduce(
                 (result, activity) => {
-                    const date = props.intl.formatDate(activity.start_date, {
+                    const date = intl.formatDate(activity.start_date, {
                         day: '2-digit',
                         month: '2-digit'
                     });
@@ -55,7 +57,7 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
                         result[date] = {};
                     }
 
-                    const time = props.intl.formatDate(activity.start_date, {
+                    const time = intl.formatDate(activity.start_date, {
                         hour: '2-digit',
                         minute: '2-digit'
                     });
@@ -74,7 +76,7 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
                 },
                 {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
             ),
-        [props.activities, props.intl]
+        [props.activities, intl]
     );
 
     const dates = React.useMemo(() => Object.keys(activityByDateTimeAndZone), [activityByDateTimeAndZone]).sort();
@@ -113,7 +115,7 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
             </div>
         </section>
     );
-});
+}
 
 type EventVenue = {
     name: string;

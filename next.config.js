@@ -21,6 +21,14 @@ let config = {
             config.resolve.alias['@sentry/node'] = '@sentry/browser';
         }
 
+        config.module.rules.push({
+            test: /\.mjs$/,
+            type: 'javascript/auto'
+        });
+
+        const jsIndex = config.resolve.extensions.findIndex(extension => extension === '.js');
+        config.resolve.extensions.splice(jsIndex, 0, '.mjs');
+
         return config;
     }
 };
