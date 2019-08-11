@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Container from '../../../components/Container/Container';
 import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
 import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
-import DiscussionCard, { DiscussionCardProps } from '../../../components/DiscussionCard/DiscussionCard';
+import DiscussionCard from '../../../components/DiscussionCard/DiscussionCard';
 import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
 import List from '../../../components/List';
@@ -40,8 +40,15 @@ function Talks(props: TalksProps) {
     );
 }
 
+type Discussion = {
+    event_id: number;
+    title: string;
+    description: string;
+    votes_count: number;
+};
+
 type DiscussionsProps = {
-    discussions: DiscussionCardProps[];
+    discussions: Discussion[];
 };
 
 function Discussions(props: DiscussionsProps) {
@@ -202,7 +209,7 @@ type EventPageProps = {
     event: Event;
     activities: ActivityProps[];
     talks: TalkCardProps[];
-    discussions: DiscussionCardProps[];
+    discussions: Discussion[];
     tickets: EventTickets | null;
 };
 
@@ -443,33 +450,18 @@ EventPage.getInitialProps = async ctx => {
         throw err;
     }
 
-    let tickets;
-
-    try {
-        tickets = await api.eventTickets(ctx.query.id);
-    } catch (e) {
-        tickets = null;
-    }
+    const [activities, talks, discussions, tickets] = await Promise.all([
+        api.eventActivities(ctx.query.id),
+        api.talks({ event_id: ctx.query.id }),
+        api.discussions({ event_id: ctx.query.id }),
+        api.eventTickets(ctx.query.id).catch(() => null)
+    ]);
 
     return {
         event,
-        activities: await api.eventActivities(ctx.query.id),
-        talks: await api.talks({ event_id: ctx.query.id }),
-        discussions: [
-            {
-                description: `что в нем стоит улучшать?
-                разговор по душам с организаторами`,
-                title: 'Зачем нам сообщество',
-                votes: 42,
-                speaker: {
-                    first_name: 'Лёха',
-                    last_name: 'Ебать',
-                    avatar: null,
-                    work: 'Tvoya mamka',
-                    position: "Tzar' nahooi"
-                }
-            }
-        ],
+        activities,
+        talks,
+        discussions,
         tickets
     };
 };

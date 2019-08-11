@@ -1,10 +1,10 @@
 import * as React from 'react';
 import '../DiscussionForm/DiscussionForm.css';
 
-export type DiscussionCardProps = {
+type DiscussionCardProps = {
     description: string;
     title: string;
-    votes: number;
+    votes_count: number;
 };
 
 export default function DiscussionCard(props: DiscussionCardProps) {
@@ -30,7 +30,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                     <button type="button" className="button" style={{ width: '100%' }}>
                         <img src="/static/star.svg" alt="" style={{ verticalAlign: 'text-top' }} /> Проголосовать
                     </button>
-                    <span className="button">{props.votes}</span>
+                    <span className="button">{props.votes_count}</span>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { format as urlFormat } from 'url';
 import * as queryString from 'query-string';
 import getConfig from 'next/config';
 import { NextPageContext } from 'next';
+import * as Cookie from 'js-cookie';
 
 function createUrl(context: {
     pathname: string;
@@ -462,4 +463,107 @@ export const registration = async (profile: Registration): Promise<never> => {
 if (typeof window !== 'undefined') {
     // @ts-ignore
     window.registration = registration;
+}
+
+type DiscussionsResponse = Array<{
+    event_id: number;
+    title: string;
+    description: string;
+    votes_count: number;
+}>;
+
+export const discussions = async (filter?: { event_id?: number }): Promise<DiscussionsResponse> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/`,
+            query: {
+                event_id: filter && filter.event_id ? filter.event_id : undefined
+            }
+        }),
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.discussions = discussions;
+}
+
+function getCSRFToken(): string {
+    return Cookie.get('csrftoken') as string;
+}
+
+export const voteDiscussion = async (id: number): Promise<any> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/${id}/vote/`
+        }),
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            }
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.voteDiscussion = voteDiscussion;
+}
+
+type Discussion = {
+    event_id: number;
+    title: string;
+    description: string;
+};
+
+export const addDiscussion = async (data: Discussion): Promise<any> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/`
+        }),
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify(data)
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.addDiscussion = addDiscussion;
 }
