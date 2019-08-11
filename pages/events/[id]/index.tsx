@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
-import { FormattedDate, FormattedNumber, FormattedPlural, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
@@ -26,12 +26,14 @@ function Talks(props: TalksProps) {
     }
 
     return (
-        <section className="event-block event-talks">
-            <h2 className="event-title event-talks__title">Доклады</h2>
-            <div className="event-talks__list">
-                {props.talks.map((talk, index) => (
-                    <TalkCard key={index} {...talk} />
-                ))}
+        <section className="section">
+            <h2 className="section__title">Доклады</h2>
+            <div className="section__content">
+                <div className="event-talks__list">
+                    {props.talks.map((talk, index) => (
+                        <TalkCard key={index} {...talk} />
+                    ))}
+                </div>
             </div>
         </section>
     );
@@ -39,7 +41,7 @@ function Talks(props: TalksProps) {
 
 type DiscussionsProps = {
     discussions: DiscussionCardProps[];
-}
+};
 
 function Discussions(props: DiscussionsProps) {
     if (props.discussions.length === 0) {
@@ -47,13 +49,15 @@ function Discussions(props: DiscussionsProps) {
     }
 
     return (
-        <section className="event-block event-talks">
-            <h2 className="event-title event-talks__title">Круглые столы</h2>
-            <div className="event-talks__list">
-                {props.discussions.map((discussion, index) => (
-                    <DiscussionCard key={index} {...discussion} />
-                ))}
-                <DiscussionForm/>
+        <section className="section">
+            <h2 className="section__title">Круглые столы</h2>
+            <div className="section__content">
+                <div className="event-talks__list">
+                    {props.discussions.map((discussion, index) => (
+                        <DiscussionCard key={index} {...discussion} />
+                    ))}
+                    <DiscussionForm />
+                </div>
             </div>
         </section>
     );
@@ -61,14 +65,16 @@ function Discussions(props: DiscussionsProps) {
 
 type ScheduleProps = {
     activities: ActivityProps[];
-} & InjectedIntlProps;
+};
 
-const Schedule = injectIntl(function(props: ScheduleProps) {
+function Schedule(props: ScheduleProps) {
+    const intl = useIntl();
+
     const activityByDateTimeAndZone = React.useMemo(
         () =>
             props.activities.reduce(
                 (result, activity) => {
-                    const date = props.intl.formatDate(activity.start_date, {
+                    const date = intl.formatDate(activity.start_date, {
                         day: '2-digit',
                         month: '2-digit'
                     });
@@ -77,7 +83,7 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
                         result[date] = {};
                     }
 
-                    const time = props.intl.formatDate(activity.start_date, {
+                    const time = intl.formatDate(activity.start_date, {
                         hour: '2-digit',
                         minute: '2-digit'
                     });
@@ -96,7 +102,7 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
                 },
                 {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
             ),
-        [props.activities, props.intl]
+        [props.activities, intl]
     );
 
     const dates = React.useMemo(() => Object.keys(activityByDateTimeAndZone), [activityByDateTimeAndZone]).sort();
@@ -107,35 +113,35 @@ const Schedule = injectIntl(function(props: ScheduleProps) {
     }
 
     return (
-        <section className="event-block event-schedule">
-            <h2 className="event-title event-schedule__title">Расписание</h2>
-            <div className="event-schedule__dates">
+        <section className="section">
+            <h2 className="section__title">Расписание</h2>
+            <div className="section__action">
                 {dates.length > 1 &&
-                dates.map((date, index) => (
-                    <button
-                        key={index}
-                        type="button"
-                        className={classNames('event-schedule__date', {
-                            'event-schedule__date_active': currentDate === date
-                        })}
-                        onClick={event => {
-                            event.preventDefault();
-                            setCurrentDate(date);
-                        }}
-                    >
-                        {date}
-                    </button>
-                ))}
+                    dates.map((date, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            className={classNames('event-schedule-date', {
+                                'event-schedule-date_active': currentDate === date
+                            })}
+                            onClick={event => {
+                                event.preventDefault();
+                                setCurrentDate(date);
+                            }}
+                        >
+                            {date}
+                        </button>
+                    ))}
             </div>
-            <div className="event-schedule__table-wrapper">
+            <div className="section__content event-schedule-table__wrapper">
                 <ScheduleTable
-                    className="event-schedule__table"
+                    className="event-schedule-table"
                     activitiesByZoneAndTime={activityByDateTimeAndZone[currentDate]}
                 />
             </div>
         </section>
     );
-});
+}
 
 type EventVenue = {
     name: string;
@@ -155,17 +161,19 @@ export type EventTickets = {
         price: {
             current_value: string;
             default_value: string;
-            modifiers: Array<| {
-                value: string;
-                type: 'sales_count';
-                sales_count: number;
-            }
+            modifiers: Array<
                 | {
-                value: string;
-                type: 'date';
-                active_from: string;
-                active_to: string;
-            }>;
+                      value: string;
+                      type: 'sales_count';
+                      sales_count: number;
+                  }
+                | {
+                      value: string;
+                      type: 'date';
+                      active_from: string;
+                      active_to: string;
+                  }
+            >;
         };
     }>;
     payments: Array<{
@@ -275,11 +283,11 @@ function EventInformation(props: EventInformationProps) {
                     itemType="http://schema.org/Place"
                 >
                     <span itemProp="name">{props.venue.name}</span>
-                    <br/>
+                    <br />
                     <span itemProp="address">{props.venue.address}</span>
                     <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-                        <meta itemProp="latitude" content={props.venue.latitude.toString()}/>
-                        <meta itemProp="longitude" content={props.venue.longitude.toString()}/>
+                        <meta itemProp="latitude" content={props.venue.latitude.toString()} />
+                        <meta itemProp="longitude" content={props.venue.longitude.toString()} />
                     </div>
                 </div>
                 <a
@@ -294,9 +302,9 @@ function EventInformation(props: EventInformationProps) {
             <li className="event-information__item event-information-item">
                 <div className="event-information-item__name">Дата и время</div>
                 <div className="event-information-item__content">
-                    <meta itemProp="startDate" content={startAt.toISOString()}/>
-                    <meta itemProp="endDate" content={finishAt.toISOString()}/>
-                    <EventDate startAt={startAt} finishAt={finishAt}/>
+                    <meta itemProp="startDate" content={startAt.toISOString()} />
+                    <meta itemProp="endDate" content={finishAt.toISOString()} />
+                    <EventDate startAt={startAt} finishAt={finishAt} />
                 </div>
             </li>
         </ul>
@@ -308,21 +316,6 @@ type EventPriceProps = {
     tickets: EventTickets | null;
     description?: string;
 };
-
-type ConditionDate = { type: 'date'; active_from: Date; active_to: Date };
-type ConditionSalesCount = { type: 'sales_count'; sales_count: number };
-
-type Condition = ConditionDate | ConditionSalesCount;
-
-function getMinConditionActiveFrom(conditions: Condition[]) {
-    return conditions.reduce<null | Date>((minDate, condition) => {
-        if (condition.type !== 'date') return minDate;
-
-        if (minDate === null || condition.active_from.getTime() < minDate.getTime()) return condition.active_from;
-
-        return minDate;
-    }, null);
-}
 
 function EventPrice(props: EventPriceProps) {
     if (props.tickets === null || props.tickets.types.length === 0) return null;
@@ -337,229 +330,87 @@ function EventPrice(props: EventPriceProps) {
         ticketsAvailable = new Date(props.tickets.sale_finish_date).getTime() > new Date().getTime();
     }
 
-    const types = props.tickets.types
-        .filter(type => !type.disabled)
-        .map(type => ({
-            name: type.name,
-            price: {
-                value: type.price.default_value,
-                steps: type.price.modifiers.reduce(
-                    (steps, modifier) => {
-                        let step = steps.find(step => step.value === modifier.value);
-
-                        if (!step) {
-                            step = {
-                                value: modifier.value,
-                                conditions: []
-                            };
-
-                            steps.push(step);
-                        }
-
-                        switch (modifier.type) {
-                            case 'sales_count':
-                                step.conditions.push({
-                                    type: 'sales_count',
-                                    sales_count: modifier.sales_count
-                                });
-                                break;
-                            case 'date':
-                                step.conditions.push({
-                                    type: 'date',
-                                    active_from: new Date(modifier.active_from),
-                                    active_to: new Date(modifier.active_to)
-                                });
-                                break;
-                            default:
-                                ((_: never) => null)(modifier);
-                        }
-
-                        return steps;
-                    },
-                    [] as Array<{ value: string; conditions: Condition[] }>
-                )
-            }
-        }));
-
-    const steps: Array<{ conditions: Condition[]; types: Array<string | null> }> = [];
-
-    types.forEach((type, typeIndex) => {
-        type.price.steps.forEach(typeStep => {
-            let step = steps.find(step =>
-                step.conditions.some(
-                    stepCondition =>
-                        typeStep.conditions.find(typeStepCondition => {
-                            if (typeStepCondition.type !== stepCondition.type) {
-                                return false;
-                            }
-
-                            switch (stepCondition.type) {
-                                case 'date':
-                                    return (
-                                        stepCondition.active_from.getTime() ===
-                                        (typeStepCondition as ConditionDate).active_from.getTime()
-                                    );
-                                case 'sales_count':
-                                    return (
-                                        stepCondition.sales_count ===
-                                        (typeStepCondition as ConditionSalesCount).sales_count
-                                    );
-                                default:
-                                    return ((_: never) => false)(stepCondition);
-                            }
-                        }) !== undefined
-                )
-            );
-
-            if (!step) {
-                step = {
-                    conditions: typeStep.conditions.slice(0),
-                    types: new Array(types.length).fill(null)
-                };
-                steps.push(step);
-            }
-
-            step.types[typeIndex] = typeStep.value;
-        });
-    });
-
-    steps.sort((a, b) => {
-        const minActiveFromA = getMinConditionActiveFrom(a.conditions);
-        if (minActiveFromA === null) return 1;
-
-        const minActiveFromB = getMinConditionActiveFrom(b.conditions);
-        if (minActiveFromB === null) return -1;
-
-        return minActiveFromA.getTime() - minActiveFromB.getTime();
-    });
+    const types = props.tickets.types.map(type => ({
+        name: type.name,
+        price: {
+            value: type.price.current_value
+        }
+    }));
 
     return (
-        <section className="event-block event-price" id="event_price">
-            <h2 className="event-title event-price__title">Стоимость участия</h2>
-            <div className="event-price__table-wrapper">
-                <table className="event-price__table">
-                    <thead>
-                    <tr>
-                        <td/>
-                        {types.map((type, index) => (
-                            <th key={index}>{type.name}</th>
-                        ))}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td/>
-                        {types.map((type, index) => (
-                            <td key={index}>
+        <section className="section" id="event_price">
+            <h2 className="section__title">Стоимость участия</h2>
+            <div className="section__content">
+                <div className="event-price-items">
+                    {types.map((type, index) => (
+                        <div className="event-price-item" key={index}>
+                            <div className="event-price-item__title">{type.name}</div>
+                            <div className="event-price-item__value">
                                 <FormattedNumber
                                     style="currency"
                                     value={parseFloat(type.price.value)}
                                     currency="RUB"
                                     minimumFractionDigits={0}
                                 />
-                            </td>
-                        ))}
-                    </tr>
-                    {steps.map((step, index) => (
-                        <tr key={index}>
-                            <td className="event-price__table-row-title">
-                                {step.conditions.map((condition, index) => {
-                                    const lastItem = step.conditions.length === index + 1;
-                                    const br = !lastItem && step.conditions.length > 1 && <br/>;
-                                    const or = lastItem && step.conditions.length > 1 && 'или';
-                                    switch (condition.type) {
-                                        case 'date':
-                                            return (
-                                                <React.Fragment key={index}>
-                                                    {or} с{' '}
-                                                    <FormattedDate
-                                                        value={condition.active_from}
-                                                        month="long"
-                                                        day="numeric"
-                                                    />
-                                                    {br}
-                                                </React.Fragment>
-                                            );
-                                        case 'sales_count':
-                                            return (
-                                                <React.Fragment key={index}>
-                                                    {or} от {condition.sales_count}{' '}
-                                                    <FormattedPlural
-                                                        value={condition.sales_count}
-                                                        one="проданного билет"
-                                                        many="проданных билетов"
-                                                        other="проданного билета"
-                                                    />
-                                                    {br}
-                                                </React.Fragment>
-                                            );
-                                    }
-                                })}
-                            </td>
-                            {step.types.map((type, index) => (
-                                <td key={index}>
-                                    {type && (
-                                        <FormattedNumber
-                                            style="currency"
-                                            value={parseFloat(type)}
-                                            currency="RUB"
-                                            minimumFractionDigits={0}
-                                        />
-                                    )}
-                                </td>
-                            ))}
-                        </tr>
+                            </div>
+                        </div>
                     ))}
-                    </tbody>
-                </table>
-            </div>
-            {ticketsAvailable && (
-                <Link href='/events/[id]/order' as={`/events/${props.eventId}/order`}>
-                    <a
-                        className="button event-price__button"
-                        onClick={() => {
-                            ym('reachGoal', 'click_event_buy_button', {
-                                event_id: props.eventId
-                            });
-                        }}
-                    >
-                        Купить билет
-                    </a>
-                </Link>
-            )}
-            {props.description && (
-                <div className="event-price__description">
-                    <Markdown>{props.description}</Markdown>
                 </div>
-            )}
+                {ticketsAvailable && (
+                    <div className="event-price-button">
+                        <Link href="/events/[id]/order" as={`/events/${props.eventId}/order`}>
+                            <a
+                                className="button"
+                                onClick={() => {
+                                    ym('reachGoal', 'click_event_buy_button', {
+                                        event_id: props.eventId
+                                    });
+                                }}
+                            >
+                                Зарегистрироваться
+                            </a>
+                        </Link>
+                        <p className="event-price-button__description">
+                            Регистрация открыта до{' '}
+                            <FormattedDate value={props.tickets.sale_finish_date} month="long" day="numeric" />
+                        </p>
+                    </div>
+                )}
+                {props.description && (
+                    <div className="event-price-description">
+                        <Markdown>{props.description}</Markdown>
+                    </div>
+                )}
+            </div>
         </section>
     );
 }
 
-const EventPage: NextComponentType<NextPageContext & {
-    query: {
-        id: number;
-    };
-},
+const EventPage: NextComponentType<
+    NextPageContext & {
+        query: {
+            id: number;
+        };
+    },
     EventPageProps,
-    EventPageProps> = props => {
+    EventPageProps
+> = props => {
     const { event, tickets, activities, talks, discussions } = props;
 
     return (
-        <Container>
+        <Container itemScope itemType="http://schema.org/Event">
             <Head>
                 <title>{event.name}</title>
-                <meta property="og:title" content={event.name}/>
-                <meta property="og:description" content={event.short_description}/>
-                {event.image_vk && <meta property="vk:image" content={event.image_vk}/>}
-                {event.image_facebook && <meta property="og:image" content={event.image_facebook}/>}
-                <body itemScope itemType="http://schema.org/Event"/>
+                <meta property="og:title" content={event.name} />
+                <meta property="og:description" content={event.short_description} />
+                {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
+                {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
             </Head>
-            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }}/>
+            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
             <h1 className="event-title" itemProp="name">
                 {event.name}
             </h1>
-            <meta itemProp="image" content={event.image}/>
+            <meta itemProp="image" content={event.image} />
             <div className="event-description" itemProp="description">
                 {event.full_description ? (
                     <Markdown>{event.full_description}</Markdown>
@@ -573,10 +424,10 @@ const EventPage: NextComponentType<NextPageContext & {
                 finishDate={event.finish_date}
                 venue={event.venue}
             />
-            <Talks talks={talks}/>
-            <Discussions discussions={discussions}/>
-            <Schedule activities={activities}/>
-            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id}/>
+            <Talks talks={talks} />
+            <Discussions discussions={discussions} />
+            <Schedule activities={activities} />
+            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
         </Container>
     );
 };
@@ -603,18 +454,20 @@ EventPage.getInitialProps = async ctx => {
         event,
         activities: await api.eventActivities(ctx.query.id),
         talks: await api.talks({ event_id: ctx.query.id }),
-        discussions: [{
-            description: "что в нем стоит улучшать? разговор по душам с организаторами",
-            title: "Зачем нам сообщество",
-            votes: 42,
-            speaker: {
-                first_name: "Лёха",
-                last_name: "Ебать",
-                avatar: null,
-                work: "Tvoya mamka",
-                position: "Tzar' nahooi"
+        discussions: [
+            {
+                description: 'что в нем стоит улучшать? разговор по душам с организаторами',
+                title: 'Зачем нам сообщество',
+                votes: 42,
+                speaker: {
+                    first_name: 'Лёха',
+                    last_name: 'Ебать',
+                    avatar: null,
+                    work: 'Tvoya mamka',
+                    position: "Tzar' nahooi"
+                }
             }
-        }],
+        ],
         tickets
     };
 };

@@ -17,10 +17,10 @@
 
 ### Запуск для разработки
 
-1. `BACKEND_DOMAIN=backend.krd.dev BACKEND_PROTOCOL=https: npm run dev`
+1. `BACKEND_DOMAIN=krd.dev/backend BACKEND_PROTOCOL=https: npm run dev`
 1. `open http://localhost:3000`
 
 ### Производственная сборка и запуск
 
 1. `npm run build`
-1. `BACKEND_DOMAIN=backend.krd.dev BACKEND_PROTOCOL=https: npm run start`
+1. `BACKEND_DOMAIN=krd.dev/backend BACKEND_PROTOCOL=https: npm run start`

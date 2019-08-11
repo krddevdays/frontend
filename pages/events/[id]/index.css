@@ -1,113 +1,63 @@
-.event-block {
-    margin: 64px 0;
-}
-
-.event-block:last-child {
-    margin-bottom: 0;
-}
-
-.event-talks {
-    display: grid;
-    grid-template:
-        'title cfp'
-        'list list';
-}
-
-.event-talks__title {
-    grid-area: title;
-}
-
 .event-talks__list {
     grid-area: list;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(min-content, 384px);
+    justify-content: center;
+
     grid-gap: 24px;
 
     margin: 24px 0 0;
     padding: 0;
 }
 
-@media (min-width: 620px) {
+@media (min-width: 640px) {
     .event-talks__list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(min-content, 384px));
     }
 }
 
-@media (min-width: 926px) {
+@media (min-width: 968px) {
     .event-talks__list {
+        justify-content: initial;
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (min-width: 1232px) {
-    .event-talks__list {
-        grid-template-columns: repeat(4, 1fr);
-    }
+.event-price-button {
+    text-align: center;
+    margin: 48px;
 }
 
-.event-price {
-    display: grid;
-    grid-template:
-        'title'
-        'table'
-        'button'
-        'description';
-}
-
-.event-price__title {
-    grid-area: title;
-}
-
-.event-price__table-wrapper {
-    margin-top: 24px;
-    grid-area: table;
-    justify-self: start;
-
-    overflow: hidden;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-    min-width: 100%;
-    box-sizing: border-box;
-}
-
-.event-price__table {
-    min-width: 100%;
-    border: none;
-    border-collapse: collapse;
-}
-
-.event-price__table thead th {
-    font-weight: normal;
+.event-price-button__description {
     font-size: 12px;
     line-height: 16px;
-    color: #262626;
-    text-align: left;
-    padding: 16px 8px;
-    border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap;
-}
-
-.event-price__table tbody td {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
     color: #a0a0a0;
-    text-align: left;
-    padding: 16px 8px;
-    white-space: nowrap;
+    text-align: center;
+    margin: 16px 0;
+    padding: 0;
 }
 
-.event-price__table tbody tr td {
-    border-top: 1px solid #e0e0e0;
+.event-price-items {
+    margin: 48px 0;
+    display: flex;
+    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-.event-price__table td.event-price__table-row-title {
-    font-weight: normal;
+.event-price-item__title {
+    font-size: 16px;
+    line-height: 24px;
+    color: #262626;
+    font-weight: bold;
 }
 
-.event-price__description {
-    grid-area: description;
+.event-price-item__value {
+    font-size: 16px;
+    line-height: 24px;
+    color: #262626;
+}
+
+.event-price-description {
     font-size: 14px;
     line-height: 20px;
     color: #262626;
@@ -115,36 +65,13 @@
     padding: 0;
 }
 
-.event-price__description p,
-.event-price__description ol,
-.event-price__description ul {
+.event-price-description p,
+.event-price-description ol,
+.event-price-description ul {
     margin: 16px 0;
 }
 
-.event-price__button {
-    margin-top: 16px;
-    grid-area: button;
-    justify-self: center;
-}
-
-.event-schedule {
-    display: grid;
-    grid-template:
-        'title dates'
-        'table table';
-}
-
-.event-schedule__title {
-    grid-area: title;
-}
-
-.event-schedule__dates {
-    grid-area: dates;
-    align-self: center;
-    justify-self: end;
-}
-
-.event-schedule__date {
+.event-schedule-date {
     display: inline-block;
     background: none;
     border: none;
@@ -161,14 +88,12 @@
     padding: 6px 12px;
 }
 
-.event-schedule__date_active {
+.event-schedule-date_active {
     color: #0000cc;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.06), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
-.event-schedule__table-wrapper {
-    margin-top: 24px;
-    grid-area: table;
+.event-schedule-table__wrapper {
     justify-self: start;
 
     overflow: hidden;
@@ -179,13 +104,13 @@
     box-sizing: border-box;
 }
 
-.event-schedule__table-wrapper:after {
+.event-schedule-table__wrapper:after {
     display: inline-block;
     content: '';
     width: 8px;
 }
 
-.event-schedule__table {
+.event-schedule-table {
     display: inline-table;
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import EventCard, { Event } from '../EventCard/EventCard';
-import './index.css';
+import List from '../List';
 
 type EventsListProps = {
     events: Event[];
@@ -8,10 +8,10 @@ type EventsListProps = {
 
 export default function EventsList(props: EventsListProps) {
     return (
-        <div className="events-list">
+        <List>
             {props.events.map((event, index) => (
                 <EventCard {...event} key={index} />
             ))}
-        </div>
+        </List>
     );
 }

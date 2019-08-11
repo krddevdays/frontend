@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import * as ru from 'react-intl/locale-data/ru';
+import { IntlProvider } from 'react-intl';
 import App, { AppContext, Container } from 'next/app';
 import NProgress from 'next-nprogress/component';
 import './_app.css';
@@ -12,6 +11,9 @@ import ym, { YMInitializer } from 'react-yandex-metrika';
 import Router from 'next/router';
 import Head from 'next/head';
 import { stripIndent } from 'common-tags';
+import ReactModal from 'react-modal';
+
+ReactModal.setAppElement('#__next');
 
 declare global {
     interface Window {
@@ -30,6 +32,14 @@ Router.events.on('routeChangeComplete', (url: string) => {
     ) {
         window.VK.Retargeting.Hit();
     }
+
+    if (process.env.NODE_ENV !== 'production') {
+        const els = document.querySelectorAll<HTMLLinkElement>('link[href*="/_next/static/css/styles.chunk.css"]');
+        const timestamp = new Date().valueOf();
+        if (els.length) {
+            els[0].href = '/_next/static/css/styles.chunk.css?v=' + timestamp;
+        }
+    }
 });
 
 const { Sentry, captureException } = sentry();
@@ -44,13 +54,8 @@ type ErrorState =
           errorEventId: undefined;
       };
 
-type MyAppProps = {
-    initialNow: number;
-} & ErrorState;
-
+type MyAppProps = ErrorState;
 type MyAppState = ErrorState;
-
-addLocaleData(ru);
 
 class MyApp extends App<MyAppProps, MyAppProps> {
     static async getInitialProps({ Component, ctx }: AppContext) {
@@ -67,9 +72,7 @@ class MyApp extends App<MyAppProps, MyAppProps> {
             errorEventId = captureException(error, ctx);
         }
 
-        const initialNow = Date.now();
-
-        return { pageProps, initialNow, hasError, errorEventId };
+        return { pageProps, hasError, errorEventId };
     }
 
     static getDerivedStateFromProps(props: MyAppProps, state: MyAppState) {
@@ -97,10 +100,10 @@ class MyApp extends App<MyAppProps, MyAppProps> {
     };
 
     render() {
-        const { Component, pageProps, initialNow } = this.props;
+        const { Component, pageProps } = this.props;
 
         return (
-            <IntlProvider locale="ru" initialNow={initialNow} timeZone="Europe/Moscow">
+            <IntlProvider locale="ru" timeZone="Europe/Moscow">
                 <Container>
                     <Head>
                         <script
