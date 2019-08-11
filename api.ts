@@ -297,6 +297,16 @@ export const eventOrder = async (
     return response.json();
 };
 
+function injectCookies(headers: Record<string, string>, ctx?: NextPageContext): Record<string, string> {
+    const newHeaders = { ...headers };
+
+    if (typeof window === 'undefined' && ctx && ctx.req && ctx.req.headers.cookie) {
+        newHeaders.Cookie = ctx.req.headers.cookie;
+    }
+
+    return newHeaders;
+}
+
 type Profile = {
     username: string;
     email: string;
@@ -307,21 +317,18 @@ type Profile = {
 };
 
 export const getProfile = async (ctx?: NextPageContext): Promise<Profile> => {
-    const headers: HeadersInit = {
-        Accept: 'application/json'
-    };
-
-    if (typeof window === 'undefined' && ctx && ctx.req) {
-        headers.Cookie = ctx.req.headers.cookie as string;
-    }
-
     const response = await fetch(
         createUrl({
             pathname: `/users/me/`
         }),
         {
             credentials: 'include',
-            headers
+            headers: injectCookies(
+                {
+                    Accept: 'application/json'
+                },
+                ctx
+            )
         }
     );
 
@@ -486,15 +493,6 @@ export const getDiscussions = async (
     filter?: { event_id?: number },
     ctx?: NextPageContext
 ): Promise<DiscussionsResponse> => {
-    const headers: HeadersInit = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-    };
-
-    if (typeof window === 'undefined' && ctx && ctx.req) {
-        headers.Cookie = ctx.req.headers.cookie as string;
-    }
-
     const response = await fetch(
         createUrl({
             pathname: `/discussions/`,
@@ -505,7 +503,13 @@ export const getDiscussions = async (
         {
             method: 'GET',
             credentials: 'include',
-            headers
+            headers: injectCookies(
+                {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                ctx
+            )
         }
     );
 
@@ -522,15 +526,6 @@ if (typeof window !== 'undefined') {
 }
 
 export const getDiscussion = async (id: number, ctx?: NextPageContext): Promise<Discussion> => {
-    const headers: HeadersInit = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-    };
-
-    if (typeof window === 'undefined' && ctx && ctx.req) {
-        headers.Cookie = ctx.req.headers.cookie as string;
-    }
-
     const response = await fetch(
         createUrl({
             pathname: `/discussions/${id}/`
@@ -538,7 +533,12 @@ export const getDiscussion = async (id: number, ctx?: NextPageContext): Promise<
         {
             method: 'GET',
             credentials: 'include',
-            headers
+            headers: injectCookies(
+                {
+                    Accept: 'application/json'
+                },
+                ctx
+            )
         }
     );
 
