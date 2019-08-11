@@ -41,30 +41,42 @@ function Talks(props: TalksProps) {
 }
 
 type Discussion = {
+    id: number;
     event_id: number;
     title: string;
     description: string;
     votes_count: number;
+    my_vote: boolean;
 };
 
 type DiscussionsProps = {
+    eventId: number;
     discussions: Discussion[];
 };
 
 function Discussions(props: DiscussionsProps) {
-    if (props.discussions.length === 0) {
-        return null;
-    }
+    const [discussions, setDiscussions] = React.useState(props.discussions);
+
+    React.useEffect(() => {
+        setDiscussions(props.discussions);
+    }, [props.discussions]);
+
+    const handleAdd = React.useCallback(
+        discussion => {
+            setDiscussions(discussions => [...discussions, discussion]);
+        },
+        [setDiscussions]
+    );
 
     return (
         <section className="section">
             <h2 className="section__title">Круглые столы</h2>
             <div className="section__content">
                 <List>
-                    {props.discussions.map((discussion, index) => (
+                    {discussions.map((discussion, index) => (
                         <DiscussionCard key={index} {...discussion} />
                     ))}
-                    <DiscussionForm />
+                    <DiscussionForm eventId={props.eventId} onAdd={handleAdd} />
                 </List>
             </div>
         </section>
@@ -209,7 +221,7 @@ type EventPageProps = {
     event: Event;
     activities: ActivityProps[];
     talks: TalkCardProps[];
-    discussions: Discussion[];
+    discussions: Discussion[] | null;
     tickets: EventTickets | null;
 };
 
@@ -433,7 +445,7 @@ const EventPage: NextComponentType<
                 venue={event.venue}
             />
             <Talks talks={talks} />
-            <Discussions discussions={discussions} />
+            {discussions && event.id === 14 && <Discussions discussions={discussions} eventId={event.id} />}
             <Schedule activities={activities} />
             <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
         </Container>
@@ -453,7 +465,7 @@ EventPage.getInitialProps = async ctx => {
     const [activities, talks, discussions, tickets] = await Promise.all([
         api.eventActivities(ctx.query.id),
         api.talks({ event_id: ctx.query.id }),
-        api.discussions({ event_id: ctx.query.id }),
+        api.getDiscussions({ event_id: ctx.query.id }, ctx).catch(() => null),
         api.eventTickets(ctx.query.id).catch(() => null)
     ]);
 

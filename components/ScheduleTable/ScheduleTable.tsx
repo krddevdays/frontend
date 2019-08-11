@@ -13,12 +13,20 @@ type BaseActivityProps = {
 
 export type TalkActivityProps = BaseActivityProps & {
     type: 'TALK';
-    thing?: TalkCardProps;
+    thing: TalkCardProps | null;
+};
+
+export type DiscussionActivityProps = BaseActivityProps & {
+    type: 'DISCUSSION';
+    thing: {
+        title: string;
+    } | null;
 };
 
 export type ActivityProps =
     | BaseActivityProps & { type: 'WELCOME' | 'COFFEE' | 'LUNCH'; thing: { title: string } }
-    | TalkActivityProps;
+    | TalkActivityProps
+    | DiscussionActivityProps;
 
 type ScheduleTableProps = {
     className?: string;
@@ -111,11 +119,21 @@ function ScheduleTable(props: ScheduleTableProps) {
 }
 
 function Activity(props: ActivityProps) {
+    let title = props.thing && props.thing.title;
+
+    if (!title) {
+        switch (props.type) {
+            case 'TALK':
+                title = 'Доклад';
+                break;
+            case 'DISCUSSION':
+                title = 'Круглый стол';
+        }
+    }
+
     return (
         <div className="schedule-activity">
-            <div className="schedule-activity__title">
-                {props.thing ? props.thing.title : props.type === 'TALK' && 'Доклад'}
-            </div>
+            <div className="schedule-activity__title">{title}</div>
             {props.type === 'TALK' && props.thing && (
                 <div className="schedule-activity__author">
                     <Author {...props.thing.speaker} small />

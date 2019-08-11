@@ -1,13 +1,66 @@
 import * as React from 'react';
+import { Response } from 'cross-fetch';
+import * as api from '../../api';
+
 import '../DiscussionForm/DiscussionForm.css';
+import { useAuth } from '../AuthProvider';
 
 type DiscussionCardProps = {
+    id: number;
     description: string;
     title: string;
     votes_count: number;
+    my_vote: boolean;
 };
 
 export default function DiscussionCard(props: DiscussionCardProps) {
+    const auth = useAuth();
+    const [votesCount, setVotesCount] = React.useState(props.votes_count);
+    const [isVoted, setIsVoted] = React.useState(props.my_vote);
+
+    React.useEffect(() => {
+        setIsVoted(props.my_vote);
+        setVotesCount(props.votes_count);
+    }, [props.votes_count, props.my_vote]);
+
+    const handleClickVote: React.ReactEventHandler<HTMLButtonElement> = React.useCallback(
+        e => {
+            e.preventDefault();
+
+            (async () => {
+                let finished = false;
+                while (!finished) {
+                    try {
+                        const discussion = await api.voteDiscussion(props.id);
+
+                        setIsVoted(discussion.my_vote);
+                        setVotesCount(discussion.votes_count);
+                        finished = true;
+                    } catch (e) {
+                        if (e instanceof Response) {
+                            switch (e.status) {
+                                case 403:
+                                    try {
+                                        await auth();
+                                    } catch (e) {
+                                        finished = true;
+                                    }
+                                    break;
+                                default:
+                                    alert('Неизвестная ошибка');
+                                    throw e;
+                            }
+                        } else {
+                            alert('Неизвестная ошибка, попробуй еще раз');
+                            throw e;
+                        }
+                    }
+                }
+            })();
+        },
+        [isVoted, props.id, auth]
+    );
+
     return (
         <div className="discussion-form">
             <div className="discussion-form__body">
@@ -27,10 +80,11 @@ export default function DiscussionCard(props: DiscussionCardProps) {
             </div>
             <div className="discussion-form__footer">
                 <div className="button-group">
-                    <button type="button" className="button" style={{ width: '100%' }}>
-                        <img src="/static/star.svg" alt="" style={{ verticalAlign: 'text-top' }} /> Проголосовать
+                    <button type="button" className="button" style={{ width: '100%' }} onClick={handleClickVote}>
+                        <img src="/static/star.svg" alt="" style={{ verticalAlign: 'text-top' }} />{' '}
+                        {isVoted ? 'Передумать' : 'Проголосовать'}
                     </button>
-                    <span className="button">{props.votes_count}</span>
+                    <span className="button">{votesCount}</span>
                 </div>
             </div>
         </div>

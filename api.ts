@@ -3,7 +3,6 @@ import { format as urlFormat } from 'url';
 import * as queryString from 'query-string';
 import getConfig from 'next/config';
 import { NextPageContext } from 'next';
-import * as Cookie from 'js-cookie';
 
 function createUrl(context: {
     pathname: string;
@@ -139,6 +138,13 @@ type EventActivitiesResponse = Array<
           start_date: string;
           thing: { title: string };
           type: 'LUNCH';
+          zone: string;
+      }
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: { title: string } | null;
+          type: 'DISCUSSION';
           zone: string;
       }
 >;
@@ -465,14 +471,30 @@ if (typeof window !== 'undefined') {
     window.registration = registration;
 }
 
-type DiscussionsResponse = Array<{
+type Discussion = {
+    id: number;
     event_id: number;
     title: string;
     description: string;
     votes_count: number;
-}>;
+    my_vote: boolean;
+};
 
-export const discussions = async (filter?: { event_id?: number }): Promise<DiscussionsResponse> => {
+type DiscussionsResponse = Array<Discussion>;
+
+export const getDiscussions = async (
+    filter?: { event_id?: number },
+    ctx?: NextPageContext
+): Promise<DiscussionsResponse> => {
+    const headers: HeadersInit = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    };
+
+    if (typeof window === 'undefined' && ctx && ctx.req) {
+        headers.Cookie = ctx.req.headers.cookie as string;
+    }
+
     const response = await fetch(
         createUrl({
             pathname: `/discussions/`,
@@ -483,10 +505,7 @@ export const discussions = async (filter?: { event_id?: number }): Promise<Discu
         {
             method: 'GET',
             credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers
         }
     );
 
@@ -499,14 +518,43 @@ export const discussions = async (filter?: { event_id?: number }): Promise<Discu
 
 if (typeof window !== 'undefined') {
     // @ts-ignore
-    window.discussions = discussions;
+    window.getDiscussions = getDiscussions;
 }
 
-function getCSRFToken(): string {
-    return Cookie.get('csrftoken') as string;
+export const getDiscussion = async (id: number, ctx?: NextPageContext): Promise<Discussion> => {
+    const headers: HeadersInit = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    };
+
+    if (typeof window === 'undefined' && ctx && ctx.req) {
+        headers.Cookie = ctx.req.headers.cookie as string;
+    }
+
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/${id}/`
+        }),
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.getDiscussion = getDiscussion;
 }
 
-export const voteDiscussion = async (id: number): Promise<any> => {
+export const voteDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
             pathname: `/discussions/${id}/vote/`
@@ -515,8 +563,7 @@ export const voteDiscussion = async (id: number): Promise<any> => {
             method: 'POST',
             credentials: 'include',
             headers: {
-                Accept: 'application/json',
-                'X-CSRFToken': getCSRFToken()
+                Accept: 'application/json'
             }
         }
     );
@@ -533,13 +580,13 @@ if (typeof window !== 'undefined') {
     window.voteDiscussion = voteDiscussion;
 }
 
-type Discussion = {
+type PostDiscussion = {
     event_id: number;
     title: string;
     description: string;
 };
 
-export const addDiscussion = async (data: Discussion): Promise<any> => {
+export const addDiscussion = async (data: PostDiscussion): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
             pathname: `/discussions/`
@@ -549,14 +596,13 @@ export const addDiscussion = async (data: Discussion): Promise<any> => {
             credentials: 'include',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         }
     );
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
         throw response;
     }
 
