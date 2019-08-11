@@ -11,6 +11,9 @@ import ym, { YMInitializer } from 'react-yandex-metrika';
 import Router from 'next/router';
 import Head from 'next/head';
 import { stripIndent } from 'common-tags';
+import ReactModal from 'react-modal';
+
+ReactModal.setAppElement('#__next');
 
 declare global {
     interface Window {

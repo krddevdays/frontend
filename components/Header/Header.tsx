@@ -1,17 +1,13 @@
 import * as React from 'react';
 import Link from 'next/link';
-import Router, { withRouter } from 'next/router';
+import Router from 'next/router';
 import classNames from 'classnames';
 
 import Logo from '../Logo/Logo';
 import Container from '../Container/Container';
 import './Header.css';
 
-type HeaderProps = {
-    router: typeof Router;
-};
-
-function Header(props: HeaderProps) {
+function Header() {
     const [menuOpened, setMenuOpened] = React.useState(false);
 
     const handleToggleClick = React.useCallback(
@@ -22,15 +18,15 @@ function Header(props: HeaderProps) {
         [setMenuOpened]
     );
 
+    const handleRouteChangeComplete = React.useCallback(() => {
+        setMenuOpened(false);
+    }, [setMenuOpened]);
+
     React.useEffect(() => {
-        function routeChangeComplete() {
-            setMenuOpened(false);
-        }
+        Router.events.on('routeChangeComplete', handleRouteChangeComplete);
 
-        Router.events.on('routeChangeComplete', routeChangeComplete);
-
-        return () => Router.events.off('routeChangeComplete', routeChangeComplete);
-    }, [props.router, setMenuOpened]);
+        return () => Router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    }, [handleRouteChangeComplete]);
 
     return (
         <header className="header-background">
@@ -72,11 +68,17 @@ function Header(props: HeaderProps) {
                         </svg>
                     </button>
                 </div>
+                <div className="header__profile">
+                    <Link href="/profile">
+                        <a className="header-profile">
+                            <span className="header-profile__icon" />
+                            <span className="header-profile__text">Профиль</span>
+                        </a>
+                    </Link>
+                </div>
             </Container>
         </header>
     );
 }
 
-const HeaderWithRouter = withRouter(Header);
-
-export default HeaderWithRouter;
+export default Header;

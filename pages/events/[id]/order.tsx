@@ -29,6 +29,7 @@ import { Event, EventTickets } from './index';
 
 import Container from '../../../components/Container/Container';
 import './order.css';
+import FormGroup from '../../../components/FormGroup';
 
 const schema = yup.object().shape({
     first_name: yup.string().required('Введите имя'),
@@ -187,21 +188,29 @@ const OrderPage: NextComponentType<
                             </div>
                             {step === 0 && (
                                 <div className="order-step-form">
-                                    <label htmlFor="first_name">Имя</label>
-                                    <Field type="text" name="first_name" id="first_name" />
-                                    <ErrorMessage name="first_name" component="div" className="error" />
+                                    <FormGroup>
+                                        <label htmlFor="first_name">Имя</label>
+                                        <Field type="text" name="first_name" id="first_name" className="form-control" />
+                                        <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
+                                    </FormGroup>
 
-                                    <label htmlFor="last_name">Фамилия</label>
-                                    <Field type="text" name="last_name" id="last_name" />
-                                    <ErrorMessage name="last_name" component="div" className="error" />
+                                    <FormGroup>
+                                        <label htmlFor="last_name">Фамилия</label>
+                                        <Field type="text" name="last_name" id="last_name" className="form-control" />
+                                        <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
+                                    </FormGroup>
 
-                                    <label htmlFor="email">E-mail</label>
-                                    <Field type="email" name="email" id="email" />
-                                    <ErrorMessage name="email" component="div" className="error" />
+                                    <FormGroup>
+                                        <label htmlFor="email">E-mail</label>
+                                        <Field type="email" name="email" id="email" className="form-control" />
+                                        <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                                    </FormGroup>
 
-                                    <label htmlFor="phone">Телефон</label>
-                                    <Field type="tel" name="phone" id="phone" />
-                                    <ErrorMessage name="phone" component="div" className="error" />
+                                    <FormGroup>
+                                        <label htmlFor="phone">Телефон</label>
+                                        <Field type="tel" name="phone" id="phone" className="form-control" />
+                                        <ErrorMessage name="phone" component="div" className="invalid-feedback" />
+                                    </FormGroup>
 
                                     <div className="order-step-form__buttons">
                                         <button type="button" className="button" onClick={() => setStep(step + 1)}>
@@ -217,78 +226,90 @@ const OrderPage: NextComponentType<
                                         <div className="order-step-form">
                                             {values.tickets.map((_, index) => (
                                                 <div key={index}>
-                                                    <p className='order-step-form__title'>
+                                                    <p className="order-step-form__title">
                                                         Участник №{index + 1}{' '}
                                                         {index > 0 && (
                                                             <button
                                                                 style={{ float: 'right' }}
                                                                 type="button"
-                                                                className="button button_small button_theme_link"
+                                                                className="button button_size_small button_theme_link"
                                                                 onClick={() => arrayHelpers.remove(index)}
                                                             >
                                                                 удалить
                                                             </button>
                                                         )}
                                                     </p>
-                                                    <Field
-                                                        component="select"
-                                                        name={`tickets[${index}].type_id`}
-                                                        id={`ticket_${index}_type_id`}
-                                                    >
-                                                        <option value="">Выберите тип билета</option>
-                                                        {props.tickets.types
-                                                            .filter(type => !type.disabled)
-                                                            .map(type => (
-                                                                <option key={type.id} value={type.id}>
-                                                                    {type.name}
-                                                                </option>
-                                                            ))}
-                                                    </Field>
-                                                    <ErrorMessage
-                                                        name={`tickets[${index}].type_id`}
-                                                        component="div"
-                                                        className="error"
-                                                    />
+                                                    <FormGroup>
+                                                        <Field
+                                                            component="select"
+                                                            name={`tickets[${index}].type_id`}
+                                                            id={`ticket_${index}_type_id`}
+                                                            className="form-control"
+                                                        >
+                                                            <option value="">Выберите тип билета</option>
+                                                            {props.tickets.types
+                                                                .filter(type => !type.disabled)
+                                                                .map(type => (
+                                                                    <option key={type.id} value={type.id}>
+                                                                        {type.name}
+                                                                    </option>
+                                                                ))}
+                                                        </Field>
+                                                        <ErrorMessage
+                                                            name={`tickets[${index}].type_id`}
+                                                            component="div"
+                                                            className="invalid-feedback"
+                                                        />
+                                                    </FormGroup>
 
-                                                    <label htmlFor={`ticket_${index}_first_name`}>Имя</label>
-                                                    <Field
-                                                        type="text"
-                                                        name={`tickets[${index}].first_name`}
-                                                        id={`ticket_${index}_first_name`}
-                                                    />
-                                                    <ErrorMessage
-                                                        name={`tickets[${index}].first_name`}
-                                                        component="div"
-                                                        className="error"
-                                                    />
+                                                    <FormGroup>
+                                                        <label htmlFor={`ticket_${index}_first_name`}>Имя</label>
+                                                        <Field
+                                                            type="text"
+                                                            name={`tickets[${index}].first_name`}
+                                                            id={`ticket_${index}_first_name`}
+                                                            className="form-control"
+                                                        />
+                                                        <ErrorMessage
+                                                            name={`tickets[${index}].first_name`}
+                                                            component="div"
+                                                            className="invalid-feedback"
+                                                        />
+                                                    </FormGroup>
 
-                                                    <label htmlFor={`ticket_${index}_last_name`}>Фамилия</label>
-                                                    <Field
-                                                        type="text"
-                                                        name={`tickets[${index}].last_name`}
-                                                        id={`ticket_${index}_last_name`}
-                                                    />
-                                                    <ErrorMessage
-                                                        name={`tickets[${index}].last_name`}
-                                                        component="div"
-                                                        className="error"
-                                                    />
+                                                    <FormGroup>
+                                                        <label htmlFor={`ticket_${index}_last_name`}>Фамилия</label>
+                                                        <Field
+                                                            type="text"
+                                                            name={`tickets[${index}].last_name`}
+                                                            id={`ticket_${index}_last_name`}
+                                                            className="form-control"
+                                                        />
+                                                        <ErrorMessage
+                                                            name={`tickets[${index}].last_name`}
+                                                            component="div"
+                                                            className="invalid-feedback"
+                                                        />
+                                                    </FormGroup>
 
-                                                    <label htmlFor={`ticket_${index}_email`}>E-mail</label>
-                                                    <Field
-                                                        type="email"
-                                                        name={`tickets[${index}].email`}
-                                                        id={`ticket_${index}_email`}
-                                                    />
-                                                    <ErrorMessage
-                                                        name={`tickets[${index}].email`}
-                                                        component="div"
-                                                        className="error"
-                                                    />
+                                                    <FormGroup>
+                                                        <label htmlFor={`ticket_${index}_email`}>E-mail</label>
+                                                        <Field
+                                                            type="email"
+                                                            name={`tickets[${index}].email`}
+                                                            id={`ticket_${index}_email`}
+                                                            className="form-control"
+                                                        />
+                                                        <ErrorMessage
+                                                            name={`tickets[${index}].email`}
+                                                            component="div"
+                                                            className="invalid-feedback"
+                                                        />
+                                                    </FormGroup>
                                                     {index + 1 === values.tickets.length && (
                                                         <button
                                                             type="button"
-                                                            className="button button_small button_theme_link"
+                                                            className="button button_size_small button_theme_link"
                                                             onClick={() =>
                                                                 arrayHelpers.insert(index + 1, {
                                                                     type_id: '',
@@ -325,39 +346,63 @@ const OrderPage: NextComponentType<
                             )}
                             {step === 2 && (
                                 <div className="order-step-form">
-                                    <Field component="select" name="payment_id" id="payment_id">
-                                        <option value="">Выберите способ оплаты</option>
-                                        {props.tickets.payments
-                                            .filter(payment => ['invoice', 'card'].includes(payment.type))
-                                            .map(payment => (
-                                                <option key={payment.id} value={payment.id}>
-                                                    {payment.type === 'invoice' && 'По счету'}
-                                                    {payment.type === 'card' && 'Банковской картой'}
-                                                </option>
-                                            ))}
-                                    </Field>
-                                    <ErrorMessage name="payment_id" component="div" className="error" />
+                                    <FormGroup>
+                                        <Field
+                                            component="select"
+                                            name="payment_id"
+                                            id="payment_id"
+                                            className="form-control"
+                                        >
+                                            <option value="">Выберите способ оплаты</option>
+                                            {props.tickets.payments
+                                                .filter(payment => ['invoice', 'card'].includes(payment.type))
+                                                .map(payment => (
+                                                    <option key={payment.id} value={payment.id}>
+                                                        {payment.type === 'invoice' && 'По счету'}
+                                                        {payment.type === 'card' && 'Банковской картой'}
+                                                    </option>
+                                                ))}
+                                        </Field>
+                                        <ErrorMessage name="payment_id" component="div" className="invalid-feedback" />
+                                    </FormGroup>
                                     {payment && payment.type === 'invoice' && (
                                         <React.Fragment>
-                                            <label htmlFor="legal_name">Название компании</label>
-                                            <Field type="text" name="legal_name" id="legal_name" />
-                                            <ErrorMessage name="legal_name" component="div" className="error" />
+                                            <FormGroup>
+                                                <label htmlFor="legal_name">Название компании</label>
+                                                <Field
+                                                    type="text"
+                                                    name="legal_name"
+                                                    id="legal_name"
+                                                    className="form-control"
+                                                />
+                                                <ErrorMessage
+                                                    name="legal_name"
+                                                    component="div"
+                                                    className="invalid-feedback"
+                                                />
+                                            </FormGroup>
 
-                                            <label htmlFor="inn">ИНН</label>
-                                            <Field type="text" name="inn" id="inn" />
-                                            <ErrorMessage name="inn" component="div" className="error" />
+                                            <FormGroup>
+                                                <label htmlFor="inn">ИНН</label>
+                                                <Field type="text" name="inn" id="inn" className="form-control" />
+                                                <ErrorMessage name="inn" component="div" className="invalid-feedback" />
+                                            </FormGroup>
                                         </React.Fragment>
                                     )}
                                     <div className="order-step-form__buttons">
                                         <button type="button" className="button" onClick={() => setStep(step - 1)}>
                                             Назад
                                         </button>{' '}
-                                        <button type="submit" className="button" disabled={isSubmitting}>
+                                        <button
+                                            type="submit"
+                                            className="button button_theme_blue"
+                                            disabled={isSubmitting}
+                                        >
                                             Купить
                                         </button>
                                     </div>
                                     {payment && (
-                                        <p className='order-step-form__information'>
+                                        <p className="order-step-form__information">
                                             Нажимая на кнопку "Купить" вы подтверждаете, что изучили и согласны с{' '}
                                             <a href={payment.agree_url} target="_blank">
                                                 правовыми документами

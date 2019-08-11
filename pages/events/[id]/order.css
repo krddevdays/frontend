@@ -138,67 +138,8 @@
     margin-bottom: 24px;
 }
 
-.order-step-form label {
-    display: block;
-
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: #767676;
-    margin: 0 0 8px;
-    padding: 0;
-}
-
-.order-step-form input {
-    width: 100%;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-
-    display: block;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    box-sizing: border-box;
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 8px 16px;
-    margin: 0 0 16px;
-
-    color: #a0a0a0;
-}
-
-.order-step-form select {
-    width: 100%;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-
-    margin: 0 0 16px;
-    padding: 8px 16px;
-
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    height: 32px;
-    color: #a0a0a0;
-    -webkit-appearance: none;
-    border-radius: 0;
-}
-
-.order-step-form select:focus,
-.order-step-form input:focus {
-    border: 1px solid #0000cc;
-    outline: none;
-}
-
-.order-step-form .error {
-    font-size: 12px;
-    line-height: 16px;
-    color: #f44336;
-    margin: -8px 0 16px;
-}
-
 .order-step-form__buttons {
-    margin-top: 32px;
+    margin-top: 24px;
     text-align: center;
 }
 
