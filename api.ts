@@ -140,6 +140,13 @@ type EventActivitiesResponse = Array<
           type: 'LUNCH';
           zone: string;
       }
+    | {
+          finish_date: string;
+          start_date: string;
+          thing: { title: string } | null;
+          type: 'DISCUSSION';
+          zone: string;
+      }
 >;
 
 export const event = async (id: number): Promise<EventResponse | null> => {
@@ -290,6 +297,16 @@ export const eventOrder = async (
     return response.json();
 };
 
+function injectCookies(headers: Record<string, string>, ctx?: NextPageContext): Record<string, string> {
+    const newHeaders = { ...headers };
+
+    if (typeof window === 'undefined' && ctx && ctx.req && ctx.req.headers.cookie) {
+        newHeaders.Cookie = ctx.req.headers.cookie;
+    }
+
+    return newHeaders;
+}
+
 type Profile = {
     username: string;
     email: string;
@@ -300,21 +317,18 @@ type Profile = {
 };
 
 export const getProfile = async (ctx?: NextPageContext): Promise<Profile> => {
-    const headers: HeadersInit = {
-        Accept: 'application/json'
-    };
-
-    if (typeof window === 'undefined' && ctx && ctx.req) {
-        headers.Cookie = ctx.req.headers.cookie as string;
-    }
-
     const response = await fetch(
         createUrl({
             pathname: `/users/me/`
         }),
         {
             credentials: 'include',
-            headers
+            headers: injectCookies(
+                {
+                    Accept: 'application/json'
+                },
+                ctx
+            )
         }
     );
 
@@ -462,4 +476,140 @@ export const registration = async (profile: Registration): Promise<never> => {
 if (typeof window !== 'undefined') {
     // @ts-ignore
     window.registration = registration;
+}
+
+type Discussion = {
+    id: number;
+    event_id: number;
+    title: string;
+    description: string;
+    votes_count: number;
+    my_vote: boolean;
+};
+
+type DiscussionsResponse = Array<Discussion>;
+
+export const getDiscussions = async (
+    filter?: { event_id?: number },
+    ctx?: NextPageContext
+): Promise<DiscussionsResponse> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/`,
+            query: {
+                event_id: filter && filter.event_id ? filter.event_id : undefined
+            }
+        }),
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers: injectCookies(
+                {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                ctx
+            )
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.getDiscussions = getDiscussions;
+}
+
+export const getDiscussion = async (id: number, ctx?: NextPageContext): Promise<Discussion> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/${id}/`
+        }),
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers: injectCookies(
+                {
+                    Accept: 'application/json'
+                },
+                ctx
+            )
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.getDiscussion = getDiscussion;
+}
+
+export const voteDiscussion = async (id: number): Promise<Discussion> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/${id}/vote/`
+        }),
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json'
+            }
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.voteDiscussion = voteDiscussion;
+}
+
+type PostDiscussion = {
+    event_id: number;
+    title: string;
+    description: string;
+};
+
+export const addDiscussion = async (data: PostDiscussion): Promise<Discussion> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/discussions/`
+        }),
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+    );
+
+    if (response.status !== 201) {
+        throw response;
+    }
+
+    return await response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.addDiscussion = addDiscussion;
 }
