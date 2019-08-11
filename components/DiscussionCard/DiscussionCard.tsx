@@ -47,18 +47,18 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                                     }
                                     break;
                                 default:
-                                    alert('Неизвестная ошибка');
+                                    alert('Неизвестная ошибка, попробуйте еще раз');
                                     throw e;
                             }
                         } else {
-                            alert('Неизвестная ошибка, попробуй еще раз');
+                            alert('Неизвестная ошибка, попробуйте еще раз');
                             throw e;
                         }
                     }
                 }
             })();
         },
-        [isVoted, props.id, auth]
+        [props.id, auth]
     );
 
     return (
