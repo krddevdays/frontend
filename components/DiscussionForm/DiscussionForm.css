@@ -8,9 +8,11 @@
 }
 
 .discussion-form__body {
-    margin: 24px 0;
+    margin: 24px 0 0;
     padding: 0 24px;
     flex: 100% 1 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .discussion-form__footer {
@@ -19,53 +21,51 @@
 }
 
 .discussion-form__title {
+    width: 100%;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
-    display: flex;
-    align-items: center;
+    flex: 100% 1 1;
 
     color: #262626;
 
-    margin: 0;
-}
-
-.discussion-form label {
-    display: block;
-
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: #767676;
-    margin: 0 0 8px;
     padding: 0;
-}
+    border: none;
+    -webkit-appearance: none;
 
-.discussion-form input {
-    width: 100%;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-
-    display: block;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    box-sizing: border-box;
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 8px 16px;
     margin: 0 0 16px;
 
-    color: #a0a0a0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 48px;
 }
 
-.discussion-form__error {
+.discussion-form__title:focus {
+    outline: none;
+}
+
+.discussion-form__description {
+    display: block;
+    width: 100%;
+    flex: 112px 1 1;
+    font-weight: normal;
     font-size: 12px;
     line-height: 16px;
-    color: #f44336;
-    margin: -8px 0 16px;
+
+    background: white;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    border: none;
+    resize: none;
 }
 
-.discussion-form__submit {
-    font-weight: 400;
-    font-size: 16px;
+.discussion-form__description:focus {
+    outline: none;
 }

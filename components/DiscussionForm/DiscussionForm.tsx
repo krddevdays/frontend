@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 
 import './DiscussionForm.css';
@@ -18,48 +18,50 @@ export default function DiscussionForm() {
     };
 
     return (
-        <article className="discussion-form">
-            <div className="discussion-form__body">
-                <h1 className="discussion-form__title">Добавить свою тему</h1>
-                <Formik
-                    initialValues={initialValues}
-                    initialStatus={null}
-                    validationSchema={schema}
-                    onSubmit={(values, actions) => {
-                        console.log(values);
-                        actions.setSubmitting(true);
-                        // make API call there
-                    }}
-                >
-                    {({ isSubmitting }) => {
-                        return (
-                            <Form>
-                                <section>
-                                    <label htmlFor="title">Название</label>
-                                    <Field type="text" name="title" id="title" />
-                                    <ErrorMessage name="title" component="div" className="discussion-form__error" />
+        <div className="discussion-form">
+            <Formik
+                initialValues={initialValues}
+                initialStatus={null}
+                validationSchema={schema}
+                onSubmit={(values, actions) => {
+                    console.log(values);
+                    actions.setSubmitting(true);
+                    // make API call there
+                }}
+            >
+                {({ isSubmitting }) => {
+                    return (
+                        <React.Fragment>
+                            <Form className="discussion-form__body">
+                                <Field
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    className="discussion-form__title"
+                                    placeholder="Название вашей темы"
+                                />
 
-                                    <label htmlFor="description">Описание</label>
-                                    <Field type="text" name="description" id="description" />
-                                    <ErrorMessage
-                                        name="description"
-                                        component="div"
-                                        className="discussion-form__error"
-                                    />
-
-                                    <button
-                                        type="submit"
-                                        className="button discussion-form__submit"
-                                        disabled={isSubmitting}
-                                    >
-                                        Добавить
-                                    </button>
-                                </section>
+                                <Field
+                                    component="textarea"
+                                    type="text"
+                                    name="description"
+                                    className="discussion-form__description"
+                                    placeholder="Описание вашей темы"
+                                />
                             </Form>
-                        );
-                    }}
-                </Formik>
-            </div>
-        </article>
+                            <div className="discussion-form__footer">
+                                <button
+                                    type="submit"
+                                    className="button button_theme_blue button_full-width"
+                                    disabled={isSubmitting}
+                                >
+                                    Подать свою тему
+                                </button>
+                            </div>
+                        </React.Fragment>
+                    );
+                }}
+            </Formik>
+        </div>
     );
 }

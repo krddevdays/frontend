@@ -13,6 +13,7 @@ import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
 import DiscussionCard, { DiscussionCardProps } from '../../../components/DiscussionCard/DiscussionCard';
 import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
+import List from '../../../components/List';
 import './index.css';
 import ym from 'react-yandex-metrika';
 
@@ -52,12 +53,12 @@ function Discussions(props: DiscussionsProps) {
         <section className="section">
             <h2 className="section__title">Круглые столы</h2>
             <div className="section__content">
-                <div className="event-talks__list">
+                <List>
                     {props.discussions.map((discussion, index) => (
                         <DiscussionCard key={index} {...discussion} />
                     ))}
                     <DiscussionForm />
-                </div>
+                </List>
             </div>
         </section>
     );
@@ -456,7 +457,8 @@ EventPage.getInitialProps = async ctx => {
         talks: await api.talks({ event_id: ctx.query.id }),
         discussions: [
             {
-                description: 'что в нем стоит улучшать? разговор по душам с организаторами',
+                description: `что в нем стоит улучшать?
+                разговор по душам с организаторами`,
                 title: 'Зачем нам сообщество',
                 votes: 42,
                 speaker: {

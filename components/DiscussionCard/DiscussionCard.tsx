@@ -1,62 +1,38 @@
 import * as React from 'react';
-import Markdown from 'markdown-to-jsx';
-
-import './DiscussionCard.css';
-import { /* Author, */ AuthorProps } from '../Author/Author';
+import '../DiscussionForm/DiscussionForm.css';
 
 export type DiscussionCardProps = {
-    description: string | null;
-    speaker: AuthorProps;
+    description: string;
     title: string;
     votes: number;
 };
 
-enum UserStates {
-    readyToVote = 'Проголосовать',
-    voted = 'Передумать',
-    author = 'Удалить'
-}
-
 export default function DiscussionCard(props: DiscussionCardProps) {
-    const [userState, setUserState] = React.useState(
-        (): UserStates => {
-            // check if user has already voted and deside what state to set as default
-            return UserStates.readyToVote;
-        }
-    );
     return (
-        <article className="discussion-card">
-            <div className="discussion-card__body">
-                <h1 className="discussion-card__title">{props.title}</h1>
-                <div className="discussion-card__description">
-                    <Markdown options={{ forceBlock: true }}>{props.description}</Markdown>
+        <div className="discussion-form">
+            <div className="discussion-form__body">
+                <div className="discussion-form__title" title={props.title}>
+                    {props.title}
+                </div>
+                <div className="discussion-form__description">
+                    {props.description.split('\n').map(function(item, key) {
+                        return (
+                            <span key={key}>
+                                {item}
+                                <br />
+                            </span>
+                        );
+                    })}
                 </div>
             </div>
-            {/* <div className="discussion-card__footer">
-                <Author {...props.speaker} />
-            </div> */}
-            <div
-                className="discussion-card__vote-block"
-                onClick={() => {
-                    switch (userState) {
-                        case UserStates.readyToVote:
-                            // call API to vote
-                            setUserState(UserStates.voted);
-                            break;
-                        case UserStates.voted:
-                            // call API to unvote
-                            setUserState(UserStates.readyToVote);
-                            break;
-                        default:
-                            // call API to remove dis shit
-                            break;
-                    }
-                }}
-            >
-                <img src="/static/star.svg" />
-                <p>{userState}</p>
-                <p className="discussion-card__vote-block_count">{props.votes}</p>
+            <div className="discussion-form__footer">
+                <div className="button-group">
+                    <button type="button" className="button" style={{ width: '100%' }}>
+                        <img src="/static/star.svg" alt="" style={{ verticalAlign: 'text-top' }} /> Проголосовать
+                    </button>
+                    <span className="button">{props.votes}</span>
+                </div>
             </div>
-        </article>
+        </div>
     );
 }
