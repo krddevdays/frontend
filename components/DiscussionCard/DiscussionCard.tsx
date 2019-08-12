@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { Response } from 'cross-fetch';
+import ym from 'react-yandex-metrika';
+
 import * as api from '../../api';
 
-import '../DiscussionForm/DiscussionForm.css';
 import { useAuth } from '../AuthProvider';
+
+import '../DiscussionForm/DiscussionForm.css';
 
 type DiscussionCardProps = {
     id: number;
@@ -27,6 +30,10 @@ export default function DiscussionCard(props: DiscussionCardProps) {
         e => {
             e.preventDefault();
 
+            setTimeout(() => {
+                ym('reachGoal', 'click_vote_on_discussion');
+            }, 0);
+
             (async () => {
                 let finished = false;
                 while (!finished) {
@@ -36,6 +43,10 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                         setIsVoted(discussion.my_vote);
                         setVotesCount(discussion.votes_count);
                         finished = true;
+
+                        setTimeout(() => {
+                            ym('reachGoal', 'vote_on_discussion');
+                        }, 0);
                     } catch (e) {
                         if (e instanceof Response) {
                             switch (e.status) {

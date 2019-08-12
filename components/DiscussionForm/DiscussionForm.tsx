@@ -51,9 +51,9 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                             onClick={e => {
                                 e.preventDefault();
                                 setConfirmed(true);
-                                (() => {
+                                setTimeout(() => {
                                     ym('reachGoal', 'click_want_own_discussion');
-                                })();
+                                }, 0);
                             }}
                         >
                             Хочу подать свою тему
@@ -80,6 +80,9 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                 props.onAdd(discussion);
                                 actions.resetForm();
                                 finished = true;
+                                setTimeout(() => {
+                                    ym('reachGoal', 'add_own_discussion');
+                                }, 0);
                             } catch (e) {
                                 if (e instanceof Response) {
                                     switch (e.status) {
