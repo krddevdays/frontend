@@ -10,7 +10,7 @@ type ModalProps = {
     isOpen: boolean;
     onAfterClose: () => void;
     title: React.ReactChild;
-    children: React.ReactChild;
+    children: React.ReactNode;
 };
 
 const Modal = (props: ModalProps) => {

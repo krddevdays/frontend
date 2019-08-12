@@ -15,6 +15,18 @@ const schema = yup.object().shape({
     password: yup.string().required('Введите пароль')
 });
 
+const registrationSchema = yup.object().shape({
+    username: yup.string().required('Введите логин'),
+    email: yup
+        .string()
+        .email('Неверный e-amil')
+        .required('Введите e-mail'),
+    first_name: yup.string().required('Введите имя'),
+    last_name: yup.string().required('Введите фамилию'),
+    password1: yup.string().required('Введите пароль'),
+    password2: yup.string().required('Введите подтверждение пароля')
+});
+
 type Profile = {
     username: string;
     email: string;
@@ -29,9 +41,211 @@ type AuthModalProps = {
     onReject: () => void;
 };
 
-const AuthModal = (props: AuthModalProps) => {
+function LoginForm(props: {
+    onFetchProfile: (profile: Profile) => void;
+    onClickRegistration: React.ReactEventHandler<HTMLButtonElement>;
+}) {
+    return (
+        <Formik
+            initialValues={{
+                username: '',
+                password: ''
+            }}
+            validationSchema={schema}
+            initialStatus={null}
+            onSubmit={async (values, actions) => {
+                actions.setStatus(null);
+                actions.setSubmitting(true);
+
+                try {
+                    await api.login(values);
+                    props.onFetchProfile(await api.getProfile());
+                } catch (e) {
+                    if (e instanceof Response) {
+                        const response = e;
+
+                        switch (response.status) {
+                            case 400: {
+                                const errors = await response.json();
+
+                                Object.keys(errors).forEach(field => {
+                                    if (['non_field_errors', '__all__'].includes(field)) {
+                                        actions.setStatus(errors[field][0]);
+                                        return;
+                                    }
+
+                                    actions.setFieldError(field, errors[field][0]);
+                                });
+                                break;
+                            }
+                            default:
+                                actions.setStatus('Неизвестная ошибка');
+                                throw e;
+                        }
+                    } else {
+                        actions.setStatus(e.toString());
+                        throw e;
+                    }
+                } finally {
+                    actions.setSubmitting(false);
+                }
+            }}
+        >
+            {({ isSubmitting, status }) => {
+                return (
+                    <Form>
+                        <FormGroup>
+                            <label htmlFor="username">Логин</label>
+                            <Field type="text" name="username" id="username" className="form-control" />
+                            <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="password">Пароль</label>
+                            <Field type="password" name="password" id="password" className="form-control" />
+                            <ErrorMessage name="password" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        {status && <div className="invalid-feedback">{status}</div>}
+                        <FormGroup>
+                            <button
+                                type="submit"
+                                className="button button_full-width button_theme_blue"
+                                disabled={isSubmitting}
+                            >
+                                Войти
+                            </button>
+                        </FormGroup>
+                        <button
+                            type="button"
+                            className="button button_full-width button_theme_link"
+                            disabled={isSubmitting}
+                            onClick={props.onClickRegistration}
+                        >
+                            Зарегистрироваться
+                        </button>
+                    </Form>
+                );
+            }}
+        </Formik>
+    );
+}
+
+function RegistrationForm(props: {
+    onFetchProfile: (profile: Profile) => void;
+    onClickLogin: React.ReactEventHandler<HTMLButtonElement>;
+}) {
+    return (
+        <Formik
+            initialValues={{
+                username: '',
+                email: '',
+                first_name: '',
+                last_name: '',
+                password1: '',
+                password2: ''
+            }}
+            validationSchema={registrationSchema}
+            initialStatus={null}
+            onSubmit={async (values, actions) => {
+                actions.setStatus(null);
+                actions.setSubmitting(true);
+
+                try {
+                    await api.registration({ ...values, work: null, position: null });
+                    props.onFetchProfile(await api.getProfile());
+                } catch (e) {
+                    if (e instanceof Response) {
+                        const response = e;
+
+                        switch (response.status) {
+                            case 400: {
+                                const errors = await response.json();
+
+                                Object.keys(errors).forEach(field => {
+                                    if (['non_field_errors', '__all__'].includes(field)) {
+                                        actions.setStatus(errors[field][0]);
+                                        return;
+                                    }
+
+                                    actions.setFieldError(field, errors[field][0]);
+                                });
+                                break;
+                            }
+                            default:
+                                actions.setStatus('Неизвестная ошибка');
+                                throw e;
+                        }
+                    } else {
+                        actions.setStatus(e.toString());
+                        throw e;
+                    }
+                } finally {
+                    actions.setSubmitting(false);
+                }
+            }}
+        >
+            {({ isSubmitting, status }) => {
+                return (
+                    <Form>
+                        <FormGroup>
+                            <label htmlFor="username">Логин</label>
+                            <Field type="text" name="username" id="username" className="form-control" />
+                            <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="username">E-mail</label>
+                            <Field type="email" name="email" id="email" className="form-control" />
+                            <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="first_name">Имя</label>
+                            <Field type="text" name="first_name" id="first_name" className="form-control" />
+                            <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="last_name">Фамилия</label>
+                            <Field type="text" name="last_name" id="last_name" className="form-control" />
+                            <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="password1">Пароль</label>
+                            <Field type="password" name="password1" id="password1" className="form-control" />
+                            <ErrorMessage name="password1" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label htmlFor="password2">Подтверждение пароля:</label>
+                            <Field type="password" name="password2" id="password2" className="form-control" />
+                            <ErrorMessage name="password2" component="div" className="invalid-feedback" />
+                        </FormGroup>
+                        {status && <div className="invalid-feedback">{status}</div>}
+                        <FormGroup>
+                            <button
+                                type="submit"
+                                className="button button_full-width button_theme_blue"
+                                disabled={isSubmitting}
+                            >
+                                Зарегистрироваться
+                            </button>
+                        </FormGroup>
+                        <button
+                            type="submit"
+                            className="button button_full-width button_theme_link"
+                            disabled={isSubmitting}
+                            onClick={props.onClickLogin}
+                        >
+                            Войти
+                        </button>
+                    </Form>
+                );
+            }}
+        </Formik>
+    );
+}
+
+function AuthModal(props: AuthModalProps) {
     const [profile, setProfile] = React.useState<Profile | null>(null);
     const [isOpen, setIsOpen] = React.useState(profile === null);
+
+    const [page, setPage] = React.useState('login');
 
     React.useEffect(() => {
         setIsOpen(profile === null);
@@ -49,84 +263,51 @@ const AuthModal = (props: AuthModalProps) => {
         setIsOpen(false);
     }, [setIsOpen]);
 
+    let title: string;
+
+    switch (page) {
+        case 'login':
+            title = 'Авторизация';
+            break;
+        case 'registration':
+            title = 'Регистрация';
+            break;
+        default:
+            title = '';
+    }
+
     return (
         <Modal
             onAfterClose={handleAfterClose}
             onRequestClose={handleRequestClose}
             isOpen={isOpen}
-            title="Авторизация"
+            title={title}
             className="auth-modal"
         >
-            <Formik
-                initialValues={{
-                    username: '',
-                    password: ''
-                }}
-                validationSchema={schema}
-                initialStatus={null}
-                onSubmit={async (values, actions) => {
-                    actions.setStatus(null);
-                    actions.setSubmitting(true);
-
-                    try {
-                        await api.login(values);
-                        setProfile(await api.getProfile());
-                    } catch (e) {
-                        if (e instanceof Response) {
-                            const response = e;
-
-                            switch (response.status) {
-                                case 400: {
-                                    const errors = await response.json();
-
-                                    Object.keys(errors).forEach(field => {
-                                        if (['non_field_errors', '__all__'].includes(field)) {
-                                            actions.setStatus(errors[field][0]);
-                                            return;
-                                        }
-
-                                        actions.setFieldError(field, errors[field][0]);
-                                    });
-                                    break;
-                                }
-                                default:
-                                    actions.setStatus('Неизвестная ошибка');
-                            }
-                        } else {
-                            actions.setStatus(e.toString());
-                        }
-                    } finally {
-                        actions.setSubmitting(false);
-                    }
-                }}
-            >
-                {({ isSubmitting, status }) => {
-                    return (
-                        <Form>
-                            <FormGroup>
-                                <label htmlFor="username">Логин</label>
-                                <Field type="text" name="username" id="username" className="form-control" />
-                                <ErrorMessage name="username" component="div" className="invalid-feedback" />
-                            </FormGroup>
-                            <FormGroup>
-                                <label htmlFor="password">Пароль</label>
-                                <Field type="password" name="password" id="password" className="form-control" />
-                                <ErrorMessage name="password" component="div" className="invalid-feedback" />
-                            </FormGroup>
-                            <button
-                                type="submit"
-                                className="button button_full-width button_theme_blue"
-                                disabled={isSubmitting}
-                            >
-                                Войти
-                            </button>
-                            {status && <div className="invalid-feedback">{status}</div>}
-                        </Form>
-                    );
-                }}
-            </Formik>
+            {page === 'login' && (
+                <LoginForm
+                    onFetchProfile={profile => {
+                        setProfile(profile);
+                    }}
+                    onClickRegistration={e => {
+                        e.preventDefault();
+                        setPage('registration');
+                    }}
+                />
+            )}
+            {page === 'registration' && (
+                <RegistrationForm
+                    onFetchProfile={profile => {
+                        setProfile(profile);
+                    }}
+                    onClickLogin={e => {
+                        e.preventDefault();
+                        setPage('login');
+                    }}
+                />
+            )}
         </Modal>
     );
-};
+}
 
 export default AuthModal;

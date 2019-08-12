@@ -72,6 +72,12 @@ function Discussions(props: DiscussionsProps) {
         <section className="section">
             <h2 className="section__title">Круглые столы</h2>
             <div className="section__content">
+                <p>
+                    Это возможность собраться с единомышленниками и обсудить интересную вам тему. Вы можете подать свою
+                    или проголосовать за другие.
+                    <br />
+                    Самые популярные темы будут выбраны в программу, а их авторы станут модераторами дискуссий.
+                </p>
                 <List>
                     {discussions.map((discussion, index) => (
                         <DiscussionCard key={index} {...discussion} />
