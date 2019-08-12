@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
+import ym from 'react-yandex-metrika';
 
 import { useAuth } from '../AuthProvider';
 import * as api from '../../api';
@@ -50,6 +51,9 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                             onClick={e => {
                                 e.preventDefault();
                                 setConfirmed(true);
+                                (() => {
+                                    ym('reachGoal', 'click_want_own_discussion');
+                                })();
                             }}
                         >
                             Хочу подать свою тему
