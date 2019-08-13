@@ -80,7 +80,8 @@
     margin: 0;
     background: #fff;
     padding: 15px 20px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .talk-card_modern .talk-card__footer {
