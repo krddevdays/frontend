@@ -402,6 +402,11 @@ function EventPrice(props: EventPriceProps) {
                         </p>
                     </div>
                 )}
+                {!ticketsAvailable && (
+                    <div className="event-price-button">
+                        <p className="event-price-button__description">Регистрация закрыта</p>
+                    </div>
+                )}
                 {props.description && (
                     <div className="event-price-description">
                         <Markdown>{props.description}</Markdown>
