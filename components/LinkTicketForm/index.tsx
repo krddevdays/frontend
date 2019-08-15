@@ -15,8 +15,15 @@ const schema = yup.object().shape({
         .required('Введите e-mail')
 });
 
+type Ticket = {
+    number: number;
+    price: number;
+    pdf_url: string | null;
+    passbook_url: string | null;
+};
+
 type LinkTicketFormProps = {
-    onLink: (ticket: { id: string; email: string }) => void;
+    onLink: (tickets: Ticket[]) => void;
 };
 
 export default function LinkTicketForm(props: LinkTicketFormProps) {
@@ -29,8 +36,8 @@ export default function LinkTicketForm(props: LinkTicketFormProps) {
                 actions.setSubmitting(true);
 
                 try {
-                    const ticket = await api.linkTicket(values);
-                    props.onLink(ticket);
+                    await api.linkTicket(values);
+                    props.onLink(await api.getTickets());
                 } catch (e) {
                     if (e instanceof Response) {
                         switch (e.status) {

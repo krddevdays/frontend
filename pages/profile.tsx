@@ -10,6 +10,7 @@ import ProfileForm from '../components/ProfileForm';
 import LinkTicketForm from '../components/LinkTicketForm';
 
 import './profile.css';
+import { FormattedNumber } from 'react-intl';
 
 type Profile = {
     username: string;
@@ -20,8 +21,16 @@ type Profile = {
     position: string | null;
 };
 
+type Ticket = {
+    number: number;
+    price: number;
+    pdf_url: string | null;
+    passbook_url: string | null;
+};
+
 type ProfilePageProps = {
     profile: null | Profile;
+    tickets: null | Ticket[];
 };
 
 const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfilePageProps> = props => {
@@ -63,10 +72,14 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
         setProfile(profile);
     }, []);
 
-    const [ticket, setTicket] = React.useState<{ id: string } | null>(null);
+    const [tickets, setTickets] = React.useState<Ticket[] | null>(props.tickets);
 
-    const handleTicketLink = React.useCallback((ticket: { id: string }) => {
-        setTicket(ticket);
+    React.useEffect(() => {
+        setTickets(props.tickets);
+    }, [props.tickets]);
+
+    const handleTicketLink = React.useCallback((tickets: Ticket[]) => {
+        setTickets(tickets);
     }, []);
 
     return (
@@ -90,21 +103,61 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
                     </div>
                 )}
             </div>
-            {profile && (
+            {tickets && (
                 <div className="section">
-                    <h2 className="section__title">Связать билет с профилем</h2>
+                    <h2 className="section__title">Билеты</h2>
                     <div className="section__content profile-section__content">
-                        {!ticket && (
-                            <React.Fragment>
-                                <p>
-                                    Мы можем использовать данные вашего профиля при печати бейджа.
-                                    <br />
-                                    Для этого нужно связать ваш билет с профилем.
-                                </p>
-                                <LinkTicketForm onLink={handleTicketLink} />
-                            </React.Fragment>
+                        {tickets.length > 0 && (
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Номер</th>
+                                        <th>Цена</th>
+                                        <th />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tickets.map((ticket, i) => (
+                                        <tr key={i}>
+                                            <td>{ticket.number}</td>
+                                            <td>
+                                                <FormattedNumber
+                                                    style="currency"
+                                                    value={ticket.price}
+                                                    currency="RUB"
+                                                    minimumFractionDigits={0}
+                                                />
+                                            </td>
+                                            <td>
+                                                {ticket.pdf_url && (
+                                                    <a href={ticket.pdf_url} target="_blank" rel="noopener noreferrer">
+                                                        pdf
+                                                    </a>
+                                                )}
+                                                {ticket.passbook_url && (
+                                                    <React.Fragment>
+                                                        {ticket.pdf_url && ' '}
+                                                        <a
+                                                            href={ticket.passbook_url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            passbook
+                                                        </a>
+                                                    </React.Fragment>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         )}
-                        {ticket && <p>Билет #{ticket.id} успешно связан с вашим профилем.</p>}
+                        <p>
+                            Мы можем использовать данные вашего профиля при печати бейджа.
+                            <br />
+                            Для этого нужно связать ваш билет с профилем.
+                        </p>
+                        <LinkTicketForm onLink={handleTicketLink} />
                     </div>
                 </div>
             )}
@@ -115,9 +168,10 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
 
 ProfilePage.getInitialProps = async ctx => {
     let profile = null;
+    let tickets = null;
 
     try {
-        profile = await api.getProfile(ctx);
+        [profile, tickets] = await Promise.all([api.getProfile(ctx), api.getTickets(ctx)]);
     } catch (e) {
         if (!(e instanceof Response) || e.status !== 403) {
             throw e;
@@ -129,7 +183,8 @@ ProfilePage.getInitialProps = async ctx => {
     }
 
     return {
-        profile
+        profile,
+        tickets
     };
 };
 

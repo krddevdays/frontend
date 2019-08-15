@@ -614,12 +614,12 @@ if (typeof window !== 'undefined') {
     window.addDiscussion = addDiscussion;
 }
 
-type Ticket = {
+type LinkTicket = {
     id: string;
     email: string;
 };
 
-export const linkTicket = async (data: Ticket): Promise<Ticket> => {
+export const linkTicket = async (data: LinkTicket): Promise<LinkTicket> => {
     const response = await fetch(
         createUrl({
             pathname: `/checkout/link/`
@@ -645,4 +645,39 @@ export const linkTicket = async (data: Ticket): Promise<Ticket> => {
 if (typeof window !== 'undefined') {
     // @ts-ignore
     window.linkTicket = linkTicket;
+}
+
+type Ticket = {
+    number: number;
+    price: number;
+    pdf_url: string | null;
+    passbook_url: string | null;
+};
+
+export const getTickets = async (ctx?: NextPageContext): Promise<Ticket[]> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/me/tickets/`
+        }),
+        {
+            credentials: 'include',
+            headers: injectCookies(
+                {
+                    Accept: 'application/json'
+                },
+                ctx
+            )
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return response.json();
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.getTickets = getTickets;
 }
