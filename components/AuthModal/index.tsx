@@ -62,11 +62,9 @@ function LoginForm(props: {
                     props.onFetchProfile(await api.getProfile());
                 } catch (e) {
                     if (e instanceof Response) {
-                        const response = e;
-
-                        switch (response.status) {
+                        switch (e.status) {
                             case 400: {
-                                const errors = await response.json();
+                                const errors = await e.json();
 
                                 Object.keys(errors).forEach(field => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
@@ -79,7 +77,7 @@ function LoginForm(props: {
                                 break;
                             }
                             default:
-                                actions.setStatus('Неизвестная ошибка');
+                                actions.setStatus('Неизвестная ошибка, попробуйте еще раз');
                                 throw e;
                         }
                     } else {
@@ -104,7 +102,11 @@ function LoginForm(props: {
                             <Field type="password" name="password" id="password" className="form-control" />
                             <ErrorMessage name="password" component="div" className="invalid-feedback" />
                         </FormGroup>
-                        {status && <div className="invalid-feedback">{status}</div>}
+                        {status && (
+                            <FormGroup>
+                                <div className="invalid-feedback">{status}</div>
+                            </FormGroup>
+                        )}
                         <FormGroup>
                             <button
                                 type="submit"
@@ -154,11 +156,9 @@ function RegistrationForm(props: {
                     props.onFetchProfile(await api.getProfile());
                 } catch (e) {
                     if (e instanceof Response) {
-                        const response = e;
-
-                        switch (response.status) {
+                        switch (e.status) {
                             case 400: {
-                                const errors = await response.json();
+                                const errors = await e.json();
 
                                 Object.keys(errors).forEach(field => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
@@ -216,7 +216,11 @@ function RegistrationForm(props: {
                             <Field type="password" name="password2" id="password2" className="form-control" />
                             <ErrorMessage name="password2" component="div" className="invalid-feedback" />
                         </FormGroup>
-                        {status && <div className="invalid-feedback">{status}</div>}
+                        {status && (
+                            <FormGroup>
+                                <div className="invalid-feedback">{status}</div>
+                            </FormGroup>
+                        )}
                         <FormGroup>
                             <button
                                 type="submit"

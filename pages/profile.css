@@ -1,3 +1,5 @@
-.profile-form {
-    max-width: 234px;
+@media (min-width: 320px) {
+    .profile-section__content {
+        max-width: 320px;
+    }
 }

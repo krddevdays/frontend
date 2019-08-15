@@ -613,3 +613,36 @@ if (typeof window !== 'undefined') {
     // @ts-ignore
     window.addDiscussion = addDiscussion;
 }
+
+type Ticket = {
+    id: string;
+    email: string;
+};
+
+export const linkTicket = async (data: Ticket): Promise<Ticket> => {
+    const response = await fetch(
+        createUrl({
+            pathname: `/checkout/link/`
+        }),
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+    );
+
+    if (response.status !== 200) {
+        throw response;
+    }
+
+    return data;
+};
+
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.linkTicket = linkTicket;
+}

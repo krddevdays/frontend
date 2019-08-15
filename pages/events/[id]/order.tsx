@@ -117,14 +117,12 @@ const OrderPage: NextComponentType<
                         window.location.href = order.payment_url;
                     } catch (e) {
                         if (e instanceof Response) {
-                            const response = e;
-
-                            switch (response.status) {
+                            switch (e.status) {
                                 case 400: {
-                                    const errors = await response.json();
+                                    const errors = await e.json();
 
                                     Object.keys(errors).forEach(field => {
-                                        if (field === 'non_field_errors') {
+                                        if (['non_field_errors', '__all__'].includes(field)) {
                                             actions.setStatus(errors[field][0]);
                                             return;
                                         }
@@ -136,17 +134,19 @@ const OrderPage: NextComponentType<
                                     break;
                                 }
                                 default:
-                                    actions.setStatus('Неизвестная ошибка');
+                                    actions.setStatus('Неизвестная ошибка, попробуйте еще раз');
+                                    throw e;
                             }
                         } else {
                             actions.setStatus(e.toString());
+                            throw e;
                         }
                     } finally {
                         actions.setSubmitting(false);
                     }
                 }}
             >
-                {({ values, isSubmitting }) => {
+                {({ values, isSubmitting, status }) => {
                     type Payment = typeof props.tickets.payments[0];
                     let payment: Payment | null = null;
 
@@ -401,6 +401,11 @@ const OrderPage: NextComponentType<
                                             Купить
                                         </button>
                                     </div>
+                                    {status && (
+                                        <FormGroup>
+                                            <div className="invalid-feedback">{status}</div>
+                                        </FormGroup>
+                                    )}
                                     {payment && (
                                         <p className="order-step-form__information">
                                             Нажимая на кнопку "Купить" вы подтверждаете, что изучили и согласны с{' '}
