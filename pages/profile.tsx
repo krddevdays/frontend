@@ -108,7 +108,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
                     <h2 className="section__title">Билеты</h2>
                     <div className="section__content profile-section__content">
                         {tickets.length > 0 && (
-                            <table>
+                            <table className="table">
                                 <thead>
                                     <tr>
                                         <th>Номер</th>
