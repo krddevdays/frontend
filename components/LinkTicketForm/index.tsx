@@ -37,7 +37,9 @@ export default function LinkTicketForm(props: LinkTicketFormProps) {
 
                 try {
                     await api.linkTicket(values);
-                    props.onLink(await api.getTickets());
+                    const tickets = await api.getTickets();
+                    actions.resetForm();
+                    props.onLink(tickets);
                 } catch (e) {
                     if (e instanceof Response) {
                         switch (e.status) {
