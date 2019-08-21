@@ -54,6 +54,7 @@ type DiscussionsProps = {
     discussions: Discussion[];
 };
 
+// @ts-ignore
 function Discussions(props: DiscussionsProps) {
     const [discussions, setDiscussions] = React.useState(props.discussions);
 
@@ -426,7 +427,7 @@ const EventPage: NextComponentType<
     EventPageProps,
     EventPageProps
 > = props => {
-    const { event, tickets, activities, talks, discussions } = props;
+    const { event, tickets, activities, talks } = props;
 
     return (
         <Container itemScope itemType="http://schema.org/Event">
@@ -456,7 +457,6 @@ const EventPage: NextComponentType<
                 venue={event.venue}
             />
             <Talks talks={talks} />
-            {discussions && event.id === 14 && <Discussions discussions={discussions} eventId={event.id} />}
             <Schedule activities={activities} />
             <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
         </Container>
