@@ -126,8 +126,6 @@ function Activity(props: ActivityProps) {
             case 'TALK':
                 title = 'Доклад';
                 break;
-            case 'DISCUSSION':
-                title = 'Круглый стол';
         }
     }
 
@@ -138,6 +136,9 @@ function Activity(props: ActivityProps) {
                 <div className="schedule-activity__author">
                     <Author {...props.thing.speaker} small />
                 </div>
+            )}
+            {props.type === 'DISCUSSION' && props.thing && (
+                <div className="schedule-activity__author">Круглый стол</div>
             )}
         </div>
     );
