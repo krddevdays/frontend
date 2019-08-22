@@ -69,47 +69,34 @@ function ScheduleTable(props: ScheduleTableProps) {
             )}
             <tbody>
                 {times.map((time, timeIndex) => {
-                    let activitiesRows = zones.reduce(
-                        (activites, zone, zoneIndex) => {
-                            if (!props.activitiesByZoneAndTime[zone][time]) {
-                                return activites;
-                            }
-
-                            props.activitiesByZoneAndTime[zone][time].forEach((activity, index) => {
-                                if (!activites[index]) {
-                                    activites[index] = new Array(zones.length).fill(undefined);
-                                }
-
-                                activites[index][zoneIndex] = activity;
-                            });
-
-                            return activites;
-                        },
-                        [] as Array<ActivityProps[]>
+                    const hasActivities = zones.some(
+                        zone => typeof props.activitiesByZoneAndTime[zone][time] !== 'undefined'
                     );
 
                     return (
                         <React.Fragment key={timeIndex}>
                             <tr className="schedule-table__row">
-                                <td className="schedule-table__time" rowSpan={activitiesRows.length}>
+                                <td className="schedule-table__time" rowSpan={hasActivities ? 2 : 1}>
                                     {time}
                                 </td>
-                                {activitiesRows[0] &&
-                                    activitiesRows[0].map((activity, index) => (
-                                        <td className="schedule-table__activity-cell" key={index}>
-                                            {activity && <Activity {...activity} />}
-                                        </td>
-                                    ))}
                             </tr>
-                            {activitiesRows.slice(1).map((activityRow, index) => (
-                                <tr key={index} className="schedule-table__row">
-                                    {activityRow.map((activity, index) => (
+                            {hasActivities && (
+                                <tr className="schedule-table__row">
+                                    {zones.map((zone, index) => (
                                         <td className="schedule-table__activity-cell" key={index}>
-                                            {activity && <Activity {...activity} />}
+                                            {props.activitiesByZoneAndTime[zone][time] && (
+                                                <div className="schedule-table__activity-cell-content">
+                                                    {props.activitiesByZoneAndTime[zone][time].map(
+                                                        (activity, index) => (
+                                                            <Activity {...activity} key={index} />
+                                                        )
+                                                    )}
+                                                </div>
+                                            )}
                                         </td>
                                     ))}
                                 </tr>
-                            ))}
+                            )}
                         </React.Fragment>
                     );
                 })}

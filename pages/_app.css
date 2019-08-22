@@ -4,6 +4,7 @@ body {
         sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     font-size: 14px;
     line-height: 20px;
+    -webkit-text-size-adjust: 100%;
 }
 
 html,
