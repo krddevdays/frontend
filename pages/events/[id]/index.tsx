@@ -287,6 +287,8 @@ function EventInformation(props: EventInformationProps) {
                                     minimumFractionDigits={0}
                                 />
                             </React.Fragment>
+                        ) : price.min === '0.00' ? (
+                            'Бесплатно'
                         ) : (
                             <FormattedNumber
                                 style="currency"
@@ -373,12 +375,16 @@ function EventPrice(props: EventPriceProps) {
                         <div className="event-price-item" key={index}>
                             <div className="event-price-item__title">{type.name}</div>
                             <div className="event-price-item__value">
-                                <FormattedNumber
-                                    style="currency"
-                                    value={parseFloat(type.price.value)}
-                                    currency="RUB"
-                                    minimumFractionDigits={0}
-                                />
+                                {type.price.value === '0.00' ? (
+                                    'Бесплатно'
+                                ) : (
+                                    <FormattedNumber
+                                        style="currency"
+                                        value={parseFloat(type.price.value)}
+                                        currency="RUB"
+                                        minimumFractionDigits={0}
+                                    />
+                                )}
                             </div>
                         </div>
                     ))}
