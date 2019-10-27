@@ -162,13 +162,6 @@ const OrderPage: NextComponentType<
         );
     }
 
-    // cancel_url: "https://qtickets.ru/cancel-order/mnEi21iSvG/9c38f985de0ec9cb2efc93cf2d579568"
-    // currency_id: "RUB"
-    // id: 802065
-    // payment_url: null
-    // price: 0
-    // reserved_to: "2019-10-28T14:45:27+03:00"
-
     return (
         <OrderPageTemplate step={3}>
             <div className="order-step-form">
