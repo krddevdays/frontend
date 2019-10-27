@@ -270,7 +270,7 @@ export const eventOrder = async (
     cancel_url: string;
     reserved_to: string;
     currency_id: string;
-    price: string;
+    price: number;
 }> => {
     const response = await fetch(
         createUrl({

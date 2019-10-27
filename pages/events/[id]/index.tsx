@@ -205,7 +205,7 @@ export type EventTickets = {
     }>;
     payments: Array<{
         id: number;
-        type: 'card' | 'invoice';
+        type: 'card' | 'invoice' | 'free';
         agree_url: string;
     }>;
 };
