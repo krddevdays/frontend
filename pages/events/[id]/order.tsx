@@ -509,8 +509,8 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                 try {
                     const order = await api.eventOrder(props.eventId, {
                         ...props.customer,
-                        tickets: props.tickets,
-                        payment_id: values.payment_id
+                        ...values,
+                        tickets: props.tickets
                     });
 
                     ym('reachGoal', 'event_order_success', {
