@@ -75,6 +75,16 @@ export default function Footer() {
                             youtube
                         </a>
                     </li>
+                    <li className="footer-menu__item">
+                        <a
+                            href="https://github.com/krddevdays"
+                            target="_blank"
+                            rel="noopener nofollow"
+                            className="footer-menu__link"
+                        >
+                            github
+                        </a>
+                    </li>
                 </ul>
             </Container>
         </footer>
