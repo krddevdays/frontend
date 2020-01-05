@@ -40,7 +40,7 @@ function Header() {
                     <ul className="header-menu">
                         <li className="header-menu__item">
                             <Link href="/events">
-                                <a className="header-menu__link">Мероприятия</a>
+                                <a className="header-menu__link">Все мероприятия</a>
                             </Link>
                         </li>
                     </ul>
