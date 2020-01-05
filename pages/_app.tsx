@@ -69,8 +69,16 @@ class MyApp extends App<MyAppProps, MyAppProps> {
                 pageProps = await Component.getInitialProps(ctx);
             }
         } catch (error) {
-            hasError = false;
-            errorEventId = captureException(error, ctx);
+            if (error.code === 'ENOENT') {
+                throw error;
+            }
+
+            if (process.env.NODE_ENV === 'production') {
+                hasError = true;
+                errorEventId = captureException(error, ctx);
+            } else {
+                throw error;
+            }
         }
 
         return { pageProps, hasError, errorEventId };
@@ -89,7 +97,7 @@ class MyApp extends App<MyAppProps, MyAppProps> {
         return { hasError: true };
     }
 
-    componentDidCatch(error: any, errorInfo: any) {
+    componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
         const errorEventId = captureException(error, { errorInfo });
 
         this.setState({ errorEventId });
