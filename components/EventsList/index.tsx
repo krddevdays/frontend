@@ -10,7 +10,7 @@ export default function EventsList(props: EventsListProps) {
     return (
         <List>
             {props.events.map((event, index) => (
-                <EventCard {...event} key={index} />
+                <EventCard {...event} key={index}/>
             ))}
         </List>
     );
