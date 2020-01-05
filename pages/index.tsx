@@ -37,7 +37,7 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
                             <a className="section__action">Посмотреть все</a>
                         </Link>
                         <div className="section__content">
-                            <EventsList events={props.events} />
+                            <EventsList events={props.events}/>
                         </div>
                     </Container>
                 </section>
@@ -51,7 +51,11 @@ export default IndexPage;
 IndexPage.getInitialProps = async () => {
     const events = await api.events({
         date_from: new Date()
-    });
+    }).then(events => events
+        .sort((e1, e2) => (
+            Date.parse(e1.finish_date) > Date.parse(e2.finish_date)
+        ) ? 1 : -1)
+    );
 
     return {
         events
