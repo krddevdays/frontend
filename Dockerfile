@@ -1,4 +1,4 @@
-FROM node:carbon-slim
+FROM node:erbium-slim
 
 EXPOSE 3000
 WORKDIR /usr/src/krddevdays
