@@ -32,7 +32,7 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
             {props.events.length > 0 && (
                 <section className="index-section-background">
                     <Container className="section">
-                        <h2 className="section__title">Мероприятия</h2>
+                        <h2 className="section__title">Предстоящие мероприятия</h2>
                         <Link href="/events">
                             <a className="section__action">Посмотреть все</a>
                         </Link>
