@@ -271,7 +271,7 @@ function AuthModal(props: AuthModalProps) {
 
     switch (page) {
         case 'login':
-            title = 'Авторизация';
+            title = 'Аутентификация';
             break;
         case 'registration':
             title = 'Регистрация';
