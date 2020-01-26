@@ -13,6 +13,7 @@ import Head from 'next/head';
 import { stripIndent } from 'common-tags';
 import ReactModal from 'react-modal';
 import AuthProvider from '../components/AuthProvider';
+import { setContext } from '../context';
 
 ReactModal.setAppElement('#__next');
 
@@ -60,6 +61,7 @@ type MyAppState = ErrorState;
 
 class MyApp extends App<MyAppProps, MyAppProps> {
     static async getInitialProps({ Component, ctx }: AppContext) {
+        setContext(ctx);
         let pageProps = {};
         let hasError = false;
         let errorEventId;

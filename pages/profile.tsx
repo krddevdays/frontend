@@ -171,7 +171,7 @@ ProfilePage.getInitialProps = async ctx => {
     let tickets = null;
 
     try {
-        [profile, tickets] = await Promise.all([api.getProfile(ctx), api.getTickets(ctx)]);
+        [profile, tickets] = await Promise.all([api.getProfile(), api.getTickets()]);
     } catch (e) {
         if (!(e instanceof Response) || e.status !== 403) {
             throw e;

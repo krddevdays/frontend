@@ -1,8 +1,30 @@
-import fetch from 'cross-fetch';
+import crossFetch from 'cross-fetch';
 import { format as urlFormat } from 'url';
 import * as queryString from 'query-string';
 import getConfig from 'next/config';
-import { NextPageContext } from 'next';
+import { getContext } from './context';
+
+type FetchInit = RequestInit & {
+    headers?: Record<string, string>;
+};
+
+function fetch(input: RequestInfo, init?: FetchInit): ReturnType<typeof crossFetch> {
+    if (typeof init === 'undefined') {
+        init = {};
+    }
+
+    const newHeaders: Record<string, string> = { ...init.headers };
+    const ctx = getContext();
+
+    if (typeof window === 'undefined' && ctx && ctx.req && ctx.req.headers.cookie) {
+        newHeaders.Cookie = ctx.req.headers.cookie;
+    }
+
+    init.headers = newHeaders;
+    init.credentials = 'include';
+
+    return crossFetch(input, init);
+}
 
 function createUrl(context: {
     pathname: string;
@@ -297,16 +319,6 @@ export const eventOrder = async (
     return response.json();
 };
 
-function injectCookies(headers: Record<string, string>, ctx?: NextPageContext): Record<string, string> {
-    const newHeaders = { ...headers };
-
-    if (typeof window === 'undefined' && ctx && ctx.req && ctx.req.headers.cookie) {
-        newHeaders.Cookie = ctx.req.headers.cookie;
-    }
-
-    return newHeaders;
-}
-
 type Profile = {
     username: string;
     email: string;
@@ -316,19 +328,15 @@ type Profile = {
     position: string | null;
 };
 
-export const getProfile = async (ctx?: NextPageContext): Promise<Profile> => {
+export const getProfile = async (): Promise<Profile> => {
     const response = await fetch(
         createUrl({
             pathname: `/users/me/`
         }),
         {
-            credentials: 'include',
-            headers: injectCookies(
-                {
-                    Accept: 'application/json'
-                },
-                ctx
-            )
+            headers: {
+                Accept: 'application/json'
+            }
         }
     );
 
@@ -375,7 +383,6 @@ export const patchProfile = async (profile: PatchProfile): Promise<Profile> => {
         }),
         {
             method: 'PATCH',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
@@ -403,7 +410,6 @@ export const login = async (credentials: { username: string; password: string })
         }),
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -429,8 +435,7 @@ export const logout = async (): Promise<true> => {
             pathname: `/users/logout/`
         }),
         {
-            method: 'POST',
-            credentials: 'include'
+            method: 'POST'
         }
     );
 
@@ -458,7 +463,6 @@ export const registration = async (profile: Registration): Promise<never> => {
         }),
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -489,10 +493,7 @@ type Discussion = {
 
 type DiscussionsResponse = Array<Discussion>;
 
-export const getDiscussions = async (
-    filter?: { event_id?: number },
-    ctx?: NextPageContext
-): Promise<DiscussionsResponse> => {
+export const getDiscussions = async (filter?: { event_id?: number }): Promise<DiscussionsResponse> => {
     const response = await fetch(
         createUrl({
             pathname: `/discussions/`,
@@ -502,14 +503,10 @@ export const getDiscussions = async (
         }),
         {
             method: 'GET',
-            credentials: 'include',
-            headers: injectCookies(
-                {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                ctx
-            )
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
         }
     );
 
@@ -525,20 +522,16 @@ if (typeof window !== 'undefined') {
     window.getDiscussions = getDiscussions;
 }
 
-export const getDiscussion = async (id: number, ctx?: NextPageContext): Promise<Discussion> => {
+export const getDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
             pathname: `/discussions/${id}/`
         }),
         {
             method: 'GET',
-            credentials: 'include',
-            headers: injectCookies(
-                {
-                    Accept: 'application/json'
-                },
-                ctx
-            )
+            headers: {
+                Accept: 'application/json'
+            }
         }
     );
 
@@ -561,7 +554,6 @@ export const voteDiscussion = async (id: number): Promise<Discussion> => {
         }),
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json'
             }
@@ -593,7 +585,6 @@ export const addDiscussion = async (data: PostDiscussion): Promise<Discussion> =
         }),
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
@@ -626,7 +617,6 @@ export const linkTicket = async (data: LinkTicket): Promise<LinkTicket> => {
         }),
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
@@ -654,19 +644,15 @@ type Ticket = {
     passbook_url: string | null;
 };
 
-export const getTickets = async (ctx?: NextPageContext): Promise<Ticket[]> => {
+export const getTickets = async (): Promise<Ticket[]> => {
     const response = await fetch(
         createUrl({
             pathname: `/me/tickets/`
         }),
         {
-            credentials: 'include',
-            headers: injectCookies(
-                {
-                    Accept: 'application/json'
-                },
-                ctx
-            )
+            headers: {
+                Accept: 'application/json'
+            }
         }
     );
 

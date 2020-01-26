@@ -482,7 +482,7 @@ EventPage.getInitialProps = async ctx => {
     const [activities, talks, discussions, tickets] = await Promise.all([
         api.eventActivities(ctx.query.id),
         api.talks({ event_id: ctx.query.id }),
-        api.getDiscussions({ event_id: ctx.query.id }, ctx).catch(() => null),
+        api.getDiscussions({ event_id: ctx.query.id }).catch(() => null),
         api.eventTickets(ctx.query.id).catch(() => null)
     ]);
 

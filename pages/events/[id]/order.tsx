@@ -647,7 +647,7 @@ OrderPage.getInitialProps = async ctx => {
     let profile: Profile | null = null;
 
     try {
-        profile = await api.getProfile(ctx);
+        profile = await api.getProfile();
     } catch (e) {
         // ignore
     }
