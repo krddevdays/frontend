@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
 import { Response } from 'cross-fetch';
+import classNames from 'classnames';
 import * as api from '../api';
 
 import Container from '../components/Container/Container';
@@ -9,8 +10,9 @@ import AuthModal from '../components/AuthModal';
 import ProfileForm from '../components/ProfileForm';
 import LinkTicketForm from '../components/LinkTicketForm';
 
-import './profile.css';
+import styles from './profile.module.css';
 import { FormattedNumber } from 'react-intl';
+import { setContext } from '../context';
 
 type Profile = {
     username: string;
@@ -98,7 +100,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
                     </div>
                 )}
                 {profile && (
-                    <div className="section__content profile-section__content">
+                    <div className={classNames('section__content', styles.profileSection__content)}>
                         <ProfileForm profile={profile} onChange={handleProfileChange} />
                     </div>
                 )}
@@ -106,7 +108,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
             {tickets && (
                 <div className="section">
                     <h2 className="section__title">Билеты</h2>
-                    <div className="section__content profile-section__content">
+                    <div className={classNames('section__content', styles.profileSection__content)}>
                         {tickets.length > 0 && (
                             <table className="table">
                                 <thead>
@@ -167,6 +169,10 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
 };
 
 ProfilePage.getInitialProps = async ctx => {
+    if (typeof window === 'undefined') {
+        setContext(ctx);
+    }
+
     let profile = null;
     let tickets = null;
 

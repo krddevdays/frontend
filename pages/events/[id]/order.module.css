@@ -1,4 +1,4 @@
-.order-title {
+.orderTitle {
     font-weight: bold;
     font-size: 24px;
     line-height: 32px;
@@ -7,15 +7,15 @@
     color: #262626;
 }
 
-.order-container {
+.orderContainer {
     text-align: center;
 }
 
-.order-steps {
+.orderSteps {
     display: inline-flex;
 }
 
-.order-step {
+.orderStep {
     position: relative;
     text-align: center;
     padding: 0 12px;
@@ -24,16 +24,16 @@
     box-sizing: content-box;
 }
 
-.order-step:first-child {
+.orderStep:first-child {
     padding-left: 0;
 }
 
-.order-step:last-child {
+.orderStep:last-child {
     padding-right: 0;
 }
 
-.order-step:before,
-.order-step:after {
+.orderStep:before,
+.orderStep:after {
     position: absolute;
     content: '';
     display: block;
@@ -43,23 +43,23 @@
     background: #e0e0e0;
 }
 
-.order-step:before {
+.orderStep:before {
     left: 0;
 }
 
-.order-step:after {
+.orderStep:after {
     left: 50%;
 }
 
-.order-step:first-child:before {
+.orderStep:first-child:before {
     display: none;
 }
 
-.order-step:last-child:after {
+.orderStep:last-child:after {
     display: none;
 }
 
-.order-step__number {
+.orderStep__number {
     position: relative;
     z-index: 1;
     display: inline-flex;
@@ -80,52 +80,52 @@
     margin: 0 0 8px;
 }
 
-.order-step__name {
+.orderStep__name {
     font-weight: normal;
     font-size: 12px;
     line-height: 16px;
     color: #a0a0a0;
 }
 
-.order-step_status_active .order-step__number {
+.orderStep_status_active .orderStep__number {
     color: white;
     background: #0000cc;
 }
 
-.order-step_status_active .order-step__name {
+.orderStep_status_active .orderStep__name {
     color: #0000cc;
 }
 
-.order-step_status_finished .order-step__number {
+.orderStep_status_finished .orderStep__number {
     color: white;
     background: #7cb342;
 }
 
-.order-step_status_finished .order-step__name {
+.orderStep_status_finished .orderStep__name {
     color: #7cb342;
 }
 
-.order-step_status_finished + .order-step:before {
+.orderStep_status_finished + .orderStep:before {
     background: #7cb342;
 }
 
-.order-step_status_finished.order-step:after {
+.orderStep_status_finished.orderStep:after {
     background: #7cb342;
 }
 
-.order-step-form {
+.orderStepForm {
     width: 100%;
     text-align: left;
     margin: 40px auto 0;
 }
 
 @media (min-width: 384px) {
-    .order-step-form {
+    .orderStepForm {
         width: 384px;
     }
 }
 
-.order-step-form .order-step-form__title {
+.orderStepForm .orderStepForm__title {
     display: block;
 
     font-style: normal;
@@ -138,12 +138,12 @@
     margin-bottom: 24px;
 }
 
-.order-step-form__buttons {
+.orderStepForm__buttons {
     margin-top: 24px;
     text-align: center;
 }
 
-.order-step-form .order-step-form__information {
+.orderStepForm .orderStepForm__information {
     font-size: 12px;
     line-height: 16px;
 

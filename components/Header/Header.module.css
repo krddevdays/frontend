@@ -1,4 +1,4 @@
-.header-background {
+.headerBackground {
     margin: 40px 0 0;
 }
 
@@ -9,13 +9,13 @@
     align-items: center;
 }
 
-.header__logo {
+.headerLogo {
     grid-column: 2;
     text-decoration: none;
     text-align: center;
 }
 
-.header__nav-toggler {
+.header__navToggler {
     grid-column: 3;
     text-align: right;
 }
@@ -25,7 +25,7 @@
     grid-row: 1;
 }
 
-.header-profile {
+.headerProfile {
     border: none;
     padding: 0;
     margin: 0;
@@ -36,12 +36,12 @@
     line-height: 16px;
 }
 
-.header-profile:hover {
+.headerProfile:hover {
     text-decoration: underline;
     color: #0000cc;
 }
 
-.header-profile__icon {
+.headerProfile__icon {
     display: inline-block;
     background: url('/static/profile.svg');
     width: 24px;
@@ -49,12 +49,12 @@
     vertical-align: middle;
 }
 
-.header-profile__text {
+.headerProfile__text {
     margin-left: 8px;
     display: none;
 }
 
-.header-toggler {
+.headerToggler {
     display: inline-flex;
     padding: 0;
     background: none;
@@ -66,11 +66,11 @@
     align-items: center;
 }
 
-.header-toggler:hover {
+.headerToggler:hover {
     cursor: pointer;
 }
 
-.header-toggler__icon {
+.headerToggler__icon {
     width: 18px;
     height: 12px;
 }
@@ -85,7 +85,7 @@
     display: block;
 }
 
-.header-menu {
+.headerMenu {
     list-style: none;
     margin: 48px 0;
     padding: 0;
@@ -93,18 +93,18 @@
     display: block;
 }
 
-.header-menu__item {
+.headerMenu__item {
     display: block;
     text-align: center;
 
     margin-bottom: 24px;
 }
 
-.header-menu__item:last-child {
+.headerMenu__item:last-child {
     margin-bottom: 0;
 }
 
-.header-menu__link {
+.headerMenu__link {
     text-decoration: none;
     color: #262626;
     font-weight: 500;
@@ -112,13 +112,13 @@
     line-height: 24px;
 }
 
-.header-menu__link:hover {
+.headerMenu__link:hover {
     text-decoration: underline;
     color: #0000cc;
 }
 
 @media (min-width: 768px) {
-    .header__nav-toggler {
+    .header__navToggler {
         display: none;
     }
 
@@ -134,26 +134,26 @@
         text-align: right;
     }
 
-    .header-profile__text {
+    .headerProfile__text {
         display: inline;
     }
 
-    .header-menu {
+    .headerMenu {
         margin: 0;
     }
 
-    .header-menu__link {
+    .headerMenu__link {
         font-size: 12px;
         line-height: 16px;
     }
 
-    .header-menu__item {
+    .headerMenu__item {
         display: inline-block;
         margin-bottom: 0;
         margin-right: 24px;
     }
 
-    .header-menu__item:last-child {
+    .headerMenu__item:last-child {
         margin-right: 0;
     }
 }

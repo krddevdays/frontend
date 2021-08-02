@@ -1,4 +1,4 @@
-.discussion-form {
+.discussionForm {
     display: flex;
     flex-direction: column;
     background: #ffffff;
@@ -7,7 +7,7 @@
     position: relative;
 }
 
-.discussion-form__body {
+.discussionForm__body {
     margin: 24px 0 0;
     padding: 0 24px;
     flex: 100% 1 1;
@@ -15,12 +15,12 @@
     flex-direction: column;
 }
 
-.discussion-form__footer {
+.discussionForm__footer {
     margin: 16px 0;
     padding: 0 24px;
 }
 
-.discussion-form__title {
+.discussionForm__title {
     width: 100%;
     font-weight: 500;
     font-size: 16px;
@@ -44,11 +44,11 @@
     resize: none;
 }
 
-.discussion-form__title:focus {
+.discussionForm__title:focus {
     outline: none;
 }
 
-.discussion-form__description {
+.discussionForm__description {
     display: block;
     width: 100%;
     flex: 112px 1 1;
@@ -68,6 +68,6 @@
     resize: none;
 }
 
-.discussion-form__description:focus {
+.discussionForm__description:focus {
     outline: none;
 }

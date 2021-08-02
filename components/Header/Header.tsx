@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import Logo from '../Logo/Logo';
 import Container from '../Container/Container';
-import './Header.css';
+import styles from './Header.module.css';
 
 function Header() {
     const [menuOpened, setMenuOpened] = React.useState(false);
@@ -29,35 +29,31 @@ function Header() {
     }, [handleRouteChangeComplete]);
 
     return (
-        <header className="header-background">
-            <Container className="header">
+        <header className={styles.headerBackground}>
+            <Container className={styles.header}>
                 <nav
                     role="navigation"
-                    className={classNames('header__nav', {
-                        header__nav_opened: menuOpened
+                    className={classNames(styles.header__nav, {
+                        [styles.header__nav_opened]: menuOpened
                     })}
                 >
-                    <ul className="header-menu">
-                        <li className="header-menu__item">
+                    <ul className={styles.headerMenu}>
+                        <li className={styles.headerMenu__item}>
                             <Link href="/events">
-                                <a className="header-menu__link">Мероприятия</a>
+                                <a className={styles.headerMenu__link}>Мероприятия</a>
                             </Link>
                         </li>
                     </ul>
                 </nav>
                 <Link href="/">
-                    <a className="header__logo" aria-label="Главная">
+                    <a className={styles.headerLogo} aria-label="Главная">
                         <Logo />
                     </a>
                 </Link>
-                <div
-                    className={classNames('header__nav-toggler', {
-                        'header__nav-toggler_opened': menuOpened
-                    })}
-                >
-                    <button className="header-toggler" type="button" onClick={handleToggleClick}>
+                <div className={styles.header__navToggler}>
+                    <button className={styles.headerToggler} type="button" onClick={handleToggleClick}>
                         <svg
-                            className="header-toggler__icon"
+                            className={styles.headerToggler__icon}
                             width="18"
                             height="12"
                             viewBox="0 0 18 12"
@@ -68,11 +64,11 @@ function Header() {
                         </svg>
                     </button>
                 </div>
-                <div className="header__profile">
+                <div className={styles.header__profile}>
                     <Link href="/profile">
-                        <a className="header-profile">
-                            <span className="header-profile__icon" />
-                            <span className="header-profile__text">Профиль</span>
+                        <a className={styles.headerProfile}>
+                            <span className={styles.headerProfile__icon} />
+                            <span className={styles.headerProfile__text}>Профиль</span>
                         </a>
                     </Link>
                 </div>

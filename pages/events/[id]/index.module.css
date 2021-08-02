@@ -1,4 +1,4 @@
-.event-talks__list {
+.eventTalks__list {
     grid-area: list;
     display: grid;
     grid-template-columns: minmax(min-content, 384px);
@@ -11,24 +11,24 @@
 }
 
 @media (min-width: 640px) {
-    .event-talks__list {
+    .eventTalks__list {
         grid-template-columns: repeat(2, minmax(min-content, 384px));
     }
 }
 
 @media (min-width: 968px) {
-    .event-talks__list {
+    .eventTalks__list {
         justify-content: initial;
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-.event-price-button {
+.eventPriceButton {
     text-align: center;
     margin: 48px;
 }
 
-.event-price-button__description {
+.eventPriceButton__description {
     font-size: 12px;
     line-height: 16px;
     color: #a0a0a0;
@@ -37,27 +37,27 @@
     padding: 0;
 }
 
-.event-price-items {
+.eventPriceItems {
     margin: 48px 0;
     display: flex;
     justify-content: space-around;
     justify-content: space-evenly;
 }
 
-.event-price-item__title {
+.eventPriceItem__title {
     font-size: 16px;
     line-height: 24px;
     color: #262626;
     font-weight: bold;
 }
 
-.event-price-item__value {
+.eventPriceItem__value {
     font-size: 16px;
     line-height: 24px;
     color: #262626;
 }
 
-.event-price-description {
+.eventPriceDescription {
     font-size: 14px;
     line-height: 20px;
     color: #262626;
@@ -65,19 +65,17 @@
     padding: 0;
 }
 
-.event-price-description p,
-.event-price-description ol,
-.event-price-description ul {
+.eventPriceDescription p,
+.eventPriceDescription ol,
+.eventPriceDescription ul {
     margin: 16px 0;
 }
 
-.event-schedule-date {
+.eventScheduleDate {
     display: inline-block;
     background: none;
     border: none;
     margin: 0 0 0 16px;
-    padding: 0;
-
     font-size: 14px;
     line-height: 20px;
 
@@ -88,12 +86,12 @@
     padding: 6px 12px;
 }
 
-.event-schedule-date_active {
+.eventScheduleDate_active {
     color: #0000cc;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.06), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
-.event-schedule-table__wrapper {
+.eventScheduleTable__wrapper {
     justify-self: start;
 
     overflow: hidden;
@@ -104,17 +102,17 @@
     box-sizing: border-box;
 }
 
-.event-schedule-table__wrapper:after {
+.eventScheduleTable__wrapper:after {
     display: inline-block;
     content: '';
     width: 8px;
 }
 
-.event-schedule-table {
+.eventScheduleTable {
     display: inline-table;
 }
 
-.event-title {
+.eventTitle {
     font-weight: bold;
     font-size: 24px;
     line-height: 32px;
@@ -123,7 +121,7 @@
     color: #262626;
 }
 
-.event-image {
+.eventImage {
     display: block;
     border-radius: 4px;
     height: 144px;
@@ -133,7 +131,7 @@
     background-position: center center;
 }
 
-.event-description {
+.eventDescription {
     margin: 16px 0;
     padding: 0;
     font-size: 14px;
@@ -142,7 +140,7 @@
     color: #262626;
 }
 
-.event-information {
+.eventInformation {
     background: #ffffff;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06), 0 2px 2px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
@@ -155,16 +153,16 @@
 }
 
 @media (min-width: 768px) {
-    .event-information {
+    .eventInformation {
         grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     }
 }
 
-.event-information__item {
+.eventInformation__item {
     display: block;
 }
 
-.event-information-item__name {
+.eventInformationItem__name {
     display: block;
     margin: 0 0 16px 0;
     padding: 0;
@@ -175,7 +173,7 @@
     color: #767676;
 }
 
-.event-information-item__content {
+.eventInformationItem__content {
     display: block;
     margin: 0;
     padding: 0;
@@ -186,7 +184,7 @@
     color: #262626;
 }
 
-.event-information-item__action {
+.eventInformationItem__action {
     display: inline-block;
     margin: 8px 0 0 0;
     padding: 0;
@@ -200,12 +198,12 @@
     text-decoration: none;
 }
 
-.event-information-item__action:hover {
+.eventInformationItem__action:hover {
     text-decoration: underline;
 }
 
 @media (min-width: 768px) {
-    .event-image {
+    .eventImage {
         height: 300px;
     }
 }

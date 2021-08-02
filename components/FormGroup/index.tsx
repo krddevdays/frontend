@@ -1,6 +1,6 @@
 import * as React from 'react';
-import './index.css';
+import styles from './index.module.css';
 
 export default function FormGroup(props: { children: React.ReactNode }) {
-    return <div className="form-group">{props.children}</div>;
+    return <div className={styles.formGroup}>{props.children}</div>;
 }

@@ -13,7 +13,6 @@
         "sourceMap": true,
         "strict": true,
         "target": "esnext",
-        "typeRoots": ["typings", "./node_modules/@types"],
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,

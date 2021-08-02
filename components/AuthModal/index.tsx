@@ -8,7 +8,7 @@ import FormGroup from '../FormGroup';
 
 import * as api from '../../api';
 
-import './index.css';
+import styles from './index.module.css';
 
 const schema = yup.object().shape({
     username: yup.string().required('Введите логин'),
@@ -286,7 +286,7 @@ function AuthModal(props: AuthModalProps) {
             onRequestClose={handleRequestClose}
             isOpen={isOpen}
             title={title}
-            className="auth-modal"
+            className={styles.authModal}
         >
             {page === 'login' && (
                 <LoginForm

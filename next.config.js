@@ -1,39 +1,20 @@
-const withCSS = require('@zeit/next-css');
-const nextSourceMaps = require('@zeit/next-source-maps');
-const webpack = require('webpack');
+const { withSentryConfig } = require('@sentry/nextjs');
 
-let config = {
+const moduleExports = {
     publicRuntimeConfig: {
-        sentryDSN: process.env.SENTRY_DSN,
         backendDomain: process.env.BACKEND_DOMAIN || 'localhost:8000',
         backendProtocol: process.env.BACKEND_PROTOCOL || 'http:'
-    },
-    webpack: (config, { isServer, buildId }) => {
-        config.plugins.push(
-            new webpack.DefinePlugin({
-                'process.env.SENTRY_RELEASE': JSON.stringify(buildId)
-            })
-        );
-
-        if (isServer) {
-            config.resolve.alias['@sentry/browser'] = '@sentry/node';
-        } else {
-            config.resolve.alias['@sentry/node'] = '@sentry/browser';
-        }
-
-        config.module.rules.push({
-            test: /\.mjs$/,
-            type: 'javascript/auto'
-        });
-
-        const jsIndex = config.resolve.extensions.findIndex(extension => extension === '.js');
-        config.resolve.extensions.splice(jsIndex, 0, '.mjs');
-
-        return config;
     }
 };
 
-config = withCSS(config);
-config = nextSourceMaps(config);
+const SentryWebpackPluginOptions = {
+    // Additional config options for the Sentry Webpack plugin. Keep in mind that
+    // the following options are set automatically, and overriding them is not
+    // recommended:
+    //   release, url, org, project, authToken, configFile, stripPrefix,
+    //   urlPrefix, include, ignore
 
-module.exports = config;
+    silent: true // Suppresses all logs
+};
+
+module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);

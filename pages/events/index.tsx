@@ -6,6 +6,7 @@ import Head from 'next/head';
 
 import Container from '../../components/Container/Container';
 import EventsList from '../../components/EventsList';
+import { setContext } from '../../context';
 
 type EventsPageProps = {
     events: Event[];
@@ -25,7 +26,11 @@ const EventsPage: NextComponentType<NextPageContext, EventsPageProps, EventsPage
     );
 };
 
-EventsPage.getInitialProps = async () => {
+EventsPage.getInitialProps = async ctx => {
+    if (typeof window === 'undefined') {
+        setContext(ctx);
+    }
+
     const events = await api.events();
 
     return {

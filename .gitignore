@@ -1,6 +1,6 @@
-.next
+/.next
 /node_modules
-npm-debug.log
+/npm-debug.log
 /.idea
-dist
 .DS_Store
+/sentry.properties

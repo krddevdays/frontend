@@ -6,7 +6,7 @@ import * as api from '../../api';
 
 import { useAuth } from '../AuthProvider';
 
-import '../DiscussionForm/DiscussionForm.css';
+import '../DiscussionForm/DiscussionForm.module.css';
 
 type DiscussionCardProps = {
     id: number;

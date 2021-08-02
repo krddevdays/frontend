@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactModal from 'react-modal';
 import classNames from 'classnames';
 
-import './index.css';
+import styles from './index.module.css';
 
 type ModalProps = {
     className?: string;
@@ -28,25 +28,25 @@ const Modal = (props: ModalProps) => {
             onRequestClose={props.onRequestClose}
             onAfterClose={props.onAfterClose}
             className={{
-                base: classNames('modal__body', props.className),
-                afterOpen: 'modal__body_after-open',
-                beforeClose: 'modal__body_before-close'
+                base: classNames(styles.modal__body, props.className),
+                afterOpen: styles.modal__body_afterOpen,
+                beforeClose: styles.modal__body_beforeClose
             }}
             overlayClassName={{
-                base: 'modal__overlay',
-                afterOpen: 'modal__overlay_after-open',
-                beforeClose: 'modal__overlay_before-close'
+                base: styles.modal__overlay,
+                afterOpen: styles.modal__overlay_afterOpen,
+                beforeClose: styles.modal__overlay_beforeClose
             }}
             closeTimeoutMS={200}
-            portalClassName="modal"
+            portalClassName={styles.modal}
             bodyOpenClassName=""
             htmlOpenClassName=""
         >
-            <button className="modal__close-button" type="button" onClick={handleClickClose}>
+            <button className={styles.modal__closeButton} type="button" onClick={handleClickClose}>
                 <img src="/static/close.svg" alt="" />
             </button>
-            <div className="modal__title">{props.title}</div>
-            <div className="modal__content">{props.children}</div>
+            <div className={styles.modal__title}>{props.title}</div>
+            <div className={styles.modal__content}>{props.children}</div>
         </ReactModal>
     );
 };

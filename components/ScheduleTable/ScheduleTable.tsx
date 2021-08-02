@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 
 import { TalkCardProps } from '../TalkCard/TalkCard';
-import './ScheduleTable.css';
+import styles from './ScheduleTable.module.css';
 import Author from '../Author/Author';
 
 type BaseActivityProps = {
@@ -24,7 +24,7 @@ export type DiscussionActivityProps = BaseActivityProps & {
 };
 
 export type ActivityProps =
-    | BaseActivityProps & { type: 'WELCOME' | 'COFFEE' | 'LUNCH'; thing: { title: string } }
+    | (BaseActivityProps & { type: 'WELCOME' | 'COFFEE' | 'LUNCH'; thing: { title: string } })
     | TalkActivityProps
     | DiscussionActivityProps;
 
@@ -54,13 +54,13 @@ function ScheduleTable(props: ScheduleTableProps) {
     );
 
     return (
-        <table className={classNames('schedule-table', props.className)}>
+        <table className={classNames(styles.scheduleTable, props.className)}>
             {zones.length > 1 && (
                 <thead>
                     <tr>
                         <td />
                         {zones.map((zone, index) => (
-                            <th className="schedule-table__zone" key={index}>
+                            <th className={styles.scheduleTable__zone} key={index}>
                                 {zone}
                             </th>
                         ))}
@@ -75,17 +75,17 @@ function ScheduleTable(props: ScheduleTableProps) {
 
                     return (
                         <React.Fragment key={timeIndex}>
-                            <tr className="schedule-table__row">
-                                <td className="schedule-table__time" rowSpan={hasActivities ? 2 : 1}>
+                            <tr className={styles.scheduleTable__row}>
+                                <td className={styles.scheduleTable__time} rowSpan={hasActivities ? 2 : 1}>
                                     {time}
                                 </td>
                             </tr>
                             {hasActivities && (
-                                <tr className="schedule-table__row">
+                                <tr className={styles.scheduleTable__row}>
                                     {zones.map((zone, index) => (
-                                        <td className="schedule-table__activity-cell" key={index}>
+                                        <td className={styles.scheduleTable__activityCell} key={index}>
                                             {props.activitiesByZoneAndTime[zone][time] && (
-                                                <div className="schedule-table__activity-cell-content">
+                                                <div className={styles.scheduleTable__activityCellContent}>
                                                     {props.activitiesByZoneAndTime[zone][time].map(
                                                         (activity, index) => (
                                                             <Activity {...activity} key={index} />
@@ -117,15 +117,15 @@ function Activity(props: ActivityProps) {
     }
 
     return (
-        <div className="schedule-activity">
-            <div className="schedule-activity__title">{title}</div>
+        <div className={styles.scheduleActivity}>
+            <div className={styles.scheduleActivity__title}>{title}</div>
             {props.type === 'TALK' && props.thing && (
-                <div className="schedule-activity__author">
+                <div className={styles.scheduleActivity__author}>
                     <Author {...props.thing.speaker} small />
                 </div>
             )}
             {props.type === 'DISCUSSION' && props.thing && (
-                <div className="schedule-activity__author">Круглый стол</div>
+                <div className={styles.scheduleActivity__author}>Круглый стол</div>
             )}
         </div>
     );

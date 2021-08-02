@@ -32,6 +32,11 @@ jobs:
         with:
           push: true
           tags: cr.yandex/crptsm0vtuj4fltqor20/frontend:${{ steps.version.outputs.name }}
+          build-args: |
+            SENTRY_URL=${{ secrets.SENTRY_URL }}
+            SENTRY_ORG=${{ secrets.SENTRY_ORG }}
+            SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as api from '../../../api';
-import Head from 'next-server/head';
+import Head from 'next/head';
 import { NextPageContext, NextComponentType } from 'next';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as yup from 'yup';
@@ -29,9 +29,10 @@ yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
 import { Event, EventTickets } from './index';
 
 import Container from '../../../components/Container/Container';
-import './order.css';
+import styles from './order.module.css';
 import FormGroup from '../../../components/FormGroup';
 import { FormattedDate, FormattedNumber } from 'react-intl';
+import { setContext } from '../../../context';
 
 type Profile = { first_name: string; last_name: string; email: string };
 
@@ -55,38 +56,38 @@ type OrderPageTemplateProps = {
 
 const OrderPageTemplate: React.FC<OrderPageTemplateProps> = ({ step, children }) => {
     return (
-        <Container className="order-container">
+        <Container className={styles.orderContainer}>
             <Head>
                 <title>Регистрация</title>
             </Head>
-            <h1 className="order-title">Регистрация</h1>
-            <div className="order-steps">
+            <h1 className={styles.orderTitle}>Регистрация</h1>
+            <div className={styles.orderSteps}>
                 <div
-                    className={classNames('order-steps__item order-step', {
-                        ['order-step_status_active']: step === 0,
-                        ['order-step_status_finished']: step > 0
+                    className={classNames(styles.orderSteps__item, styles.orderStep, {
+                        [styles.orderStep_status_active]: step === 0,
+                        [styles.orderStep_status_finished]: step > 0
                     })}
                 >
-                    <div className="order-step__number">1</div>
-                    <div className="order-step__name">Данные покупателя</div>
+                    <div className={styles.orderStep__number}>1</div>
+                    <div className={styles.orderStep__name}>Данные покупателя</div>
                 </div>
                 <div
-                    className={classNames('order-steps__item order-step', {
-                        ['order-step_status_active']: step === 1,
-                        ['order-step_status_finished']: step > 1
+                    className={classNames(styles.orderSteps__item, styles.orderStep, {
+                        [styles.orderStep_status_active]: step === 1,
+                        [styles.orderStep_status_finished]: step > 1
                     })}
                 >
-                    <div className="order-step__number">2</div>
-                    <div className="order-step__name">Данные участников</div>
+                    <div className={styles.orderStep__number}>2</div>
+                    <div className={styles.orderStep__name}>Данные участников</div>
                 </div>
                 <div
-                    className={classNames('order-steps__item order-step', {
-                        ['order-step_status_active']: step === 2,
-                        ['order-step_status_finished']: step > 2
+                    className={classNames(styles.orderSteps__item, styles.orderStep, {
+                        [styles.orderStep_status_active]: step === 2,
+                        [styles.orderStep_status_finished]: step > 2
                     })}
                 >
-                    <div className="order-step__number">3</div>
-                    <div className="order-step__name">Оплата</div>
+                    <div className={styles.orderStep__number}>3</div>
+                    <div className={styles.orderStep__name}>Оплата</div>
                 </div>
             </div>
             {children}
@@ -164,11 +165,11 @@ const OrderPage: NextComponentType<
 
     return (
         <OrderPageTemplate step={3}>
-            <div className="order-step-form">
-                <p className="order-step-form__information">Ваш заказ №{order.id} успешно оформлен.</p>
+            <div className={styles.orderStepForm}>
+                <p className={styles.orderStepForm__information}>Ваш заказ №{order.id} успешно оформлен.</p>
                 {order.payment_url && (
                     <React.Fragment>
-                        <p className="order-step-form__information">
+                        <p className={styles.orderStepForm__information}>
                             Бронь действительна до{' '}
                             <FormattedDate
                                 value={order.reserved_to}
@@ -178,7 +179,7 @@ const OrderPage: NextComponentType<
                                 minute="numeric"
                             />
                         </p>
-                        <div className="order-step-form__buttons">
+                        <div className={styles.orderStepForm__buttons}>
                             <a href={order.payment_url} className="button button_theme_blue">
                                 Оплатить{' '}
                                 <FormattedNumber
@@ -247,7 +248,7 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
             }}
         >
             {({ isSubmitting, status }) => (
-                <Form className="order-step-form">
+                <Form className={styles.orderStepForm}>
                     <FormGroup>
                         <label htmlFor="first_name">Имя</label>
                         <Field type="text" name="first_name" id="first_name" className="form-control" />
@@ -272,7 +273,7 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
                         <ErrorMessage name="phone" component="div" className="invalid-feedback" />
                     </FormGroup>
 
-                    <div className="order-step-form__buttons">
+                    <div className={styles.orderStepForm__buttons}>
                         <button type="submit" className="button" disabled={isSubmitting}>
                             {isSubmitting ? 'Проверка данных' : 'Продолжить'}
                         </button>
@@ -343,13 +344,13 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
             }}
         >
             {({ values, isSubmitting, status }) => (
-                <Form className="order-step-form">
+                <Form className={styles.orderStepForm}>
                     <FieldArray
                         name="tickets"
                         render={arrayHelpers =>
                             values.tickets.map((_, index) => (
                                 <div key={index}>
-                                    <p className="order-step-form__title">
+                                    <p className={styles.orderStepForm__title}>
                                         Участник №{index + 1}{' '}
                                         {index > 0 && (
                                             <button
@@ -443,7 +444,7 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                             ))
                         }
                     />
-                    <div className="order-step-form__buttons">
+                    <div className={styles.orderStepForm__buttons}>
                         <button
                             type="button"
                             className="button"
@@ -563,7 +564,7 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                     payment = props.payments.find(payment => payment.id.toString() === values.payment_id) as Payment;
                 }
                 return (
-                    <Form className="order-step-form">
+                    <Form className={styles.orderStepForm}>
                         <FormGroup>
                             <Field
                                 component="select"
@@ -600,7 +601,7 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                                 </FormGroup>
                             </React.Fragment>
                         )}
-                        <div className="order-step-form__buttons">
+                        <div className={styles.orderStepForm__buttons}>
                             <button type="button" className="button" onClick={props.onClickPrev}>
                                 Назад
                             </button>{' '}
@@ -614,7 +615,7 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                             </FormGroup>
                         )}
                         {payment && (
-                            <p className="order-step-form__information">
+                            <p className={styles.orderStepForm__information}>
                                 Нажимая на кнопку "Купить" вы подтверждаете, что изучили и согласны с{' '}
                                 <a href={payment.agree_url} target="_blank">
                                     правовыми документами
@@ -630,6 +631,10 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
 };
 
 OrderPage.getInitialProps = async ctx => {
+    if (typeof window === 'undefined') {
+        setContext(ctx);
+    }
+
     let event = null;
     let tickets = null;
 

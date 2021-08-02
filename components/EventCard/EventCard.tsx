@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { FormattedDate } from 'react-intl';
 
-import './EventCard.css';
+import styles from './EventCard.module.css';
 
 function EventDate(props: { startAt: Date; finishAt: Date }) {
     const currentDate = new Date();
@@ -46,13 +46,13 @@ export default function EventCard(props: Event) {
 
     return (
         <article
-            className={classNames('event-card', {
-                'event-card_disabled': startAt.getTime() < Date.now()
+            className={classNames(styles.eventCard, {
+                [styles.eventCard_disabled]: startAt.getTime() < Date.now()
             })}
             itemScope
             itemType="http://schema.org/Event"
         >
-            <div className="event-card__date">
+            <div className={styles.eventCard__date}>
                 <meta itemProp="startDate" content={startAt.toISOString()} />
                 <meta itemProp="endDate" content={finishAt.toISOString()} />
                 <EventDate startAt={startAt} finishAt={finishAt} />
@@ -65,17 +65,17 @@ export default function EventCard(props: Event) {
                     <meta itemProp="longitude" content={props.venue.longitude.toString()} />
                 </div>
             </div>
-            <h1 className="event-card__title" itemProp="name">
+            <h1 className={styles.eventCard__title} itemProp="name">
                 {props.name}
             </h1>
-            <p className="event-card__description" itemProp="description">
+            <p className={styles.eventCard__description} itemProp="description">
                 {props.short_description}
             </p>
-            <div className="event-card__footer">
+            <div className={styles.eventCard__footer}>
                 <Link href="/events/[id]" as={`/events/${props.id}`}>
-                    <a className="event-card__link" itemProp="url">
+                    <a className={styles.eventCard__link} itemProp="url">
                         Подробнее
-                        <span className="event-card__link-icon">
+                        <span className={styles.eventCard__linkIcon}>
                             <svg
                                 width="5"
                                 height="10"

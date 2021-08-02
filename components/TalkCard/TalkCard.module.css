@@ -1,4 +1,4 @@
-.talk-card {
+.talkCard {
     display: flex;
     flex-direction: column;
     background: #ffffff;
@@ -7,18 +7,18 @@
     position: relative;
 }
 
-.talk-card__body {
+.talkCard__body {
     margin: 24px 0 0;
     padding: 0 24px;
     flex: 100% 1 1;
 }
 
-.talk-card__footer {
+.talkCard__footer {
     margin: 48px 0 24px;
     padding: 0 24px;
 }
 
-.talk-card__title {
+.talkCard__title {
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
@@ -30,7 +30,7 @@
     margin: 0;
 }
 
-.talk-card__description {
+.talkCard__description {
     display: none;
 
     position: absolute;
@@ -51,25 +51,25 @@
     padding: 8px 24px;
 }
 
-.talk-card__description p {
+.talkCard__description p {
     margin: 16px 0;
 }
 
-.talk-card:hover .talk-card__description {
+.talkCard:hover .talkCard__description {
     display: block;
 }
 
-.talk-card__image {
+.talkCard__image {
     display: none;
     width: 100%;
     border-radius: 4px;
 }
 
-.talk-card_modern .talk-card__image {
+.talkCard_modern .talkCard__image {
     display: block;
 }
 
-.talk-card_modern .talk-card__body {
+.talkCard_modern .talkCard__body {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -84,15 +84,15 @@
     overflow-x: hidden;
 }
 
-.talk-card_modern .talk-card__footer {
+.talkCard_modern .talkCard__footer {
     display: none;
 }
 
-.talk-card_modern .talk-card__description {
+.talkCard_modern .talkCard__description {
     position: relative;
     padding: 0;
 }
 
-.talk-card_modern:hover .talk-card__body {
+.talkCard_modern:hover .talkCard__body {
     display: block;
 }

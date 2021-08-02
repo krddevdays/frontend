@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import './Container.css';
+import styles from './Container.module.css';
 
 type ContainerProps = {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ type ContainerProps = {
 export default function Container(props: ContainerProps) {
     const { className, ...restProps } = props;
     return (
-        <div className={classNames('container', className)} {...restProps}>
+        <div className={classNames(styles.container, className)} {...restProps}>
             {props.children}
         </div>
     );

@@ -18,12 +18,18 @@
     transition: opacity 200ms ease-in-out;
 }
 
-.modal__overlay.modal__overlay_after-open {
+.modal__overlay.modal__overlay_afterOpen {
     opacity: 1;
 }
 
-.modal__overlay.modal__overlay_before-close {
+.modal__overlay.modal__overlay_beforeClose {
     opacity: 0;
+}
+
+.modal__body_afterOpen {
+}
+
+.modal__body_beforeClose {
 }
 
 .modal__body {
@@ -46,7 +52,7 @@
     margin: 24px;
 }
 
-.modal__close-button {
+.modal__closeButton {
     float: right;
     padding: 0;
     margin: 24px 16px 24px;
@@ -54,7 +60,7 @@
     background: none;
 }
 
-.modal__close-button > img {
+.modal__closeButton > img {
     width: 24px;
     height: 24px;
     vertical-align: top;

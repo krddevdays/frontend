@@ -14,8 +14,9 @@ import DiscussionCard from '../../../components/DiscussionCard/DiscussionCard';
 import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
 import List from '../../../components/List';
-import './index.css';
+import styles from './index.module.css';
 import ym from 'react-yandex-metrika';
+import { setContext } from '../../../context';
 
 type TalksProps = {
     talks: TalkCardProps[];
@@ -30,7 +31,7 @@ function Talks(props: TalksProps) {
         <section className="section">
             <h2 className="section__title">Доклады</h2>
             <div className="section__content">
-                <div className="event-talks__list">
+                <div className={styles.eventTalks__list}>
                     {props.talks.map((talk, index) => (
                         <TalkCard key={index} {...talk} />
                     ))}
@@ -99,36 +100,33 @@ function Schedule(props: ScheduleProps) {
 
     const activityByDateTimeAndZone = React.useMemo(
         () =>
-            props.activities.reduce(
-                (result, activity) => {
-                    const date = intl.formatDate(activity.start_date, {
-                        day: '2-digit',
-                        month: '2-digit'
-                    });
+            props.activities.reduce((result, activity) => {
+                const date = intl.formatDate(activity.start_date, {
+                    day: '2-digit',
+                    month: '2-digit'
+                });
 
-                    if (!result[date]) {
-                        result[date] = {};
-                    }
+                if (!result[date]) {
+                    result[date] = {};
+                }
 
-                    const time = intl.formatDate(activity.start_date, {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+                const time = intl.formatDate(activity.start_date, {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
 
-                    if (!result[date][activity.zone]) {
-                        result[date][activity.zone] = {};
-                    }
+                if (!result[date][activity.zone]) {
+                    result[date][activity.zone] = {};
+                }
 
-                    if (!result[date][activity.zone][time]) {
-                        result[date][activity.zone][time] = [];
-                    }
+                if (!result[date][activity.zone][time]) {
+                    result[date][activity.zone][time] = [];
+                }
 
-                    result[date][activity.zone][time].push(activity);
+                result[date][activity.zone][time].push(activity);
 
-                    return result;
-                },
-                {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }
-            ),
+                return result;
+            }, {} as { [key: string]: { [key: string]: { [key: string]: ActivityProps[] } } }),
         [props.activities, intl]
     );
 
@@ -148,8 +146,8 @@ function Schedule(props: ScheduleProps) {
                         <button
                             key={index}
                             type="button"
-                            className={classNames('event-schedule-date', {
-                                'event-schedule-date_active': currentDate === date
+                            className={classNames(styles.eventScheduleDate, {
+                                [styles.eventScheduleDate_active]: currentDate === date
                             })}
                             onClick={event => {
                                 event.preventDefault();
@@ -160,9 +158,9 @@ function Schedule(props: ScheduleProps) {
                         </button>
                     ))}
             </div>
-            <div className="section__content event-schedule-table__wrapper">
+            <div className={classNames('section__content', styles.eventScheduleTable__wrapper)}>
                 <ScheduleTable
-                    className="event-schedule-table"
+                    className={styles.eventScheduleTable}
                     activitiesByZoneAndTime={activityByDateTimeAndZone[currentDate]}
                 />
             </div>
@@ -265,11 +263,11 @@ function EventInformation(props: EventInformationProps) {
     }, null);
 
     return (
-        <ul className="event-information">
+        <ul className={styles.eventInformation}>
             {price !== null && (
-                <li className="event-information__item event-information-item">
-                    <div className="event-information-item__name">Стоимость участия</div>
-                    <div className="event-information-item__content">
+                <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
+                    <div className={styles.eventInformationItem__name}>Стоимость участия</div>
+                    <div className={styles.eventInformationItem__content}>
                         {price.min !== price.max ? (
                             <React.Fragment>
                                 от{' '}
@@ -298,15 +296,15 @@ function EventInformation(props: EventInformationProps) {
                             />
                         )}
                     </div>
-                    <a className="event-information-item__action" href="#event_price">
+                    <a className={styles.eventInformationItem__action} href="#event_price">
                         Подробнее
                     </a>
                 </li>
             )}
-            <li className="event-information__item event-information-item">
-                <div className="event-information-item__name">Место проведения</div>
+            <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
+                <div className={styles.eventInformationItem__name}>Место проведения</div>
                 <div
-                    className="event-information-item__content"
+                    className={styles.eventInformationItem__content}
                     itemProp="location"
                     itemScope
                     itemType="http://schema.org/Place"
@@ -320,7 +318,7 @@ function EventInformation(props: EventInformationProps) {
                     </div>
                 </div>
                 <a
-                    className="event-information-item__action"
+                    className={styles.eventInformationItem__action}
                     href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
                     target="_blank"
                     rel="nofollow noopener"
@@ -328,9 +326,9 @@ function EventInformation(props: EventInformationProps) {
                     Смотреть на карте
                 </a>
             </li>
-            <li className="event-information__item event-information-item">
-                <div className="event-information-item__name">Дата и время</div>
-                <div className="event-information-item__content">
+            <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
+                <div className={styles.eventInformationItem__name}>Дата и время</div>
+                <div className={styles.eventInformationItem__content}>
                     <meta itemProp="startDate" content={startAt.toISOString()} />
                     <meta itemProp="endDate" content={finishAt.toISOString()} />
                     <EventDate startAt={startAt} finishAt={finishAt} />
@@ -370,11 +368,11 @@ function EventPrice(props: EventPriceProps) {
         <section className="section" id="event_price">
             <h2 className="section__title">Стоимость участия</h2>
             <div className="section__content">
-                <div className="event-price-items">
+                <div className={styles.eventPriceItems}>
                     {types.map((type, index) => (
-                        <div className="event-price-item" key={index}>
-                            <div className="event-price-item__title">{type.name}</div>
-                            <div className="event-price-item__value">
+                        <div className={styles.eventPriceItem} key={index}>
+                            <div className={styles.eventPriceItem__title}>{type.name}</div>
+                            <div className={styles.eventPriceItem__value}>
                                 {type.price.value === '0.00' ? (
                                     'Бесплатно'
                                 ) : (
@@ -390,7 +388,7 @@ function EventPrice(props: EventPriceProps) {
                     ))}
                 </div>
                 {ticketsAvailable && (
-                    <div className="event-price-button">
+                    <div className={styles.eventPriceButton}>
                         <Link href="/events/[id]/order" as={`/events/${props.eventId}/order`}>
                             <a
                                 className="button"
@@ -403,19 +401,19 @@ function EventPrice(props: EventPriceProps) {
                                 Зарегистрироваться
                             </a>
                         </Link>
-                        <p className="event-price-button__description">
+                        <p className={styles.eventPriceButton__description}>
                             Регистрация открыта до{' '}
                             <FormattedDate value={props.tickets.sale_finish_date} month="long" day="numeric" />
                         </p>
                     </div>
                 )}
                 {!ticketsAvailable && (
-                    <div className="event-price-button">
-                        <p className="event-price-button__description">Регистрация закрыта</p>
+                    <div className={styles.eventPriceButton}>
+                        <p className={styles.eventPriceButton__description}>Регистрация закрыта</p>
                     </div>
                 )}
                 {props.description && (
-                    <div className="event-price-description">
+                    <div className={styles.eventPriceDescription}>
                         <Markdown>{props.description}</Markdown>
                     </div>
                 )}
@@ -444,12 +442,12 @@ const EventPage: NextComponentType<
                 {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
                 {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
             </Head>
-            <div className="event-image" style={{ backgroundImage: `url(${event.image})` }} />
-            <h1 className="event-title" itemProp="name">
+            <div className={styles.eventImage} style={{ backgroundImage: `url(${event.image})` }} />
+            <h1 className={styles.eventTitle} itemProp="name">
                 {event.name}
             </h1>
             <meta itemProp="image" content={event.image} />
-            <div className="event-description" itemProp="description">
+            <div className={styles.eventDescription} itemProp="description">
                 {event.full_description ? (
                     <Markdown>{event.full_description}</Markdown>
                 ) : (
@@ -470,6 +468,10 @@ const EventPage: NextComponentType<
 };
 
 EventPage.getInitialProps = async ctx => {
+    if (typeof window === 'undefined') {
+        setContext(ctx);
+    }
+
     const event = await api.event(ctx.query.id);
 
     if (event === null) {

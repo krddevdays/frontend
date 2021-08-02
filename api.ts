@@ -347,11 +347,6 @@ export const getProfile = async (): Promise<Profile> => {
     return response.json();
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.getProfile = getProfile;
-}
-
 type PatchProfile = {
     first_name?: string;
     last_name?: string;
@@ -398,11 +393,6 @@ export const patchProfile = async (profile: PatchProfile): Promise<Profile> => {
     return response.json();
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.patchProfile = patchProfile;
-}
-
 export const login = async (credentials: { username: string; password: string }): Promise<true> => {
     const response = await fetch(
         createUrl({
@@ -424,11 +414,6 @@ export const login = async (credentials: { username: string; password: string })
     return true;
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.login = login;
-}
-
 export const logout = async (): Promise<true> => {
     const response = await fetch(
         createUrl({
@@ -445,11 +430,6 @@ export const logout = async (): Promise<true> => {
 
     return true;
 };
-
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.logout = logout;
-}
 
 type Registration = Profile & {
     password1: string;
@@ -476,11 +456,6 @@ export const registration = async (profile: Registration): Promise<never> => {
 
     return void 0 as never;
 };
-
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.registration = registration;
-}
 
 type Discussion = {
     id: number;
@@ -517,11 +492,6 @@ export const getDiscussions = async (filter?: { event_id?: number }): Promise<Di
     return await response.json();
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.getDiscussions = getDiscussions;
-}
-
 export const getDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
@@ -542,11 +512,6 @@ export const getDiscussion = async (id: number): Promise<Discussion> => {
     return await response.json();
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.getDiscussion = getDiscussion;
-}
-
 export const voteDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
@@ -566,11 +531,6 @@ export const voteDiscussion = async (id: number): Promise<Discussion> => {
 
     return await response.json();
 };
-
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.voteDiscussion = voteDiscussion;
-}
 
 type PostDiscussion = {
     event_id: number;
@@ -600,11 +560,6 @@ export const addDiscussion = async (data: PostDiscussion): Promise<Discussion> =
     return await response.json();
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.addDiscussion = addDiscussion;
-}
-
 type LinkTicket = {
     id: string;
     email: string;
@@ -632,11 +587,6 @@ export const linkTicket = async (data: LinkTicket): Promise<LinkTicket> => {
     return data;
 };
 
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.linkTicket = linkTicket;
-}
-
 type Ticket = {
     number: number;
     price: number;
@@ -662,8 +612,3 @@ export const getTickets = async (): Promise<Ticket[]> => {
 
     return response.json();
 };
-
-if (typeof window !== 'undefined') {
-    // @ts-ignore
-    window.getTickets = getTickets;
-}

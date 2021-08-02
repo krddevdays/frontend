@@ -9,7 +9,7 @@ import * as api from '../../api';
 
 import Tooltip from '../Tooltip';
 
-import './DiscussionForm.css';
+import styles from './DiscussionForm.module.css';
 
 type Discussion = {
     id: number;
@@ -40,11 +40,11 @@ export default function DiscussionForm(props: DiscussionFormProps) {
     return (
         <React.Fragment>
             {!confirmed && (
-                <div className="discussion-form">
-                    <div className="discussion-form__body">
+                <div className={styles.discussionForm}>
+                    <div className={styles.discussionForm__body}>
                         <img src="/static/discussion.svg" alt="" width="100%" />
                     </div>
-                    <div className="discussion-form__footer">
+                    <div className={styles.discussionForm__footer}>
                         <button
                             type="submit"
                             className="button button_theme_blue button_full-width"
@@ -122,13 +122,13 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                 >
                     {({ isSubmitting, errors, touched, status }) => {
                         return (
-                            <Form className="discussion-form">
-                                <div className="discussion-form__body">
+                            <Form className={styles.discussionForm}>
+                                <div className={styles.discussionForm__body}>
                                     <Field
                                         component="textarea"
                                         name="title"
                                         id="title"
-                                        className="discussion-form__title"
+                                        className={styles.discussionForm__title}
                                         placeholder="Название темы"
                                         innerRef={titleRef}
                                     />
@@ -141,7 +141,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                     <Field
                                         component="textarea"
                                         name="description"
-                                        className="discussion-form__description"
+                                        className={styles.discussionForm__description}
                                         placeholder="Описание темы"
                                         innerRef={descriptionRef}
                                     />
@@ -151,7 +151,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                         </Tooltip>
                                     )}
                                 </div>
-                                <div className="discussion-form__footer">
+                                <div className={styles.discussionForm__footer}>
                                     <button
                                         type="submit"
                                         className="button button_theme_blue button_full-width"

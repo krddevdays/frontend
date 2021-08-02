@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import './Author.css';
+import styles from './Author.module.css';
 
 export type AuthorProps = {
     small?: boolean;
@@ -17,14 +17,14 @@ export default function Author(props: AuthorProps) {
 
     return (
         <div
-            className={classNames('author', {
-                author_small: props.small
+            className={classNames(styles.author, {
+                [styles.author_small]: props.small
             })}
         >
-            <img className="author__avatar" alt={fullName} src={props.avatar || '/static/defaultAvatar.svg'} />
-            <div className="author__details">
-                <div className="author__name">{fullName}</div>
-                <div className="author__position">
+            <img className={styles.author__avatar} alt={fullName} src={props.avatar || '/static/defaultAvatar.svg'} />
+            <div className={styles.author__details}>
+                <div className={styles.author__name}>{fullName}</div>
+                <div className={styles.author__position}>
                     {props.position && `${props.position}, `}
                     {props.work}
                 </div>
