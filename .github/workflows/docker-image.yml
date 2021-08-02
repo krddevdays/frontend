@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          registry: cr.yandex
+          username: json_key
+          password: ${{ secrets.YC_IAM_SERVICE_ACCOUNT_AUTH_KEYS }}
+
+      - name: Generate version
+        id: version
+        run: |
+          export BRANCH=${GITHUB_REF#refs/heads/};
+          export BRANCH=${BRANCH#refs/tags/};
+          export BRANCH=${BRANCH//\//-};
+          export BRANCH=${BRANCH//./-};
+          export VERSION=$BRANCH.$(date +%s).${GITHUB_SHA:0:8};
+          echo "::set-output name=name::$VERSION"
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: cr.yandex/crptsm0vtuj4fltqor20/frontend:${{ steps.version.outputs.name }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
