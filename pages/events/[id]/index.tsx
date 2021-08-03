@@ -416,7 +416,7 @@ function EventPrice(props: EventPriceProps) {
                     </div>
                 )}
                 {props.description && (
-                    <div className={styles.eventPriceDescription}>
+                    <div className="prose max-w-none">
                         <Markdown>{props.description}</Markdown>
                     </div>
                 )}
@@ -450,7 +450,7 @@ const EventPage: NextComponentType<
                 {event.name}
             </h1>
             <meta itemProp="image" content={event.image} />
-            <div className={styles.eventDescription} itemProp="description">
+            <div className="prose max-w-none" itemProp="description">
                 {event.full_description ? (
                     <Markdown>{event.full_description}</Markdown>
                 ) : (

@@ -57,20 +57,6 @@
     color: #262626;
 }
 
-.eventPriceDescription {
-    font-size: 14px;
-    line-height: 20px;
-    color: #262626;
-    margin: 8px 0 0;
-    padding: 0;
-}
-
-.eventPriceDescription p,
-.eventPriceDescription ol,
-.eventPriceDescription ul {
-    margin: 16px 0;
-}
-
 .eventScheduleDate {
     display: inline-block;
     background: none;
@@ -129,15 +115,6 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-size: cover;
     background-position: center center;
-}
-
-.eventDescription {
-    margin: 16px 0;
-    padding: 0;
-    font-size: 14px;
-    line-height: 20px;
-
-    color: #262626;
 }
 
 .eventInformation {
