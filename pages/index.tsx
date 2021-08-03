@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
 
 import * as api from '../api';
 
@@ -9,7 +10,6 @@ import Container from '../components/Container/Container';
 import EventsList from '../components/EventsList';
 import { Event } from '../components/EventCard/EventCard';
 import styles from './index.module.css';
-import { setContext } from '../context';
 
 type IndexPageProps = {
     events: Event[];
@@ -51,18 +51,17 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
 
 export default IndexPage;
 
-IndexPage.getInitialProps = async ctx => {
-    if (typeof window === 'undefined') {
-        setContext(ctx);
-    }
-
-    const events = await api
-        .events({
-            date_from: new Date()
-        })
-        .then(events => events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1)));
-
+export const getStaticProps: GetStaticProps<IndexPageProps, never> = async function() {
     return {
-        events
+        props: {
+            events: await api
+                .events({
+                    date_from: new Date()
+                })
+                .then(events =>
+                    events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1))
+                )
+        },
+        revalidate: 10
     };
 };

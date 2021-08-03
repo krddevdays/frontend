@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextPageContext, NextComponentType } from 'next';
+import { NextPageContext, NextComponentType, GetStaticProps, GetStaticPaths } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
 import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
@@ -16,7 +16,6 @@ import { EventDate } from '../../../components/EventDate/EventDate';
 import List from '../../../components/List';
 import styles from './index.module.css';
 import ym from 'react-yandex-metrika';
-import { setContext } from '../../../context';
 
 type TalksProps = {
     talks: TalkCardProps[];
@@ -228,6 +227,10 @@ type EventPageProps = {
     talks: TalkCardProps[];
     discussions: Discussion[] | null;
     tickets: EventTickets | null;
+};
+
+type EventPageParams = {
+    id: string;
 };
 
 type EventInformationProps = { tickets: EventTickets | null; startDate: string; finishDate: string; venue: EventVenue };
@@ -467,33 +470,50 @@ const EventPage: NextComponentType<
     );
 };
 
-EventPage.getInitialProps = async ctx => {
-    if (typeof window === 'undefined') {
-        setContext(ctx);
+export const getStaticPaths: GetStaticPaths<EventPageParams> = async function() {
+    return {
+        paths: (await api.events()).map(event => ({
+            params: {
+                id: event.id.toString()
+            }
+        })),
+        fallback: 'blocking'
+    };
+};
+
+export const getStaticProps: GetStaticProps<EventPageProps, EventPageParams> = async function(context) {
+    if (typeof context.params === 'undefined') {
+        return {
+            notFound: true
+        };
     }
 
-    const event = await api.event(ctx.query.id);
+    const eventId = parseInt(context.params.id);
+
+    const event = await api.event(eventId);
 
     if (event === null) {
-        const err = new Error();
-        // @ts-ignore
-        err.code = 'ENOENT';
-        throw err;
+        return {
+            notFound: true
+        };
     }
 
     const [activities, talks, discussions, tickets] = await Promise.all([
-        api.eventActivities(ctx.query.id),
-        api.talks({ event_id: ctx.query.id }),
-        api.getDiscussions({ event_id: ctx.query.id }).catch(() => null),
-        api.eventTickets(ctx.query.id).catch(() => null)
+        api.eventActivities(eventId),
+        api.talks({ event_id: eventId }),
+        api.getDiscussions({ event_id: eventId }).catch(() => null),
+        api.eventTickets(eventId).catch(() => null)
     ]);
 
     return {
-        event,
-        activities,
-        talks,
-        discussions,
-        tickets
+        props: {
+            event,
+            activities,
+            talks,
+            discussions,
+            tickets
+        },
+        revalidate: 10
     };
 };
 

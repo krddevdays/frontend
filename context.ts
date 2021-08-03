@@ -1,8 +1,8 @@
-import { NextPageContext } from 'next';
+import { IncomingMessage } from 'http';
 
-let context: NextPageContext | undefined;
+let context: IncomingMessage | undefined;
 
-export function setContext(ctx: NextPageContext) {
+export function setContext(ctx: IncomingMessage) {
     context = ctx;
 }
 

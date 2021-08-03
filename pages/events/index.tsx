@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { NextPageContext, NextComponentType } from 'next';
+import { NextPageContext, NextComponentType, GetStaticProps } from 'next';
 import { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
 import Head from 'next/head';
 
 import Container from '../../components/Container/Container';
 import EventsList from '../../components/EventsList';
-import { setContext } from '../../context';
 
 type EventsPageProps = {
     events: Event[];
@@ -26,15 +25,12 @@ const EventsPage: NextComponentType<NextPageContext, EventsPageProps, EventsPage
     );
 };
 
-EventsPage.getInitialProps = async ctx => {
-    if (typeof window === 'undefined') {
-        setContext(ctx);
-    }
-
-    const events = await api.events();
-
+export const getStaticProps: GetStaticProps<EventsPageProps, never> = async function() {
     return {
-        events
+        props: {
+            events: await api.events()
+        },
+        revalidate: 10
     };
 };
 

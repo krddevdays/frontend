@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as api from '../../../api';
 import Head from 'next/head';
-import { NextPageContext, NextComponentType } from 'next';
+import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
@@ -36,7 +36,7 @@ import { setContext } from '../../../context';
 
 type Profile = { first_name: string; last_name: string; email: string };
 
-type EventPageProps = {
+type EventOrderPageProps = {
     event: Event;
     tickets: EventTickets;
     profile: Profile | null;
@@ -95,14 +95,16 @@ const OrderPageTemplate: React.FC<OrderPageTemplateProps> = ({ step, children })
     );
 };
 
+type EventOrderPageParams = {
+    id: string;
+};
+
 const OrderPage: NextComponentType<
     NextPageContext & {
-        query: {
-            id: number;
-        };
+        query: EventOrderPageParams;
     },
-    EventPageProps,
-    EventPageProps
+    EventOrderPageProps,
+    EventOrderPageProps
 > = props => {
     const [step, setStep] = React.useState(0);
     const [customer, setCustomer] = React.useState<Customer | null>(props.profile);
@@ -630,23 +632,25 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
     );
 };
 
-OrderPage.getInitialProps = async ctx => {
-    if (typeof window === 'undefined') {
-        setContext(ctx);
+export const getServerSideProps: GetServerSideProps<EventOrderPageProps, EventOrderPageParams> = async function(
+    context
+) {
+    setContext(context.req);
+
+    if (typeof context.params === 'undefined') {
+        return {
+            notFound: true
+        };
     }
 
-    let event = null;
-    let tickets = null;
+    const eventId = parseInt(context.params.id);
 
-    try {
-        [event, tickets] = await Promise.all([api.event(ctx.query.id), api.eventTickets(ctx.query.id)]);
-    } finally {
-        if (event === null || tickets === null || !tickets.is_active) {
-            const err = new Error();
-            // @ts-ignore
-            err.code = 'ENOENT';
-            throw err;
-        }
+    const [event, tickets] = await Promise.all([api.event(eventId), api.eventTickets(eventId)]);
+
+    if (event === null || tickets === null || !tickets.is_active) {
+        return {
+            notFound: true
+        };
     }
 
     let profile: Profile | null = null;
@@ -658,9 +662,11 @@ OrderPage.getInitialProps = async ctx => {
     }
 
     return {
-        event,
-        tickets,
-        profile
+        props: {
+            event,
+            tickets,
+            profile
+        }
     };
 };
 

@@ -16,8 +16,8 @@ function fetch(input: RequestInfo, init?: FetchInit): ReturnType<typeof crossFet
     const newHeaders: Record<string, string> = { ...init.headers };
     const ctx = getContext();
 
-    if (typeof window === 'undefined' && ctx && ctx.req && ctx.req.headers.cookie) {
-        newHeaders.Cookie = ctx.req.headers.cookie;
+    if (typeof window === 'undefined' && ctx && ctx && ctx.headers.cookie) {
+        newHeaders.Cookie = ctx.headers.cookie;
     }
 
     init.headers = newHeaders;

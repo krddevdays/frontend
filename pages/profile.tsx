@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextPageContext, NextComponentType } from 'next';
+import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Response } from 'cross-fetch';
 import classNames from 'classnames';
@@ -168,10 +168,8 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
     );
 };
 
-ProfilePage.getInitialProps = async ctx => {
-    if (typeof window === 'undefined') {
-        setContext(ctx);
-    }
+export const getServerSideProps: GetServerSideProps<ProfilePageProps, never> = async function(context) {
+    setContext(context.req);
 
     let profile = null;
     let tickets = null;
@@ -184,13 +182,11 @@ ProfilePage.getInitialProps = async ctx => {
         }
     }
 
-    if (typeof window === 'undefined' && ctx.res && profile === null) {
-        ctx.res.statusCode = 403;
-    }
-
     return {
-        profile,
-        tickets
+        props: {
+            profile,
+            tickets
+        }
     };
 };
 
