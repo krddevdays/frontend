@@ -1,8 +1,10 @@
 import * as React from 'react';
 import ReactModal from 'react-modal';
 import classNames from 'classnames';
+import closeSvg from './Close.svg';
+import Image from 'next/image'
 
-import styles from './index.module.css';
+import styles from './Modal.module.css';
 
 type ModalProps = {
     className?: string;
@@ -19,7 +21,7 @@ const Modal = (props: ModalProps) => {
             e.preventDefault();
             props.onRequestClose();
         },
-        [props.onRequestClose]
+        [props]
     );
 
     return (
@@ -43,7 +45,7 @@ const Modal = (props: ModalProps) => {
             htmlOpenClassName=""
         >
             <button className={styles.modal__closeButton} type="button" onClick={handleClickClose}>
-                <img src="/static/close.svg" alt="" />
+                <Image src={closeSvg} alt="" />
             </button>
             <div className={styles.modal__title}>{props.title}</div>
             <div className={styles.modal__content}>{props.children}</div>

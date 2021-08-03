@@ -20,6 +20,7 @@ export default function TalkCard(props: TalkCardProps) {
                 [styles.talkCard_modern]: hasPoster
             })}
         >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             {hasPoster && <img className={styles.talkCard__image} src={props.poster_image} alt="" />}
             <div className={styles.talkCard__body}>
                 <h1 className={styles.talkCard__title}>{props.title}</h1>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Placement, ReferenceObject } from 'popper.js';
 import { Popper } from 'react-popper';
 
-import styles from './index.module.css';
+import styles from './Tooltip.module.css';
 
 type TooltipProps<T> = {
     refObject: React.RefObject<T>;

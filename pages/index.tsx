@@ -7,9 +7,9 @@ import { GetStaticProps } from 'next';
 import * as api from '../api';
 
 import Container from '../components/Container/Container';
-import EventsList from '../components/EventsList';
+import EventsList from '../components/EventsList/EventsList';
 import { Event } from '../components/EventCard/EventCard';
-import styles from './index.module.css';
+import styles from '../styles/IndexPage.module.css';
 
 type IndexPageProps = {
     events: Event[];

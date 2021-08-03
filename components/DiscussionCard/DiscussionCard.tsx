@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Response } from 'cross-fetch';
 import ym from 'react-yandex-metrika';
+import starSvg from './Star.svg';
 
 import * as api from '../../api';
 
 import { useAuth } from '../AuthProvider';
 
-import '../DiscussionForm/DiscussionForm.module.css';
+import styles from '../DiscussionForm/DiscussionForm.module.css';
 
 type DiscussionCardProps = {
     id: number;
@@ -73,12 +74,12 @@ export default function DiscussionCard(props: DiscussionCardProps) {
     );
 
     return (
-        <div className="discussion-form">
-            <div className="discussion-form__body">
-                <div className="discussion-form__title" title={props.title}>
+        <div className={styles.discussionForm}>
+            <div className={styles.discussionForm__body}>
+                <div className={styles.discussionForm__title} title={props.title}>
                     {props.title}
                 </div>
-                <div className="discussion-form__description">
+                <div className={styles.discussionForm__description}>
                     {props.description.split('\n').map(function(item, key) {
                         return (
                             <span key={key}>
@@ -89,13 +90,14 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                     })}
                 </div>
             </div>
-            <div className="discussion-form__footer">
-                <div className="button-group">
-                    <button type="button" className="button" style={{ width: '100%' }} onClick={handleClickVote}>
-                        <img src="/static/star.svg" alt="" style={{ verticalAlign: 'text-top' }} />{' '}
+            <div className={styles.discussionForm__footer}>
+                <div className='button-group'>
+                    <button type='button' className='button' style={{ width: '100%' }} onClick={handleClickVote}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={starSvg.src} alt='' style={{ verticalAlign: 'text-top' }} />{' '}
                         {isVoted ? 'Передумать' : 'Проголосовать'}
                     </button>
-                    <span className="button">{votesCount}</span>
+                    <span className='button'>{votesCount}</span>
                 </div>
             </div>
         </div>

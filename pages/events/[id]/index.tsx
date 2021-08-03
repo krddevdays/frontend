@@ -13,8 +13,8 @@ import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
 import DiscussionCard from '../../../components/DiscussionCard/DiscussionCard';
 import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
-import List from '../../../components/List';
-import styles from './index.module.css';
+import List from '../../../components/List/List';
+import styles from '../../../styles/EventPage.module.css';
 import ym from 'react-yandex-metrika';
 
 type TalksProps = {
@@ -324,7 +324,7 @@ function EventInformation(props: EventInformationProps) {
                     className={styles.eventInformationItem__action}
                     href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
                     target="_blank"
-                    rel="nofollow noopener"
+                    rel="noreferrer nofollow noopener"
                 >
                     Смотреть на карте
                 </a>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import AuthModal from './AuthModal';
+import AuthModal from './AuthModal/AuthModal';
 
 type Profile = {
     username: string;

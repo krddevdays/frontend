@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 import * as api from '../../api';
 
-import FormGroup from '../FormGroup';
+import FormGroup from '../FormGroup/FormGroup';
 
 type Profile = {
     username: string;

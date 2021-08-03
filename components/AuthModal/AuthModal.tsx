@@ -3,12 +3,12 @@ import { Response } from 'cross-fetch';
 import * as yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import Modal from '../Modal';
-import FormGroup from '../FormGroup';
+import Modal from '../Modal/Modal';
+import FormGroup from '../FormGroup/FormGroup';
 
 import * as api from '../../api';
 
-import styles from './index.module.css';
+import styles from './AuthModal.module.css';
 
 const schema = yup.object().shape({
     username: yup.string().required('Введите логин'),
@@ -261,7 +261,7 @@ function AuthModal(props: AuthModalProps) {
         } else {
             props.onReject();
         }
-    }, [profile, props.onResolve, props.onReject]);
+    }, [profile, props]);
 
     const handleRequestClose = React.useCallback(() => {
         setIsOpen(false);

@@ -6,11 +6,11 @@ import classNames from 'classnames';
 import * as api from '../api';
 
 import Container from '../components/Container/Container';
-import AuthModal from '../components/AuthModal';
-import ProfileForm from '../components/ProfileForm';
-import LinkTicketForm from '../components/LinkTicketForm';
+import AuthModal from '../components/AuthModal/AuthModal';
+import ProfileForm from '../components/ProfileForm/ProfileForm';
+import LinkTicketForm from '../components/LinkTicketForm/LinkTicketForm';
 
-import styles from './profile.module.css';
+import styles from '../styles/ProfilePage.module.css';
 import { FormattedNumber } from 'react-intl';
 import { setContext } from '../context';
 
@@ -40,7 +40,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
 
     React.useEffect(() => {
         setProfile(props.profile);
-    }, [props.profile === null]);
+    }, [props.profile]);
 
     const [authModalIsOpened, setAuthModalIsOpened] = React.useState(profile === null);
 
@@ -50,7 +50,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
         if (authModalIsOpened !== newAuthModalIsOpened) {
             setAuthModalIsOpened(newAuthModalIsOpened);
         }
-    }, [setAuthModalIsOpened, profile]);
+    }, [setAuthModalIsOpened, profile, authModalIsOpened]);
 
     const handleAuthModal = React.useCallback(
         (profile?: Profile) => {

@@ -3,11 +3,13 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import ym from 'react-yandex-metrika';
+import discussionSvg from './Discussion.svg';
+import Image from 'next/image'
 
 import { useAuth } from '../AuthProvider';
 import * as api from '../../api';
 
-import Tooltip from '../Tooltip';
+import Tooltip from '../Tooltip/Tooltip';
 
 import styles from './DiscussionForm.module.css';
 
@@ -42,7 +44,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
             {!confirmed && (
                 <div className={styles.discussionForm}>
                     <div className={styles.discussionForm__body}>
-                        <img src="/static/discussion.svg" alt="" width="100%" />
+                        <Image src={discussionSvg} alt="" width="100%" />
                     </div>
                     <div className={styles.discussionForm__footer}>
                         <button

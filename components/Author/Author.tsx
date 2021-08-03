@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import avatarSvg from './DefaultAvatar.svg';
 
 import styles from './Author.module.css';
 
@@ -21,7 +22,8 @@ export default function Author(props: AuthorProps) {
                 [styles.author_small]: props.small
             })}
         >
-            <img className={styles.author__avatar} alt={fullName} src={props.avatar || '/static/defaultAvatar.svg'} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.author__avatar} alt={fullName} src={props.avatar || avatarSvg.src} />
             <div className={styles.author__details}>
                 <div className={styles.author__name}>{fullName}</div>
                 <div className={styles.author__position}>

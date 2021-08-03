@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import App from 'next/app';
-import './_app.css';
+import '../styles/Global.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import ym, { YMInitializer } from 'react-yandex-metrika';
@@ -69,6 +69,7 @@ class MyApp extends App {
                             }}
                         />
                         <noscript>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src="https://mc.yandex.ru/watch/53951545"
                                 style={{

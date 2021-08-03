@@ -43,7 +43,7 @@
 
 .headerProfile__icon {
     display: inline-block;
-    background: url('/static/profile.svg');
+    background: url('./Profile.svg');
     width: 24px;
     height: 24px;
     vertical-align: middle;

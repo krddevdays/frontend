@@ -29,8 +29,8 @@ yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
 import { Event, EventTickets } from './index';
 
 import Container from '../../../components/Container/Container';
-import styles from './order.module.css';
-import FormGroup from '../../../components/FormGroup';
+import styles from '../../../styles/OrderPage.module.css';
+import FormGroup from '../../../components/FormGroup/FormGroup';
 import { FormattedDate, FormattedNumber } from 'react-intl';
 import { setContext } from '../../../context';
 
@@ -618,8 +618,8 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                         )}
                         {payment && (
                             <p className={styles.orderStepForm__information}>
-                                Нажимая на кнопку "Купить" вы подтверждаете, что изучили и согласны с{' '}
-                                <a href={payment.agree_url} target="_blank">
+                                Нажимая на кнопку &quot;Купить&quot; вы подтверждаете, что изучили и согласны с{' '}
+                                <a href={payment.agree_url} target="_blank" rel="noreferrer">
                                     правовыми документами
                                 </a>
                                 .

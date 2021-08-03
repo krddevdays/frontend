@@ -19,7 +19,7 @@ export default function Footer() {
                         <a
                             href="https://vk.com/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             vk
@@ -29,7 +29,7 @@ export default function Footer() {
                         <a
                             href="https://facebook.com/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             fb
@@ -39,7 +39,7 @@ export default function Footer() {
                         <a
                             href="https://twitter.com/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             twitter
@@ -49,7 +49,7 @@ export default function Footer() {
                         <a
                             href="https://instagram.com/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             instagram
@@ -59,7 +59,7 @@ export default function Footer() {
                         <a
                             href="https://t.me/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             telegram
@@ -69,7 +69,7 @@ export default function Footer() {
                         <a
                             href="https://www.youtube.com/c/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             youtube
@@ -79,7 +79,7 @@ export default function Footer() {
                         <a
                             href="https://github.com/krddevdays"
                             target="_blank"
-                            rel="noopener nofollow"
+                            rel="noreferrer noopener nofollow"
                             className={styles.footerMenu__link}
                         >
                             github

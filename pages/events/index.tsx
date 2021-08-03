@@ -5,7 +5,7 @@ import * as api from '../../api';
 import Head from 'next/head';
 
 import Container from '../../components/Container/Container';
-import EventsList from '../../components/EventsList';
+import EventsList from '../../components/EventsList/EventsList';
 
 type EventsPageProps = {
     events: Event[];
