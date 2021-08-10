@@ -73,7 +73,7 @@ export const getStaticProps: GetStaticProps<IndexPageProps, never> = async funct
         props: {
             events: await api
                 .events({
-                    date_from: new Date(2019, 1, 1)
+                    date_from: new Date()
                 })
                 .then(events =>
                     events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1))
