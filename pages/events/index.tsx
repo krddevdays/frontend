@@ -4,7 +4,6 @@ import { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
 import Head from 'next/head';
 
-import Container from '../../components/Container/Container';
 import EventsList from '../../components/EventsList/EventsList';
 
 type EventsPageProps = {
@@ -13,15 +12,15 @@ type EventsPageProps = {
 
 const EventsPage: NextComponentType<NextPageContext, EventsPageProps, EventsPageProps> = props => {
     return (
-        <Container className="section">
+        <div className='mt-12 max-w-7xl mx-auto sm:px-6 lg:px-8'>
             <Head>
                 <title>Мероприятия</title>
             </Head>
-            <h1 className="section__title">Мероприятия</h1>
-            <div className="section__content">
+            <h1 className='text-lg leading-6 font-medium text-gray-900'>Мероприятия</h1>
+            <div className='mt-6'>
                 <EventsList events={props.events} />
             </div>
-        </Container>
+        </div>
     );
 };
 
