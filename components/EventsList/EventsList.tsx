@@ -2,7 +2,7 @@ import * as React from 'react';
 import EventCard, { Event } from '../EventCard/EventCard';
 import List from '../List/List';
 
-type EventsListProps = {
+export type EventsListProps = {
     events: Event[];
 };
 
