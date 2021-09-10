@@ -3,8 +3,8 @@ const { withSentryConfig } = require('@sentry/nextjs');
 const moduleExports = {
     reactStrictMode: true,
     publicRuntimeConfig: {
-        backendDomain: process.env.BACKEND_DOMAIN || 'localhost:8000',
-        backendProtocol: process.env.BACKEND_PROTOCOL || 'http:'
+        backendDomain: process.env.BACKEND_DOMAIN || 'krd.dev/backend',
+        backendProtocol: process.env.BACKEND_PROTOCOL || 'https:'
     }
 };
 

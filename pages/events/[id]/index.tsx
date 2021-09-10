@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NextPageContext, NextComponentType, GetStaticProps, GetStaticPaths } from 'next';
+import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
 import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
@@ -16,6 +16,7 @@ import { EventDate } from '../../../components/EventDate/EventDate';
 import List from '../../../components/List/List';
 import styles from '../../../styles/EventPage.module.css';
 import ym from 'react-yandex-metrika';
+import { setContext } from '../../../context';
 
 type TalksProps = {
     talks: TalkCardProps[];
@@ -470,18 +471,9 @@ const EventPage: NextComponentType<
     );
 };
 
-export const getStaticPaths: GetStaticPaths<EventPageParams> = async function() {
-    return {
-        paths: (await api.events()).map(event => ({
-            params: {
-                id: event.id.toString()
-            }
-        })),
-        fallback: 'blocking'
-    };
-};
+export const getServerSideProps: GetServerSideProps<EventPageProps, EventPageParams> = async function(context) {
+    setContext(context.req);
 
-export const getStaticProps: GetStaticProps<EventPageProps, EventPageParams> = async function(context) {
     if (typeof context.params === 'undefined') {
         return {
             notFound: true
@@ -512,8 +504,7 @@ export const getStaticProps: GetStaticProps<EventPageProps, EventPageParams> = a
             talks,
             discussions,
             tickets
-        },
-        revalidate: 10
+        }
     };
 };
 

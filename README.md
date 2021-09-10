@@ -16,8 +16,12 @@
 
 ### Запуск для разработки
 
-1. `BACKEND_DOMAIN=krd.dev/backend BACKEND_PROTOCOL=https: npm run dev`
+1. `npm run dev`
 1. `open http://localhost:3000`
+
+Чтобы подменить бекенд сервер:
+
+1. `BACKEND_DOMAIN=localhost:8000 BACKEND_PROTOCOL=http: npm run dev`
 
 ### Производственная сборка и запуск
 

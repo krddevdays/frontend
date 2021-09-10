@@ -3,13 +3,14 @@ import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 
 import * as api from '../api';
 
 import EventsList, { EventsListProps } from '../components/EventsList/EventsList';
 
 import heroImage from '../public/hero.jpg';
+import { setContext } from '../context';
 
 type IndexPageProps = {
     events: EventsListProps['events'];
@@ -68,7 +69,9 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
 
 export default IndexPage;
 
-export const getStaticProps: GetStaticProps<IndexPageProps, never> = async function() {
+export const getServerSideProps: GetServerSideProps<IndexPageProps, never> = async function(context) {
+    setContext(context.req);
+
     return {
         props: {
             events: await api
@@ -78,7 +81,6 @@ export const getStaticProps: GetStaticProps<IndexPageProps, never> = async funct
                 .then(events =>
                     events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1))
                 )
-        },
-        revalidate: 10
+        }
     };
 };
