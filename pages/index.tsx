@@ -28,10 +28,10 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
                         <div className='absolute inset-0'>
                             <Image
                                 objectFit='cover'
-                                objectPosition='bottom'
+                                objectPosition='center'
                                 loading='lazy'
                                 placeholder='blur'
-                                layout='responsive'
+                                layout='fill'
                                 src={heroImage}
                             />
                             <div className='absolute inset-0 bg-indigo-700 mix-blend-multiply' />
@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps, never> = asy
         props: {
             events: await api
                 .events({
-                    date_from: new Date()
+                    date_from: new Date(2018, 0, 1)
                 })
                 .then(events =>
                     events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1))
