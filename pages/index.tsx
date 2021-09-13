@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 
@@ -50,14 +49,8 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
                 </div>
             </div>
             {props.events.length > 0 && (
-                <section className='max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10'>
-                    <div className='flex justify-between'>
-                        <h2 className='text-lg leading-6 font-medium text-gray-900'>Предстоящие мероприятия</h2>
-                        <Link href='/events'>
-                            <a className='text-lg font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500'>Посмотреть
-                                все</a>
-                        </Link>
-                    </div>
+                <section className='max-w-7xl sm:px-6 lg:px-8 mt-10 mx-2 sm:mx-auto'>
+                    <h2 className='text-lg leading-6 font-medium text-gray-900 text-center'>Предстоящие мероприятия</h2>
                     <div className='mt-6'>
                         <EventsList events={props.events} />
                     </div>
@@ -76,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps, never> = asy
         props: {
             events: await api
                 .events({
-                    date_from: new Date(2018, 0, 1)
+                    date_from: new Date()
                 })
                 .then(events =>
                     events.sort((e1, e2) => (Date.parse(e1.finish_date) > Date.parse(e2.finish_date) ? 1 : -1))

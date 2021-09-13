@@ -1,11 +1,24 @@
 import * as React from 'react';
 import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
-import { Event } from '../../components/EventCard/EventCard';
 import * as api from '../../api';
 import Head from 'next/head';
 
 import EventsList from '../../components/EventsList/EventsList';
 import { setContext } from '../../context';
+
+type Event = {
+    id: number;
+    name: string;
+    start_date: string;
+    finish_date: string;
+    short_description: string;
+    venue: {
+        name: string;
+        address: string;
+        latitude: number;
+        longitude: number;
+    };
+};
 
 type EventsPageProps = {
     events: Event[];
