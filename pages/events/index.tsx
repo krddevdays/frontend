@@ -26,7 +26,7 @@ type EventsPageProps = {
 
 const EventsPage: NextComponentType<NextPageContext, EventsPageProps, EventsPageProps> = props => {
     return (
-        <div className='mt-12 max-w-7xl mx-auto sm:px-6 lg:px-8'>
+        <div className='mt-12 max-w-7xl sm:px-6 lg:px-8 mx-2 sm:mx-auto'>
             <Head>
                 <title>Мероприятия</title>
             </Head>
