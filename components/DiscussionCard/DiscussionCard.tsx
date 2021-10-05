@@ -48,7 +48,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                         setTimeout(() => {
                             ym('reachGoal', 'vote_on_discussion');
                         }, 0);
-                    } catch (e) {
+                    } catch (e: any) {
                         if (e instanceof Response) {
                             switch (e.status) {
                                 case 403:

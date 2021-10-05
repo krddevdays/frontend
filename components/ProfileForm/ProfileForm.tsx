@@ -39,7 +39,7 @@ export default function ProfileForm(props: ProfileFormProps) {
 
                 try {
                     props.onChange(await api.patchProfile(values));
-                } catch (e) {
+                } catch (e: any) {
                     if (e instanceof Response) {
                         switch (e.status) {
                             case 400: {

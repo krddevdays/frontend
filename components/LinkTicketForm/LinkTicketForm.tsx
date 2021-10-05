@@ -40,7 +40,7 @@ export default function LinkTicketForm(props: LinkTicketFormProps) {
                     const tickets = await api.getTickets();
                     actions.resetForm();
                     props.onLink(tickets);
-                } catch (e) {
+                } catch (e: any) {
                     if (e instanceof Response) {
                         switch (e.status) {
                             case 404: {

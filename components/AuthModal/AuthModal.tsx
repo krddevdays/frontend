@@ -60,7 +60,7 @@ function LoginForm(props: {
                 try {
                     await api.login(values);
                     props.onFetchProfile(await api.getProfile());
-                } catch (e) {
+                } catch (e: any) {
                     if (e instanceof Response) {
                         switch (e.status) {
                             case 400: {
@@ -154,7 +154,7 @@ function RegistrationForm(props: {
                 try {
                     await api.registration({ ...values, work: null, position: null });
                     props.onFetchProfile(await api.getProfile());
-                } catch (e) {
+                } catch (e: any) {
                     if (e instanceof Response) {
                         switch (e.status) {
                             case 400: {

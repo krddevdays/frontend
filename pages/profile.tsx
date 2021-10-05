@@ -176,7 +176,7 @@ export const getServerSideProps: GetServerSideProps<ProfilePageProps, never> = a
 
     try {
         [profile, tickets] = await Promise.all([api.getProfile(), api.getTickets()]);
-    } catch (e) {
+    } catch (e: any) {
         if (!(e instanceof Response) || e.status !== 403) {
             throw e;
         }

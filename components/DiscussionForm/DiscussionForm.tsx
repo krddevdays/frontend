@@ -85,7 +85,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                 setTimeout(() => {
                                     ym('reachGoal', 'add_own_discussion');
                                 }, 0);
-                            } catch (e) {
+                            } catch (e: any) {
                                 if (e instanceof Response) {
                                     switch (e.status) {
                                         case 403:

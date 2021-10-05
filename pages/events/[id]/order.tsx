@@ -524,7 +524,7 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                     });
 
                     props.onSubmit(order);
-                } catch (e) {
+                } catch (e: any) {
                     if (e instanceof Response) {
                         switch (e.status) {
                             case 400: {
