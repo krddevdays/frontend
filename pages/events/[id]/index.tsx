@@ -2,14 +2,15 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
+import Image from 'next/image';
 import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
 
-import Container from '../../../components/Container/Container';
+import Author, { AuthorProps } from '../../../components/Author/Author';
+
 import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
-import TalkCard, { TalkCardProps } from '../../../components/TalkCard/TalkCard';
 import DiscussionCard from '../../../components/DiscussionCard/DiscussionCard';
 import DiscussionForm from '../../../components/DiscussionForm/DiscussionForm';
 import { EventDate } from '../../../components/EventDate/EventDate';
@@ -18,8 +19,15 @@ import styles from '../../../styles/EventPage.module.css';
 import ym from 'react-yandex-metrika';
 import { setContext } from '../../../context';
 
+type Talk = {
+    description: string | null;
+    speaker: AuthorProps;
+    title: string;
+    poster_image?: string;
+}
+
 type TalksProps = {
-    talks: TalkCardProps[];
+    talks: Talk[];
 };
 
 function Talks(props: TalksProps) {
@@ -28,15 +36,26 @@ function Talks(props: TalksProps) {
     }
 
     return (
-        <section className="section">
-            <h2 className="section__title">Доклады</h2>
-            <div className="section__content">
-                <div className={styles.eventTalks__list}>
-                    {props.talks.map((talk, index) => (
-                        <TalkCard key={index} {...talk} />
-                    ))}
-                </div>
-            </div>
+        <section className='mt-10'>
+            <h2 className='text-2xl font-bold text-gray-900'>Доклады</h2>
+            <ul role='list' className='mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+                {props.talks.map((talk, index) => (
+                    <li key={index}
+                        className='group bg-white rounded-lg shadow divide-y divide-gray-200 overflow-hidden'>
+                        <div className='h-full w-full p-6 flex flex-col justify-between relative'>
+                            <div className='flex-1 text-gray-900 font-medium'>
+                                {talk.title}
+                            </div>
+                            <Author className='mt-10' {...talk.speaker} />
+                            <div
+                                className='absolute inset-0 p-6 opacity-0 group-hover:opacity-100 bg-white text-xs overflow-auto'>
+                                {talk.description &&
+                                <Markdown options={{ forceBlock: true }}>{talk.description}</Markdown>}
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
         </section>
     );
 }
@@ -71,9 +90,9 @@ function Discussions(props: DiscussionsProps) {
     );
 
     return (
-        <section className="section">
-            <h2 className="section__title">Круглые столы</h2>
-            <div className="section__content">
+        <section className='section'>
+            <h2 className='section__title'>Круглые столы</h2>
+            <div className='section__content'>
                 <p>
                     Это возможность собраться с единомышленниками и обсудить интересную вам тему. Вы можете подать свою
                     или проголосовать за другие.
@@ -138,25 +157,25 @@ function Schedule(props: ScheduleProps) {
     }
 
     return (
-        <section className="section">
-            <h2 className="section__title">Расписание</h2>
-            <div className="section__action">
+        <section className='section'>
+            <h2 className='section__title'>Расписание</h2>
+            <div className='section__action'>
                 {dates.length > 1 &&
-                    dates.map((date, index) => (
-                        <button
-                            key={index}
-                            type="button"
-                            className={classNames(styles.eventScheduleDate, {
-                                [styles.eventScheduleDate_active]: currentDate === date
-                            })}
-                            onClick={event => {
-                                event.preventDefault();
-                                setCurrentDate(date);
-                            }}
-                        >
-                            {date}
-                        </button>
-                    ))}
+                dates.map((date, index) => (
+                    <button
+                        key={index}
+                        type='button'
+                        className={classNames(styles.eventScheduleDate, {
+                            [styles.eventScheduleDate_active]: currentDate === date
+                        })}
+                        onClick={event => {
+                            event.preventDefault();
+                            setCurrentDate(date);
+                        }}
+                    >
+                        {date}
+                    </button>
+                ))}
             </div>
             <div className={classNames('section__content', styles.eventScheduleTable__wrapper)}>
                 <ScheduleTable
@@ -186,19 +205,17 @@ export type EventTickets = {
         price: {
             current_value: string;
             default_value: string;
-            modifiers: Array<
+            modifiers: Array<| {
+                value: string;
+                type: 'sales_count';
+                sales_count: number;
+            }
                 | {
-                      value: string;
-                      type: 'sales_count';
-                      sales_count: number;
-                  }
-                | {
-                      value: string;
-                      type: 'date';
-                      active_from: string;
-                      active_to: string;
-                  }
-            >;
+                value: string;
+                type: 'date';
+                active_from: string;
+                active_to: string;
+            }>;
         };
     }>;
     payments: Array<{
@@ -225,7 +242,7 @@ export type Event = {
 type EventPageProps = {
     event: Event;
     activities: ActivityProps[];
-    talks: TalkCardProps[];
+    talks: Talk[];
     discussions: Discussion[] | null;
     tickets: EventTickets | null;
 };
@@ -267,78 +284,85 @@ function EventInformation(props: EventInformationProps) {
     }, null);
 
     return (
-        <ul className={styles.eventInformation}>
+        <dl className={classNames('mt-10 grid grid-cols-1 gap-5', {
+            'lg:grid-cols-3': price !== null,
+            'lg:grid-cols-2': price === null
+        })}>
+            <div className='px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6'>
+                <dt className='text-sm font-medium text-gray-500 truncate'>Дата и время</dt>
+                <dd className='mt-1 text-sm text-gray-900'>
+                    <meta itemProp='startDate' content={startAt.toISOString()} />
+                    <meta itemProp='endDate' content={finishAt.toISOString()} />
+                    <EventDate startAt={startAt} finishAt={finishAt} />
+                </dd>
+            </div>
+            <div className='px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6'>
+                <dt className='text-sm font-medium text-gray-500 truncate'>Место проведения</dt>
+                <dd className='mt-1 text-sm text-gray-900'
+                    itemProp='location'
+                    itemScope
+                    itemType='http://schema.org/Place'>
+                    <span itemProp='name'>{props.venue.name}</span>
+                    <br />
+                    <span itemProp='address'>{props.venue.address}</span>
+                    <div itemProp='geo' itemScope itemType='http://schema.org/GeoCoordinates'>
+                        <meta itemProp='latitude' content={props.venue.latitude.toString()} />
+                        <meta itemProp='longitude' content={props.venue.longitude.toString()} />
+                    </div>
+                    <div className='mt-2'>
+                        <a
+                            href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
+                            target='_blank'
+                            rel='noreferrer nofollow noopener'
+                            className='text-xs font-semibold hover:underline text-indigo-700'
+                        >
+                            Смотреть на карте
+                        </a>
+                    </div>
+                </dd>
+            </div>
             {price !== null && (
-                <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
-                    <div className={styles.eventInformationItem__name}>Стоимость участия</div>
-                    <div className={styles.eventInformationItem__content}>
-                        {price.min !== price.max ? (
-                            <React.Fragment>
-                                от{' '}
+                <div className='px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6'>
+                    <dt className='text-sm font-medium text-gray-500 truncate'>Стоимость участия</dt>
+                    <dd className='mt-1 text-sm text-gray-900'>
+                        <div>
+                            {price.min !== price.max ? (
+                                <React.Fragment>
+                                    от{' '}
+                                    <FormattedNumber
+                                        style='currency'
+                                        value={parseFloat(price.min)}
+                                        currency='RUB'
+                                        minimumFractionDigits={0}
+                                    />{' '}
+                                    до{' '}
+                                    <FormattedNumber
+                                        style='currency'
+                                        value={parseFloat(price.max)}
+                                        currency='RUB'
+                                        minimumFractionDigits={0}
+                                    />
+                                </React.Fragment>
+                            ) : price.min === '0.00' ? (
+                                'Бесплатно'
+                            ) : (
                                 <FormattedNumber
-                                    style="currency"
+                                    style='currency'
                                     value={parseFloat(price.min)}
-                                    currency="RUB"
-                                    minimumFractionDigits={0}
-                                />{' '}
-                                до{' '}
-                                <FormattedNumber
-                                    style="currency"
-                                    value={parseFloat(price.max)}
-                                    currency="RUB"
+                                    currency='RUB'
                                     minimumFractionDigits={0}
                                 />
-                            </React.Fragment>
-                        ) : price.min === '0.00' ? (
-                            'Бесплатно'
-                        ) : (
-                            <FormattedNumber
-                                style="currency"
-                                value={parseFloat(price.min)}
-                                currency="RUB"
-                                minimumFractionDigits={0}
-                            />
-                        )}
-                    </div>
-                    <a className={styles.eventInformationItem__action} href="#event_price">
-                        Подробнее
-                    </a>
-                </li>
+                            )}
+                        </div>
+                        <div className='mt-2'>
+                            <a className='text-xs font-semibold hover:underline text-indigo-700' href='#event_price'>
+                                Подробнее
+                            </a>
+                        </div>
+                    </dd>
+                </div>
             )}
-            <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
-                <div className={styles.eventInformationItem__name}>Место проведения</div>
-                <div
-                    className={styles.eventInformationItem__content}
-                    itemProp="location"
-                    itemScope
-                    itemType="http://schema.org/Place"
-                >
-                    <span itemProp="name">{props.venue.name}</span>
-                    <br />
-                    <span itemProp="address">{props.venue.address}</span>
-                    <div itemProp="geo" itemScope itemType="http://schema.org/GeoCoordinates">
-                        <meta itemProp="latitude" content={props.venue.latitude.toString()} />
-                        <meta itemProp="longitude" content={props.venue.longitude.toString()} />
-                    </div>
-                </div>
-                <a
-                    className={styles.eventInformationItem__action}
-                    href={`https://yandex.ru/maps/?pt=${props.venue.longitude},${props.venue.latitude}&z=15&l=map`}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                >
-                    Смотреть на карте
-                </a>
-            </li>
-            <li className={classNames(styles.eventInformation__item, styles.eventInformationItem)}>
-                <div className={styles.eventInformationItem__name}>Дата и время</div>
-                <div className={styles.eventInformationItem__content}>
-                    <meta itemProp="startDate" content={startAt.toISOString()} />
-                    <meta itemProp="endDate" content={finishAt.toISOString()} />
-                    <EventDate startAt={startAt} finishAt={finishAt} />
-                </div>
-            </li>
-        </ul>
+        </dl>
     );
 }
 
@@ -369,9 +393,9 @@ function EventPrice(props: EventPriceProps) {
     }));
 
     return (
-        <section className="section" id="event_price">
-            <h2 className="section__title">Стоимость участия</h2>
-            <div className="section__content">
+        <section className='section' id='event_price'>
+            <h2 className='section__title'>Стоимость участия</h2>
+            <div className='section__content'>
                 <div className={styles.eventPriceItems}>
                     {types.map((type, index) => (
                         <div className={styles.eventPriceItem} key={index}>
@@ -381,9 +405,9 @@ function EventPrice(props: EventPriceProps) {
                                     'Бесплатно'
                                 ) : (
                                     <FormattedNumber
-                                        style="currency"
+                                        style='currency'
                                         value={parseFloat(type.price.value)}
-                                        currency="RUB"
+                                        currency='RUB'
                                         minimumFractionDigits={0}
                                     />
                                 )}
@@ -393,9 +417,9 @@ function EventPrice(props: EventPriceProps) {
                 </div>
                 {ticketsAvailable && (
                     <div className={styles.eventPriceButton}>
-                        <Link href="/events/[id]/order" as={`/events/${props.eventId}/order`}>
+                        <Link href='/events/[id]/order' as={`/events/${props.eventId}/order`}>
                             <a
-                                className="button"
+                                className='button'
                                 onClick={() => {
                                     ym('reachGoal', 'click_event_buy_button', {
                                         event_id: props.eventId
@@ -407,7 +431,7 @@ function EventPrice(props: EventPriceProps) {
                         </Link>
                         <p className={styles.eventPriceButton__description}>
                             Регистрация открыта до{' '}
-                            <FormattedDate value={props.tickets.sale_finish_date} month="long" day="numeric" />
+                            <FormattedDate value={props.tickets.sale_finish_date} month='long' day='numeric' />
                         </p>
                     </div>
                 )}
@@ -417,7 +441,7 @@ function EventPrice(props: EventPriceProps) {
                     </div>
                 )}
                 {props.description && (
-                    <div className="prose max-w-none">
+                    <div className='prose max-w-none'>
                         <Markdown>{props.description}</Markdown>
                     </div>
                 )}
@@ -426,48 +450,57 @@ function EventPrice(props: EventPriceProps) {
     );
 }
 
-const EventPage: NextComponentType<
-    NextPageContext & {
-        query: {
-            id: number;
-        };
-    },
+const EventPage: NextComponentType<NextPageContext & {
+    query: {
+        id: number;
+    };
+},
     EventPageProps,
-    EventPageProps
-> = props => {
+    EventPageProps> = props => {
     const { event, tickets, activities, talks } = props;
 
     return (
-        <Container itemScope itemType="http://schema.org/Event">
+        <div className='mt-12 max-w-7xl sm:px-6 lg:px-8 mx-auto' itemScope itemType='http://schema.org/Event'>
             <Head>
                 <title>{event.name}</title>
-                <meta property="og:title" content={event.name} />
-                <meta property="og:description" content={event.short_description} />
-                {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
-                {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
+                <meta property='og:title' content={event.name} />
+                <meta property='og:description' content={event.short_description} />
+                {event.image_vk && <meta property='vk:image' content={event.image_vk} />}
+                {event.image_facebook && <meta property='og:image' content={event.image_facebook} />}
             </Head>
-            <div className={styles.eventImage} style={{ backgroundImage: `url(${event.image})` }} />
-            <h1 className={styles.eventTitle} itemProp="name">
-                {event.name}
-            </h1>
-            <meta itemProp="image" content={event.image} />
-            <div className="prose max-w-none" itemProp="description">
-                {event.full_description ? (
-                    <Markdown>{event.full_description}</Markdown>
-                ) : (
-                    <p>{event.short_description}</p>
-                )}
+            <div className='relative h-36 sm:h-72 sm:rounded-2xl shadow-xl sm:overflow-hidden bg-gray-500'>
+                <Image
+                    layout='fill'
+                    objectFit='cover'
+                    objectPosition='center'
+                    loading='lazy'
+                    src={event.image}
+                    alt={event.name}
+                    itemProp='image'
+                />
             </div>
-            <EventInformation
-                tickets={tickets}
-                startDate={event.start_date}
-                finishDate={event.finish_date}
-                venue={event.venue}
-            />
-            <Talks talks={talks} />
-            <Schedule activities={activities} />
-            <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
-        </Container>
+            <div className='mx-2 sm:mx-auto'>
+                <h1 className='mt-10 text-2xl font-bold text-gray-900' itemProp='name'>
+                    {event.name}
+                </h1>
+                <div className='prose max-w-none' itemProp='description'>
+                    {event.full_description ? (
+                        <Markdown>{event.full_description}</Markdown>
+                    ) : (
+                        <p>{event.short_description}</p>
+                    )}
+                </div>
+                <EventInformation
+                    tickets={tickets}
+                    startDate={event.start_date}
+                    finishDate={event.finish_date}
+                    venue={event.venue}
+                />
+                <Talks talks={talks} />
+                <Schedule activities={activities} />
+                <EventPrice tickets={tickets} description={event.ticket_description} eventId={event.id} />
+            </div>
+        </div>
     );
 };
 

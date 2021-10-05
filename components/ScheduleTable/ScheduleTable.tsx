@@ -1,9 +1,8 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import { TalkCardProps } from '../TalkCard/TalkCard';
 import styles from './ScheduleTable.module.css';
-import Author from '../Author/Author';
+import Author, { AuthorProps } from '../Author/Author';
 
 type BaseActivityProps = {
     zone: string;
@@ -11,9 +10,16 @@ type BaseActivityProps = {
     start_date: string;
 };
 
+type Talk = {
+    description: string | null;
+    speaker: AuthorProps;
+    title: string;
+    poster_image?: string;
+}
+
 export type TalkActivityProps = BaseActivityProps & {
     type: 'TALK';
-    thing: TalkCardProps | null;
+    thing: Talk | null;
 };
 
 export type DiscussionActivityProps = BaseActivityProps & {

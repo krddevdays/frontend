@@ -5,6 +5,9 @@ const moduleExports = {
     publicRuntimeConfig: {
         backendDomain: process.env.BACKEND_DOMAIN || 'krd.dev/backend',
         backendProtocol: process.env.BACKEND_PROTOCOL || 'https:'
+    },
+    images: {
+        domains: ['storage.yandexcloud.net']
     }
 };
 
