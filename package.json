@@ -4,9 +4,12 @@
         "test": "echo \"Warning: no test specified\" && exit 0",
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook"
     },
     "dependencies": {
+        "@heroicons/react": "^1.0.4",
         "@sentry/nextjs": "^6.13.2",
         "@tailwindcss/forms": "^0.3.4",
         "@tailwindcss/typography": "^0.4.1",
@@ -41,6 +44,9 @@
         "yup": "^0.32.9"
     },
     "devDependencies": {
+        "@storybook/addon-postcss": "^2.0.0",
+        "@storybook/react": "^6.3.10",
+        "chromatic": "^5.10.2",
         "husky": "^2.7.0",
         "lint-staged": "^11.2.0",
         "prettier": "^2.4.1"
