@@ -9,10 +9,11 @@ RUN apt-get update \
 COPY package*.json ./
 RUN NODE_ENV=production npm ci
 
-ARG SENTRY_URL
-ARG SENTRY_ORG
-ARG SENTRY_PROJECT
+ARG SENTRY_URL=https://sentry.io/
+ARG SENTRY_ORG=krddev
+ARG SENTRY_PROJECT=frontend
 ARG SENTRY_AUTH_TOKEN
+
 ARG BACKEND_DOMAIN=krd.dev/backend
 ARG BACKEND_PROTOCOL=https:
 

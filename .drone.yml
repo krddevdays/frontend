@@ -1,9 +1,34 @@
 kind: pipeline
+type: docker
 name: default
 
 steps:
-  - name: lint
+  - name: install
     image: node:14.17
     commands:
       - npm ci
+
+  - name: lint
+    image: node:14.17
+    commands:
       - npx next lint
+
+  - name: version
+    image: node:14.17
+    commands:
+      - export VERSION=$DRONE_BRANCH.$(date +%s).${DRONE_COMMIT_SHA:0:8};
+      - echo $VERSION > .tags
+
+  - name: build
+    image: plugins/docker:20.10
+    environment:
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+    settings:
+      repo: cr.yandex/crptsm0vtuj4fltqor20/frontend
+      registry: cr.yandex
+      username: json_key
+      password:
+        from_secret: YC_IAM_SERVICE_ACCOUNT_AUTH_KEYS
+      build_args_from_env:
+        - SENTRY_AUTH_TOKEN
