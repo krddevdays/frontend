@@ -26,4 +26,4 @@
 ### Производственная сборка и запуск
 
 1. `npm run build`
-1. `BACKEND_DOMAIN=krd.dev/backend BACKEND_PROTOCOL=https: npm run start`
+1. `npm run start`

@@ -1,7 +1,7 @@
 FROM node:16.14-slim
 
 EXPOSE 3000
-WORKDIR /usr/src/krddevdays
+WORKDIR /usr/src/krddev
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ca-certificates
