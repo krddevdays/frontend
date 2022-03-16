@@ -1,0 +1,9 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: lint
+    image: node:14.17
+    commands:
+      - npm ci
+      - npx next lint
