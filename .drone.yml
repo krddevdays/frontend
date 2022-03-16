@@ -16,8 +16,8 @@ steps:
   - name: version
     image: node:14.17
     commands:
-      - export VERSION=$DRONE_BRANCH.$(date +%s).${DRONE_COMMIT_SHA:0:8};
-      - echo $VERSION > .tags
+      - node ./version.js > .tags
+      - cat .tags
 
   - name: build
     image: plugins/docker:20.10
