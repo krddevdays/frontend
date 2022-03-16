@@ -32,6 +32,7 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
                                 placeholder='blur'
                                 layout='fill'
                                 src={heroImage}
+                                alt=""
                             />
                             <div className='absolute inset-0 bg-indigo-700 mix-blend-multiply' />
                         </div>

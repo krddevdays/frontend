@@ -1,4 +1,4 @@
-FROM node:14.17-slim
+FROM node:16.14-slim
 
 EXPOSE 3000
 WORKDIR /usr/src/krddevdays

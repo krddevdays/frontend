@@ -4,17 +4,17 @@ name: default
 
 steps:
   - name: install
-    image: node:14.17
+    image: node:16.14
     commands:
       - npm ci
 
   - name: lint
-    image: node:14.17
+    image: node:16.14
     commands:
       - npx next lint
 
   - name: version
-    image: node:14.17
+    image: node:16.14
     commands:
       - node ./version.js > .tags
       - cat .tags
