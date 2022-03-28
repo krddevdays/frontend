@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import ym from 'react-yandex-metrika';
 import phone from 'phone';
 
+import * as vk from '../../../features/vk';
+
 yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
     return this.test('unique', message, function(value) {
         if (!value || !value[propertyName]) {
@@ -99,13 +101,11 @@ type EventOrderPageParams = {
     id: string;
 };
 
-const OrderPage: NextComponentType<
-    NextPageContext & {
-        query: EventOrderPageParams;
-    },
+const OrderPage: NextComponentType<NextPageContext & {
+    query: EventOrderPageParams;
+},
     EventOrderPageProps,
-    EventOrderPageProps
-> = props => {
+    EventOrderPageProps> = props => {
     const [step, setStep] = React.useState(0);
     const [customer, setCustomer] = React.useState<Customer | null>(props.profile);
     const [tickets, setTickets] = React.useState<Ticket[] | null>(null);
@@ -175,17 +175,17 @@ const OrderPage: NextComponentType<
                             Бронь действительна до{' '}
                             <FormattedDate
                                 value={order.reserved_to}
-                                month="long"
-                                day="numeric"
-                                hour="numeric"
-                                minute="numeric"
+                                month='long'
+                                day='numeric'
+                                hour='numeric'
+                                minute='numeric'
                             />
                         </p>
                         <div className={styles.orderStepForm__buttons}>
-                            <a href={order.payment_url} className="button button_theme_blue">
+                            <a href={order.payment_url} className='button button_theme_blue'>
                                 Оплатить{' '}
                                 <FormattedNumber
-                                    style="currency"
+                                    style='currency'
                                     value={order.price}
                                     currency={order.currency_id}
                                     minimumFractionDigits={0}
@@ -243,8 +243,8 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
                     ...values,
                     ...(parsedPhone.length
                         ? {
-                              phone: parsedPhone[0]
-                          }
+                            phone: parsedPhone[0]
+                        }
                         : {})
                 });
             }}
@@ -252,37 +252,37 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
             {({ isSubmitting, status }) => (
                 <Form className={styles.orderStepForm}>
                     <FormGroup>
-                        <label htmlFor="first_name">Имя</label>
-                        <Field type="text" name="first_name" id="first_name" className="form-control" />
-                        <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
+                        <label htmlFor='first_name'>Имя</label>
+                        <Field type='text' name='first_name' id='first_name' className='form-control' />
+                        <ErrorMessage name='first_name' component='div' className='invalid-feedback' />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor="last_name">Фамилия</label>
-                        <Field type="text" name="last_name" id="last_name" className="form-control" />
-                        <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
+                        <label htmlFor='last_name'>Фамилия</label>
+                        <Field type='text' name='last_name' id='last_name' className='form-control' />
+                        <ErrorMessage name='last_name' component='div' className='invalid-feedback' />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor="email">E-mail</label>
-                        <Field type="email" name="email" id="email" className="form-control" />
-                        <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                        <label htmlFor='email'>E-mail</label>
+                        <Field type='email' name='email' id='email' className='form-control' />
+                        <ErrorMessage name='email' component='div' className='invalid-feedback' />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor="phone">Телефон</label>
-                        <Field type="tel" name="phone" id="phone" className="form-control" />
-                        <ErrorMessage name="phone" component="div" className="invalid-feedback" />
+                        <label htmlFor='phone'>Телефон</label>
+                        <Field type='tel' name='phone' id='phone' className='form-control' />
+                        <ErrorMessage name='phone' component='div' className='invalid-feedback' />
                     </FormGroup>
 
                     <div className={styles.orderStepForm__buttons}>
-                        <button type="submit" className="button" disabled={isSubmitting}>
+                        <button type='submit' className='button' disabled={isSubmitting}>
                             {isSubmitting ? 'Проверка данных' : 'Продолжить'}
                         </button>
                     </div>
                     {status && (
                         <FormGroup>
-                            <div className="invalid-feedback">{status}</div>
+                            <div className='invalid-feedback'>{status}</div>
                         </FormGroup>
                     )}
                 </Form>
@@ -348,7 +348,7 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
             {({ values, isSubmitting, status }) => (
                 <Form className={styles.orderStepForm}>
                     <FieldArray
-                        name="tickets"
+                        name='tickets'
                         render={arrayHelpers =>
                             values.tickets.map((_, index) => (
                                 <div key={index}>
@@ -357,8 +357,8 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                         {index > 0 && (
                                             <button
                                                 style={{ float: 'right' }}
-                                                type="button"
-                                                className="button button_size_small button_theme_link"
+                                                type='button'
+                                                className='button button_size_small button_theme_link'
                                                 onClick={() => arrayHelpers.remove(index)}
                                             >
                                                 удалить
@@ -367,13 +367,13 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                     </p>
                                     <FormGroup>
                                         <Field
-                                            component="select"
+                                            component='select'
                                             name={`tickets[${index}].type_id`}
                                             id={`ticket_${index}_type_id`}
-                                            className="form-control"
+                                            className='form-control'
                                             disabled={props.types.length === 1}
                                         >
-                                            <option value="">Выберите тип билета</option>
+                                            <option value=''>Выберите тип билета</option>
                                             {props.types
                                                 .filter(type => !type.disabled)
                                                 .map(type => (
@@ -384,59 +384,59 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                         </Field>
                                         <ErrorMessage
                                             name={`tickets[${index}].type_id`}
-                                            component="div"
-                                            className="invalid-feedback"
+                                            component='div'
+                                            className='invalid-feedback'
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_first_name`}>Имя</label>
                                         <Field
-                                            type="text"
+                                            type='text'
                                             name={`tickets[${index}].first_name`}
                                             id={`ticket_${index}_first_name`}
-                                            className="form-control"
+                                            className='form-control'
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].first_name`}
-                                            component="div"
-                                            className="invalid-feedback"
+                                            component='div'
+                                            className='invalid-feedback'
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_last_name`}>Фамилия</label>
                                         <Field
-                                            type="text"
+                                            type='text'
                                             name={`tickets[${index}].last_name`}
                                             id={`ticket_${index}_last_name`}
-                                            className="form-control"
+                                            className='form-control'
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].last_name`}
-                                            component="div"
-                                            className="invalid-feedback"
+                                            component='div'
+                                            className='invalid-feedback'
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_email`}>E-mail</label>
                                         <Field
-                                            type="email"
+                                            type='email'
                                             name={`tickets[${index}].email`}
                                             id={`ticket_${index}_email`}
-                                            className="form-control"
+                                            className='form-control'
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].email`}
-                                            component="div"
-                                            className="invalid-feedback"
+                                            component='div'
+                                            className='invalid-feedback'
                                         />
                                     </FormGroup>
                                     {index + 1 === values.tickets.length && (
                                         <button
-                                            type="button"
-                                            className="button button_size_small button_theme_link"
+                                            type='button'
+                                            className='button button_size_small button_theme_link'
                                             onClick={() => arrayHelpers.insert(index + 1, ticketFactory())}
                                         >
                                             Добавить еще участника
@@ -448,21 +448,22 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                     />
                     <div className={styles.orderStepForm__buttons}>
                         <button
-                            type="button"
-                            className="button"
+                            type='button'
+                            className='button'
                             onClick={() => {
                                 props.onClickPrev(values.tickets);
                             }}
                         >
                             Назад
-                        </button>{' '}
-                        <button type="submit" className="button" disabled={isSubmitting}>
+                        </button>
+                        {' '}
+                        <button type='submit' className='button' disabled={isSubmitting}>
                             {isSubmitting ? 'Проверка данных' : 'Продолжить'}
                         </button>
                     </div>
                     {status && (
                         <FormGroup>
-                            <div className="invalid-feedback">{status}</div>
+                            <div className='invalid-feedback'>{status}</div>
                         </FormGroup>
                     )}
                 </Form>
@@ -523,6 +524,8 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                         order_price: order.price
                     });
 
+                    vk.goal('purchase', { value: order.price });
+
                     props.onSubmit(order);
                 } catch (e: any) {
                     if (e instanceof Response) {
@@ -569,13 +572,13 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                     <Form className={styles.orderStepForm}>
                         <FormGroup>
                             <Field
-                                component="select"
-                                name="payment_id"
-                                id="payment_id"
-                                className="form-control"
+                                component='select'
+                                name='payment_id'
+                                id='payment_id'
+                                className='form-control'
                                 disabled={props.payments.length === 1}
                             >
-                                <option value="">Выберите способ оплаты</option>
+                                <option value=''>Выберите способ оплаты</option>
                                 {props.payments
                                     .filter(payment => ['invoice', 'card', 'free'].includes(payment.type))
                                     .map(payment => (
@@ -586,40 +589,41 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                                         </option>
                                     ))}
                             </Field>
-                            <ErrorMessage name="payment_id" component="div" className="invalid-feedback" />
+                            <ErrorMessage name='payment_id' component='div' className='invalid-feedback' />
                         </FormGroup>
                         {payment && payment.type === 'invoice' && (
                             <React.Fragment>
                                 <FormGroup>
-                                    <label htmlFor="legal_name">Название компании</label>
-                                    <Field type="text" name="legal_name" id="legal_name" className="form-control" />
-                                    <ErrorMessage name="legal_name" component="div" className="invalid-feedback" />
+                                    <label htmlFor='legal_name'>Название компании</label>
+                                    <Field type='text' name='legal_name' id='legal_name' className='form-control' />
+                                    <ErrorMessage name='legal_name' component='div' className='invalid-feedback' />
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <label htmlFor="inn">ИНН</label>
-                                    <Field type="text" name="inn" id="inn" className="form-control" />
-                                    <ErrorMessage name="inn" component="div" className="invalid-feedback" />
+                                    <label htmlFor='inn'>ИНН</label>
+                                    <Field type='text' name='inn' id='inn' className='form-control' />
+                                    <ErrorMessage name='inn' component='div' className='invalid-feedback' />
                                 </FormGroup>
                             </React.Fragment>
                         )}
                         <div className={styles.orderStepForm__buttons}>
-                            <button type="button" className="button" onClick={props.onClickPrev}>
+                            <button type='button' className='button' onClick={props.onClickPrev}>
                                 Назад
-                            </button>{' '}
-                            <button type="submit" className="button button_theme_blue" disabled={isSubmitting}>
+                            </button>
+                            {' '}
+                            <button type='submit' className='button button_theme_blue' disabled={isSubmitting}>
                                 {isSubmitting ? 'Проверка данных' : 'Купить'}
                             </button>
                         </div>
                         {status && (
                             <FormGroup>
-                                <div className="invalid-feedback">{status}</div>
+                                <div className='invalid-feedback'>{status}</div>
                             </FormGroup>
                         )}
                         {payment && (
                             <p className={styles.orderStepForm__information}>
                                 Нажимая на кнопку &quot;Купить&quot; вы подтверждаете, что изучили и согласны с{' '}
-                                <a href={payment.agree_url} target="_blank" rel="noreferrer">
+                                <a href={payment.agree_url} target='_blank' rel='noreferrer'>
                                     правовыми документами
                                 </a>
                                 .

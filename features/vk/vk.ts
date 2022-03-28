@@ -1,7 +1,8 @@
 declare global {
     interface Window {
         VK?: {
-            Retargeting?: {
+            Goal: (conversionName: string, parameters?: Object) => void,
+            Retargeting: {
                 Hit: () => void,
                 Event: (eventName: string) => void,
                 Add: (audienceID: number) => void
@@ -10,12 +11,16 @@ declare global {
     }
 }
 
+export function goal(conversionName: string, parameters?: Object) {
+    window?.VK?.Goal(conversionName, parameters);
+}
+
 export function hit() {
-    window?.VK?.Retargeting?.Hit();
+    window?.VK?.Retargeting.Hit();
 }
 
 export function event(name: string) {
-    window?.VK?.Retargeting?.Event(name);
+    window?.VK?.Retargeting.Event(name);
 }
 
 export function add(id: number) {

@@ -8,6 +8,8 @@ import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
 
+import * as vk from '../../../features/vk';
+
 import Author, { AuthorProps } from '../../../components/Author/Author';
 
 import ScheduleTable, { ActivityProps } from '../../../components/ScheduleTable/ScheduleTable';
@@ -424,6 +426,8 @@ function EventPrice(props: EventPriceProps) {
                                     ym('reachGoal', 'click_event_buy_button', {
                                         event_id: props.eventId
                                     });
+
+                                    vk.goal('initiate_checkout');
                                 }}
                             >
                                 Зарегистрироваться
