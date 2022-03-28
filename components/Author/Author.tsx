@@ -36,7 +36,7 @@ export default function Author(props: AuthorProps) {
                     'text-sm': !props.small,
                     'text-xs': props.small
                 })}>{fullName}</p>
-                {!props.small && <p className='text-gray-500 text-xs'>{[props.position, props.work].filter(v => v !== undefined).join(', ')}</p>}
+                {!props.small && <p className='text-gray-500 text-xs'>{[props.position, props.work].filter(v => v !== null).join(', ')}</p>}
             </div>
         </div>
     );
