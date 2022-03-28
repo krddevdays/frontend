@@ -11,25 +11,14 @@ import { stripIndent } from 'common-tags';
 import ReactModal from 'react-modal';
 import AuthProvider from '../components/AuthProvider';
 
-ReactModal.setAppElement('#__next');
+import * as vk from '../features/vk';
 
-declare global {
-    interface Window {
-        VK: any;
-    }
-}
+ReactModal.setAppElement('#__next');
 
 Router.events.on('routeChangeComplete', (url: string) => {
     ym('hit', url);
 
-    if (
-        window &&
-        typeof window.VK !== 'undefined' &&
-        typeof window.VK.Retargeting !== 'undefined' &&
-        typeof window.VK.Retargeting.Hit === 'function'
-    ) {
-        window.VK.Retargeting.Hit();
-    }
+    vk.hit();
 });
 
 class MyApp extends App {

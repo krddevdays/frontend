@@ -1,0 +1,5 @@
+{
+    "name": "@krddev-features/vk",
+    "private": true,
+    "main": "vk.ts"
+}
