@@ -8,6 +8,15 @@ const moduleExports = {
     },
     images: {
         domains: ['storage.yandexcloud.net']
+    },
+    async redirects() {
+        return [
+            {
+                source: '/cfp',
+                destination: 'https://forms.yandex.ru/cloud/5adc61cf6162d77e2714831c/\n',
+                permanent: false,
+            },
+        ]
     }
 };
 
