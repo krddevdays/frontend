@@ -94,8 +94,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                         'lg:mt-[40px] lg:text-[18px] lg:leading-[22px] lg:w-[228px] lg:ml-[582px]'
                         // 'xl:mt-[70px] xl:text-[24px] xl:leading-[30px] xl:w-[360px] xl:ml-[861px]'
                     )}>
-                        Собираемся раз в неделю, завтракаем и болтаем обо всем, что связано с IT — технологии, проекты,
-                        рынок, интересные события
+                        Собираемся раз в неделю, завтракаем и болтаем обо всем
                     </p>
 
                     <div className={classNames(styles.brutalType, 'font-bold text-white opacity-60 tracking-tighter',
