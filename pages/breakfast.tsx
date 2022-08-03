@@ -14,7 +14,7 @@ const BreakfastPage: NextPageWithLayout = () => {
             <Head>
                 <title>krd.dev/breakfast</title>
                 <meta name='description'
-                      content='Собираемся раз в неделю, завтракаем и болтаем обо всем, что связано с IT — технологии, проекты, рынок, интересные события'
+                      content='Собираемся раз в неделю, завтракаем и болтаем обо всем'
                 />
             </Head>
             <div
