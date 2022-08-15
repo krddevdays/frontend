@@ -54,7 +54,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                                          alt='' />
                                     <div className='pl-[16px]'>
                                         воскресенье,<br />
-                                        14 августа с 9:00
+                                        21 августа с 9:00
                                     </div>
                                 </div>
                                 <div className='pt-[18px] sm:pt-[12px] md:pt-[18px] flex flex-row justify-items-start'>
