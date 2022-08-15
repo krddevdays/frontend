@@ -54,7 +54,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                                          alt='' />
                                     <div className='pl-[16px]'>
                                         воскресенье,<br />
-                                        7 августа с 9:00
+                                        14 августа с 9:00
                                     </div>
                                 </div>
                                 <div className='pt-[18px] sm:pt-[12px] md:pt-[18px] flex flex-row justify-items-start'>
@@ -96,15 +96,6 @@ const BreakfastPage: NextPageWithLayout = () => {
                     )}>
                         Собираемся раз в неделю, завтракаем и болтаем обо всем
                     </p>
-
-                    <div className={classNames(styles.brutalType, 'font-bold text-white opacity-60 tracking-tighter',
-                        'mt-[24px] text-[12px] leading-[15px]',
-                        'md:mt-[32px] md:text-[20px] md:leading-[25px] md:w-[500px]',
-                        'lg:text-[14px] lg:leading-[18px] lg:mt-[-12px]'
-                        // 'xl:text-[20px] xl:leading-[25px] xl:w-[700px]'
-                    )}>
-                        *Да, видео стоковое, но после первой встречи обязательно добавим живое :)
-                    </div>
                 </div>
             </div>
             <div className={classNames('fixed inset-0 z-20', styles.background)}></div>
