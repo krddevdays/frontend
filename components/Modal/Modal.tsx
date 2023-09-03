@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactModal from 'react-modal';
 import classNames from 'classnames';
 import closeSvg from './Close.svg';
-import Image from 'next/image'
+import Image from "next/image"
 
 import styles from './Modal.module.css';
 
@@ -45,7 +45,13 @@ const Modal = (props: ModalProps) => {
             htmlOpenClassName=""
         >
             <button className={styles.modal__closeButton} type="button" onClick={handleClickClose}>
-                <Image src={closeSvg} alt="" />
+                <Image
+                    src={closeSvg}
+                    alt=""
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
             </button>
             <div className={styles.modal__title}>{props.title}</div>
             <div className={styles.modal__content}>{props.children}</div>

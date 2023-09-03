@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import avatarSvg from './DefaultAvatar.svg';
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export type AuthorProps = {
     className?: string;
@@ -18,18 +18,21 @@ export default function Author(props: AuthorProps) {
     const fullName = [props.first_name, props.last_name].join(' ');
 
     return (
-        <div className={`flex items-center items-center justify-between space-x-3 ${props.className}`}>
+        <div className={`flex items-center justify-between space-x-3 ${props.className}`}>
             <div className={classNames('relative bg-gray-300 rounded-full flex-shrink-0 overflow-hidden', {
                 'w-12 h-12': !props.small,
                 'w-6 h-6': props.small
             })}>
                 <Image
-                    layout='fill'
-                    objectFit='cover'
-                    objectPosition='center'
                     loading='lazy'
                     src={props.avatar || avatarSvg}
-                    alt={fullName} />
+                    alt={fullName}
+                    fill
+                    sizes="100vw"
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: "center"
+                    }} />
             </div>
             <div className='flex-1'>
                 <p className={classNames({

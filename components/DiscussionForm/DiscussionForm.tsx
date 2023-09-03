@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import ym from 'react-yandex-metrika';
 import discussionSvg from './Discussion.svg';
-import Image from 'next/image'
+import Image from "next/image"
 
 import { useAuth } from '../AuthProvider';
 import * as api from '../../api';
@@ -44,7 +44,13 @@ export default function DiscussionForm(props: DiscussionFormProps) {
             {!confirmed && (
                 <div className={styles.discussionForm}>
                     <div className={styles.discussionForm__body}>
-                        <Image src={discussionSvg} alt="" width="100%" />
+                        <Image
+                            src={discussionSvg}
+                            alt=""
+                            style={{
+                                maxWidth: "100%",
+                                height: "auto"
+                            }} />
                     </div>
                     <div className={styles.discussionForm__footer}>
                         <button
