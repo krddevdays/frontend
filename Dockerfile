@@ -1,30 +1,43 @@
-FROM node:16.14-slim
+FROM node:16.14-slim AS base
 
-EXPOSE 3000
-WORKDIR /usr/src/krddev
-
+FROM base AS deps
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ca-certificates
-
+WORKDIR /app
 COPY package*.json ./
-RUN NODE_ENV=production npm ci
+ENV NODE_ENV=production
+RUN npm ci
 
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 ARG SENTRY_URL=https://sentry.io/
 ARG SENTRY_ORG=krddev
 ARG SENTRY_PROJECT=frontend
-ARG SENTRY_AUTH_TOKEN
-
 ARG BACKEND_DOMAIN=krd.dev/backend
 ARG BACKEND_PROTOCOL=https:
-
 ENV SENTRY_URL $SENTRY_URL
 ENV SENTRY_ORG $SENTRY_ORG
 ENV SENTRY_PROJECT $SENTRY_PROJECT
-ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
 ENV BACKEND_DOMAIN=$BACKEND_DOMAIN
 ENV BACKEND_PROTOCOL=$BACKEND_PROTOCOL
+RUN --mount=type=secret,id=sentry-auth-token \
+    SENTRY_AUTH_TOKEN="$(cat /run/secrets/sentry-auth-token)" && \
+    export SENTRY_AUTH_TOKEN && \
+    npm run build -- --no-lint
 
-COPY . .
-RUN npm run build
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
 
-CMD [ "npm", "start" ]
+EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME localhost
+CMD ["node", "server.js"]
