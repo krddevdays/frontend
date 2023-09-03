@@ -54,9 +54,10 @@ type Customer = {
 
 type OrderPageTemplateProps = {
     step: number;
+    children: React.ReactNode
 };
 
-const OrderPageTemplate: React.FC<OrderPageTemplateProps> = ({ step, children }) => {
+const OrderPageTemplate = ({ step, children }: OrderPageTemplateProps) => {
     return (
         <Container className={styles.orderContainer}>
             <Head>

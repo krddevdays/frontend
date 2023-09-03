@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextPageContext, NextComponentType, GetServerSideProps } from 'next';
 import * as api from '../../../api';
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from "next/image";
 import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 import classNames from 'classnames';
 import Markdown from 'markdown-to-jsx';
@@ -85,7 +85,7 @@ function Discussions(props: DiscussionsProps) {
     }, [props.discussions]);
 
     const handleAdd = React.useCallback(
-        discussion => {
+      (discussion: Discussion) => {
             setDiscussions(discussions => [...discussions, discussion]);
         },
         [setDiscussions]
@@ -419,19 +419,20 @@ function EventPrice(props: EventPriceProps) {
                 </div>
                 {ticketsAvailable && (
                     <div className={styles.eventPriceButton}>
-                        <Link href='/events/[id]/order' as={`/events/${props.eventId}/order`}>
-                            <a
-                                className='button'
-                                onClick={() => {
-                                    ym('reachGoal', 'click_event_buy_button', {
-                                        event_id: props.eventId
-                                    });
+                        <Link
+                            href='/events/[id]/order'
+                            as={`/events/${props.eventId}/order`}
+                            className='button'
+                            onClick={() => {
+                                ym('reachGoal', 'click_event_buy_button', {
+                                    event_id: props.eventId
+                                });
 
-                                    vk.goal('initiate_checkout');
-                                }}
-                            >
+                                vk.goal('initiate_checkout');
+                            }}>
+
                                 Зарегистрироваться
-                            </a>
+
                         </Link>
                         <p className={styles.eventPriceButton__description}>
                             Регистрация открыта до{' '}
@@ -474,14 +475,16 @@ const EventPage: NextComponentType<NextPageContext & {
             </Head>
             <div className='relative h-36 sm:h-72 sm:rounded-2xl shadow-xl sm:overflow-hidden bg-gray-500'>
                 <Image
-                    layout='fill'
-                    objectFit='cover'
-                    objectPosition='center'
                     loading='lazy'
                     src={event.image}
                     alt={event.name}
                     itemProp='image'
-                />
+                    fill
+                    sizes="100vw"
+                    style={{
+                        objectFit: "cover",
+                        objectPosition: "center"
+                    }} />
             </div>
             <div className='mx-2 sm:mx-auto'>
                 <h1 className='mt-10 text-2xl font-bold text-gray-900' itemProp='name'>

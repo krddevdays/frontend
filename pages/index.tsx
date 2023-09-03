@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPageContext, NextComponentType } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from "next/image";
 import { GetServerSideProps } from 'next';
 
 import * as api from '../api';
@@ -26,14 +26,16 @@ const IndexPage: NextComponentType<NextPageContext, IndexPageProps, IndexPagePro
                     <div className='relative shadow-xl sm:rounded-2xl sm:overflow-hidden'>
                         <div className='absolute inset-0'>
                             <Image
-                                objectFit='cover'
-                                objectPosition='center'
                                 loading='lazy'
                                 placeholder='blur'
-                                layout='fill'
                                 src={heroImage}
                                 alt=""
-                            />
+                                fill
+                                sizes="100vw"
+                                style={{
+                                    objectFit: "cover",
+                                    objectPosition: "center"
+                                }} />
                             <div className='absolute inset-0 bg-indigo-700 mix-blend-multiply' />
                         </div>
                         <div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
