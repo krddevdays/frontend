@@ -1,8 +1,7 @@
-FROM node:16.14-slim AS base
+FROM node:16.14-alpine AS base
 
 FROM base AS deps
-RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package*.json ./
 ENV NODE_ENV=production
