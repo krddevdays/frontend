@@ -7,7 +7,6 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import ym, { YMInitializer } from 'react-yandex-metrika';
 import Router from 'next/router';
-import Head from 'next/head';
 import { stripIndent } from 'common-tags';
 import ReactModal from 'react-modal';
 import AuthProvider from '../components/AuthProvider';

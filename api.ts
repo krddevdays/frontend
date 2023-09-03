@@ -1,6 +1,6 @@
 import crossFetch from 'cross-fetch';
 import { format as urlFormat } from 'url';
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 import getConfig from 'next/config';
 import { getContext } from './context';
 
@@ -35,7 +35,7 @@ function createUrl(context: {
     const url = urlFormat({
         protocol: getConfig().publicRuntimeConfig.backendProtocol,
         host: getConfig().publicRuntimeConfig.backendDomain,
-        pathname: context.pathname
+        pathname: context.pathname,
     });
 
     if (typeof context.query === 'undefined') {
@@ -43,7 +43,7 @@ function createUrl(context: {
     }
 
     const query = queryString.stringify(context.query, {
-        arrayFormat: 'bracket'
+        arrayFormat: 'bracket',
     });
 
     return `${url}?${query}`;
@@ -56,14 +56,14 @@ export const events = async (filter?: { date_from?: Date }): Promise<EventsRespo
         createUrl({
             pathname: '/events/',
             query: {
-                date_from: filter && filter.date_from ? filter.date_from.toISOString().slice(0, 10) : undefined
-            }
+                date_from: filter && filter.date_from ? filter.date_from.toISOString().slice(0, 10) : undefined,
+            },
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -95,14 +95,14 @@ export const talks = async (filter?: { event_id?: number }): Promise<TalksRespon
         createUrl({
             pathname: '/talks/',
             query: {
-                event_id: filter && filter.event_id ? filter.event_id : undefined
-            }
+                event_id: filter && filter.event_id ? filter.event_id : undefined,
+            },
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -174,13 +174,13 @@ type EventActivitiesResponse = Array<
 export const event = async (id: number): Promise<EventResponse | null> => {
     const response = await fetch(
         createUrl({
-            pathname: `/events/${id}/`
+            pathname: `/events/${id}/`,
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status === 404) {
@@ -197,13 +197,13 @@ export const event = async (id: number): Promise<EventResponse | null> => {
 export const eventActivities = async (id: number): Promise<EventActivitiesResponse> => {
     const response = await fetch(
         createUrl({
-            pathname: `/events/${id}/activities/`
+            pathname: `/events/${id}/activities/`,
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -249,13 +249,13 @@ type EventTicketsResponse = {
 export const eventTickets = async (id: number): Promise<EventTicketsResponse | null> => {
     const response = await fetch(
         createUrl({
-            pathname: `/events/${id}/tickets/`
+            pathname: `/events/${id}/tickets/`,
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status === 404) {
@@ -285,7 +285,7 @@ type Order = {
 
 export const eventOrder = async (
     id: number,
-    order: Order
+    order: Order,
 ): Promise<{
     id: string;
     payment_url: string;
@@ -296,16 +296,16 @@ export const eventOrder = async (
 }> => {
     const response = await fetch(
         createUrl({
-            pathname: `/events/${id}/order/`
+            pathname: `/events/${id}/order/`,
         }),
         {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(order)
-        }
+            body: JSON.stringify(order),
+        },
     );
 
     if (response.status === 400) {
@@ -331,13 +331,13 @@ type Profile = {
 export const getProfile = async (): Promise<Profile> => {
     const response = await fetch(
         createUrl({
-            pathname: `/users/me/`
+            pathname: `/users/me/`,
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -357,7 +357,7 @@ type PatchProfile = {
 export const patchProfile = async (profile: PatchProfile): Promise<Profile> => {
     const data: Partial<Omit<Profile, 'email' | 'username'>> = {};
 
-    (Object.keys(profile) as Array<keyof typeof profile>).forEach(key => {
+    (Object.keys(profile) as Array<keyof typeof profile>).forEach((key) => {
         const value = profile[key];
 
         switch (key) {
@@ -374,16 +374,16 @@ export const patchProfile = async (profile: PatchProfile): Promise<Profile> => {
 
     const response = await fetch(
         createUrl({
-            pathname: `/users/me/`
+            pathname: `/users/me/`,
         }),
         {
             method: 'PATCH',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
-        }
+            body: JSON.stringify(data),
+        },
     );
 
     if (response.status !== 200) {
@@ -396,15 +396,15 @@ export const patchProfile = async (profile: PatchProfile): Promise<Profile> => {
 export const login = async (credentials: { username: string; password: string }): Promise<true> => {
     const response = await fetch(
         createUrl({
-            pathname: `/users/login/`
+            pathname: `/users/login/`,
         }),
         {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(credentials)
-        }
+            body: JSON.stringify(credentials),
+        },
     );
 
     if (response.status !== 200) {
@@ -417,11 +417,11 @@ export const login = async (credentials: { username: string; password: string })
 export const logout = async (): Promise<true> => {
     const response = await fetch(
         createUrl({
-            pathname: `/users/logout/`
+            pathname: `/users/logout/`,
         }),
         {
-            method: 'POST'
-        }
+            method: 'POST',
+        },
     );
 
     if (response.status !== 200) {
@@ -439,15 +439,15 @@ type Registration = Profile & {
 export const registration = async (profile: Registration): Promise<never> => {
     const response = await fetch(
         createUrl({
-            pathname: `/users/registration/`
+            pathname: `/users/registration/`,
         }),
         {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(profile)
-        }
+            body: JSON.stringify(profile),
+        },
     );
 
     if (response.status !== 200) {
@@ -473,16 +473,16 @@ export const getDiscussions = async (filter?: { event_id?: number }): Promise<Di
         createUrl({
             pathname: `/discussions/`,
             query: {
-                event_id: filter && filter.event_id ? filter.event_id : undefined
-            }
+                event_id: filter && filter.event_id ? filter.event_id : undefined,
+            },
         }),
         {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }
+                'Content-Type': 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -495,14 +495,14 @@ export const getDiscussions = async (filter?: { event_id?: number }): Promise<Di
 export const getDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
-            pathname: `/discussions/${id}/`
+            pathname: `/discussions/${id}/`,
         }),
         {
             method: 'GET',
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -515,14 +515,14 @@ export const getDiscussion = async (id: number): Promise<Discussion> => {
 export const voteDiscussion = async (id: number): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
-            pathname: `/discussions/${id}/vote/`
+            pathname: `/discussions/${id}/vote/`,
         }),
         {
             method: 'POST',
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {
@@ -541,16 +541,16 @@ type PostDiscussion = {
 export const addDiscussion = async (data: PostDiscussion): Promise<Discussion> => {
     const response = await fetch(
         createUrl({
-            pathname: `/discussions/`
+            pathname: `/discussions/`,
         }),
         {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
-        }
+            body: JSON.stringify(data),
+        },
     );
 
     if (response.status !== 201) {
@@ -568,16 +568,16 @@ type LinkTicket = {
 export const linkTicket = async (data: LinkTicket): Promise<LinkTicket> => {
     const response = await fetch(
         createUrl({
-            pathname: `/checkout/link/`
+            pathname: `/checkout/link/`,
         }),
         {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
-        }
+            body: JSON.stringify(data),
+        },
     );
 
     if (response.status !== 200) {
@@ -597,13 +597,13 @@ type Ticket = {
 export const getTickets = async (): Promise<Ticket[]> => {
     const response = await fetch(
         createUrl({
-            pathname: `/me/tickets/`
+            pathname: `/me/tickets/`,
         }),
         {
             headers: {
-                Accept: 'application/json'
-            }
-        }
+                Accept: 'application/json',
+            },
+        },
     );
 
     if (response.status !== 200) {

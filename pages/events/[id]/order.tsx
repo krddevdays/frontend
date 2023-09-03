@@ -219,7 +219,7 @@ const CustomerForm: React.FC<CustomerFormProps> = (props) => {
                     .test(
                         'is-rus-phone',
                         'Неверный номер телефона',
-                        (value) => !value || phone(value, 'RUS').length !== 0,
+                        (value) => !value || !phone(value, { country: 'RUS' }).isValid,
                     ),
             }),
         [],
@@ -237,13 +237,13 @@ const CustomerForm: React.FC<CustomerFormProps> = (props) => {
             validationSchema={schema}
             initialStatus={null}
             onSubmit={({ phone: rawPhone, ...values }) => {
-                let parsedPhone = phone(rawPhone || '', 'RUS');
+                let parsedPhone = phone(rawPhone || '', { country: 'RUS' });
 
                 props.onSubmit({
                     ...values,
-                    ...(parsedPhone.length
+                    ...(parsedPhone.isValid
                         ? {
-                              phone: parsedPhone[0],
+                              phone: parsedPhone.phoneNumber,
                           }
                         : {}),
                 });

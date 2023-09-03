@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Placement, ReferenceObject } from 'popper.js';
+import { Placement, VirtualElement } from '@popperjs/core';
 import { Popper } from 'react-popper';
 
 import styles from './Tooltip.module.css';
@@ -10,7 +10,7 @@ type TooltipProps<T> = {
     placement?: Placement;
 };
 
-export default function Tooltip<T extends ReferenceObject>(props: TooltipProps<T>) {
+export default function Tooltip<T extends HTMLElement | VirtualElement>(props: TooltipProps<T>) {
     return (
         <Popper referenceElement={props.refObject.current || undefined} placement={props.placement}>
             {({ ref, style, placement, arrowProps }) => (
