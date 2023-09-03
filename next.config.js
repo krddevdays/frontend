@@ -1,6 +1,7 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
+    output: 'standalone',
     reactStrictMode: true,
     publicRuntimeConfig: {
         backendDomain: process.env.BACKEND_DOMAIN || 'krd.dev/backend',
