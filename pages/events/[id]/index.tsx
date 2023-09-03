@@ -238,7 +238,7 @@ export type Event = {
     start_date: string;
     finish_date: string;
     short_description: string;
-    image: string;
+    image: string | null;
     full_description?: string;
     ticket_description?: string;
     image_vk?: string;
@@ -483,20 +483,22 @@ const EventPage: NextComponentType<
                 {event.image_vk && <meta property="vk:image" content={event.image_vk} />}
                 {event.image_facebook && <meta property="og:image" content={event.image_facebook} />}
             </Head>
-            <div className="relative h-36 sm:h-72 sm:rounded-2xl shadow-xl sm:overflow-hidden bg-gray-500">
-                <Image
-                    loading="lazy"
-                    src={event.image}
-                    alt={event.name}
-                    itemProp="image"
-                    fill
-                    sizes="100vw"
-                    style={{
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                    }}
-                />
-            </div>
+            {event.image && (
+                <div className="relative h-36 sm:h-72 sm:rounded-2xl shadow-xl sm:overflow-hidden bg-gray-500">
+                    <Image
+                        loading="lazy"
+                        src={event.image}
+                        alt={event.name}
+                        itemProp="image"
+                        fill
+                        sizes="100vw"
+                        style={{
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                        }}
+                    />
+                </div>
+            )}
             <div className="mx-2 sm:mx-auto">
                 <h1 className="mt-10 text-2xl font-bold text-gray-900" itemProp="name">
                     {event.name}
