@@ -11,16 +11,16 @@ import phone from 'phone';
 
 import * as vk from '../../../features/vk';
 
-yup.addMethod(yup.object, 'uniqueProperty', function(propertyName, message) {
-    return this.test('unique', message, function(value) {
+yup.addMethod(yup.object, 'uniqueProperty', function (propertyName, message) {
+    return this.test('unique', message, function (value) {
         if (!value || !value[propertyName]) {
             return true;
         }
 
         // @ts-ignore
-        if (this.parent.filter(v => v !== value).some(v => v[propertyName] === value[propertyName])) {
+        if (this.parent.filter((v) => v !== value).some((v) => v[propertyName] === value[propertyName])) {
             throw this.createError({
-                path: `${this.path}.${propertyName}`
+                path: `${this.path}.${propertyName}`,
             });
         }
 
@@ -54,7 +54,7 @@ type Customer = {
 
 type OrderPageTemplateProps = {
     step: number;
-    children: React.ReactNode
+    children: React.ReactNode;
 };
 
 const OrderPageTemplate = ({ step, children }: OrderPageTemplateProps) => {
@@ -68,7 +68,7 @@ const OrderPageTemplate = ({ step, children }: OrderPageTemplateProps) => {
                 <div
                     className={classNames(styles.orderSteps__item, styles.orderStep, {
                         [styles.orderStep_status_active]: step === 0,
-                        [styles.orderStep_status_finished]: step > 0
+                        [styles.orderStep_status_finished]: step > 0,
                     })}
                 >
                     <div className={styles.orderStep__number}>1</div>
@@ -77,7 +77,7 @@ const OrderPageTemplate = ({ step, children }: OrderPageTemplateProps) => {
                 <div
                     className={classNames(styles.orderSteps__item, styles.orderStep, {
                         [styles.orderStep_status_active]: step === 1,
-                        [styles.orderStep_status_finished]: step > 1
+                        [styles.orderStep_status_finished]: step > 1,
                     })}
                 >
                     <div className={styles.orderStep__number}>2</div>
@@ -86,7 +86,7 @@ const OrderPageTemplate = ({ step, children }: OrderPageTemplateProps) => {
                 <div
                     className={classNames(styles.orderSteps__item, styles.orderStep, {
                         [styles.orderStep_status_active]: step === 2,
-                        [styles.orderStep_status_finished]: step > 2
+                        [styles.orderStep_status_finished]: step > 2,
                     })}
                 >
                     <div className={styles.orderStep__number}>3</div>
@@ -102,11 +102,13 @@ type EventOrderPageParams = {
     id: string;
 };
 
-const OrderPage: NextComponentType<NextPageContext & {
-    query: EventOrderPageParams;
-},
+const OrderPage: NextComponentType<
+    NextPageContext & {
+        query: EventOrderPageParams;
+    },
     EventOrderPageProps,
-    EventOrderPageProps> = props => {
+    EventOrderPageProps
+> = (props) => {
     const [step, setStep] = React.useState(0);
     const [customer, setCustomer] = React.useState<Customer | null>(props.profile);
     const [tickets, setTickets] = React.useState<Ticket[] | null>(null);
@@ -116,7 +118,7 @@ const OrderPage: NextComponentType<NextPageContext & {
         return (
             <OrderPageTemplate step={0}>
                 <CustomerForm
-                    onSubmit={customer => {
+                    onSubmit={(customer) => {
                         setCustomer(customer);
                         setStep(1);
                     }}
@@ -132,11 +134,11 @@ const OrderPage: NextComponentType<NextPageContext & {
                 <TicketsForm
                     types={props.tickets.types}
                     customer={customer}
-                    onClickPrev={tickets => {
+                    onClickPrev={(tickets) => {
                         setTickets(tickets);
                         setStep(0);
                     }}
-                    onSubmit={tickets => {
+                    onSubmit={(tickets) => {
                         setTickets(tickets);
                         setStep(2);
                     }}
@@ -157,7 +159,7 @@ const OrderPage: NextComponentType<NextPageContext & {
                     onClickPrev={() => {
                         setStep(1);
                     }}
-                    onSubmit={order => {
+                    onSubmit={(order) => {
                         setOrder(order);
                         setStep(3);
                     }}
@@ -176,17 +178,17 @@ const OrderPage: NextComponentType<NextPageContext & {
                             Бронь действительна до{' '}
                             <FormattedDate
                                 value={order.reserved_to}
-                                month='long'
-                                day='numeric'
-                                hour='numeric'
-                                minute='numeric'
+                                month="long"
+                                day="numeric"
+                                hour="numeric"
+                                minute="numeric"
                             />
                         </p>
                         <div className={styles.orderStepForm__buttons}>
-                            <a href={order.payment_url} className='button button_theme_blue'>
+                            <a href={order.payment_url} className="button button_theme_blue">
                                 Оплатить{' '}
                                 <FormattedNumber
-                                    style='currency'
+                                    style="currency"
                                     value={order.price}
                                     currency={order.currency_id}
                                     minimumFractionDigits={0}
@@ -205,25 +207,22 @@ type CustomerFormProps = {
     initialValues?: Customer;
 };
 
-const CustomerForm: React.FC<CustomerFormProps> = props => {
+const CustomerForm: React.FC<CustomerFormProps> = (props) => {
     const schema = React.useMemo(
         () =>
             yup.object().shape({
                 first_name: yup.string().required('Введите имя'),
                 last_name: yup.string().required('Введите фамилию'),
-                email: yup
-                    .string()
-                    .email('Неверный e-mail')
-                    .required('Введите e-mail'),
+                email: yup.string().email('Неверный e-mail').required('Введите e-mail'),
                 phone: yup
                     .string()
                     .test(
                         'is-rus-phone',
                         'Неверный номер телефона',
-                        value => !value || phone(value, 'RUS').length !== 0
-                    )
+                        (value) => !value || phone(value, 'RUS').length !== 0,
+                    ),
             }),
-        []
+        [],
     );
 
     return (
@@ -233,7 +232,7 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
                 last_name: '',
                 email: '',
                 phone: '',
-                ...props.initialValues
+                ...props.initialValues,
             }}
             validationSchema={schema}
             initialStatus={null}
@@ -244,46 +243,46 @@ const CustomerForm: React.FC<CustomerFormProps> = props => {
                     ...values,
                     ...(parsedPhone.length
                         ? {
-                            phone: parsedPhone[0]
-                        }
-                        : {})
+                              phone: parsedPhone[0],
+                          }
+                        : {}),
                 });
             }}
         >
             {({ isSubmitting, status }) => (
                 <Form className={styles.orderStepForm}>
                     <FormGroup>
-                        <label htmlFor='first_name'>Имя</label>
-                        <Field type='text' name='first_name' id='first_name' className='form-control' />
-                        <ErrorMessage name='first_name' component='div' className='invalid-feedback' />
+                        <label htmlFor="first_name">Имя</label>
+                        <Field type="text" name="first_name" id="first_name" className="form-control" />
+                        <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor='last_name'>Фамилия</label>
-                        <Field type='text' name='last_name' id='last_name' className='form-control' />
-                        <ErrorMessage name='last_name' component='div' className='invalid-feedback' />
+                        <label htmlFor="last_name">Фамилия</label>
+                        <Field type="text" name="last_name" id="last_name" className="form-control" />
+                        <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor='email'>E-mail</label>
-                        <Field type='email' name='email' id='email' className='form-control' />
-                        <ErrorMessage name='email' component='div' className='invalid-feedback' />
+                        <label htmlFor="email">E-mail</label>
+                        <Field type="email" name="email" id="email" className="form-control" />
+                        <ErrorMessage name="email" component="div" className="invalid-feedback" />
                     </FormGroup>
 
                     <FormGroup>
-                        <label htmlFor='phone'>Телефон</label>
-                        <Field type='tel' name='phone' id='phone' className='form-control' />
-                        <ErrorMessage name='phone' component='div' className='invalid-feedback' />
+                        <label htmlFor="phone">Телефон</label>
+                        <Field type="tel" name="phone" id="phone" className="form-control" />
+                        <ErrorMessage name="phone" component="div" className="invalid-feedback" />
                     </FormGroup>
 
                     <div className={styles.orderStepForm__buttons}>
-                        <button type='submit' className='button' disabled={isSubmitting}>
+                        <button type="submit" className="button" disabled={isSubmitting}>
                             {isSubmitting ? 'Проверка данных' : 'Продолжить'}
                         </button>
                     </div>
                     {status && (
                         <FormGroup>
-                            <div className='invalid-feedback'>{status}</div>
+                            <div className="invalid-feedback">{status}</div>
                         </FormGroup>
                     )}
                 </Form>
@@ -300,15 +299,15 @@ type TicketsFormProps = {
     types: EventTickets['types'];
 };
 
-const TicketsForm: React.FC<TicketsFormProps> = props => {
+const TicketsForm: React.FC<TicketsFormProps> = (props) => {
     const ticketFactory = React.useCallback(
         (defaults: Partial<Ticket> = {}) => ({
             type_id: props.types.length === 1 ? props.types[0].id.toString() : '',
             first_name: defaults.first_name ? defaults.first_name : '',
             last_name: defaults.last_name ? defaults.last_name : '',
-            email: defaults.email ? defaults.email : ''
+            email: defaults.email ? defaults.email : '',
         }),
-        [props.types]
+        [props.types],
     );
 
     const schema = React.useMemo(
@@ -325,22 +324,19 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                 type_id: yup.string().required('Выберите билет'),
                                 first_name: yup.string().required('Введите имя'),
                                 last_name: yup.string().required('Введите фамилию'),
-                                email: yup
-                                    .string()
-                                    .email('Неверный e-amil')
-                                    .required('Введите e-mail')
-                            })
+                                email: yup.string().email('Неверный e-amil').required('Введите e-mail'),
+                            }),
                     )
-                    .min(1)
+                    .min(1),
             }),
-        []
+        [],
     );
 
     return (
         <Formik
             validationSchema={schema}
             initialValues={{
-                tickets: props.initialValues || [ticketFactory(props.customer)]
+                tickets: props.initialValues || [ticketFactory(props.customer)],
             }}
             onSubmit={({ tickets }) => {
                 props.onSubmit(tickets);
@@ -349,8 +345,8 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
             {({ values, isSubmitting, status }) => (
                 <Form className={styles.orderStepForm}>
                     <FieldArray
-                        name='tickets'
-                        render={arrayHelpers =>
+                        name="tickets"
+                        render={(arrayHelpers) =>
                             values.tickets.map((_, index) => (
                                 <div key={index}>
                                     <p className={styles.orderStepForm__title}>
@@ -358,8 +354,8 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                         {index > 0 && (
                                             <button
                                                 style={{ float: 'right' }}
-                                                type='button'
-                                                className='button button_size_small button_theme_link'
+                                                type="button"
+                                                className="button button_size_small button_theme_link"
                                                 onClick={() => arrayHelpers.remove(index)}
                                             >
                                                 удалить
@@ -368,16 +364,16 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                     </p>
                                     <FormGroup>
                                         <Field
-                                            component='select'
+                                            component="select"
                                             name={`tickets[${index}].type_id`}
                                             id={`ticket_${index}_type_id`}
-                                            className='form-control'
+                                            className="form-control"
                                             disabled={props.types.length === 1}
                                         >
-                                            <option value=''>Выберите тип билета</option>
+                                            <option value="">Выберите тип билета</option>
                                             {props.types
-                                                .filter(type => !type.disabled)
-                                                .map(type => (
+                                                .filter((type) => !type.disabled)
+                                                .map((type) => (
                                                     <option key={type.id} value={type.id}>
                                                         {type.name}
                                                     </option>
@@ -385,59 +381,59 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                                         </Field>
                                         <ErrorMessage
                                             name={`tickets[${index}].type_id`}
-                                            component='div'
-                                            className='invalid-feedback'
+                                            component="div"
+                                            className="invalid-feedback"
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_first_name`}>Имя</label>
                                         <Field
-                                            type='text'
+                                            type="text"
                                             name={`tickets[${index}].first_name`}
                                             id={`ticket_${index}_first_name`}
-                                            className='form-control'
+                                            className="form-control"
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].first_name`}
-                                            component='div'
-                                            className='invalid-feedback'
+                                            component="div"
+                                            className="invalid-feedback"
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_last_name`}>Фамилия</label>
                                         <Field
-                                            type='text'
+                                            type="text"
                                             name={`tickets[${index}].last_name`}
                                             id={`ticket_${index}_last_name`}
-                                            className='form-control'
+                                            className="form-control"
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].last_name`}
-                                            component='div'
-                                            className='invalid-feedback'
+                                            component="div"
+                                            className="invalid-feedback"
                                         />
                                     </FormGroup>
 
                                     <FormGroup>
                                         <label htmlFor={`ticket_${index}_email`}>E-mail</label>
                                         <Field
-                                            type='email'
+                                            type="email"
                                             name={`tickets[${index}].email`}
                                             id={`ticket_${index}_email`}
-                                            className='form-control'
+                                            className="form-control"
                                         />
                                         <ErrorMessage
                                             name={`tickets[${index}].email`}
-                                            component='div'
-                                            className='invalid-feedback'
+                                            component="div"
+                                            className="invalid-feedback"
                                         />
                                     </FormGroup>
                                     {index + 1 === values.tickets.length && (
                                         <button
-                                            type='button'
-                                            className='button button_size_small button_theme_link'
+                                            type="button"
+                                            className="button button_size_small button_theme_link"
                                             onClick={() => arrayHelpers.insert(index + 1, ticketFactory())}
                                         >
                                             Добавить еще участника
@@ -449,22 +445,21 @@ const TicketsForm: React.FC<TicketsFormProps> = props => {
                     />
                     <div className={styles.orderStepForm__buttons}>
                         <button
-                            type='button'
-                            className='button'
+                            type="button"
+                            className="button"
                             onClick={() => {
                                 props.onClickPrev(values.tickets);
                             }}
                         >
                             Назад
-                        </button>
-                        {' '}
-                        <button type='submit' className='button' disabled={isSubmitting}>
+                        </button>{' '}
+                        <button type="submit" className="button" disabled={isSubmitting}>
                             {isSubmitting ? 'Проверка данных' : 'Продолжить'}
                         </button>
                     </div>
                     {status && (
                         <FormGroup>
-                            <div className='invalid-feedback'>{status}</div>
+                            <div className="invalid-feedback">{status}</div>
                         </FormGroup>
                     )}
                 </Form>
@@ -491,19 +486,19 @@ type PaymentFormProps = {
     onSubmit(order: Order): void;
 };
 
-const PaymentForm: React.FC<PaymentFormProps> = props => {
+const PaymentForm: React.FC<PaymentFormProps> = (props) => {
     const schema = React.useMemo(
         () =>
             yup.object().shape({
-                payment_id: yup.string().required('Укажите способ оплаты')
+                payment_id: yup.string().required('Укажите способ оплаты'),
             }),
-        []
+        [],
     );
 
     return (
         <Formik
             initialValues={{
-                payment_id: props.payments.length === 1 ? props.payments[0].id.toString() : ''
+                payment_id: props.payments.length === 1 ? props.payments[0].id.toString() : '',
             }}
             validationSchema={schema}
             initialStatus={null}
@@ -515,14 +510,14 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                     const order = await api.eventOrder(props.eventId, {
                         ...props.customer,
                         ...values,
-                        tickets: props.tickets
+                        tickets: props.tickets,
                     });
 
                     ym('reachGoal', 'event_order_success', {
                         event_id: props.eventId,
                         order_id: order.id,
                         currency: order.currency_id,
-                        order_price: order.price
+                        order_price: order.price,
                     });
 
                     vk.goal('purchase', { value: order.price });
@@ -534,7 +529,7 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                             case 400: {
                                 const errors = await e.json();
 
-                                Object.keys(errors).forEach(field => {
+                                Object.keys(errors).forEach((field) => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
                                         actions.setStatus(errors[field][0]);
                                         return;
@@ -563,26 +558,26 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
             }}
         >
             {({ values, isSubmitting, status }) => {
-                type Payment = typeof props.payments[0];
+                type Payment = (typeof props.payments)[0];
                 let payment: Payment | null = null;
 
                 if (values.payment_id) {
-                    payment = props.payments.find(payment => payment.id.toString() === values.payment_id) as Payment;
+                    payment = props.payments.find((payment) => payment.id.toString() === values.payment_id) as Payment;
                 }
                 return (
                     <Form className={styles.orderStepForm}>
                         <FormGroup>
                             <Field
-                                component='select'
-                                name='payment_id'
-                                id='payment_id'
-                                className='form-control'
+                                component="select"
+                                name="payment_id"
+                                id="payment_id"
+                                className="form-control"
                                 disabled={props.payments.length === 1}
                             >
-                                <option value=''>Выберите способ оплаты</option>
+                                <option value="">Выберите способ оплаты</option>
                                 {props.payments
-                                    .filter(payment => ['invoice', 'card', 'free'].includes(payment.type))
-                                    .map(payment => (
+                                    .filter((payment) => ['invoice', 'card', 'free'].includes(payment.type))
+                                    .map((payment) => (
                                         <option key={payment.id} value={payment.id}>
                                             {payment.type === 'invoice' && 'По счету'}
                                             {payment.type === 'card' && 'Банковской картой'}
@@ -590,41 +585,40 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
                                         </option>
                                     ))}
                             </Field>
-                            <ErrorMessage name='payment_id' component='div' className='invalid-feedback' />
+                            <ErrorMessage name="payment_id" component="div" className="invalid-feedback" />
                         </FormGroup>
                         {payment && payment.type === 'invoice' && (
                             <React.Fragment>
                                 <FormGroup>
-                                    <label htmlFor='legal_name'>Название компании</label>
-                                    <Field type='text' name='legal_name' id='legal_name' className='form-control' />
-                                    <ErrorMessage name='legal_name' component='div' className='invalid-feedback' />
+                                    <label htmlFor="legal_name">Название компании</label>
+                                    <Field type="text" name="legal_name" id="legal_name" className="form-control" />
+                                    <ErrorMessage name="legal_name" component="div" className="invalid-feedback" />
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <label htmlFor='inn'>ИНН</label>
-                                    <Field type='text' name='inn' id='inn' className='form-control' />
-                                    <ErrorMessage name='inn' component='div' className='invalid-feedback' />
+                                    <label htmlFor="inn">ИНН</label>
+                                    <Field type="text" name="inn" id="inn" className="form-control" />
+                                    <ErrorMessage name="inn" component="div" className="invalid-feedback" />
                                 </FormGroup>
                             </React.Fragment>
                         )}
                         <div className={styles.orderStepForm__buttons}>
-                            <button type='button' className='button' onClick={props.onClickPrev}>
+                            <button type="button" className="button" onClick={props.onClickPrev}>
                                 Назад
-                            </button>
-                            {' '}
-                            <button type='submit' className='button button_theme_blue' disabled={isSubmitting}>
+                            </button>{' '}
+                            <button type="submit" className="button button_theme_blue" disabled={isSubmitting}>
                                 {isSubmitting ? 'Проверка данных' : 'Купить'}
                             </button>
                         </div>
                         {status && (
                             <FormGroup>
-                                <div className='invalid-feedback'>{status}</div>
+                                <div className="invalid-feedback">{status}</div>
                             </FormGroup>
                         )}
                         {payment && (
                             <p className={styles.orderStepForm__information}>
                                 Нажимая на кнопку &quot;Купить&quot; вы подтверждаете, что изучили и согласны с{' '}
-                                <a href={payment.agree_url} target='_blank' rel='noreferrer'>
+                                <a href={payment.agree_url} target="_blank" rel="noreferrer">
                                     правовыми документами
                                 </a>
                                 .
@@ -637,14 +631,14 @@ const PaymentForm: React.FC<PaymentFormProps> = props => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps<EventOrderPageProps, EventOrderPageParams> = async function(
-    context
+export const getServerSideProps: GetServerSideProps<EventOrderPageProps, EventOrderPageParams> = async function (
+    context,
 ) {
     setContext(context.req);
 
     if (typeof context.params === 'undefined') {
         return {
-            notFound: true
+            notFound: true,
         };
     }
 
@@ -654,7 +648,7 @@ export const getServerSideProps: GetServerSideProps<EventOrderPageProps, EventOr
 
     if (event === null || tickets === null || !tickets.is_active) {
         return {
-            notFound: true
+            notFound: true,
         };
     }
 
@@ -670,8 +664,8 @@ export const getServerSideProps: GetServerSideProps<EventOrderPageProps, EventOr
         props: {
             event,
             tickets,
-            profile
-        }
+            profile,
+        },
     };
 };
 

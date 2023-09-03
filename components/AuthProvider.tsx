@@ -19,8 +19,8 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
     const [, setQueue] = React.useState<Array<[Resolver, Rejector]>>([]);
 
     const handleAuthModal = React.useCallback((profile?: Profile) => {
-        setQueue(queue => {
-            queue.forEach(item => {
+        setQueue((queue) => {
+            queue.forEach((item) => {
                 if (profile) {
                     item[0](profile);
                 } else {
@@ -42,7 +42,7 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
             rejector = reject;
         });
 
-        setQueue(queue => [...queue, [resolver as Resolver, rejector as Rejector]]);
+        setQueue((queue) => [...queue, [resolver as Resolver, rejector as Rejector]]);
         setAuthModalOpen(true);
 
         return promise;
@@ -51,7 +51,7 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
     return (
         <Context.Provider
             value={{
-                auth: handleAuthRequest
+                auth: handleAuthRequest,
             }}
         >
             {props.children}
@@ -67,5 +67,5 @@ export function useAuth() {
 }
 
 const Context = React.createContext({
-    auth: new Function()
+    auth: new Function(),
 });

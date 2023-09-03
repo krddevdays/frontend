@@ -28,7 +28,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
     }, [props.votes_count, props.my_vote]);
 
     const handleClickVote: React.ReactEventHandler<HTMLButtonElement> = React.useCallback(
-        e => {
+        (e) => {
             e.preventDefault();
 
             setTimeout(() => {
@@ -70,7 +70,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                 }
             })();
         },
-        [props.id, auth]
+        [props.id, auth],
     );
 
     return (
@@ -80,7 +80,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                     {props.title}
                 </div>
                 <div className={styles.discussionForm__description}>
-                    {props.description.split('\n').map(function(item, key) {
+                    {props.description.split('\n').map(function (item, key) {
                         return (
                             <span key={key}>
                                 {item}
@@ -91,13 +91,13 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                 </div>
             </div>
             <div className={styles.discussionForm__footer}>
-                <div className='button-group'>
-                    <button type='button' className='button' style={{ width: '100%' }} onClick={handleClickVote}>
+                <div className="button-group">
+                    <button type="button" className="button" style={{ width: '100%' }} onClick={handleClickVote}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={starSvg.src} alt='' style={{ verticalAlign: 'text-top' }} />{' '}
+                        <img src={starSvg.src} alt="" style={{ verticalAlign: 'text-top' }} />{' '}
                         {isVoted ? 'Передумать' : 'Проголосовать'}
                     </button>
-                    <span className='button'>{votesCount}</span>
+                    <span className="button">{votesCount}</span>
                 </div>
             </div>
         </div>

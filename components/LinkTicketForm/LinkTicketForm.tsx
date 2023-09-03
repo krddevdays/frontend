@@ -9,10 +9,7 @@ import FormGroup from '../FormGroup/FormGroup';
 
 const schema = yup.object().shape({
     id: yup.number().required('Введите номер билета'),
-    email: yup
-        .string()
-        .email('Введите валидный e-mail')
-        .required('Введите e-mail')
+    email: yup.string().email('Введите валидный e-mail').required('Введите e-mail'),
 });
 
 type Ticket = {
@@ -65,7 +62,7 @@ export default function LinkTicketForm(props: LinkTicketFormProps) {
             }}
             initialValues={{
                 id: '',
-                email: ''
+                email: '',
             }}
         >
             {({ status, isSubmitting }) => {

@@ -12,19 +12,16 @@ import styles from './AuthModal.module.css';
 
 const schema = yup.object().shape({
     username: yup.string().required('Введите логин'),
-    password: yup.string().required('Введите пароль')
+    password: yup.string().required('Введите пароль'),
 });
 
 const registrationSchema = yup.object().shape({
     username: yup.string().required('Введите логин'),
-    email: yup
-        .string()
-        .email('Неверный e-amil')
-        .required('Введите e-mail'),
+    email: yup.string().email('Неверный e-amil').required('Введите e-mail'),
     first_name: yup.string().required('Введите имя'),
     last_name: yup.string().required('Введите фамилию'),
     password1: yup.string().required('Введите пароль'),
-    password2: yup.string().required('Введите подтверждение пароля')
+    password2: yup.string().required('Введите подтверждение пароля'),
 });
 
 type Profile = {
@@ -49,7 +46,7 @@ function LoginForm(props: {
         <Formik
             initialValues={{
                 username: '',
-                password: ''
+                password: '',
             }}
             validationSchema={schema}
             initialStatus={null}
@@ -66,7 +63,7 @@ function LoginForm(props: {
                             case 400: {
                                 const errors = await e.json();
 
-                                Object.keys(errors).forEach(field => {
+                                Object.keys(errors).forEach((field) => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
                                         actions.setStatus(errors[field][0]);
                                         return;
@@ -143,7 +140,7 @@ function RegistrationForm(props: {
                 first_name: '',
                 last_name: '',
                 password1: '',
-                password2: ''
+                password2: '',
             }}
             validationSchema={registrationSchema}
             initialStatus={null}
@@ -160,7 +157,7 @@ function RegistrationForm(props: {
                             case 400: {
                                 const errors = await e.json();
 
-                                Object.keys(errors).forEach(field => {
+                                Object.keys(errors).forEach((field) => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
                                         actions.setStatus(errors[field][0]);
                                         return;
@@ -290,10 +287,10 @@ function AuthModal(props: AuthModalProps) {
         >
             {page === 'login' && (
                 <LoginForm
-                    onFetchProfile={profile => {
+                    onFetchProfile={(profile) => {
                         setProfile(profile);
                     }}
-                    onClickRegistration={e => {
+                    onClickRegistration={(e) => {
                         e.preventDefault();
                         setPage('registration');
                     }}
@@ -301,10 +298,10 @@ function AuthModal(props: AuthModalProps) {
             )}
             {page === 'registration' && (
                 <RegistrationForm
-                    onFetchProfile={profile => {
+                    onFetchProfile={(profile) => {
                         setProfile(profile);
                     }}
-                    onClickLogin={e => {
+                    onClickLogin={(e) => {
                         e.preventDefault();
                         setPage('login');
                     }}

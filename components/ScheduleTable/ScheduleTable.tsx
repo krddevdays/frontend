@@ -15,7 +15,7 @@ type Talk = {
     speaker: AuthorProps;
     title: string;
     poster_image?: string;
-}
+};
 
 export type TalkActivityProps = BaseActivityProps & {
     type: 'TALK';
@@ -44,19 +44,20 @@ type ScheduleTableProps = {
 };
 
 function ScheduleTable(props: ScheduleTableProps) {
-    const zones = React.useMemo(() => Object.keys(props.activitiesByZoneAndTime).sort(), [
-        props.activitiesByZoneAndTime
-    ]);
+    const zones = React.useMemo(
+        () => Object.keys(props.activitiesByZoneAndTime).sort(),
+        [props.activitiesByZoneAndTime],
+    );
     const times = React.useMemo(
         () =>
             Array.from(
                 zones.reduce((times, zone) => {
-                    Object.keys(props.activitiesByZoneAndTime[zone]).forEach(item => times.add(item));
+                    Object.keys(props.activitiesByZoneAndTime[zone]).forEach((item) => times.add(item));
 
                     return times;
-                }, new Set<string>())
+                }, new Set<string>()),
             ).sort(),
-        [zones, props.activitiesByZoneAndTime]
+        [zones, props.activitiesByZoneAndTime],
     );
 
     return (
@@ -76,7 +77,7 @@ function ScheduleTable(props: ScheduleTableProps) {
             <tbody>
                 {times.map((time, timeIndex) => {
                     const hasActivities = zones.some(
-                        zone => typeof props.activitiesByZoneAndTime[zone][time] !== 'undefined'
+                        (zone) => typeof props.activitiesByZoneAndTime[zone][time] !== 'undefined',
                     );
 
                     return (
@@ -95,7 +96,7 @@ function ScheduleTable(props: ScheduleTableProps) {
                                                     {props.activitiesByZoneAndTime[zone][time].map(
                                                         (activity, index) => (
                                                             <Activity {...activity} key={index} />
-                                                        )
+                                                        ),
                                                     )}
                                                 </div>
                                             )}

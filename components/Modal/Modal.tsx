@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactModal from 'react-modal';
 import classNames from 'classnames';
 import closeSvg from './Close.svg';
-import Image from "next/image"
+import Image from 'next/image';
 
 import styles from './Modal.module.css';
 
@@ -17,11 +17,11 @@ type ModalProps = {
 
 const Modal = (props: ModalProps) => {
     const handleClickClose: React.MouseEventHandler<HTMLButtonElement> = React.useCallback(
-        e => {
+        (e) => {
             e.preventDefault();
             props.onRequestClose();
         },
-        [props]
+        [props],
     );
 
     return (
@@ -32,12 +32,12 @@ const Modal = (props: ModalProps) => {
             className={{
                 base: classNames(styles.modal__body, props.className),
                 afterOpen: styles.modal__body_afterOpen,
-                beforeClose: styles.modal__body_beforeClose
+                beforeClose: styles.modal__body_beforeClose,
             }}
             overlayClassName={{
                 base: styles.modal__overlay,
                 afterOpen: styles.modal__overlay_afterOpen,
-                beforeClose: styles.modal__overlay_beforeClose
+                beforeClose: styles.modal__overlay_beforeClose,
             }}
             closeTimeoutMS={200}
             portalClassName={styles.modal}
@@ -49,9 +49,10 @@ const Modal = (props: ModalProps) => {
                     src={closeSvg}
                     alt=""
                     style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                    }} />
+                        maxWidth: '100%',
+                        height: 'auto',
+                    }}
+                />
             </button>
             <div className={styles.modal__title}>{props.title}</div>
             <div className={styles.modal__content}>{props.children}</div>

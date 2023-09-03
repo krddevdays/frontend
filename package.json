@@ -20,9 +20,10 @@
         "classnames": "^2.3.1",
         "common-tags": "^1.8.2",
         "cross-fetch": "^3.1.5",
-        "eslint": "^8.11.0",
-        "eslint-config-next": "^12.1.0",
-        "eslint-config-prettier": "^8.5.0",
+        "eslint": "8.48.0",
+        "eslint-config-next": "13.4.19",
+        "eslint-config-prettier": "9.0.0",
+        "eslint-plugin-prettier": "5.0.0",
         "formik": "^2.2.9",
         "markdown-to-jsx": "^7.1.7",
         "next": "13.4.19",
@@ -44,6 +45,6 @@
     "devDependencies": {
         "husky": "^2.7.0",
         "lint-staged": "^12.3.6",
-        "prettier": "^2.6.0"
+        "prettier": "3.0.3"
     }
 }

@@ -25,7 +25,7 @@ const schema = yup.object().shape({
     first_name: yup.string().required('Введите имя'),
     last_name: yup.string().required('Введите фамилию'),
     work: yup.string(),
-    position: yup.string()
+    position: yup.string(),
 });
 
 export default function ProfileForm(props: ProfileFormProps) {
@@ -45,7 +45,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                             case 400: {
                                 const errors = await e.json();
 
-                                Object.keys(errors).forEach(field => {
+                                Object.keys(errors).forEach((field) => {
                                     if (['non_field_errors', '__all__'].includes(field)) {
                                         actions.setStatus(errors[field][0]);
                                         return;
@@ -71,7 +71,7 @@ export default function ProfileForm(props: ProfileFormProps) {
                 first_name: props.profile.first_name,
                 last_name: props.profile.last_name,
                 work: props.profile.work || '',
-                position: props.profile.position || ''
+                position: props.profile.position || '',
             }}
         >
             {({ status, isSubmitting }) => {

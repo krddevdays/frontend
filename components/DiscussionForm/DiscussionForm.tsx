@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import ym from 'react-yandex-metrika';
 import discussionSvg from './Discussion.svg';
-import Image from "next/image"
+import Image from 'next/image';
 
 import { useAuth } from '../AuthProvider';
 import * as api from '../../api';
@@ -28,7 +28,7 @@ export type DiscussionFormProps = {
 
 const schema = yup.object().shape({
     title: yup.string().required('Введите тему'),
-    description: yup.string().required('Введите описание')
+    description: yup.string().required('Введите описание'),
 });
 
 export default function DiscussionForm(props: DiscussionFormProps) {
@@ -48,15 +48,16 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                             src={discussionSvg}
                             alt=""
                             style={{
-                                maxWidth: "100%",
-                                height: "auto"
-                            }} />
+                                maxWidth: '100%',
+                                height: 'auto',
+                            }}
+                        />
                     </div>
                     <div className={styles.discussionForm__footer}>
                         <button
                             type="submit"
                             className="button button_theme_blue button_full-width"
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 setConfirmed(true);
                                 setTimeout(() => {
@@ -73,7 +74,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                 <Formik
                     initialValues={{
                         title: '',
-                        description: ''
+                        description: '',
                     }}
                     initialStatus={null}
                     validationSchema={schema}
@@ -104,7 +105,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                         case 400:
                                             const errors = await e.json();
 
-                                            Object.keys(errors).forEach(field => {
+                                            Object.keys(errors).forEach((field) => {
                                                 if (['non_field_errors', '__all__'].includes(field)) {
                                                     actions.setStatus(errors[field][0]);
                                                     return;

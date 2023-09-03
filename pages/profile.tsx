@@ -35,7 +35,7 @@ type ProfilePageProps = {
     tickets: null | Ticket[];
 };
 
-const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfilePageProps> = props => {
+const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfilePageProps> = (props) => {
     const [profile, setProfile] = React.useState(props.profile);
 
     React.useEffect(() => {
@@ -59,15 +59,15 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
             }
             setAuthModalIsOpened(false);
         },
-        [setAuthModalIsOpened]
+        [setAuthModalIsOpened],
     );
 
     const handleClickAuth: React.MouseEventHandler<HTMLButtonElement> = React.useCallback(
-        e => {
+        (e) => {
             e.preventDefault();
             setAuthModalIsOpened(true);
         },
-        [setAuthModalIsOpened]
+        [setAuthModalIsOpened],
     );
 
     const handleProfileChange = React.useCallback((profile: Profile) => {
@@ -168,7 +168,7 @@ const ProfilePage: NextComponentType<NextPageContext, ProfilePageProps, ProfileP
     );
 };
 
-export const getServerSideProps: GetServerSideProps<ProfilePageProps, never> = async function(context) {
+export const getServerSideProps: GetServerSideProps<ProfilePageProps, never> = async function (context) {
     setContext(context.req);
 
     let profile = null;
@@ -185,8 +185,8 @@ export const getServerSideProps: GetServerSideProps<ProfilePageProps, never> = a
     return {
         props: {
             profile,
-            tickets
-        }
+            tickets,
+        },
     };
 };
 
