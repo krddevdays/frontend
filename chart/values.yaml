@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: cr.yandex/crptsm0vtuj4fltqor20/frontend
+  repository: ccr.yandex/crp7fcdv4506tqnqd64o/frontend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
