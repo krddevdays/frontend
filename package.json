@@ -27,7 +27,7 @@
         "markdown-to-jsx": "7.3.2",
         "next": "13.4.19",
         "phone": "3.1.40",
-        "postcss": "8.4.29",
+        "postcss": "8.4.31",
         "postcss-100vh-fix": "1.0.2",
         "query-string": "8.1.0",
         "react": "18.2.0",
