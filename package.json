@@ -3,7 +3,8 @@
     "scripts": {
         "test": "echo \"Warning: no test specified\" && exit 0",
         "dev": "next dev",
-        "build": "next build",
+        "lint": "eslint .",
+        "build": "next build --no-lint",
         "start": "next start",
         "prepare": "husky install"
     },
@@ -16,8 +17,9 @@
         "@types/node": "^18.19.3",
         "@types/react": "^18.2.45",
         "@types/react-modal": "^3.16.3",
+        "@typescript-eslint/eslint-plugin": "^6.15.0",
         "autoprefixer": "^10.4.16",
-        "classnames": "^2.3.2",
+        "clsx": "^2.0.0",
         "common-tags": "^1.8.2",
         "cross-fetch": "^4.0.0",
         "eslint": "^8.56.0",

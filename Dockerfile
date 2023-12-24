@@ -24,7 +24,7 @@ ENV BACKEND_PROTOCOL=$BACKEND_PROTOCOL
 RUN --mount=type=secret,id=sentry-auth-token \
     SENTRY_AUTH_TOKEN="$(cat /run/secrets/sentry-auth-token)" && \
     export SENTRY_AUTH_TOKEN && \
-    npm run build -- --no-lint
+    npm run build
 
 FROM base AS runner
 WORKDIR /app

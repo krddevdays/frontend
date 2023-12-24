@@ -1,0 +1,67 @@
+.scheduleTable {
+    border-collapse: collapse;
+}
+
+.scheduleTable__zone {
+    font-weight: normal;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+}
+
+.scheduleTable__time {
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+
+    padding-top: 40px;
+    padding-right: 16px;
+}
+
+.scheduleTable__activityCell {
+    vertical-align: top;
+    padding-top: 24px;
+    padding-right: 24px;
+}
+
+.scheduleTable__activityCell-content {
+    display: grid;
+    grid-gap: 8px;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+}
+
+.scheduleTable__activityCell:last-child {
+    padding-right: 0;
+}
+
+.scheduleActivity {
+    display: inline-block;
+    background: #ffffff;
+    box-shadow:
+        0 1px 8px rgba(0, 0, 0, 0.06),
+        0 2px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    padding: 16px;
+}
+
+.scheduleActivity__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #262626;
+}
+
+.scheduleActivity__author {
+    margin-top: 8px;
+
+    font-size: 12px;
+    line-height: 16px;
+
+    color: #262626;
+}
