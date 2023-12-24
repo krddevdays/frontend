@@ -9,6 +9,9 @@ const moduleExports = {
         backendDomain: process.env.BACKEND_DOMAIN || 'krd.dev/backend',
         backendProtocol: process.env.BACKEND_PROTOCOL || 'https:',
     },
+    poweredByHeader: false,
+    productionBrowserSourceMaps: false,
+    assetPrefix: process.env.ASSET_PREFIX,
     images: {
         remotePatterns: [
             {

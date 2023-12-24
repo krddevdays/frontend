@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: 'npm'
@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate image meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: cr.yandex/crp7fcdv4506tqnqd64o/frontend
           tags: |
@@ -35,20 +35,20 @@ jobs:
             type=ref,event=pr,suffix=-latest
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: cr.yandex
           username: json_key
           password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
 
       - name: Build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           provenance: false
           context: .
@@ -58,4 +58,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           secrets: |
-            "sentry-auth-token=${{ secrets.SENTRY_AUTH_TOKEN }}"
+            "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}"
+            "S3_ACCESS_KEY_ID=${{ secrets.S3_ACCESS_KEY_ID }}"
+            "S3_SECRET_ACCESS_KEY=${{ secrets.S3_SECRET_ACCESS_KEY }}"

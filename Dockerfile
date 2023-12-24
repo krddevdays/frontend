@@ -21,10 +21,21 @@ ENV SENTRY_ORG $SENTRY_ORG
 ENV SENTRY_PROJECT $SENTRY_PROJECT
 ENV BACKEND_DOMAIN=$BACKEND_DOMAIN
 ENV BACKEND_PROTOCOL=$BACKEND_PROTOCOL
-RUN --mount=type=secret,id=sentry-auth-token \
-    SENTRY_AUTH_TOKEN="$(cat /run/secrets/sentry-auth-token)" && \
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
+    SENTRY_AUTH_TOKEN="$(cat /run/secrets/SENTRY_AUTH_TOKEN)" && \
     export SENTRY_AUTH_TOKEN && \
-    npm run build
+    ASSET_PREFIX="https://krddev-frontend.storage.yandexcloud.net" npm run build
+
+FROM amazon/aws-cli:2.15.4 as uploader
+WORKDIR /app
+COPY --from=builder /app/.next/static ./.next/static
+RUN --mount=type=secret,id=S3_ACCESS_KEY_ID \
+    --mount=type=secret,id=S3_SECRET_ACCESS_KEY \
+    aws configure set aws_access_key_id $(cat /run/secrets/S3_ACCESS_KEY_ID) && \
+    aws configure set aws_secret_access_key $(cat /run/secrets/S3_SECRET_ACCESS_KEY) && \
+    aws configure set region ru-central1 && \
+    aws configure set endpoint_url https://storage.yandexcloud.net && \
+    aws s3 cp --recursive --no-progress --cache-control "public,max-age=31536000" ./.next/static s3://krddev-frontend/_next/static
 
 FROM base AS runner
 WORKDIR /app
@@ -33,7 +44,7 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=uploader --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 EXPOSE 3000
