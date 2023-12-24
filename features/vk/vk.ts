@@ -1,12 +1,12 @@
 declare global {
     interface Window {
         VK?: {
-            Goal: (conversionName: string, parameters?: Object) => void,
+            Goal: (conversionName: string, parameters?: Object) => void;
             Retargeting: {
-                Hit: () => void,
-                Event: (eventName: string) => void,
-                Add: (audienceID: number) => void
-            }
+                Hit: () => void;
+                Event: (eventName: string) => void;
+                Add: (audienceID: number) => void;
+            };
         };
     }
 }

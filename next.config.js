@@ -6,10 +6,16 @@ const moduleExports = {
     reactStrictMode: true,
     publicRuntimeConfig: {
         backendDomain: process.env.BACKEND_DOMAIN || 'krd.dev/backend',
-        backendProtocol: process.env.BACKEND_PROTOCOL || 'https:'
+        backendProtocol: process.env.BACKEND_PROTOCOL || 'https:',
     },
     images: {
-        domains: ['storage.yandexcloud.net']
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'storage.yandexcloud.net',
+                pathname: '/krddev-static/**',
+            },
+        ],
     },
     sentry: {
         hideSourceMaps: true,
@@ -18,11 +24,11 @@ const moduleExports = {
         return [
             {
                 source: '/cfp',
-                destination: 'https://forms.yandex.ru/cloud/5adc61cf6162d77e2714831c/\n',
+                destination: 'https://forms.yandex.ru/cloud/5adc61cf6162d77e2714831c',
                 permanent: false,
             },
-        ]
-    }
+        ];
+    },
 };
 
 module.exports = withSentryConfig(moduleExports);
