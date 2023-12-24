@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { FormattedDate } from 'react-intl';
+import { EventDate } from '../EventDate/EventDate';
 
 type Event = {
     id: number;
@@ -37,7 +37,11 @@ export default function EventsList(props: EventsListProps) {
                                     : 'text-gray-500 bg-gray-100'
                             }`}
                         >
-                            <EventDate startAt={new Date(event.start_date)} finishAt={new Date(event.finish_date)} />
+                            <EventDate
+                                startAt={new Date(event.start_date)}
+                                finishAt={new Date(event.finish_date)}
+                                compact={true}
+                            />
                         </p>
                         <p className="text-sm font-medium text-gray-900 mt-1.5">{event.name}</p>
                         <p className="text-sm text-gray-500">{event.short_description}</p>
@@ -45,26 +49,5 @@ export default function EventsList(props: EventsListProps) {
                 </li>
             ))}
         </ul>
-    );
-}
-
-function EventDate(props: { startAt: Date; finishAt: Date }) {
-    const currentDate = new Date();
-    const needYear = currentDate.getFullYear() !== props.startAt.getFullYear();
-
-    const needDate = props.startAt.getDate() !== props.finishAt.getDate();
-
-    if (!needDate) {
-        return (
-            <FormattedDate value={props.startAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
-        );
-    }
-
-    return (
-        <React.Fragment>
-            <FormattedDate value={props.startAt} day="numeric" />
-            -
-            <FormattedDate value={props.finishAt} month="long" day="numeric" year={needYear ? 'numeric' : undefined} />
-        </React.Fragment>
     );
 }
