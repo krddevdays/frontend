@@ -7,7 +7,6 @@ import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import classNames from 'classnames';
 import ym from 'react-yandex-metrika';
-import phone from 'phone';
 
 import * as vk from '../../../features/vk';
 
@@ -216,11 +215,25 @@ const CustomerForm: React.FC<CustomerFormProps> = (props) => {
                 email: yup.string().email('Неверный e-mail').required('Введите e-mail'),
                 phone: yup
                     .string()
-                    .test(
-                        'is-rus-phone',
-                        'Неверный номер телефона',
-                        (value) => !value || !phone(value, { country: 'RUS' }).isValid,
-                    ),
+                    .transform(function (value) {
+                        if (!this.isType(value)) {
+                            return value;
+                        }
+
+                        // map empty string to undefined for API, because it accepts valid phone or undefined
+                        if (value?.trim().length === 0) return undefined;
+
+                        // normalization for API
+                        return value?.replaceAll(/[^+0-9]/g, '').replace(/^8/, '+7');
+                    })
+                    .test('is-phone', 'Неверный номер телефона', (value) => {
+                        // it is optional
+                        if (value === undefined || value.length === 0) return true;
+
+                        if (value.length !== 12) return false;
+
+                        return /^\+7/.test(value);
+                    }),
             }),
         [],
     );
@@ -236,17 +249,8 @@ const CustomerForm: React.FC<CustomerFormProps> = (props) => {
             }}
             validationSchema={schema}
             initialStatus={null}
-            onSubmit={({ phone: rawPhone, ...values }) => {
-                let parsedPhone = phone(rawPhone || '', { country: 'RUS' });
-
-                props.onSubmit({
-                    ...values,
-                    ...(parsedPhone.isValid
-                        ? {
-                              phone: parsedPhone.phoneNumber,
-                          }
-                        : {}),
-                });
+            onSubmit={(values) => {
+                props.onSubmit(schema.cast(values));
             }}
         >
             {({ isSubmitting, status }) => (
@@ -616,9 +620,9 @@ const PaymentForm: React.FC<PaymentFormProps> = (props) => {
                             </FormGroup>
                         )}
                         {payment && (
-                            <p className={styles.orderStepForm__information}>
+                            <p className={classNames(styles.orderStepForm__information, 'mt-2')}>
                                 Нажимая на кнопку &quot;Купить&quot; вы подтверждаете, что изучили и согласны с{' '}
-                                <a href={payment.agree_url} target="_blank" rel="noreferrer">
+                                <a href={payment.agree_url} className={'underline'} target="_blank" rel="noreferrer">
                                     правовыми документами
                                 </a>
                                 .

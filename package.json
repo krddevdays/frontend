@@ -29,7 +29,6 @@
         "lint-staged": "^15.2.0",
         "markdown-to-jsx": "^7.3.2",
         "next": "^14.0.4",
-        "phone": "^3.1.41",
         "postcss": "^8.4.32",
         "postcss-100vh-fix": "^1.0.2",
         "prettier": "^3.1.1",
