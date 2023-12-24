@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, useIntl } from 'react-intl';
+
+function convertTZ(date: Date | string | number, tzString: string) {
+    return new Date((date instanceof Date ? date : new Date(date)).toLocaleString('en-US', { timeZone: tzString }));
+}
 
 export function EventDate(props: { startAt: Date; finishAt: Date; compact?: boolean }) {
     const { startAndFinishSameDay, inCurrentYear } = useEventDateHelper(props.startAt, props.finishAt);
@@ -66,14 +70,20 @@ export function EventDate(props: { startAt: Date; finishAt: Date; compact?: bool
 }
 
 export function useEventDateHelper(startAt: Date, finishAt: Date) {
-    const currentDate = new Date();
+    const intl = useIntl();
+
+    const currentDate = intl.timeZone ? convertTZ(new Date(), intl.timeZone) : new Date();
+    const convertedStartAt = intl.timeZone ? convertTZ(startAt, intl.timeZone) : startAt;
+    const convertedFinishAt = intl.timeZone ? convertTZ(finishAt, intl.timeZone) : finishAt;
+
     const inCurrentYear =
-        currentDate.getFullYear() === startAt.getFullYear() && currentDate.getFullYear() === finishAt.getFullYear();
+        currentDate.getFullYear() === convertedStartAt.getFullYear() &&
+        currentDate.getFullYear() === convertedFinishAt.getFullYear();
 
     const startAndFinishSameDay =
-        startAt.getFullYear() === finishAt.getFullYear() &&
-        startAt.getMonth() === finishAt.getMonth() &&
-        startAt.getDate() === finishAt.getDate();
+        convertedStartAt.getFullYear() === convertedFinishAt.getFullYear() &&
+        convertedStartAt.getMonth() === convertedFinishAt.getMonth() &&
+        convertedStartAt.getDate() === convertedFinishAt.getDate();
 
     return {
         inCurrentYear,
