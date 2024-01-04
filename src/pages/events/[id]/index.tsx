@@ -433,9 +433,11 @@ function EventPrice(props: EventPriceProps) {
                             as={`/events/${props.eventId}/order`}
                             className="button"
                             onClick={() => {
-                                ym('reachGoal', 'click_event_buy_button', {
+                                const params = {
                                     event_id: props.eventId,
-                                });
+                                };
+                                ym('reachGoal', 'click_event_buy_button', params);
+                                window._tmr.push({ type: 'reachGoal', goal: 'click_event_buy_button', params });
 
                                 vk.goal('initiate_checkout');
                             }}

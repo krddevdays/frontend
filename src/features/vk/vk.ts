@@ -1,4 +1,19 @@
 declare global {
+    type TmrEvent = {
+        id?: string;
+        params?: object;
+        url?: string;
+    } & (
+        | {
+              type: 'pageView';
+          }
+        | {
+              type: 'reachGoal';
+              goal: string;
+              value?: number;
+          }
+    );
+
     interface Window {
         VK?: {
             Goal: (conversionName: string, parameters?: object) => void;
@@ -7,6 +22,10 @@ declare global {
                 Event: (eventName: string) => void;
                 Add: (audienceID: number) => void;
             };
+        };
+
+        _tmr: {
+            push(data: TmrEvent): void;
         };
     }
 }

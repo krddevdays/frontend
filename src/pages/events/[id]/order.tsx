@@ -517,12 +517,16 @@ const PaymentForm: React.FC<PaymentFormProps> = (props) => {
                         tickets: props.tickets,
                     });
 
-                    ym('reachGoal', 'event_order_success', {
+                    const params = {
                         event_id: props.eventId,
                         order_id: order.id,
                         currency: order.currency_id,
                         order_price: order.price,
-                    });
+                    };
+
+                    ym('reachGoal', 'event_order_success', params);
+
+                    window._tmr.push({ type: 'reachGoal', goal: 'event_order_success', value: order.price, params });
 
                     vk.goal('purchase', { value: order.price });
 

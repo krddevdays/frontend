@@ -19,6 +19,7 @@ ReactModal.setAppElement('#__next');
 
 Router.events.on('routeChangeComplete', (url: string) => {
     ym('hit', url);
+    window._tmr.push({ type: 'pageView' });
 
     vk.hit();
 });
@@ -57,6 +58,22 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                                 t.async=!0,t.src="https://vk.com/js/api/openapi.js?154",t.onload=function()
                                 {VK.Retargeting.Init("VK-RTRG-383749-dV7bo"),VK.Retargeting.Hit()},
                                 document.head.appendChild(t)}();`,
+                    }}
+                />
+                <Script
+                    id="plugin-vk-ads-pixel"
+                    dangerouslySetInnerHTML={{
+                        __html: stripIndent`
+                        var _tmr = window._tmr || (window._tmr = []);
+                        _tmr.push({id: "3469783", type: "pageView", start: (new Date()).getTime()});
+                        (function (d, w, id) {
+                          if (d.getElementById(id)) return;
+                          var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+                          ts.src = "https://top-fwz1.mail.ru/js/code.js";
+                          var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+                          if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+                        })(document, window, "tmr-code");
+                        `,
                     }}
                 />
                 <YMInitializer
