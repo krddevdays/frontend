@@ -6,9 +6,6 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
 import clsx from 'clsx';
-import ym from 'react-yandex-metrika';
-
-import * as vk from '@/features/vk/vk';
 
 yup.addMethod(yup.object, 'uniqueProperty', function (propertyName, message) {
     return this.test('unique', message, function (value) {
@@ -524,11 +521,9 @@ const PaymentForm: React.FC<PaymentFormProps> = (props) => {
                         order_price: order.price,
                     };
 
-                    ym('reachGoal', 'event_order_success', params);
+                    ym(53951545, 'reachGoal', 'event_order_success', params);
 
-                    window._tmr.push({ type: 'reachGoal', goal: 'event_order_success', value: order.price, params });
-
-                    vk.goal('purchase', { value: order.price });
+                    _tmr.push({ type: 'reachGoal', goal: 'event_order_success', value: order.price, params });
 
                     props.onSubmit(order);
                 } catch (e: unknown) {

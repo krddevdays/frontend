@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { Response } from 'cross-fetch';
-import ym from 'react-yandex-metrika';
 import discussionSvg from './Discussion.svg';
 import Image from 'next/image';
 
@@ -61,7 +60,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                 e.preventDefault();
                                 setConfirmed(true);
                                 setTimeout(() => {
-                                    ym('reachGoal', 'click_want_own_discussion');
+                                    ym(53951545, 'reachGoal', 'click_want_own_discussion');
                                 }, 0);
                             }}
                         >
@@ -90,7 +89,7 @@ export default function DiscussionForm(props: DiscussionFormProps) {
                                 actions.resetForm();
                                 finished = true;
                                 setTimeout(() => {
-                                    ym('reachGoal', 'add_own_discussion');
+                                    ym(53951545, 'reachGoal', 'add_own_discussion');
                                 }, 0);
                             } catch (e: unknown) {
                                 if (e instanceof Response) {

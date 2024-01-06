@@ -5,23 +5,19 @@ import Script from 'next/script';
 import '@/styles/Global.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import ym, { YMInitializer } from 'react-yandex-metrika';
 import Router from 'next/router';
 import { stripIndent } from 'common-tags';
 import ReactModal from 'react-modal';
 import AuthProvider from '@/components/AuthProvider';
 
-import * as vk from '@/features/vk/vk';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 
 ReactModal.setAppElement('#__next');
 
 Router.events.on('routeChangeComplete', (url: string) => {
-    ym('hit', url);
-    window._tmr.push({ type: 'pageView' });
-
-    vk.hit();
+    ym(53951545, 'hit', url);
+    _tmr.push({ type: 'pageView' });
 });
 
 type GetLayout = (page: ReactElement) => ReactNode;
@@ -51,20 +47,10 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <IntlProvider locale="ru" timeZone="Europe/Moscow">
             <AuthProvider>
                 <Script
-                    id="plugin-vk-pixel"
+                    id="vk-ads-pixel"
                     dangerouslySetInnerHTML={{
                         __html: stripIndent`
-                                !function(){var t=document.createElement("script");t.type="text/javascript",
-                                t.async=!0,t.src="https://vk.com/js/api/openapi.js?154",t.onload=function()
-                                {VK.Retargeting.Init("VK-RTRG-383749-dV7bo"),VK.Retargeting.Hit()},
-                                document.head.appendChild(t)}();`,
-                    }}
-                />
-                <Script
-                    id="plugin-vk-ads-pixel"
-                    dangerouslySetInnerHTML={{
-                        __html: stripIndent`
-                        var _tmr = window._tmr || (window._tmr = []);
+                        var _tmr = _tmr || (_tmr = []);
                         _tmr.push({id: "3469783", type: "pageView", start: (new Date()).getTime()});
                         (function (d, w, id) {
                           if (d.getElementById(id)) return;
@@ -76,15 +62,24 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                         `,
                     }}
                 />
-                <YMInitializer
-                    accounts={[53951545]}
-                    options={{
-                        clickmap: true,
-                        trackLinks: true,
-                        accurateTrackBounce: true,
-                        webvisor: true,
+                <Script
+                    id="ym-counter"
+                    dangerouslySetInnerHTML={{
+                        __html: stripIndent`
+                       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                       m[i].l=1*new Date();
+                       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+                       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+                    
+                       ym(53951545, "init", {
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                       });
+                    `,
                     }}
-                    version="2"
                 />
                 {getLayout(<Component {...pageProps} />)}
             </AuthProvider>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Response } from 'cross-fetch';
-import ym from 'react-yandex-metrika';
 import starSvg from './Star.svg';
 
 import * as api from '@/api';
@@ -32,7 +31,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
             e.preventDefault();
 
             setTimeout(() => {
-                ym('reachGoal', 'click_vote_on_discussion');
+                ym(53951545, 'reachGoal', 'click_vote_on_discussion');
             }, 0);
 
             (async () => {
@@ -46,7 +45,7 @@ export default function DiscussionCard(props: DiscussionCardProps) {
                         finished = true;
 
                         setTimeout(() => {
-                            ym('reachGoal', 'vote_on_discussion');
+                            ym(53951545, 'reachGoal', 'vote_on_discussion');
                         }, 0);
                     } catch (e: unknown) {
                         if (e instanceof Response) {

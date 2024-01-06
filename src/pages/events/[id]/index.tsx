@@ -8,8 +8,6 @@ import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
 import Link from 'next/link';
 
-import * as vk from '@/features/vk/vk';
-
 import Author, { AuthorProps } from '@/components/Author/Author';
 
 import ScheduleTable, { ActivityProps } from '@/components/ScheduleTable/ScheduleTable';
@@ -18,7 +16,6 @@ import DiscussionForm from '@/components/DiscussionForm/DiscussionForm';
 import { EventDate } from '@/components/EventDate/EventDate';
 import List from '@/components/List/List';
 import styles from '@/styles/EventPage.module.css';
-import ym from 'react-yandex-metrika';
 import { setContext } from '@/context';
 
 type Talk = {
@@ -436,10 +433,8 @@ function EventPrice(props: EventPriceProps) {
                                 const params = {
                                     event_id: props.eventId,
                                 };
-                                ym('reachGoal', 'click_event_buy_button', params);
-                                window._tmr.push({ type: 'reachGoal', goal: 'click_event_buy_button', params });
-
-                                vk.goal('initiate_checkout');
+                                ym(53951545, 'reachGoal', 'click_event_buy_button', params);
+                                _tmr.push({ type: 'reachGoal', goal: 'click_event_buy_button', params });
                             }}
                         >
                             Зарегистрироваться
