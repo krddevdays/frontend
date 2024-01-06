@@ -1,7 +1,5 @@
 import crossFetch from 'cross-fetch';
-import { format as urlFormat } from 'url';
 import queryString from 'query-string';
-import getConfig from 'next/config';
 import { getContext } from './context';
 
 type FetchInit = RequestInit & {
@@ -32,11 +30,9 @@ function createUrl(context: {
         [key: string]: unknown;
     };
 }) {
-    const url = urlFormat({
-        protocol: getConfig().publicRuntimeConfig.backendProtocol,
-        host: getConfig().publicRuntimeConfig.backendDomain,
-        pathname: context.pathname,
-    });
+    const api = process.env.PRIVATE_BACKEND_API || 'https://krd.dev/backend';
+
+    const url = `${api}${context.pathname}`;
 
     if (typeof context.query === 'undefined') {
         return url;
