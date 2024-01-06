@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import clsx from 'clsx';
 
 import styles from '@/styles/BreakfastPage.module.css';
+import * as fonts from '@/styles/fonts.ts';
 
 import calendarImage from '../../public/calendar.svg';
 import locationImage from '../../public/location.svg';
@@ -32,7 +33,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                     >
                         <div
                             className={clsx(
-                                styles.brutalType,
+                                fonts.brutalType.className,
                                 'font-bold text-white rotate-2 tracking-tighter',
                                 'text-[14px] leading-[17px]',
                                 'md:text-[24px] md:leading-[30px]',
@@ -52,7 +53,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                     >
                         <div
                             className={clsx(
-                                styles.brutalType,
+                                fonts.brutalType.className,
                                 'font-bold text-white tracking-tighter',
                                 'text-[16px] leading-[20px]',
                                 'sm:text-[13px] sm:leading-[16px]',
@@ -106,7 +107,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                 >
                     <h1
                         className={clsx(
-                            styles.hagridType,
+                            fonts.hagrid.className,
                             'font-extrabold text-white tracking-tighter',
                             'text-[21px] leading-[23px] w-[270px]',
                             'md:text-[48px] md:leading-[53px] md:w-[620px]',
@@ -118,7 +119,7 @@ const BreakfastPage: NextPageWithLayout = () => {
 
                     <p
                         className={clsx(
-                            styles.brutalType,
+                            fonts.brutalType.className,
                             'font-bold text-white tracking-tighter',
                             'mt-[24px] text-[16px] leading-[20px] w-[280px]',
                             'sm:mt-[16px] sm:text-[14px] sm:leading-[17px]',
