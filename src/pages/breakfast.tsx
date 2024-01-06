@@ -69,8 +69,7 @@ const BreakfastPage: NextPageWithLayout = () => {
                                     />
                                     <div className="pl-[16px]">
                                         воскресенье,
-                                        <br />
-                                        21 августа с 9:00
+                                        <br />с 9:00
                                     </div>
                                 </div>
                                 <div className="pt-[18px] sm:pt-[12px] md:pt-[18px] flex flex-row justify-items-start">
@@ -132,24 +131,32 @@ const BreakfastPage: NextPageWithLayout = () => {
                     </p>
                 </div>
             </div>
-            <div className={clsx('fixed inset-0 z-20', styles.background)}></div>
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                controlsList="nodownload nofullscreen noremoteplayback"
-                disablePictureInPicture
-                disableRemotePlayback
-                className="fixed top-0 left-0 z-10 min-w-full min-h-full max-w-none"
-            >
-                <source src="https://storage.yandexcloud.net/krddev-static/breakfast-video.mp4" type="video/mp4" />
-                <source
-                    src="https://storage.yandexcloud.net/krddev-static/breakfast-video.hevc.mp4"
-                    type='video/mp4; codecs="hvc1"'
-                />
-                <source src="https://storage.yandexcloud.net/krddev-static/breakfast-video.webm" type="video/webm" />
-            </video>
+            <div className="fixed inset-0 z-20">
+                <div className="absolute inset-0 bg-[#14131D]/50" />
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    className="object-cover object-bottom w-full h-full"
+                >
+                    <source
+                        src="https://storage.yandexcloud.net/krddev-content/breakfast/breakfast.av1.mp4"
+                        type="video/mp4; codecs=av01.0.05M.08,opus"
+                    />
+                    <source
+                        src="https://storage.yandexcloud.net/krddev-content/breakfast/breakfast.hevc.mp4"
+                        type="video/mp4; codecs=hvc1"
+                    />
+                    <source
+                        src="https://storage.yandexcloud.net/krddev-content/breakfast/breakfast.h264.mp4"
+                        type="video/mp4; codecs=avc1.4D401E,mp4a.40.2"
+                    />
+                </video>
+            </div>
         </div>
     );
 };

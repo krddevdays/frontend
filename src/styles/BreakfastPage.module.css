@@ -14,10 +14,6 @@
     font-display: swap;
 }
 
-.background {
-    background: rgba(20, 19, 29, 0.3);
-}
-
 .headerImage {
     background-image: url('../../public/breakfast-header.svg');
     background-size: cover;

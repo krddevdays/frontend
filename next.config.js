@@ -17,11 +17,6 @@ const moduleExports = {
             {
                 protocol: 'https',
                 hostname: 'storage.yandexcloud.net',
-                pathname: '/krddev-static/**',
-            },
-            {
-                protocol: 'https',
-                hostname: 'storage.yandexcloud.net',
                 pathname: '/krddev-content/**',
             },
         ],
